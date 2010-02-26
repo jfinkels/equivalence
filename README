@@ -1,0 +1,4 @@
+To compile this article, do
+
+  pdflatex main.tex
+
