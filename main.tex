@@ -5,6 +5,7 @@
 \usepackage{hyperref} 
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage{complexity}
@@ -15,7 +16,7 @@
 \theoremstyle{definition} 
 \newtheorem{definition}{Definition}[section]
 
-\newcommand{\plain}[1]{\,\textrm{#1}\,}
+\newcommand{\plain}[1]{\,\text{#1}\,}
 \newcommand{\sigmastar}{\Sigma^{*}}
 \newcommand{\kr}{\leq^{p}_{ker}}
 
@@ -170,6 +171,9 @@ $R_{a}=R_{eq}$, and if $a=1^n$ then $R_{a}=R_{eqi}$.
 
 \begin{theorem}$R_{bc}\kr GI$\end{theorem}
 \begin{proof}
+  
+  %% TODO this fails for 1110 and 0111; 
+  %% need to add a triangle structure onto v_one
   Construct $M\in FP$ on input $w \in \sigmastar$:
   \begin{enumerate}
   \item Initialize set of vertices $V_w=\{v_{zero}, v_{one}\}$ and set of
@@ -187,7 +191,35 @@ $R_{a}=R_{eq}$, and if $a=1^n$ then $R_{a}=R_{eqi}$.
   $k\in\mathbb{N}$. Assume $|x|=|y|=n$, so both $x$ and $y$ have $n-k$
   zeros. Define $E_{w,1}=\{(v_i, v_{one})|v_i = 1\}$ and $E_{w,0}=\{(v_i,
   v_{zero})|v_i = 0\}$, so $E_x = E_{x,1}\cup E_{x,0}$ and $E_y = E_{y,1} \cup
-  E_{y,0}$.
+  E_{y,0}$ by construction. Define $V_{w,b}=\{v_i|x_i=b\}$, so $V_x=V_{x,1}
+  \cup V_{x,0}$ and $V_y=V_{y,1} \cup V_{y,0}$. Note that
+  $|V_{x,1}|=|V_{y,1}|=k$ and $|V_{x,0}|=|V_{y,0}|=n-k$. Since
+  $|V_{x,1}|=|V_{y,1}|=k$, there exists a bijection between them, call it
+  $\phi_1:V_{x,1}\to V_{y,1}$. Similarly, since $|V_{x,0}|=|V_{y,0}|=k$, there
+  exists a bijection between them, call it $\phi_0:V_{x,0}\to V_{y,0}$. Define
+  $\phi:V_x\to V_y$ by 
+  \begin{displaymath}
+    \phi(v) = 
+    \begin{cases}
+      \phi_0(v) & \plain{if} v = 0\\
+      \phi_1(v) & \plain{if} v = 1\\
+      v & \plain{if} v = v_{zero} \plain{or} v = v_{one}
+    \end{cases}
+  \end{displaymath}
+  for all $v\in V_x$.
+
+  Since the only edges in $E_x$ are the edges $(v_i, v_{one})$ when $x_i=1$ and
+  $(v_i, v_{zero})$ when $x_i=0$, then $(v_i, v_{one})\in V_x \leftrightarrow
+  (\phi(v_i), \phi(v_{one}))=(\phi_1(v_i), v_{one})\in V_y$, and $(v_i,
+  v_{zero})\in V_x \leftrightarrow (\phi(v_i), \phi(v_{zero})) = (\phi_0(v_i),
+  v_{zero})\in V_y$. Therefore $\phi$ describes a graph isomorphism, so $G_1$
+  is isomorphic to $G_2$.
+  
+  Suppose $(x,y)\notin R_{bc}$, so $x$ and $y$ have a different number of
+  ones. Let $k$ be the number of ones in $x$, and $l$ be the number of ones in
+  $y$, with $k\neq l$. Define $E_{w,0}$ and $E_{w,1}$ as above. Now
+  $|E_{x,1}|=k$ and $|E_{y,1}|=l$. Since $k=|E_{x,1}|\neq|E_{y,1}|=l$, no
+  bijection exists between them. 
 \end{proof}
 
 \end{document}
