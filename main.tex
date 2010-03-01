@@ -19,6 +19,7 @@
 \newcommand{\plain}[1]{\,\text{#1}\,}
 \newcommand{\sigmastar}{\Sigma^{*}}
 \newcommand{\kr}{\leq^{p}_{ker}}
+\newcommand{\nkr}{\nleq^{p}_{ker}}
 
 % define the author, title, and date
 \author{Jeffrey Finkelstein} 
@@ -54,7 +55,7 @@ Let $GI=\{(G_1,G_2)|G_1 \plain{and} G_2 \plain{are undirected graphs and} G_1
 
 \begin{definition}Let $R,S\subseteq\sigmastar\times\sigmastar$. We say $R$
   \textit{kernel reduces to} $S$ if $\exists f\in\FP:\forall x,y\in\sigmastar
-  (x,y)\in R \leftrightarrow (f(x),f(y))\in S$. We denote this by $R\kr
+  (x,y)\in R \iff (f(x),f(y))\in S$. We denote this by $R\kr
   S$.\end{definition}
 
 \section{Relationships among equivalence relations}
@@ -99,7 +100,7 @@ $R_{a}=R_{eq}$, and if $a=1^n$ then $R_{a}=R_{eqi}$.
 %%   $I(w)=w, \forall w\in\sigmastar$. Suppose $(x,y)\in R$. Then
 %%   $(I(x),I(y))=(x,y)\in R \subseteq S$. Suppose $(x,y) \notin R$. Then
 %%   $(I(x),I(y))=(x,y)\notin R \subseteq S$. Therefore $(x,y)\in R
-%%   \leftrightarrow (I(x),I(y))\in S$, that is, $R \leq^{p}_{ker}S$.
+%%   \iff (I(x),I(y))\in S$, that is, $R \leq^{p}_{ker}S$.
 %% \end{proof}
 
 \begin{figure}
@@ -115,14 +116,54 @@ $R_{a}=R_{eq}$, and if $a=1^n$ then $R_{a}=R_{eqi}$.
 \end{figure}
 
 \section{Results}
+\subsection{Reductions among equivalence relation}
+\begin{theorem}$R_{par}\kr R_{bc}$\end{theorem}
+\begin{proof}
+  Construct $M\in FP$ on input $w\in\sigmastar$:
+  \begin{enumerate}
+  \item For $i=1$ to $|w|$:
+    \begin{enumerate}
+    \item If $w_i = 1$, for $j=i$ to $|w|$:
+      \begin{enumerate}
+      \item If $w_j = 1$, write a $0$ to $w_i$ and $w_j$
+      \item Break
+      \end{enumerate}
+    \end{enumerate}
+  \end{enumerate}
+  Notice that this is the machine which finds pairs of ones and writes zeros in
+  their place, one pair at a time.
 
+  Suppose $(x,y)\in R_{par}$, so either $x$ and $y$ both have even parity or
+  $x$ and $y$ both have odd parity.
+  
+  If $x$ and $y$ both have even parity, $x$ contains $2k$ ones and $y$ contains
+  $2l$ ones, for some $k,l\in\mathbb{N}$. $M(x)$ and $M(y)$ both output the
+  string $0^{|x|}$, and since both $M(x)$ and $M(y)$ have a bitcount of zero,
+  $(M(x), M(y))\in R_{bc}$.
+
+  If $x$ and $y$ both have odd parity, $x$ contains $2k+1$ ones and $y$
+  contains $2l+1$ ones, for some $k,l\in\mathbb{N}$. $M(x)$ and $M(y)$ both
+  output a string containing a single one, so both $M(x)$ and $M(y)$ have a
+  bitcount of one, $(M(x), M(y))\in R_{bc}$.
+
+  Suppose $(x,y)\notin R_{par}$, so without loss of generality, $x$ has even
+  parity and $y$ has odd parity. Then $x$ contains $2k$ ones and $y$ contains
+  $2l+1$ ones, for some $k,l\in\mathbb{N}$. Thus $M(x)$ outputs the string
+  $0^{|x|}$ and $M(y)$ outputs the string containing a single one. Since the
+  bitcount of $M(x)$ is zero and the bitcount of $M(y)$ is one,
+  $(M(x),M(y))\notin R_{bc}$.
+
+  Therefore $(x,y)\in R_{par} \iff (M(x),M(y))\in R_{bc}$, so
+  $R_{par} \kr R_{bc}$.
+\end{proof}
+\subsection{Reductions from equivalence relations to graph isomorphism}
 \begin{theorem}$R_{par}\kr GI$\end{theorem}
 \begin{proof}
   Construct $M\in FP$ on input $w\in\sigmastar$:
   \begin{enumerate}
   \item Initialize set of vertices $V_w=\{v_{p}, v_{o}\}$ and set of
     (undirected) edges $E_w=\{\}$.
-  \item for $i=1$ to $|w|$:
+  \item For $i=1$ to $|w|$:
     \begin{enumerate}
     \item If $w_i=1$ and $(v_{o}, v_{p})\notin E_w$, add undirected edge
       $(v_{o}, v_{p})$ to $E_w$.
@@ -165,31 +206,33 @@ $R_{a}=R_{eq}$, and if $a=1^n$ then $R_{a}=R_{eqi}$.
   bijection exists between $V_x$ and $V_y$ which preserves edges. Therefore,
   $G_x$ is not isomorphic to $G_y$.
 
-  Since $(x,y)\in R_{par} \leftrightarrow (M(x), M(y)) \in GI$, we have shown
+  Since $(x,y)\in R_{par} \iff (M(x), M(y)) \in GI$, we have shown
   $R_{par} \kr GI$.
 \end{proof}
 
 \begin{theorem}$R_{bc}\kr GI$\end{theorem}
 \begin{proof}
   
-  %% TODO this fails for 1110 and 0111; 
-  %% need to add a triangle structure onto v_one
   Construct $M\in FP$ on input $w \in \sigmastar$:
   \begin{enumerate}
-  \item Initialize set of vertices $V_w=\{v_{zero}, v_{one}\}$ and set of
-    (undirected) edges $E_w=\{\}$.
+  \item Initialize set of vertices $V_w=\{v_{zero}, v_{one,0}, v_{one,1},
+    v_{one,2}\}$ and set of (undirected) edges $E_w=\{(v_{one,0}, v_{one,1}),
+    (v_{one,1}, v_{one,2}), (v_{one,2}, v_{one,0})\}$ (so at this point, the
+    graph $(V_w, E_w)$ consists of a single vertex connected to no other
+    vertices and a triangle consisting of vertices $v_{one,0}$, $v_{one,1}$,
+    and $v_{one,2}$).
   \item for $i=1$ to $|w|$:
     \begin{enumerate}
     \item Add $v_i$ to $V_w$.
-    \item If $w_i = 1$, add undirected edge $(v_i, v_{one})$ to $E_w$.
+    \item If $w_i = 1$, add undirected edge $(v_i, v_{one,0})$ to $E_w$.
     \item Else if $w_i = 0$, add undirected edge $(v_i, v_{zero})$ to $E_w$.
     \end{enumerate}
-  \item Output $G_w=(V_w,E_w)$.
+  \item Output $G_w=(V_w, E_w)$.
   \end{enumerate}
   
   Suppose $(x,y)\in R_{bc}$, so $x$ and $y$ have the same number of ones, say
   $k\in\mathbb{N}$. Assume $|x|=|y|=n$, so both $x$ and $y$ have $n-k$
-  zeros. Define $E_{w,1}=\{(v_i, v_{one})|v_i = 1\}$ and $E_{w,0}=\{(v_i,
+  zeros. Define $E_{w,1}=\{(v_i, v_{one,0})|v_i = 1\}$ and $E_{w,0}=\{(v_i,
   v_{zero})|v_i = 0\}$, so $E_x = E_{x,1}\cup E_{x,0}$ and $E_y = E_{y,1} \cup
   E_{y,0}$ by construction. Define $V_{w,b}=\{v_i|x_i=b\}$, so $V_x=V_{x,1}
   \cup V_{x,0}$ and $V_y=V_{y,1} \cup V_{y,0}$. Note that
@@ -201,25 +244,28 @@ $R_{a}=R_{eq}$, and if $a=1^n$ then $R_{a}=R_{eqi}$.
   \begin{displaymath}
     \phi(v) = 
     \begin{cases}
-      \phi_0(v) & \plain{if} v = 0\\
-      \phi_1(v) & \plain{if} v = 1\\
-      v & \plain{if} v = v_{zero} \plain{or} v = v_{one}
+      \phi_0(v) & \plain{if} v = v_i \plain{and} x_i = 1\\
+      \phi_1(v) & \plain{if} v = v_i \plain{and} x_i = 0\\
+      v & \plain{if} v \in \{v_{zero}, v_{one,0}, v_{one,1}, v_{one,2}\}
     \end{cases}
   \end{displaymath}
   for all $v\in V_x$.
 
-  Since the only edges in $E_x$ are the edges $(v_i, v_{one})$ when $x_i=1$ and
-  $(v_i, v_{zero})$ when $x_i=0$, then $(v_i, v_{one})\in V_x \leftrightarrow
-  (\phi(v_i), \phi(v_{one}))=(\phi_1(v_i), v_{one})\in V_y$, and $(v_i,
-  v_{zero})\in V_x \leftrightarrow (\phi(v_i), \phi(v_{zero})) = (\phi_0(v_i),
-  v_{zero})\in V_y$. Therefore $\phi$ describes a graph isomorphism, so $G_1$
-  is isomorphic to $G_2$.
+  Since the only edges in $E_x$ are the edges $(v_i, v_{one,0})$ when $x_i=1$
+  and $(v_i, v_{zero})$ when $x_i=0$, then $(v_i, v_{one,0})\in V_x
+  \iff (\phi(v_i), \phi(v_{one,0}))=(\phi_1(v_i), v_{one,0})\in
+  V_y$, and $(v_i, v_{zero})\in V_x \iff (\phi(v_i), \phi(v_{zero}))
+  = (\phi_0(v_i), v_{zero})\in V_y$. Therefore $\phi$ describes a graph
+  isomorphism, so $G_1$ is isomorphic to $G_2$.
   
   Suppose $(x,y)\notin R_{bc}$, so $x$ and $y$ have a different number of
   ones. Let $k$ be the number of ones in $x$, and $l$ be the number of ones in
-  $y$, with $k\neq l$. Define $E_{w,0}$ and $E_{w,1}$ as above. Now
-  $|E_{x,1}|=k$ and $|E_{y,1}|=l$. Since $k=|E_{x,1}|\neq|E_{y,1}|=l$, no
-  bijection exists between them. 
+  $y$, with $k\neq l$. Suppose without loss of generality that $k>l$. Define
+  $E_{w,0}$ and $E_{w,1}$ as above. Now $|E_{x,1}|=k$ and $|E_{y,1}|=l$. Since
+  $k>l$, $E_{x,1}$ has at least one more edge adjacent to the triangle created
+  by the vertices $\{v_{one,0},v_{one,1},v_{one,2}\}$ than does $E_{y,1}$. Thus
+  no possible bijection exists between $V_x$ and $V_y$ which preserves all
+  edges.
 \end{proof}
 
 \end{document}
