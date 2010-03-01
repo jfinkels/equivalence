@@ -1,20 +1,20 @@
 \documentclass{article}
 
 % package imports
-%\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry} 
-\usepackage{hyperref} 
-\usepackage[utf8]{inputenc}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{amssymb}
-\usepackage{complexity}
+\usepackage{amsmath} % required for piecewise function definition
+\usepackage{amsthm} % required for theorems, definitions, lemmas, and styles
+\usepackage{amssymb} % required for strict subset symbol (\subsetneq)
+\usepackage{complexity} % required for typesetting complexity classes
+\usepackage{graphicx} % required for including images
+\usepackage{hyperref} % required for hyperlinking references in the article
 
+% define theorem, lemma, and definition environments and corresponding styles
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}{Lemma}[section]
 \theoremstyle{definition} 
 \newtheorem{definition}{Definition}[section]
 
+% custom shortcut commands
 \newcommand{\plain}[1]{\,\text{#1}\,}
 \newcommand{\sigmastar}{\Sigma^{*}}
 \newcommand{\kr}{\leq^{p}_{ker}}
@@ -22,7 +22,7 @@
 
 % define the author, title, and date
 \author{Jeffrey Finkelstein} 
-\date{May 2010} 
+\date{2010} 
 \title{Untitled}
 \begin{document}
 \maketitle
@@ -90,20 +90,10 @@ Figure \ref{fig:containments} exhibits the containments among $R_{eq}$,
 $R_{eqi}$, $R_{bc}$, and $R_{par}$. Note that if $a=0^n$, for $n=|x|=|y|$, then
 $R_{a}=R_{eq}$ and if $a=1^n$ then $R_{a}=R_{eqi}$.
 
-%% \begin{lemma}Let $R,S \subseteq \sigmastar\times\sigmastar$ be two
-%%   equivalence relations. If $R\subseteq S$ then $R\leq^{p}_{ker}S$.\end{lemma}
-%% \begin{proof}
-%%   Consider the identity function, $I:\sigmastar\to\sigmastar$, defined by
-%%   $I(w)=w, \forall w\in\sigmastar$. Suppose $(x,y)\in R$. Then
-%%   $(I(x),I(y))=(x,y)\in R \subseteq S$. Suppose $(x,y) \notin R$. Then
-%%   $(I(x),I(y))=(x,y)\notin R \subseteq S$. Therefore $(x,y)\in R
-%%   \iff (I(x),I(y))\in S$, that is, $R \leq^{p}_{ker}S$.
-%% \end{proof}
-
 \begin{figure}
   \begin{center}
-    \includegraphics[width=300px,height=241px,keepaspectratio=true]
-                    {containments.png}
+    \includegraphics[width=300pt,height=241pt,keepaspectratio=true]
+										{containments.png}
   \end{center}
   \caption{ \label{fig:containments} Containment relationships for equivalence
     relations $R_{eq}$, $R_{eqi}$, $R_{bc}$, and $R_{par}$. The following are
@@ -265,12 +255,14 @@ $R_{a}=R_{eq}$ and if $a=1^n$ then $R_{a}=R_{eqi}$.
   \begin{displaymath}
     \phi(v) = 
     \begin{cases}
-      \phi_0(v) & \plain{if} v = v_i \plain{and} x_i = 1\\
-      \phi_1(v) & \plain{if} v = v_i \plain{and} x_i = 0\\
+      \phi_0(v) & \plain{if} v = v_i \plain{and} x_i = 1, \plain{for some} i\in\{1,\ldots,|x|\}\\
+      \phi_1(v) & \plain{if} v = v_i \plain{and} x_i = 0, \plain{for some} i\in\{1,\ldots,|x|\}\\
       v & \plain{if} v \in \{v_{zero}, v_{one,0}, v_{one,1}, v_{one,2}\}
     \end{cases}
   \end{displaymath}
-  for all $v\in V_x$.
+  for all $v\in V_x$. Notice that each $v_i$ ``corresponds'' to a
+  single $x_i$, because each $x_i$ can be either a one or a zero,
+  exclusively.
 
   Since the only edges in $E_x$ are the edges $(v_i, v_{one,0})$ when $x_i=1$
   and $(v_i, v_{zero})$ when $x_i=0$, then $(v_i, v_{one,0})\in V_x
@@ -294,5 +286,16 @@ $R_{a}=R_{eq}$ and if $a=1^n$ then $R_{a}=R_{eqi}$.
   and \ref{thm:rbc-gi}, but uses a directed graph instead of an undirected
   graph. Since undirected graph isomorphism is polynomial time equivalent to
   directed graph isomorphism, the proof is complete.\end{proof}
-
+\begin{proof}
+	Construct machine $M\in\FP$ on input $w\in\sigmastar$:
+  \begin{enumerate}
+	\item Initialize set of vertices $V_w=\{w_1, w_2, \ldots, w_{|w|}\}$
+	and set of directed edges $E_w=\{(w_1, w_2),(w_2,
+	w_3),\ldots,(w_{|w|-1}, w_{|w|})\}$.
+	\item For $i=1$ to $|w|$:
+		\begin{enumerate}
+		\item 
+		\end{enumerate}
+  \end{enumerate}
+\end{proof}
 \end{document}
