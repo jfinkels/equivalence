@@ -10,7 +10,6 @@
 \usepackage{amssymb}
 \usepackage{complexity}
 
-
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}{Lemma}[section]
 \theoremstyle{definition} 
@@ -25,14 +24,11 @@
 \author{Jeffrey Finkelstein} 
 \date{May 2010} 
 \title{Untitled}
-
 \begin{document}
-
 \maketitle
-
 \section{Definitions}
 
-In the following definitions, $x,y,a\in{\Sigma^*}$.
+In the following definitions, $x,y\in\sigmastar$.
 
 Let $R_{par}=\{(x,y)|x \plain{and} y \plain{have the same parity}\}$.
 
@@ -42,8 +38,9 @@ Let $R_{eq}=\{(x,y)|x = y\}$.
 
 Let $R_{eqi}=\{(x,y)|x = y \lor x = \bar{y}\}$.
 
-Let $R_{a}=\{((a,x),(a,y))|x = y \lor x \oplus y = a\}$. ($R_{a}$ is a family
-of equivalence relations; $R_{a}$ is a different relation for each fixed $a\in\sigmastar$.)
+For any fixed $a\in\sigmastar$, let $R_{a}=\{(x,y)|x = y \lor x \oplus y =
+a\}$. ($R_{a}$ is a family of equivalence relations; $R_{a}$ is a different
+relation for each $a$.)
 
 Notice the following equivalent definitions, where $n$=$|x|$=$|y|$:
 $R_{eq}=\{(x,y)|x \oplus y = 0^n\}$, $R_{eqi}=\{(x,y)|x \oplus y = 0^n \lor x
@@ -91,7 +88,7 @@ Let $GI=\{(G_1,G_2)|G_1 \plain{and} G_2 \plain{are undirected graphs and} G_1
 
 Figure \ref{fig:containments} exhibits the containments among $R_{eq}$,
 $R_{eqi}$, $R_{bc}$, and $R_{par}$. Note that if $a=0^n$, for $n=|x|=|y|$, then
-$R_{a}=R_{eq}$, and if $a=1^n$ then $R_{a}=R_{eqi}$.
+$R_{a}=R_{eq}$ and if $a=1^n$ then $R_{a}=R_{eqi}$.
 
 %% \begin{lemma}Let $R,S \subseteq \sigmastar\times\sigmastar$ be two
 %%   equivalence relations. If $R\subseteq S$ then $R\leq^{p}_{ker}S$.\end{lemma}
@@ -117,9 +114,10 @@ $R_{a}=R_{eq}$, and if $a=1^n$ then $R_{a}=R_{eqi}$.
 
 \section{Results}
 \subsection{Reductions among equivalence relation}
+%% TODO convert from enumerate blocks to pseudocode blocks
 \begin{theorem}$R_{par}\kr R_{bc}$\end{theorem}
 \begin{proof}
-  Construct $M\in FP$ on input $w\in\sigmastar$:
+  Construct $M\in \FP$ on input $w\in\sigmastar$:
   \begin{enumerate}
   \item For $i=1$ to $|w|$:
     \begin{enumerate}
@@ -156,10 +154,34 @@ $R_{a}=R_{eq}$, and if $a=1^n$ then $R_{a}=R_{eqi}$.
   Therefore $(x,y)\in R_{par} \iff (M(x),M(y))\in R_{bc}$, so
   $R_{par} \kr R_{bc}$.
 \end{proof}
-\subsection{Reductions from equivalence relations to graph isomorphism}
-\begin{theorem}$R_{par}\kr GI$\end{theorem}
+
+\begin{theorem}$R_{bc}\kr R_{eq}$\end{theorem}
 \begin{proof}
-  Construct $M\in FP$ on input $w\in\sigmastar$:
+  Construct $M\in \FP$ on input $w\in\sigmastar$:
+  \begin{enumerate}
+  \item Sort the bits of $w$ in increasing order using an efficient (polynomial
+    time) sorting algorithm
+  \end{enumerate}
+  Notice that if $|w|=n$ and $w$ contains $k$ ones, this machine outputs
+  the string which can be described by the regular expression $0^{n-k}1^k$.
+
+  Suppose $(x,y)\in R_{bc}$, so $x$ and $y$ have the same number of ones, say
+  $k$. Thus $M(x)=M(y)=0^{n-k}1^k$, so $(M(x),M(y))\in R_{eq}$.
+  
+  Suppose $(x,y)\notin R_{bc}$, so $x$ and $y$ have a different number of
+  ones. Suppose $x$ has $k$ ones and $y$ has $l$ ones, for some
+  $k,l\in\mathbb{N}$. Assume without loss of generality that $k>l$. Then
+  $M(x)=0^{n-k}1^{k}$ and $M(y)=0^{n-l}1^{l}$, so $M(x)\neq M(y)$. Thus
+  $(M(x),M(y))\notin R_{eq}$.
+
+  Therefore $(x,y)\in R_{bc} \iff (M(x),M(y))\in R_{eq}$, so $R_{bc}\kr
+  R_{eq}$.
+\end{proof}
+
+\subsection{Reductions from equivalence relations to graph isomorphism}
+\begin{theorem}\label{thm:rpar-gi}$R_{par}\kr GI$\end{theorem}
+\begin{proof}
+  Construct $M\in \FP$ on input $w\in\sigmastar$:
   \begin{enumerate}
   \item Initialize set of vertices $V_w=\{v_{p}, v_{o}\}$ and set of
     (undirected) edges $E_w=\{\}$.
@@ -210,10 +232,9 @@ $R_{a}=R_{eq}$, and if $a=1^n$ then $R_{a}=R_{eqi}$.
   $R_{par} \kr GI$.
 \end{proof}
 
-\begin{theorem}$R_{bc}\kr GI$\end{theorem}
+\begin{theorem}\label{thm:rbc-gi}$R_{bc}\kr GI$\end{theorem}
 \begin{proof}
-  
-  Construct $M\in FP$ on input $w \in \sigmastar$:
+  Construct $M\in \FP$ on input $w \in \sigmastar$:
   \begin{enumerate}
   \item Initialize set of vertices $V_w=\{v_{zero}, v_{one,0}, v_{one,1},
     v_{one,2}\}$ and set of (undirected) edges $E_w=\{(v_{one,0}, v_{one,1}),
@@ -267,5 +288,11 @@ $R_{a}=R_{eq}$, and if $a=1^n$ then $R_{a}=R_{eqi}$.
   no possible bijection exists between $V_x$ and $V_y$ which preserves all
   edges.
 \end{proof}
+
+\begin{theorem}$R_{eq} \kr GI$\end{theorem}
+\begin{proof}The proof is similar as the proofs of Theorems \ref{thm:rpar-gi}
+  and \ref{thm:rbc-gi}, but uses a directed graph instead of an undirected
+  graph. Since undirected graph isomorphism is polynomial time equivalent to
+  directed graph isomorphism, the proof is complete.\end{proof}
 
 \end{document}
