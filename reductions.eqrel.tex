@@ -1,0 +1,64 @@
+\begin{theorem}$R_{par}\kr R_{bc}$\end{theorem}
+\begin{proof}
+\end{proof}
+\begin{proof}
+  Construct $M\in \FP$ on input $w\in\sigmastar$:
+  \begin{algorithm}[h]
+    \For{i=1 \KwTo $|w|$}{
+      \If{$w_i$=1}{
+        \For{j=i \KwTo $|w|$}{
+          \If{$w_j$=1}{
+            write 0 to both $w_i$ and $w_j$\;
+            break\;
+          }
+        }
+      }
+    }
+  \end{algorithm}\\
+  Notice that this is the machine which finds pairs of ones and writes zeros in
+  their place, one pair at a time.
+
+  Suppose $(x, y)\in R_{par}$, so either $x$ and $y$ both have even parity or
+  $x$ and $y$ both have odd parity.
+  
+  If $x$ and $y$ both have even parity, $x$ contains $2k$ ones and $y$ contains
+  $2l$ ones, for some $k,l\in\mathbb{N}$. $M(x)$ and $M(y)$ both output the
+  string $0^{|x|}$, and since both $M(x)$ and $M(y)$ have a bitcount of zero,
+  $(M(x), M(y))\in R_{bc}$.
+
+  If $x$ and $y$ both have odd parity, $x$ contains $2k+1$ ones and $y$
+  contains $2l+1$ ones, for some $k,l\in\mathbb{N}$. $M(x)$ and $M(y)$ both
+  output a string containing a single one, so both $M(x)$ and $M(y)$ have a
+  bitcount of one, $(M(x), M(y))\in R_{bc}$.
+
+  Suppose $(x, y)\notin R_{par}$, so without loss of generality, $x$ has even
+  parity and $y$ has odd parity. Then $x$ contains $2k$ ones and $y$ contains
+  $2l+1$ ones, for some $k,l\in\mathbb{N}$. Thus $M(x)$ outputs the string
+  $0^{|x|}$ and $M(y)$ outputs the string containing a single one. Since the
+  bitcount of $M(x)$ is zero and the bitcount of $M(y)$ is one,
+  $(M(x), M(y))\notin R_{bc}$.
+
+  Therefore $(x, y)\in R_{par} \iff (M(x), M(y))\in R_{bc}$, so
+  $R_{par} \kr R_{bc}$.
+\end{proof}
+
+\begin{theorem}$R_{bc}\kr R_{eq}$\end{theorem}
+\begin{proof}
+  Construct $M\in \FP$ on input $w\in\sigmastar$ which sorts the bits of $w$
+  using an efficient (polynomial-time) sorting algorithm.
+
+  Notice that if $|w|=n$ and $w$ contains $k$ ones, this machine outputs
+  the string which can be described by the regular expression $0^{n-k}1^k$.
+
+  Suppose $(x, y)\in R_{bc}$, so $x$ and $y$ have the same number of ones, say
+  $k$. Thus $M(x)=M(y)=0^{n-k}1^k$, so $(M(x), M(y))\in R_{eq}$.
+  
+  Suppose $(x, y)\notin R_{bc}$, so $x$ and $y$ have a different number of
+  ones. Suppose $x$ has $k$ ones and $y$ has $l$ ones, for some
+  $k,l\in\mathbb{N}$. Assume without loss of generality that $k>l$. Then
+  $M(x)=0^{n-k}1^{k}$ and $M(y)=0^{n-l}1^{l}$, so $M(x)\neq M(y)$. Thus
+  $(M(x), M(y))\notin R_{eq}$.
+
+  Therefore $(x, y)\in R_{bc} \iff (M(x), M(y))\in R_{eq}$, so $R_{bc}\kr
+  R_{eq}$.
+\end{proof}
