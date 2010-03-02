@@ -28,14 +28,14 @@
 
 % package imports
 \usepackage{algorithm2e}
-\usepackage{amsmath} % required for piecewise function definition
-\usepackage{amsthm} % required for theorems, definitions, lemmas, and styles
-\usepackage{amssymb} % required for strict subset symbol (\subsetneq)
-\usepackage{chngcntr}
-\usepackage{complexity} % required for typesetting complexity classes
-\usepackage{cclicenses} % required for adding creative commons license symbols
-\usepackage{graphicx} % required for including images
-\usepackage{hyperref} % required for hyperlinking references in the article
+\usepackage{amsmath} % for piecewise function definition
+\usepackage{amsthm} % for theorems, definitions, lemmas, and styles
+\usepackage{amssymb} % for strict subset symbol (\subsetneq)
+\usepackage{chngcntr} % for counting figures with section numbers
+\usepackage{complexity} % for typesetting complexity classes
+\usepackage{cclicenses} % for adding creative commons license symbols
+\usepackage{graphicx} % for including images
+\usepackage{hyperref} % for hyperlinking references in the article
 
 % define theorem, lemma, and definition environments and corresponding styles
 \newtheorem{theorem}{Theorem}[section]
@@ -49,7 +49,7 @@
 \newcommand{\kr}{\leq^{p}_{ker}} % kernel-reduces
 \newcommand{\nkr}{\nleq^{p}_{ker}} % does not kernel-reduce
 
-% create the license
+% create the creative commons license
 \newcommand{\license}{\begin{tabular}[h]{r l}
     \bysa & \parbox{275pt}{Copyright 2010 Jeffrey Finkelstein. 
       Except where otherwise noted, this work is licensed
@@ -57,8 +57,8 @@
 \end{tabular}}
 
 % redefine footnote so it has no reference and no number
-\long\def\symbolfootnote[#1]#2{\begingroup%
-\def\thefootnote{\fnsymbol{footnote}}\footnotetext{#2}\endgroup} 
+\long\def\symbolfootnote#1{\begingroup%
+\def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup} 
 
 % change figure numbering so it is per section
 \counterwithin{figure}{section}
@@ -70,9 +70,9 @@
 
 \begin{document}
 \maketitle
-\symbolfootnote[0]{\license}
+\symbolfootnote{\license}
 \begin{abstract}
-Hello, world!
+This is the abstract.
 \end{abstract}
 \section{Definitions}
 
@@ -95,6 +95,7 @@ $R_{eq}=\{(x, y)|x \oplus y = 0^n\}$, $R_{eqi}=\{(x, y)|x \oplus y = 0^n \lor x
 \oplus y = 1^n\}$, and $R_{a}=\{((a,x),(a,y))|x \oplus y = 0^n \lor x \oplus
 y\ = a\}$.
 
+%% TODO should I use the complexity package \GI to format the GI class?
 Let $GI=\{(G_1,G_2)|G_1 \plain{and} G_2 \plain{are undirected graphs and} G_1
 \plain{is isomorphic to} G_2\}$.
 
@@ -330,7 +331,7 @@ $R_{a}=R_{eq}$ and if $a=1^n$ then $R_{a}=R_{eqi}$.
   Therefore $(x, y)\in R_{bc} \iff (M(x), M(y))\in GI$, so $R_{bc}\kr GI$.
 \end{proof}
 
-\begin{theorem}$R_{eq} \kr GI$\end{theorem}
+\begin{theorem}\label{thm:req_kr_gi}$R_{eq} \kr GI$\end{theorem}
 \begin{proof}The proof is similar as the proofs of Theorems \ref{thm:rpar-gi}
   and \ref{thm:rbc-gi}, but uses a directed graph instead of an undirected
   graph. Since undirected graph isomorphism is polynomial time equivalent to
@@ -378,7 +379,63 @@ $R_{a}=R_{eq}$ and if $a=1^n$ then $R_{a}=R_{eqi}$.
 \begin{proof}
   Construct machine $M\in \FP$ on input $w\in\sigmastar$:
   \begin{enumerate}
+  \item Initialize set of vertices $V_w=\{v_{zero}, v_{one}, v_1, v_2, \ldots,
+    v_{|w|}\}$ and set of directed edges $E_w=\{(v_1, v_2), (v_2, v_3), \ldots,
+    (v_{|w|-1}, v_{|w|})\}$.
   \item For $i=1$ to $|w|$:
+    \begin{enumerate}
+    \item If $w_i=1$ add directed edge $(v_i, v_{one})$ to $E_w$.
+    \item If $w_i=0$ add directed edge $(v_i, v_{zero})$ to $E_w$.
+    \end{enumerate}
+  \item Output $G_w=(V_w, E_w)$.
   \end{enumerate}
+  Notice that this machine, as in the machine in the proof of Theorem
+  \ref{thm:req_kr_gi}, creates a ``spine'' representing each bit of word
+  $w$.
+
+  Suppose $(x, y)\in R_{eqi}$, so either $x=y$ or $x=\bar{y}$.
+
+  If $x=y$, $M(x)$ and $M(y)$ output exactly the same graph, so $G_x$ is
+  isomorphic to $G_y$, and hence $(M(x), M(y))\in GI$.
+
+  If $x=\bar{y}$, define $\phi:V_x\to V_y$ by
+  \begin{displaymath}
+    \phi(v)=
+    \begin{cases}
+      v & \plain{if} v = v_i\\
+      v_{zero} & \plain{if} v = v_{one}\\
+      v_{one} & \plain{if} v = v_{zero}
+    \end{cases}
+  \end{displaymath}
+  for all $v\in V_x$. Notice that $\phi$ maps each $v_i\in V_x$ to the
+  corresponding $v_i\in V_y$, and maps $v_{zero}\in V_x$ to $v_{one}\in V_y$
+  and $v_{one}\in V_x$ to $v_{zero}\in V_y$. Then $\forall
+  i\in\{1,2,\ldots,|x|\}$, $x_i=0 \iff y=1$, so $(v_i, v_{zero})\in E_x \iff
+  (\phi(v_i), \phi(v_{zero}))\in E_y \iff (v_i, v_{one})\in E_y$. Similarly,
+  $x_i=1 \iff y=0$, so $(v_i, v_{one})\in E_x \iff (\phi(v_i),
+  \phi(v_{one}))\in E_y \iff (v_i, v_{zero})\in E_y$. The rest of the edges in
+  $E_x$ map directly to the corresponding edges in $E_y$ by $(v_{i-1}, v_i)
+  \mapsto (\phi(v_{i-1}), \phi(v_i))=(v_{i-1}, v_i)$, $\forall
+  i\in\{2,3,\ldots,|x|\}$. Therefore, $\phi$ describes an isomorphism between
+  $G_x$ and $G_y$, so $(M(x), M(y))\in GI$.
+
+  Suppose $(x, y)\notin R_{eqi}$, so $x\neq y$ and $x\neq\bar{y}$. Thus
+  $\exists i,j\in\{1,2,\ldots,|x|\}, i\neq j,$ such that $x_i=y_i\land x_j\neq
+  y_j$. Suppose without loss of generality that $x_i=y_i=0$ and $0=x_j\neq
+  y_j=1$. Now $x_i=y_i=0$ implies $(v_i, v_{zero})\in E_x$ and $(v_i,
+  v_{zero})\in E_y$. Also, $x_j=0$ implies $(v_j, v_{zero})\in E_x$ and $y_j=1$
+  implies $(v_j, v_{one})\in E_y$. Assume, with the goal of producing a
+  contradiction, that there exists a bijection, $\phi:V_x\to V_y$ such that
+  $(u,v)\in E_x\iff(\phi(u),\phi(v))\in E_y$. Since $\phi$ must map vertices
+  on the ``spine'' of $G_x$ to corresponding vertices in $G_y$, and since
+  $(v_i, v_{zero})\in E_x$, then $(\phi(v_i), \phi(v_{zero}))=(v_i,
+  \phi(v_{zero}))$ must be in $E_y$. The only edge of this form in $E_y$ is
+  $(v_i, v_{zero})$ so $\phi(v_{zero})=v_{zero}$. Since $(v_j, v_{zero})\in
+  E_x$, $(\phi(v_j), \phi(v_{zero}))=(v_j, v_{zero})\in E_y$. But the only edge
+  in $E_y$ with source vertex $v_j$ is, by construction, $(v_j, v_{one})$. This
+  is a contradiction. Hence no such bijection exists, so $G_x$ is not
+  isomorphic to $G_y$, and $(M(x), M(y))\notin GI$.
+
+  Therefore $(x, y)\in R_{eqi} \iff (M(x), M(y))\in GI$, so $R_{eqi}\kr GI$.
 \end{proof}
 \end{document}
