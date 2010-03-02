@@ -1,5 +1,6 @@
-The cclicenses.sty and complexity.sty files are required to compile this
-article. The cclicenses.sty and complexity.sty LaTeX files are licensed under the terms of their own respective licenses.
+The algorithm2e.sty, cclicenses.sty and complexity.sty files are required to
+compile this article. Each of these LaTeX files are licensed under the terms of
+their own respective licenses.
 
 To compile this article, do
 
