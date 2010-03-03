@@ -36,7 +36,7 @@ isomorphism.
 %% context-free grammar equivalence, multigraph isomorphism, hypergraph
 %% isomorphism, etc.
 
-\begin{theorem}\label{thm:rpar-gi}$R_{par}\kr GI$\end{theorem}
+\begin{theorem}\label{thm:rpar_gi}$R_{par}\kr GI$\end{theorem}
 \begin{proof}
   Construct $M\in \FP$ on input $w\in\sigmastar$:\\
   \begin{algorithm}[H]
@@ -87,7 +87,7 @@ isomorphism.
   Therefore $(x, y)\in R_{par} \iff (M(x), M(y)) \in GI$, so $R_{par} \kr GI$.
 \end{proof}
 
-\begin{theorem}\label{thm:rbc-gi}$R_{bc}\kr GI$\end{theorem}
+\begin{theorem}\label{thm:rbc_gi}$R_{bc}\kr GI$\end{theorem}
 \begin{proof}
   Construct $M\in \FP$ on input $w \in \sigmastar$:\\
   \begin{algorithm}[H]
@@ -215,7 +215,7 @@ isomorphism.
     \Return{$G_w=(V_w, E_w)$}
   \end{algorithm}
   Notice that this machine, as in the machine in the proof of Theorem
-  \ref{thm:req_kr_gi}, creates a ``spine'' representing each bit of word $w$.
+  \ref{thm:req_kr_dirgi}, creates a ``spine'' representing each bit of word $w$.
 
   Suppose $(x, y)\in R_{eqi}$, so either $x=y$ or $x=\bar{y}$.
 
@@ -267,3 +267,68 @@ isomorphism.
 
 \begin{corollary}$R_{eqi}\kr GI$\end{corollary}
 \begin{proof}Follows directly from Theorem \ref{thm:reqi_kr_dirgi} and Corollary \ref{cor:gi_ke_dirgi}.\end{proof}
+
+\begin{theorem}\label{thm:ra_kr_dirgi}$\forall a\in\sigmastar R_a \kr
+  DirGI$\end{theorem}
+\begin{proof}
+	Let $a\in\sigmastar$. Construct machine $M\in\FP$ on input $w\in\sigmastar$
+	(let $n=|w|$):\\
+	\begin{algorithm}[H]
+		$U_w\gets\{v_1, v_2, \ldots, v_n\}$\;
+		$U'_w\gets\{v'_1, v'_2, \ldots, v'_n\}$\;
+		$F_w\gets\{(v_1, v_2), (v_2, v_3), \ldots, (v_{n-1}, v_n)\}$\tcp*[f]{directed
+			edges}\;
+		$F'_w\gets\{(v'_1, v'_2), (v'_2, v'_3), \ldots, (v'_{n-1},
+		v'_n)\}$\tcp*[f]{directed edges}\;
+		\For{$i=1$ \KwTo $n$}{
+			\If{$w_i=1$}{
+				add vertex $u_i$ to $U_w$\;
+				add directed edge $(v_i, u_i)$ to $F_w$\;
+			}
+			\If{$w_i\oplus a_i=1$}{
+				add vertex $u'_i$ to $U'_w$\;
+				add directed edge $(v'_i, u'_i)$ to $F'_w$\;
+			}
+		}
+		$V_w\gets U_w\cup U'_w$\;
+		$E_w\gets F_w\cup F'_w$\;
+		\Return{$G_w=(V_w, E_w)$}
+	\end{algorithm}
+	Notice that for each input string $w$, this machine produces a graph which is
+	the disjoint union of two distinct graphs, one representing the bits of $w$ and
+	the other representing the bits of $w\oplus a$.
+	
+	Suppose $(x,y)\in R_a$, so either $x=y$ or $x\oplus y=a$.
+	
+  In the case that $x=y$, $M(x)$ and $M(y)$ output exactly the same graph, so
+  $G_x$ is isomorphic to $G_y$, and hence $(M(x), M(y))\in DirGI$.
+
+	Consider the case in which $x\neq y$, but $x\oplus y=a$. Define $\phi:V_x\to
+	V_y$ by
+	\begin{displaymath}
+		\phi(v)=
+		\begin{cases}
+			v'_i & \plain{if} v=v_i \plain{for some} i\in\{1, 2, \ldots, n\}\\
+			v_i & \plain{if} v=v'_i \plain{for some} i\in\{1, 2, \ldots, n\}\\
+			u'_i & \plain{if} u=u_i \plain{for some} i\in\{1, 2, \ldots, n\}\\
+			u_i & \plain{if} u=u'_i \plain{for some} i\in\{1, 2, \ldots, n\}\\
+		\end{cases}
+	\end{displaymath}
+	If no $u_i$ exists or no $u'_i$ exists for some $i\in\{1, 2, \ldots, n\}$
+	then we don't define $\phi$ for those values not in the domain. $\phi$ maps
+	each $v_i\in V_x$ to $v'_i\in V_y$, so $(v_i, v_{i+1})\in E_x \iff
+	(\phi(v_i), \phi(v_{i+1}))=(v'_i, v'_{i+1})\in E_y, \forall i\in\{1, 2,
+	\ldots, n-1\}$, and $\phi$ maps each $v'_i\in V_x$ to $v_i\in V_y$, so
+	$(v'_i, v'_{i+1})\in E_x \iff (\phi(v'_i), \phi(v'_{i+1}))=(v_i, v_{i+1})\in
+	E_y, \forall i\in\{1, 2, \ldots, n-1\}$.
+
+	Now for each $i\in\{1, 2, \ldots, n\}$ for which $u_i$ exists and is in
+	$V_x$, $(v_i, u_i)\in E_x$. This occurs if and only if $x_i=1$, and since by
+	hypothesis $x\oplus y=a \iff y=x\oplus a$, $y_i=x_i\oplus a_i$. In the case
+	that $a_i=0$, then $y_i=x_i\oplus a_i= 1\oplus 0=1$. Since $y_i=1$ and
+	$y_i\olpus a_i=1\oplus 0=1$, $M(y)$ produces graph $G_y$ containing vertex
+	$u'_i\in V_y$ and directed edge $(v'_i, u'_i)\in E_y$. Now $\phi(u_i)=u'_i$
+	is well-defined, and $(v_i, u_i)\in E_x\iff (\phi(v_i), \phi(u_i))=(v'_i,
+	u'_i)\in E_y$. In the case that $a_i=1$, then $y_i$
+
+\end{proof}
