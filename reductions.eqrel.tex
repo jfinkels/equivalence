@@ -4,10 +4,10 @@
 \begin{proof}
   Construct $M\in \FP$ on input $w\in\sigmastar$:
   \begin{algorithm}[h]
-    \For{i=1 \KwTo $|w|$}{
-      \If{$w_i$=1}{
-        \For{j=i \KwTo $|w|$}{
-          \If{$w_j$=1}{
+    \For{$i=1$ \KwTo $|w|-1$}{
+      \If{$w_i=1$}{
+        \For{$j=i+1$ \KwTo $|w|$}{
+          \If{$w_j=1$}{
             write 0 to both $w_i$ and $w_j$\;
             break\;
           }
