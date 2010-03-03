@@ -1,3 +1,41 @@
+\begin{lemma}\label{lem:gi_kr_dirgi}$GI\kr DirGI$\end{lemma}
+\begin{proof}
+  Construct machine $M\in\FP$ on input $G=(V,E)$:\\
+  \begin{algorithm}[H]
+    $V'\gets V$\;
+    $E'\gets\{\}$\;
+    \ForEach{$(u, v)\in E$}{
+      add directed edges $(u, v)$ and $(v, u)$ to $E'$
+    }
+    \Return{$G'=(V', E')$}
+  \end{algorithm}
+  Notice that this machine constructs the graph with all undirected edges of
+  the input graph replaced with two complementary directed edges incident to
+  both vertices.
+
+  %% TODO complete this proof
+\end{proof}
+
+\begin{lemma}\label{lem:dirgi_kr_gi}$DirGI\kr GI$\end{lemma}
+\begin{proof}
+  %% TODO complete this proof
+\end{proof}
+
+\begin{corollary}\label{cor:gi_ke_dirgi}$GI\kequiv DirGI$\end{corollary}
+\begin{proof}This follows directly from Lemmas \ref{lem:gi_kr_dirgi} and
+  \ref{lem:dirgi_kr_gi} and Definition \ref{def:kr}.\end{proof}
+
+From Corollary \ref{cor:gi_ke_dirgi}, we can use a kernel reduction to directed
+graph isomorphism to show that a language kernel reduces to (undirected) graph
+isomorphism. 
+
+%% TODO are these kernel reductions? they must be...
+
+%% There are other languages that are polynomial time kernel equivalent to
+%% graph isomorphism, including but not limited to finite automata equivalence,
+%% context-free grammar equivalence, multigraph isomorphism, hypergraph
+%% isomorphism, etc.
+
 \begin{theorem}\label{thm:rpar-gi}$R_{par}\kr GI$\end{theorem}
 \begin{proof}
   Construct $M\in \FP$ on input $w\in\sigmastar$:\\
@@ -111,26 +149,28 @@
   Therefore $(x, y)\in R_{bc} \iff (M(x), M(y))\in GI$, so $R_{bc}\kr GI$.
 \end{proof}
 
-\begin{theorem}\label{thm:req_kr_gi}$R_{eq} \kr GI$\end{theorem}
+\begin{theorem}\label{thm:req_kr_dirgi}$R_{eq} \kr DirGI$\end{theorem}
 \begin{proof}
-  Construct machine $M\in\FP$ on input $w\in\sigmastar$:
-  \begin{enumerate}
-  \item Initialize set of vertices $V_w=\{v_1, v_2, \ldots, v_{|w|}\}$
-    and set of directed edges $E_w=\{(v_1, v_2),(v_2,
-    v_3),\ldots,(v_{|w|-1}, v_{|w|})\}$.
-  \item For $i=1$ to $|w|$:
-    \begin{enumerate}
-    \item If $w_i=1$, add vertex $v'_i$ to $V_w$ and directed edge $(v_i,
-      v'_i)$ to $E_w$.
-    \end{enumerate}
-  \item Output $G_w=(V_w, E_w)$.
-  \end{enumerate}
-  This machine constructs a ``spine'' of vertices, with an extra vertex $v'_i$
-  and directed edge $(v_i, v'_i)$ adjacent to the spine whenever $w_i$ is a
-  one, $\forall i\in\{1,2,\ldots,|w|\}$.
+  Construct machine $M\in\FP$ on input $w\in\sigmastar$:\\
+  \begin{algorithm}[H]
+    $V_w\gets\{v_1, v_2, \ldots, v_{|w|}\}$\; 
+    $E_w\gets\{(v_1, v_2), (v_2, v_3), \ldots, (v_{|w|-1},
+    v_{|w|})\}$\tcp*[f]{directed edges}\;
+    \For{$i=1$ \KwTo $|w|$}{
+      \If{$w_i=1$}{
+        add vertex $v'_i$ to $V_w$\;
+        add directed edge $(v_i, v'_i)$ to $E_w$\;
+      }
+    }
+    \Return{$G_w=(V_w, E_w)$}
+  \end{algorithm}
+  Notice that this machine constructs a ``spine'' of vertices, with an extra
+  vertex $v'_i$ and directed edge $(v_i, v'_i)$ adjacent to the spine whenever
+  $w_i$ is a one, $\forall i\in\{1,2,\ldots,|w|\}$.
 
-  Suppose $(x, y)\in R_{eq}$, so $x=y$. Then $M(x)$ and $M(y)$ obviously
-  produce the same graph, so $(M(x), M(y))\in GI$.
+  Suppose $(x, y)\in R_{eq}$, so $x=y$. Then $M(x)$ and $M(y)$ produce the same
+  graph, so $G_x$ is isomorphic to $G_y$ by the identity mapping. Therefore
+  $(M(x), M(y))\in DirGI$.
   
   %% TODO is this sufficient proof?
 
@@ -141,44 +181,52 @@
   \ldots, (v_{n-1}, v_n)\}$ must correspond in both $G_x$ and $G_y$. Let $i$ be
   the index of the first bit at which $x$ and $y$ differ. Suppose without loss
   of generality that $x_i=1$ and $y_i=0$. Then $v'_i\in V_x$ and $(v_i,
-  v'_i)\in E_x$, but $v'_i\notin V_y$ so $(v_i, v'_i)\notin E_y$. Since
+  v'_i)\in E_x$, but $v'_i\notin V_y$ so $(v_i, v'_i)\notin E_y$. Assume with
+  the intention of producing a contradiction that a bijection exists between
+  $V_x$ and $V_y$ which satisfies the conditions for a graph isomorphism. Since
   vertices along the ``spine'' of the $V_x$ must map to vertices along the
   ``spine'' of $V_y$, and specifically $v_i$ in $V_x$ must map to $v_i$ in
-  $V_y$, $(v_i, v'_i)\in E_x$ implies $(v_i, v'_i)\in E_y$. But no such mapping
-  can exist, because $(v_i, v'_i)\notin E_y$. Therefore $G_x$ is not isomorphic
-  to $G_y$, so $(M(x), M(y))\notin GI$.
+  $V_y$, $(v_i, v'_i)\in E_x$ implies $(v_i, v'_i)\in E_y$. But $(v_i,
+  v'_i)\notin E_y$ because $y_i=0$. This is a contradiction. Therefore no such
+  mapping exists, so $G_x$ is not isomorphic to $G_y$, and hence $(M(x),
+  M(y))\notin DirGI$.
 
-  Therefore $(x, y)\in R_{eq} \iff (M(x), M(y))\in GI$, so $R_{eq}\kr GI$.  
+  Therefore $(x, y)\in R_{eq} \iff (M(x), M(y))\in DirGI$, so $R_{eq}\kr
+  DirGI$.
 \end{proof}
 
-\begin{theorem}$R_{eqi}\kr GI$\end{theorem}
+\begin{corollary}$R_{eq}\kr GI$\end{corollary}
+\begin{proof}Follows directly from Theorem \ref{thm:req_kr_dirgi} and Corollary \ref{cor:gi_ke_dirgi}.\end{proof}
+
+\begin{theorem}\label{thm:reqi_kr_dirgi}$R_{eqi}\kr DirGI$\end{theorem}
 \begin{proof}
-  Construct machine $M\in \FP$ on input $w\in\sigmastar$:
-  \begin{enumerate}
-  \item Initialize set of vertices $V_w=\{v_{zero}, v_{one}, v_1, v_2, \ldots,
-    v_{|w|}\}$ and set of directed edges $E_w=\{(v_1, v_2), (v_2, v_3), \ldots,
-    (v_{|w|-1}, v_{|w|})\}$.
-  \item For $i=1$ to $|w|$:
-    \begin{enumerate}
-    \item If $w_i=1$ add directed edge $(v_i, v_{one})$ to $E_w$.
-    \item If $w_i=0$ add directed edge $(v_i, v_{zero})$ to $E_w$.
-    \end{enumerate}
-  \item Output $G_w=(V_w, E_w)$.
-  \end{enumerate}
+  Construct machine $M\in \FP$ on input $w\in\sigmastar$:\\
+  \begin{algorithm}[H]
+    $V_w\gets\{v_1, v_2, \ldots, v_{|w|}, v_{zero}, v_{one}\}$\;
+    $E_w\gets\{(v_1, v_2), (v_2, v_3), \ldots, (v_{|w|-1},
+    v_{|w|})\}$\tcp*[f]{directed edges}\;
+    \For{$i=1$ \KwTo $|w|$}{
+      \eIf{$w_i=1$}{
+        add directed edge $(v_i, v_{one})$ to $E_w$
+      }{
+        add directed edge $(v_i, v_{zero})$ to $E_w$
+      }
+    }
+    \Return{$G_w=(V_w, E_w)$}
+  \end{algorithm}
   Notice that this machine, as in the machine in the proof of Theorem
-  \ref{thm:req_kr_gi}, creates a ``spine'' representing each bit of word
-  $w$.
+  \ref{thm:req_kr_gi}, creates a ``spine'' representing each bit of word $w$.
 
   Suppose $(x, y)\in R_{eqi}$, so either $x=y$ or $x=\bar{y}$.
 
-  If $x=y$, $M(x)$ and $M(y)$ output exactly the same graph, so $G_x$ is
-  isomorphic to $G_y$, and hence $(M(x), M(y))\in GI$.
+  In the case that $x=y$, $M(x)$ and $M(y)$ output exactly the same graph, so
+  $G_x$ is isomorphic to $G_y$, and hence $(M(x), M(y))\in DirGI$.
 
-  If $x=\bar{y}$, define $\phi:V_x\to V_y$ by
+  In the case that $x=\bar{y}$, define $\phi:V_x\to V_y$ by
   \begin{displaymath}
     \phi(v)=
     \begin{cases}
-      v & \plain{if} v = v_i\\
+      v & \plain{if} v = v_i, \plain{for some} i\in\{1, 2, \ldots, |x|\}\\
       v_{zero} & \plain{if} v = v_{one}\\
       v_{one} & \plain{if} v = v_{zero}
     \end{cases}
@@ -187,13 +235,13 @@
   corresponding $v_i\in V_y$, and maps $v_{zero}\in V_x$ to $v_{one}\in V_y$
   and $v_{one}\in V_x$ to $v_{zero}\in V_y$. Then $\forall
   i\in\{1,2,\ldots,|x|\}$, $x_i=0 \iff y=1$, so $(v_i, v_{zero})\in E_x \iff
-  (\phi(v_i), \phi(v_{zero}))\in E_y \iff (v_i, v_{one})\in E_y$. Similarly,
-  $x_i=1 \iff y=0$, so $(v_i, v_{one})\in E_x \iff (\phi(v_i),
-  \phi(v_{one}))\in E_y \iff (v_i, v_{zero})\in E_y$. The rest of the edges in
-  $E_x$ map directly to the corresponding edges in $E_y$ by $(v_{i-1}, v_i)
-  \mapsto (\phi(v_{i-1}), \phi(v_i))=(v_{i-1}, v_i)$, $\forall
-  i\in\{2,3,\ldots,|x|\}$. Therefore, $\phi$ describes an isomorphism between
-  $G_x$ and $G_y$, so $(M(x), M(y))\in GI$.
+  (\phi(v_i), \phi(v_{zero})) = (v_i, v_{one})\in E_y$. Similarly, $x_i=1 \iff
+  y=0$, so $(v_i, v_{one})\in E_x \iff (\phi(v_i), \phi(v_{one}))\in E_y \iff
+  (v_i, v_{zero})\in E_y$. The rest of the edges in $E_x$ map directly to the
+  corresponding edges in $E_y$ by $(v_{i-1}, v_i) \mapsto (\phi(v_{i-1}),
+  \phi(v_i))=(v_{i-1}, v_i)$, $\forall i\in\{2,3,\ldots,|x|\}$. Therefore,
+  $\phi$ describes an isomorphism between $G_x$ and $G_y$, so $(M(x), M(y))\in
+  DirGI$.
 
   Suppose $(x, y)\notin R_{eqi}$, so $x\neq y$ and $x\neq\bar{y}$. Thus
   $\exists i,j\in\{1,2,\ldots,|x|\}, i\neq j,$ such that $x_i=y_i\land x_j\neq
@@ -202,15 +250,20 @@
   v_{zero})\in E_y$. Also, $x_j=0$ implies $(v_j, v_{zero})\in E_x$ and $y_j=1$
   implies $(v_j, v_{one})\in E_y$. Assume, with the goal of producing a
   contradiction, that there exists a bijection, $\phi:V_x\to V_y$ such that
-  $(u,v)\in E_x\iff(\phi(u),\phi(v))\in E_y$. Since $\phi$ must map vertices
-  on the ``spine'' of $G_x$ to corresponding vertices in $G_y$, and since
-  $(v_i, v_{zero})\in E_x$, then $(\phi(v_i), \phi(v_{zero}))=(v_i,
-  \phi(v_{zero}))$ must be in $E_y$. The only edge of this form in $E_y$ is
-  $(v_i, v_{zero})$ so $\phi(v_{zero})=v_{zero}$. Since $(v_j, v_{zero})\in
-  E_x$, $(\phi(v_j), \phi(v_{zero}))=(v_j, v_{zero})\in E_y$. But the only edge
-  in $E_y$ with source vertex $v_j$ is, by construction, $(v_j, v_{one})$. This
-  is a contradiction. Hence no such bijection exists, so $G_x$ is not
-  isomorphic to $G_y$, and $(M(x), M(y))\notin GI$.
+  $(u,v)\in E_x\iff(\phi(u),\phi(v))\in E_y$, $\forall u,v\in V_x$. Since
+  $\phi$ must map vertices on the ``spine'' of $G_x$ to corresponding vertices
+  in $G_y$, and since $(v_i, v_{zero})\in E_x$, then $(\phi(v_i),
+  \phi(v_{zero}))=(v_i, \phi(v_{zero}))$ must be in $E_y$. The only edge of
+  this form in $E_y$ is $(v_i, v_{zero})$ so $\phi(v_{zero})=v_{zero}$. Since
+  $(v_j, v_{zero})\in E_x$, $(\phi(v_j), \phi(v_{zero}))=(v_j, v_{zero})\in
+  E_y$. But the only edge in $E_y$ with source vertex $v_j$ is, by
+  construction, $(v_j, v_{one})$. This is a contradiction. Hence no such
+  bijection exists, so $G_x$ is not isomorphic to $G_y$, and $(M(x),
+  M(y))\notin DirGI$.
 
-  Therefore $(x, y)\in R_{eqi} \iff (M(x), M(y))\in GI$, so $R_{eqi}\kr GI$.
+  Therefore $(x, y)\in R_{eqi} \iff (M(x), M(y))\in DirGI$, so $R_{eqi}\kr
+  DirGI$.
 \end{proof}
+
+\begin{corollary}$R_{eqi}\kr GI$\end{corollary}
+\begin{proof}Follows directly from Theorem \ref{thm:reqi_kr_dirgi} and Corollary \ref{cor:gi_ke_dirgi}.\end{proof}
