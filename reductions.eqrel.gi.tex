@@ -1,18 +1,17 @@
 \begin{theorem}\label{thm:rpar-gi}$R_{par}\kr GI$\end{theorem}
 \begin{proof}
-  Construct $M\in \FP$ on input $w\in\sigmastar$:
-  \begin{enumerate}
-  \item Initialize set of vertices $V_w=\{v_{p}, v_{o}\}$ and set of
-    (undirected) edges $E_w=\{\}$.
-  \item For $i=1$ to $|w|$:
-    \begin{enumerate}
-    \item If $w_i=1$ and $(v_{o}, v_{p})\notin E_w$, add undirected edge
-      $(v_{o}, v_{p})$ to $E_w$.
-    \item Else if $w_i=1$ and $(v_{o}, v_{p})\in E_w$, remove $(v_{o}, v_{p})$
-      from $E_w$.
-    \end{enumerate}
-  \item Output $G_w=(V_w,E_w)$.
-  \end{enumerate}
+  Construct $M\in \FP$ on input $w\in\sigmastar$:\\
+  \begin{algorithm}[H]
+    $V_w\gets\{v_p, v_o\}$\;
+    $E_w\gets\{\}$ \tcp{undirected edges}\;
+    \For{$i=1$ \KwTo $|w|$}{
+      \If{$w_i=1$}{
+        \eIf{$(v_o, v_p)\in E_w$}{add undirected edge $(v_o, v_p)$ to $E_w$\;}
+            {remove $(v_o, v_p)$ from $E_w$\;}
+      }
+    }
+    \Return $G_w=(V_w, E_w)$
+  \end{algorithm}
 
   Suppose $(x, y)\in R_{par}$, so either $x$ and $y$ both have even parity or
   $x$ and $y$ both have odd parity. 
@@ -52,39 +51,40 @@
 
 \begin{theorem}\label{thm:rbc-gi}$R_{bc}\kr GI$\end{theorem}
 \begin{proof}
-  Construct $M\in \FP$ on input $w \in \sigmastar$:
-  \begin{enumerate}
-  \item Initialize set of vertices $V_w=\{v_{zero}, v_{one,0}, v_{one,1},
-    v_{one,2}\}$ and set of (undirected) edges $E_w=\{(v_{one,0}, v_{one,1}),
-    (v_{one,1}, v_{one,2}), (v_{one,2}, v_{one,0})\}$ (so at this point, the
-    graph $(V_w, E_w)$ consists of a single vertex connected to no other
-    vertices and a triangle consisting of vertices $v_{one,0}$, $v_{one,1}$,
-    and $v_{one,2}$).
-  \item for $i=1$ to $|w|$:
-    \begin{enumerate}
-    \item Add $v_i$ to $V_w$.
-    \item If $w_i = 1$, add undirected edge $(v_i, v_{one,0})$ to $E_w$.
-    \item Else if $w_i = 0$, add undirected edge $(v_i, v_{zero})$ to $E_w$.
-    \end{enumerate}
-  \item Output $G_w=(V_w, E_w)$.
-  \end{enumerate}
+  Construct $M\in \FP$ on input $w \in \sigmastar$:\\
+  \begin{algorithm}[H]
+    $V_w\gets\{v_1, v_2, \ldots, v_{|w|}, v_{zero}, v_{one,0}, v_{one,1},
+    v_{one,2}\}$\;
+    $E_w\gets\{(v_{one,0}, v_{one,1}), (v_{one,1}, v_{one,2}), (v_{one,2},
+    v_{one,0})\}$\tcp{undirected edges}\; 
+    \For{$i=1$ \KwTo $|w|$}{
+      \eIf{$w_i=1$}{
+        add undirected edge $(v_i, v_{one,0})$ to $E_w$\;
+      }{
+        add undirected edge $(v_i, v_{zero})$ to $E_w$\;
+      }
+    }
+    \Return{$G_w=(V_w, E_w)$}
+  \end{algorithm}
   
   Suppose $(x, y)\in R_{bc}$, so $x$ and $y$ have the same number of ones, say
   $k\in\mathbb{N}$. Assume $|x|=|y|=n$, so both $x$ and $y$ have $n-k$
-  zeros. Define $E_{w,1}=\{(v_i, v_{one,0})|v_i = 1\}$ and $E_{w,0}=\{(v_i,
-  v_{zero})|v_i = 0\}$, so $E_x = E_{x,1}\cup E_{x,0}$ and $E_y = E_{y,1} \cup
-  E_{y,0}$ by construction. Define $V_{w,b}=\{v_i|x_i=b\}$, so $V_x=V_{x,1}
-  \cup V_{x,0}$ and $V_y=V_{y,1} \cup V_{y,0}$. Note that
-  $|V_{x,1}|=|V_{y,1}|=k$ and $|V_{x,0}|=|V_{y,0}|=n-k$. Since
-  $|V_{x,1}|=|V_{y,1}|=k$, there exists a bijection between them, call it
-  $\phi_1:V_{x,1}\to V_{y,1}$. Similarly, since $|V_{x,0}|=|V_{y,0}|=k$, there
-  exists a bijection between them, call it $\phi_0:V_{x,0}\to V_{y,0}$. Define
-  $\phi:V_x\to V_y$ by 
+  zeros. Define $E_{w,1}=\{(v_i, v_{one,0})|i\in\{1,2,\ldots,n\}, w_i = 1\}$
+  and $E_{w,0}=\{(v_i, v_{zero})|i\in\{1,2,\ldots,n\}, w_i = 0\}$, so $E_x =
+  E_{x,1}\cup E_{x,0}$ and $E_y = E_{y,1} \cup E_{y,0}$ by construction. Define
+  $V_{w,b}=\{v_i|w_i=b\}$, so $V_x=V_{x,1} \cup V_{x,0}$ and $V_y=V_{y,1} \cup
+  V_{y,0}$. Note that $|V_{x,1}|=|V_{y,1}|=k$ and
+  $|V_{x,0}|=|V_{y,0}|=n-k$. Since $|V_{x,1}|=|V_{y,1}|=k$, there exists a
+  bijection between them, call it $\phi_1:V_{x,1}\to V_{y,1}$. Similarly, since
+  $|V_{x,0}|=|V_{y,0}|=k$, there exists a bijection between them, call it
+  $\phi_0:V_{x,0}\to V_{y,0}$. Define $\phi:V_x\to V_y$ by
   \begin{displaymath}
     \phi(v) = 
     \begin{cases}
-      \phi_0(v) & \plain{if} v = v_i \plain{and} x_i = 1, \plain{for some} i\in\{1,\ldots,|x|\}\\
-      \phi_1(v) & \plain{if} v = v_i \plain{and} x_i = 0, \plain{for some} i\in\{1,\ldots,|x|\}\\
+      \phi_0(v) & \plain{if} v = v_i \plain{and} x_i = 1, \plain{for some}
+      i\in\{1,\ldots,n\}\\ 
+      \phi_1(v) & \plain{if} v = v_i \plain{and} x_i = 0, \plain{for some}
+      i\in\{1,\ldots,n\}\\ 
       v & \plain{if} v \in \{v_{zero}, v_{one,0}, v_{one,1}, v_{one,2}\}
     \end{cases}
   \end{displaymath}
@@ -93,11 +93,11 @@
   exclusively.
 
   Since the only edges in $E_x$ are the edges $(v_i, v_{one,0})$ when $x_i=1$
-  and $(v_i, v_{zero})$ when $x_i=0$, then $(v_i, v_{one,0})\in V_x
-  \iff (\phi(v_i), \phi(v_{one,0}))=(\phi_1(v_i), v_{one,0})\in
-  V_y$, and $(v_i, v_{zero})\in V_x \iff (\phi(v_i), \phi(v_{zero}))
-  = (\phi_0(v_i), v_{zero})\in V_y$. Therefore $\phi$ describes a graph
-  isomorphism, so $G_1$ is isomorphic to $G_2$.
+  and $(v_i, v_{zero})$ when $x_i=0$, then $(v_i, v_{one,0})\in E_x \iff
+  (\phi(v_i), \phi(v_{one,0}))=(\phi_1(v_i), v_{one,0})\in E_y$, and $(v_i,
+  v_{zero})\in E_x \iff (\phi(v_i), \phi(v_{zero})) = (\phi_0(v_i),
+  v_{zero})\in E_y$. Therefore $\phi$ describes a graph isomorphism, so $G_1$
+  is isomorphic to $G_2$.
   
   Suppose $(x, y)\notin R_{bc}$, so $x$ and $y$ have a different number of
   ones. Let $k$ be the number of ones in $x$, and $l$ be the number of ones in
@@ -112,10 +112,6 @@
 \end{proof}
 
 \begin{theorem}\label{thm:req_kr_gi}$R_{eq} \kr GI$\end{theorem}
-\begin{proof}The proof is similar as the proofs of Theorems \ref{thm:rpar-gi}
-  and \ref{thm:rbc-gi}, but uses a directed graph instead of an undirected
-  graph. Since undirected graph isomorphism is polynomial time equivalent to
-  directed graph isomorphism, the proof is complete.\end{proof}
 \begin{proof}
   Construct machine $M\in\FP$ on input $w\in\sigmastar$:
   \begin{enumerate}
