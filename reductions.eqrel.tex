@@ -1,9 +1,7 @@
 \begin{theorem}$R_{par}\kr R_{bc}$\end{theorem}
 \begin{proof}
-\end{proof}
-\begin{proof}
-  Construct $M\in \FP$ on input $w\in\sigmastar$:
-  \begin{algorithm}[h]
+  Construct $M\in \FP$ on input $w\in\sigmastar$:\\
+  \begin{algorithm}[H]
     \For{$i=1$ \KwTo $|w|-1$}{
       \If{$w_i=1$}{
         \For{$j=i+1$ \KwTo $|w|$}{
@@ -14,7 +12,7 @@
         }
       }
     }
-  \end{algorithm}\\
+  \end{algorithm}
   Notice that this is the machine which finds pairs of ones and writes zeros in
   their place, one pair at a time.
 
@@ -45,10 +43,9 @@
 \begin{theorem}$R_{bc}\kr R_{eq}$\end{theorem}
 \begin{proof}
   Construct $M\in \FP$ on input $w\in\sigmastar$ which sorts the bits of $w$
-  using an efficient (polynomial-time) sorting algorithm.
-
-  Notice that if $|w|=n$ and $w$ contains $k$ ones, this machine outputs
-  the string which can be described by the regular expression $0^{n-k}1^k$.
+  using an efficient (polynomial-time) sorting algorithm. Notice that if
+  $|w|=n$ and $w$ contains $k$ ones, this machine outputs the string
+  $0^{n-k}1^k$.
 
   Suppose $(x, y)\in R_{bc}$, so $x$ and $y$ have the same number of ones, say
   $k$. Thus $M(x)=M(y)=0^{n-k}1^k$, so $(M(x), M(y))\in R_{eq}$.
