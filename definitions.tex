@@ -18,10 +18,16 @@ $R_{eq}=\{(x, y)|x \oplus y = 0^n\}$, $R_{eqi}=\{(x, y)|x \oplus y = 0^n \lor x
 y\ = a\}$.
 
 %% TODO should I use the complexity package \GI to format the GI class?
-Let $GI=\{(G_1,G_2)|G_1 \plain{and} G_2 \plain{are undirected graphs and} G_1
+Let $GI=\{(G_1, G_2)|G_1 \plain{and} G_2 \plain{are undirected graphs and} G_1
 \plain{is isomorphic to} G_2\}$.
 
-\begin{definition}Let $R,S\subseteq\sigmastar\times\sigmastar$. We say $R$
-  \textit{kernel reduces to} $S$ if $\exists f\in\FP:\forall x,y\in\sigmastar
-  (x, y)\in R \iff (f(x),f(y))\in S$. We denote this by $R\kr
-  S$.\end{definition}
+Let $DirGI=\{(G_1, G_2)| G_1 \plain{and} G_2 \plain{are directed graphs and}
+G_1 \plain{is isomorphic to} G_2\}$.
+
+\begin{definition}\label{def:kr}
+  Let $R,S\subseteq\sigmastar\times\sigmastar$. We say $R$ \textit{kernel
+  reduces to} $S$ if $\exists f\in\FP:\forall x,y\in\sigmastar (x, y)\in R \iff
+  (f(x),f(y))\in S$. We denote this by $R\kr S$.
+  
+  We say $R$ \textit{is equivalent under kernel reductions to} $S$ if $R\kr S$
+  and $S\kr R$. We denote this by $R\kequiv S$.\end{definition}
