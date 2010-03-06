@@ -1,0 +1,27 @@
+\begin{theorem}\label{thm:krc_npc}If a language $A$ is $\kr$-complete in \NPEq,
+  then $A$ is $\mor$-complete in \NP. In other words, if $A$ is \NPEq-complete
+  then $A$ is \NP-complete.\end{theorem}
+\begin{proof}
+  %% TODO complete this proof
+\end{proof}
+
+\begin{corollary}If $GI$ is not $\mor$-complete in \NP then $GI$ is not
+  $\kr$-complete in \NPEq. In other words, if $GI$ is not \NP-complete then
+  $GI$ is not \NPEq-complete.\end{corollary}
+\begin{proof}
+  This is a specific case of the contrapositive statement of Theorem
+  \ref{thm:krc_npc}.
+\end{proof}
+
+\begin{definition}\label{def:gi_class}\GI\,is the class of problems which are
+  polynomial-time, many-one equivalent to $GI$.\end{definition}
+
+\begin{lemma}$GI$ is $\mor$-complete in \GI.\end{lemma}
+\begin{proof}Follows directly from Definition \ref{def:gi_class}.\end{proof}
+
+\begin{theorem}If $GI$ is not \NP-complete and \NPEq\,under kernel reductions
+  equals \GI\,under many-one reductions then there exists a language $B$ in
+  \NPEq\,such that $B\nkr GI$. In other words $\NPEq\backslash\GI\neq\emptyset$.\end{theorem}
+\begin{proof}
+  %% TODO complete this proof
+\end{proof}
