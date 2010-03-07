@@ -1,33 +1,25 @@
-\begin{lemma}\label{lem:gi_kr_dirgi}$GI\kr DirGI$\end{lemma}
-\begin{proof}
-  Construct machine $M\in\FP$ on input $G=(V,E)$:\\
-  \begin{algorithm}[H]
-    $V'\gets V$\;
-    $E'\gets\{\}$\;
-    \ForEach{$(u, v)\in E$}{
-      add directed edges $(u, v)$ and $(v, u)$ to $E'$
-    }
-    \Return{$G'=(V', E')$}
-  \end{algorithm}
-  Notice that this machine constructs the graph with all undirected edges of
-  the input graph replaced with two complementary directed edges incident to
-  both vertices.
+%% \begin{lemma}\label{lem:gi_kr_dirgi}$GI\kr DirGI$\end{lemma}
+%% \begin{proof}
+%%   Construct machine $M\in\FP$ on input $G=(V,E)$:\\
+%%   \begin{algorithm}[H]
+%%     $V'\gets V$\;
+%%     $E'\gets\{\}$\;
+%%     \ForEach{$(u, v)\in E$}{
+%%       add directed edges $(u, v)$ and $(v, u)$ to $E'$
+%%     }
+%%     \Return{$G'=(V', E')$}
+%%   \end{algorithm}
+%%   Notice that this machine constructs the graph with all undirected edges of
+%%   the input graph replaced with two complementary directed edges incident to
+%%   both vertices.
 
-  %% TODO complete this proof
-\end{proof}
+%%   %% TODO complete this proof
+%% \end{proof}
 
-\begin{lemma}\label{lem:dirgi_kr_gi}$DirGI\kr GI$\end{lemma}
-\begin{proof}
-  %% TODO complete this proof
-\end{proof}
-
-\begin{corollary}\label{cor:gi_ke_dirgi}$GI\kequiv DirGI$\end{corollary}
-\begin{proof}This follows directly from Lemmas \ref{lem:gi_kr_dirgi} and
-  \ref{lem:dirgi_kr_gi} and Definition \ref{def:kr}.\end{proof}
-
-From Corollary \ref{cor:gi_ke_dirgi}, we can use a kernel reduction to directed
-graph isomorphism to show that a language kernel reduces to (undirected) graph
-isomorphism. 
+%% \begin{lemma}\label{lem:dirgi_kr_gi}$DirGI\kr GI$\end{lemma}
+%% \begin{proof}
+%%   %% TODO complete this proof
+%% \end{proof}
 
 %% TODO are these kernel reductions? they must be...
 
@@ -82,7 +74,7 @@ isomorphism.
   $M(y)$ outputs $G_y=(V_y, E_y)$, where $V_y=\{v_o, v_p\}$ and $E_y=\{(v_o,
   v_p)\}$. Since $(v_o, v_p)\in E_y$ but $(v_o, v_p)\notin E_x$, so no
   bijection exists between $V_x$ and $V_y$ which preserves edges. Therefore,
-  $G_x$ is not isomorphic to $G_y$.
+  $G_x$ is not isomorphic to $G_y$ so $(M(x), M(y))\notin GI$.
 
   Therefore $(x, y)\in R_{par} \iff (M(x), M(y)) \in GI$, so $R_{par} \kr GI$.
 \end{proof}
@@ -149,6 +141,22 @@ isomorphism.
   Therefore $(x, y)\in R_{bc} \iff (M(x), M(y))\in GI$, so $R_{bc}\kr GI$.
 \end{proof}
 
+Unlike the reductions from $R_{par}$ and $R_{bc}$ to $GI$, in the reductions
+from $R_{eq}$ and $R_{eqi}$ to $GI$ the order of bits in each string $x$ and
+$y$ is significant. Therefore, we can use the following lemma to reduce these
+equivalence relation problems to the directed form of the graph isomorphism
+problem.
+
+\begin{lemma}\label{lem:gi_ke_dirgi}$GI\kequiv DirGI$\end{lemma}
+\begin{proof}
+  %% TODO complete this proof
+  %% provide simply a reference? see the graph isomorphism book
+\end{proof}
+
+From Lemma \ref{lem:gi_ke_dirgi}, we can use a kernel reduction to directed
+graph isomorphism to show that a language kernel reduces to (undirected) graph
+isomorphism, as in the following two theorems.
+
 \begin{theorem}\label{thm:req_kr_dirgi}$R_{eq} \kr DirGI$\end{theorem}
 \begin{proof}
   Construct machine $M\in\FP$ on input $w\in\sigmastar$:\\
@@ -196,7 +204,8 @@ isomorphism.
 \end{proof}
 
 \begin{corollary}$R_{eq}\kr GI$\end{corollary}
-\begin{proof}Follows directly from Theorem \ref{thm:req_kr_dirgi} and Corollary \ref{cor:gi_ke_dirgi}.\end{proof}
+\begin{proof}Follows directly from Theorem \ref{thm:req_kr_dirgi} and Lemma
+  \ref{lem:gi_ke_dirgi}.\end{proof}
 
 \begin{theorem}\label{thm:reqi_kr_dirgi}$R_{eqi}\kr DirGI$\end{theorem}
 \begin{proof}
@@ -267,8 +276,8 @@ isomorphism.
 \end{proof}
 
 \begin{corollary}$R_{eqi}\kr GI$\end{corollary}
-\begin{proof}Follows directly from Theorem \ref{thm:reqi_kr_dirgi} and 
-  Corollary \ref{cor:gi_ke_dirgi}.\end{proof}
+\begin{proof}Follows directly from Theorem \ref{thm:reqi_kr_dirgi} and Lemma
+  \ref{lem:gi_ke_dirgi}.\end{proof}
 
 \begin{theorem}\label{thm:ra_kr_dirgi}$\forall a\in\sigmastar R_a \kr DirGI$
 \end{theorem}
@@ -337,5 +346,5 @@ isomorphism.
 \end{proof}
 
 \begin{corollary}$R_a\kr GI$\end{corollary}
-\begin{proof}Follows directly from Theorem \ref{thm:ra_kr_dirgi} and 
-  Corollary \ref{cor:gi_ke_dirgi}.\end{proof}
+\begin{proof}Follows directly from Theorem \ref{thm:ra_kr_dirgi} and Lemma
+  \ref{lem:gi_ke_dirgi}.\end{proof}
