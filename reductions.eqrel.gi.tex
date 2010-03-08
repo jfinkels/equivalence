@@ -321,8 +321,8 @@ isomorphism, as in the following two theorems.
     \begin{cases}
       v'_i & \plain{if} v=v_i \plain{for some} i\in\{1, 2, \ldots, n\}\\
       v_i & \plain{if} v=v'_i \plain{for some} i\in\{1, 2, \ldots, n\}\\
-      u'_i & \plain{if} u=u_i \plain{for some} i\in\{1, 2, \ldots, n\}\\
-      u_i & \plain{if} u=u'_i \plain{for some} i\in\{1, 2, \ldots, n\}\\
+      u'_i & \plain{if} v=u_i \plain{for some} i\in\{1, 2, \ldots, n\}\\
+      u_i & \plain{if} v=u'_i \plain{for some} i\in\{1, 2, \ldots, n\}\\
     \end{cases}
   \end{displaymath}
   If no $u_i$ exists or no $u'_i$ exists for some $i\in\{1, 2, \ldots, n\}$
@@ -334,15 +334,61 @@ isomorphism, as in the following two theorems.
   E_y, \forall i\in\{1, 2, \ldots, n-1\}$.
 
   Now for each $i\in\{1, 2, \ldots, n\}$ for which $u_i$ exists and is in
-  $V_x$, $(v_i, u_i)\in E_x$. This occurs if and only if $x_i=1$, and since by
-  hypothesis $x\oplus y=a \iff y=x\oplus a$, $y_i=x_i\oplus a_i$. In the case
-  that $a_i=0$, then $y_i=x_i\oplus a_i= 1\oplus 0=1$. Since $y_i=1$ and
-  $y_i\oplus a_i=1\oplus 0=1$, $M(y)$ produces graph $G_y$ containing vertex
-  $u'_i\in V_y$ and directed edge $(v'_i, u'_i)\in E_y$. Now $\phi(u_i)=u'_i$
-  is well-defined, and $(v_i, u_i)\in E_x\iff (\phi(v_i), \phi(u_i))=(v'_i,
-  u'_i)\in E_y$. In the case that $a_i=1$, then $y_i$
-  
-  %% TODO complete this proof
+  $V_x$, $(v_i, u_i)\in E_x$ by construction. This occurs if and only if
+  $x_i=1$, and since by hypothesis $x\oplus y=a \iff y=x\oplus a$,
+  $y_i=x_i\oplus a_i$. In the case that $a_i=0$, then $y_i=x_i\oplus a_i=
+  1\oplus 0=1$. Since $y_i=1$ and $y_i\oplus a_i=1\oplus 0=1$, $M(y)$ produces
+  graph $G_y$ containing vertex $u'_i\in V_y$ and directed edge $(v'_i,
+  u'_i)\in E_y$. Now $\phi(u_i)=u'_i$ is well-defined, and $(v_i, u_i)\in
+  E_x\iff (\phi(v_i), \phi(u_i))=(v'_i, u'_i)\in E_y$. In the case that
+  $a_i=1$, then $y_i=x_i\oplus a_i=1\oplus1=0$. Since $y_i=0$ and $y_i\oplus
+  a_i=0\oplus 1=1$, $M(y)$ produces graph $G_y$ containing vertex $u'_i\in V_y$
+  and directed edge $(v'_i, u'_i)\in E_y$. Now $\phi(u_i)=u'_i$ is
+  well-defined, and $(v_i, u_i)\in E_x\iff (\phi(v_i), \phi(u_i))=(v'_i,
+  u'_i)\in E_y$.
+
+  Now for each $i\in\{1, 2, \ldots, n\}$ for which $u'_i$ exists and is in
+  $V_x$, $(v'_i, u'_i)\in E_x$ by construction. This occurs if and only if
+  $x_i\oplus a_i=1$, and since by hypothesis $x\oplus y=a \iff y=x\oplus a$,
+  then $y_i=x_i\oplus a_i=1$. Since $y_i=1$, $M(y)$ produces graph $G_y$
+  containing vertex $u_i\in V_y$ and directed edge $(v_i, u_i)\in E_y$. Now
+  $\phi(u'_i)=u_i$ is well-defined, and $(v'_i, u'_i)\in E_x\iff (\phi(v'_i),
+  \phi(u'_i))=(v_i, u_i)\in E_y$. Therefore $\phi$ describes an isomorphism
+  between graphs $G_x$ and $G_y$, so $(M(x),M(y))\in DirGI$.
+
+  Suppose $(x, y)\notin R_a$, so $x\neq y$ and $x\oplus y\neq a$. Thus $\exists
+  i,j\in\{1, 2, \ldots, n\}: x_i\neq y_i$ and $x_j\oplus y_j\neq a_j$ (with the
+  possibility that $i=j$). Because $M(x)$ and $M(y)$ both produce graphs which
+  are the disjoint union of two distinct subgraphs, $(U_x, F_x)$ and $(U'_x,
+  F'_x)$ in $G_x$ and $(U_y, F_y)$ and $(U'_y, F'_y)$ in $G_y$, if the graphs
+  $G_x$ and $G_y$ were isomorphic, the bijection between them must either map
+  vertices of $U_x$ to $U_y$ and $U'_x$ to $U'_y$ or map vertices of $U_x$ to
+  $U'_y$ and $U'_x$ to $U_y$. The only possible bijections must map either
+  $v_i\in U_x$ to $v_i\in U_y$ and $v'_i\in U'_x$ to $v'_i\in U'_y$ or $v_i\in
+  U_x$ to $v'_i\in U'_y$ and $v'_i\in U'_x$ and $v_i\in U_y$, $\forall i\in\{1,
+  2, \ldots, n\}$, because of the chain of directed edges between each vertex
+  of adjacent index.
+
+  Assume without loss of generality that $x_i=1$ and $y_i=0$, which implies
+  $(v_i, u_i)\in F_x$ but $(v_i, u_i)\notin F_y$. Now $\phi$ cannot map $v_i\in
+  U_x$ to $v_i\in U_y$ and $v'_i\in U'_x$ to $v'_i\in U'_y$ because $(v_i,
+  u_i)\in F_x$ but $(v_i, u_i)\notin F_y$. 
+
+  Assume $\phi$ describes a graph isomorphism which maps $v_j\in U_x$ to
+  $v'_j\in U'_y$ and $v'_j\in U'_x$ to $v_j\in U_y$. In the case that $x_j=0$,
+  $y_j=0$ and $a_j=1$, then $y_j\oplus a_j=1$, so $(v_j, u_j)\notin F_x$ but
+  $(v'_j, u'_j)\in F'_y$. This is a contradiction with the assumption that
+  $\phi$ describes a graph isomorphism. In the case that $x_j=1$, $y_j=1$ and
+  $a_j=1$, then $y_j\oplus a_j=0$, so $(v_j, u_j)\in F_x$ but $(v'_j,
+  u'_j)\notin F'_y$. This is a contradiction. In the case that $x_j=0$,
+  $y_j=1$, and $a_j=0$, then $y_j\oplus a_j=1$, so $(v_j, u_j)\notin F_x$ but
+  $(v'_j, u'_j)\in F'_y$. This is a contradiction. In the case that $x_j=1$,
+  $y_j=0$, and $a_j=0$, then $y_j\oplus a_j=0$, so $(v_j, u_j)\in F_x$ but
+  $(v'_j, u'_j)\notin F'_y$. This is a contradiction. Therefore no such
+  bijection $\phi$ exists. Therefore $G_x$ is not isomorphic to $G_y$, thus
+  $(M(x), M(y))\notin DirGI$.
+
+  Therefore $(x, y)\in R_a\iff (M(x), M(y))\in DirGI$, so $R_a\kr DirGI$.
 \end{proof}
 
 \begin{corollary}$R_a\kr GI$\end{corollary}
