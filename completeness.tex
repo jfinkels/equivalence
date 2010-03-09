@@ -6,31 +6,40 @@
 \end{proof}
 
 \begin{corollary}\label{cor:gi_complete}If $GI$ is not $\mor$-complete in
-	\NP\,then $GI$ is not $\kr$-complete in \NPEq. In other words, if $GI$ is not
+  \NP\,then $GI$ is not $\kr$-complete in \NPEq. In other words, if $GI$ is not
   \NP-complete then $GI$ is not \NPEq-complete.\end{corollary}
 \begin{proof}
   This is a specific case of the contrapositive statement of Theorem
   \ref{thm:krc_npc}.
 \end{proof}
 
-\begin{definition}\label{def:gim_class}$\GIm$ is the class of problems which
-  are polynomial-time, many-one equivalent to $GI$. In other words,
-  $\GIm=\{A|A\moequiv GI\}$.\end{definition}
+\begin{definition}\label{def:gi_classes}$\GIker$ is the class of problems
+  which are polynomial-time equivalent under kernel reductions to $GI$. In
+  other words, $\GIker=\{A|A\kequiv GI\}$.
 
-\begin{definition}\label{def:giker_class}$\GIker$ is the class of problems
-	which are polynomial-time equivalent under kernel reductions to $GI$. In
-	other words, $\GIker=\{A|A\kequiv GI\}$.\end{definition}
+  $\GIm$ is the class of problems which are polynomial-time, many-one
+  equivalent to $GI$. In other words, $\GIm=\{A|A\moequiv GI\}$.
 
-\begin{theorem}If $GI$ is not \NP-complete then $\NPEq\neq\GIker$. In other
-	words, there exists a language $B$ in \NPEq\,such that $B\nkr
-	GI$.\end{theorem}
+  $\GIt$ is the class of problems which are polynomial-time equivalent under
+  Turing reductions to $GI$. In other words, $\GIt=\{A|A\tequiv GI\}$.
+\end{definition}
+
+\begin{lemma}$\GIker\subset\NPEq$\end{lemma}
+\begin{proof}Let $A\in\GIker$, so $A\kequiv GI$.\end{proof}
+
+\begin{theorem}If $GI$ is not \NP-complete then $\GIker\neq\NPEq$.\end{theorem}
 \begin{proof}
-	Suppose $GI$ is not \NP-complete. By Corollary \ref{cor:gi_complete}, $GI$ is
+  Suppose $GI$ is not \NP-complete. By Corollary \ref{cor:gi_complete}, $GI$ is
   not \NPEq-complete. Assume $\GIker=\NPEq$. By Definition
-  \ref{def:giker_class}, $GI$ is complete under kernel reductions in
+  \ref{def:gi_classes}, $GI$ is complete under kernel reductions in
   $\GIker$. Hence $GI$ is complete under kernel reductions in \NPEq, or in
   other words, $GI$ is \NPEq-complete. This is a contradiction. Therefore
   $\GIker\neq\NPEq$.
+\end{proof}
 
+%% TODO is it true that PEq is a subset of NPEq?
+
+\begin{theorem}$\GIker\subseteq\GIm\subseteq\NPEq$\end{theorem}
+\begin{proof}
   %% TODO complete this proof
 \end{proof}
