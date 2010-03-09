@@ -5,23 +5,32 @@
   %% TODO complete this proof
 \end{proof}
 
-\begin{corollary}If $GI$ is not $\mor$-complete in \NP\,then $GI$ is not
-  $\kr$-complete in \NPEq. In other words, if $GI$ is not \NP-complete then
-  $GI$ is not \NPEq-complete.\end{corollary}
+\begin{corollary}\label{cor:gi_complete}If $GI$ is not $\mor$-complete in
+	\NP\,then $GI$ is not $\kr$-complete in \NPEq. In other words, if $GI$ is not
+  \NP-complete then $GI$ is not \NPEq-complete.\end{corollary}
 \begin{proof}
   This is a specific case of the contrapositive statement of Theorem
   \ref{thm:krc_npc}.
 \end{proof}
 
-\begin{definition}\label{def:gi_class}\GI\,is the class of problems which are
-  polynomial-time, many-one equivalent to $GI$.\end{definition}
+\begin{definition}\label{def:gim_class}$\GIm$ is the class of problems which
+  are polynomial-time, many-one equivalent to $GI$. In other words,
+  $\GIm=\{A|A\moequiv GI\}$.\end{definition}
 
-\begin{lemma}$GI$ is $\mor$-complete in \GI.\end{lemma}
-\begin{proof}Follows directly from Definition \ref{def:gi_class}.\end{proof}
+\begin{definition}\label{def:giker_class}$\GIker$ is the class of problems
+	which are polynomial-time equivalent under kernel reductions to $GI$. In
+	other words, $\GIker=\{A|A\kequiv GI\}$.\end{definition}
 
-\begin{theorem}If $GI$ is not \NP-complete and \NPEq\,under kernel reductions
-  equals \GI\,under many-one reductions then there exists a language $B$ in
-  \NPEq\,such that $B\nkr GI$. In other words $\NPEq\backslash\GI\neq\emptyset$.\end{theorem}
+\begin{theorem}If $GI$ is not \NP-complete then $\NPEq\neq\GIker$. In other
+	words, there exists a language $B$ in \NPEq\,such that $B\nkr
+	GI$.\end{theorem}
 \begin{proof}
+	Suppose $GI$ is not \NP-complete. By Corollary \ref{cor:gi_complete}, $GI$ is
+  not \NPEq-complete. Assume $\GIker=\NPEq$. By Definition
+  \ref{def:giker_class}, $GI$ is complete under kernel reductions in
+  $\GIker$. Hence $GI$ is complete under kernel reductions in \NPEq, or in
+  other words, $GI$ is \NPEq-complete. This is a contradiction. Therefore
+  $\GIker\neq\NPEq$.
+
   %% TODO complete this proof
 \end{proof}
