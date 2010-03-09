@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.47pre4 r22446"
-   sodipodi:docname="DiagramReqtoDirGI.svg">
+   sodipodi:docname="1010and1010.svg">
   <defs
      id="defs4">
     <marker
@@ -65,9 +65,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="55.625561"
-     inkscape:cy="478.24261"
+     inkscape:zoom="0.70000001"
+     inkscape:cx="567.33323"
+     inkscape:cy="694.92554"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -85,7 +85,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -94,10 +94,13 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       id="g6396">
+       id="g6396"
+       style="fill:none"
+       transform="translate(-86.929605,-206.50907)">
       <g
          transform="translate(201.67636,-5.7495143)"
-         id="g5400">
+         id="g5400"
+         style="fill:none">
         <path
            sodipodi:type="arc"
            style="opacity:0.76799999;fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
@@ -194,7 +197,8 @@
       </g>
       <g
          transform="translate(27.390646,-5.7319)"
-         id="g5413">
+         id="g5413"
+         style="fill:none">
         <path
            transform="translate(-43.292961,34.523851)"
            d="m 197.14286,401.64789 c 0,12.22916 -9.9137,22.14285 -22.14286,22.14285 -12.22916,0 -22.14286,-9.91369 -22.14286,-22.14285 0,-12.22916 9.9137,-22.14286 22.14286,-22.14286 12.22916,0 22.14286,9.9137 22.14286,22.14286 z"
@@ -290,5 +294,45 @@
            style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)" />
       </g>
     </g>
+    <path
+       style="opacity:0.76799999;fill:#ff6600;fill-opacity:0;stroke:#000000;stroke-width:0.02857143;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d=""
+       id="path6735" />
+    <path
+       style="opacity:0.76799999;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0.02857143;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d=""
+       id="path6779" />
+    <path
+       style="opacity:0.76799999;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0.02857143;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d=""
+       id="path6783" />
+    <path
+       style="opacity:0.76799999;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0.02857143;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d=""
+       id="path6787" />
+    <path
+       style="opacity:0.76799999;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0.02857143;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d=""
+       id="path6789" />
+    <path
+       style="opacity:0.76799999;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0.02857143;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d=""
+       id="path6791" />
+    <path
+       style="opacity:0.76799999;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0.02857143;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d=""
+       id="path6793" />
+    <path
+       style="opacity:0.76799999;fill:#ffcc00;fill-opacity:1;stroke:#000000;stroke-width:0.02857143;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d=""
+       id="path6799" />
+    <path
+       style="opacity:0.76799999;fill:#aad400;fill-opacity:1;stroke:#000000;stroke-width:0.02857143;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d=""
+       id="path6807" />
+    <path
+       style="opacity:0.76799999;fill:#aad400;fill-opacity:1;stroke:#000000;stroke-width:0.02857143;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d=""
+       id="path6809" />
   </g>
 </svg>
