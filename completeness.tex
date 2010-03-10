@@ -24,10 +24,41 @@
   Turing reductions to $GI$. In other words, $\GIt=\{A|A\tequiv GI\}$.
 \end{definition}
 
-\begin{lemma}$\GIker\subset\NPEq$\end{lemma}
-\begin{proof}Let $A\in\GIker$, so $A\kequiv GI$.\end{proof}
+\begin{lemma}\label{lem:kr_mor}If $A\kr B$ then $A\mor B$.\end{lemma}
+\begin{proof}Since $A\kr B$, $\exists f\in\FP: (x,y)\in A\iff(f(x), f(y))\in
+  B$. Define $g\in FP$ by $g(x,y)=(f(x), f(y))$. Therefore $A\mor B$ by
+  $g$.\end{proof}
 
-\begin{theorem}If $GI$ is not \NP-complete then $\GIker\neq\NPEq$.\end{theorem}
+\begin{lemma}\label{lem:np_closed}$\NP$ is closed under polynomial-time,
+  many-one reductions. In other words, if $A\mor B$ and $B\in\NP$ then
+  $A\in\NP$.\end{lemma}
+\begin{proof}
+  Since $B\in\NP$, there exists a non-deterministic polynomial time Turing
+  machine which decides $B$; call it $N_B$. Since $A\mor B$, $\exists f\in\FP$,
+  such that $w\in A\iff f(w)\in B$. Construct non-deterministic Turing machine
+  $N_A$ on input $w$:\\
+  \begin{algorithm}[H]
+    Compute $f(w)$\;
+    Run $N_B$ on input $f(w)$\;
+    \eIf{$N_B(f(w))$ accepts}{
+      \ACCEPT
+    }{
+      \REJECT
+    }
+  \end{algorithm}
+  Since $f$ runs in polynomial time and $N_B$ runs in non-deterministic
+  polynomial time, $N_A$ runs in non-deterministic polynomial time. Therefore
+  $A\in\NP$.
+\end{proof}
+
+\begin{corollary}\label{cor:npeq_closed}$\NPEq$ is closed under polynomial time
+  kernel reductions. In other words, if $R\kr S$ and $S\in\NPEq$ then
+  $R\in\NPEq$.\end{corollary}
+\begin{proof}Follows directly from Lemmas \ref{lem:kr_mor} and
+  \ref{lem:np_closed}.\end{proof}
+
+\begin{theorem}\label{thm:giker_neq_npeq}If $GI$ is not \NP-complete then
+  $\GIker\neq\NPEq$.\end{theorem}
 \begin{proof}
   Suppose $GI$ is not \NP-complete. By Corollary \ref{cor:gi_complete}, $GI$ is
   not \NPEq-complete. Assume $\GIker=\NPEq$. By Definition
@@ -37,9 +68,10 @@
   $\GIker\neq\NPEq$.
 \end{proof}
 
-%% TODO is it true that PEq is a subset of NPEq?
-
-\begin{theorem}$\GIker\subseteq\GIm\subseteq\NPEq$\end{theorem}
-\begin{proof}
-  %% TODO complete this proof
-\end{proof}
+\begin{theorem}If $GI$ is not \NP-complete then
+  $\GIker\subsetneq\NPEq$\end{theorem}
+\begin{proof}Let $A\in\GIker$. By Corollary \ref{cor:npeq_closed}, since $A\kr
+  GI$ by definition of $\GIker$ and since $GI\in\NPEq$, $A\in\NPEq$. Hence
+  $GIker\subset\NPEq$. By Theorem \ref{thm:giker_neq_npeq}, if $GI$ is not
+  \NP-complete then $\GIker\neq\NPEq$. Therefore
+  $\GIker\subsetneq\NPEq$.\end{proof}
