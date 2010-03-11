@@ -36,6 +36,7 @@
 \usepackage{cclicenses} % for adding creative commons license symbols
 \usepackage{graphicx} % for including images
 \usepackage[pdftitle={Untitled}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
+\usepackage[all]{hypcap} % references to images will link to the image
 
 % don't print semicolons in pseudocode algorithms
 \dontprintsemicolon
@@ -46,6 +47,11 @@
 \newtheorem{corollary}{Corollary}[section]
 \theoremstyle{definition} 
 \newtheorem{definition}{Definition}[section]
+
+% define lemma, corollary, and definition context labels for /autoref command
+\newcommand{\lemmaname}{Lemma}
+\newcommand{\corollaryname}{Corollary}
+\newcommand{\definitionname}{Definition}
 
 % custom shortcut commands
 \newcommand{\plain}[1]{\,\text{#1}\,} % plain text inside math environments
@@ -65,8 +71,8 @@
 \end{tabular}}
 
 % set commands for \ACCEPT and \REJECT for use in algorithms
-\SetKw{ACCEPT}{ACCEPT}
-\SetKw{REJECT}{REJECT}
+\SetKw{ACCEPT}{accept}
+\SetKw{REJECT}{reject}
 
 % redefine footnote so it has no reference and no number
 \long\def\symbolfootnote#1{\begingroup%
