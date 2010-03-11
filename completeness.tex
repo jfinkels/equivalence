@@ -1,6 +1,6 @@
 \begin{lemma}\label{lem:rl_eq_rel}Let $L\in\NP$, and let $V$ be a verifier for
   $L$. Then $R_L=\{((a,x),(a,y))|x=y\plain{or}V(a,x\oplus y)\plain{accepts}\}$
-  is an equivalence relation.\end{lemma}
+  is an equivalence relation in \PEq.\end{lemma}
 \begin{proof}Want to show that $R_L$ is reflexive, symmetric, and transitive.
   
   To show $R_L$ is reflexive, we show that $((a,x),(a,x))\in R_L$, because
@@ -18,7 +18,9 @@
   z)$ accepts, then $V(a, x\oplus z)$ accepts, so $((a,x),(a,z))\in R_L$. In
   the case that $V(a, x\oplus y)$ and $y=z$, then $V(a, x\oplus z)$ accepts, so
   $((a,x), (a,y))\in R_L$. In the case that $V(a, x\oplus y)$ accepts and $V(a,
-  y\oplus z)$ accepts, then 
+  y\oplus z)$ accepts and $x\neq y$ and $y\neq z$, if $x=z$ then
+  $((a,x),(a,z))\in R_L$. If $x\neq z$, let $c_1=x\oplus y$ and let
+  $c_2=y\oplus z$. Then $c_1\oplus c_2=x\oplus y\oplus y\oplus z=x\oplus z$.
 
   TODO complete this proof
   %% TODO complete this proof
@@ -31,8 +33,19 @@
   Let $L\in\NP$, so there exists deterministic polynomial time verifier, $V$,
   for $L$ such that given an input $w$ and a correct certificate $c$, $w\in
   L\iff V(w,c)$ accepts. Define $R_L=\{((a, x),(a, y))|x=y \plain{or} V(a,
-  x\oplus y) \plain{accepts}\}$. $R_L$ is an equivalence relation by
-  \autoref{lem:rl_eq_rel}.
+  x\oplus y) \plain{accepts}\}$. $R_L$ is an equivalence relation in
+  $\PEq\subset\NPEq$ by \autoref{lem:rl_eq_rel}. Since $A$ is $\kr$-complete in
+  \NPEq, $R_L\kr A$, so $\exists f\in\FP:((a,x),(a,y))\in R_L\iff (f(a,x),
+  f(a,y))\in A$.
+
+  Construct $M\in\FP$ on input $w$:\\
+  \begin{algorithm}[H]
+    $x\gets00\ldots01$\;
+    $y\gets w\oplus y$\;
+    \Return{$(f(w,x),f(w,y))$}
+  \end{algorithm}
+
+  
 
   TODO complete this proof
   %% TODO complete this proof
