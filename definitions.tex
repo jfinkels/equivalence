@@ -14,7 +14,7 @@ relation for each $a$.)
 
 Notice the following equivalent definitions, where $n$=$|x|$=$|y|$:
 $R_{eq}=\{(x, y)|x \oplus y = 0^n\}$, $R_{eqi}=\{(x, y)|x \oplus y = 0^n \lor x
-\oplus y = 1^n\}$, and $R_{a}=\{((a,x),(a,y))|x \oplus y = 0^n \lor x \oplus
+\oplus y = 1^n\}$, and $R_{a}=\{(x,y)|x \oplus y = 0^n \lor x \oplus
 y\ = a\}$.
 
 Let $GI=\{(G_1, G_2)|G_1 \plain{and} G_2 \plain{are undirected graphs and} G_1
@@ -24,12 +24,10 @@ Let $DirGI=\{(G_1, G_2)| G_1 \plain{and} G_2 \plain{are directed graphs and}
 G_1 \plain{is isomorphic to} G_2\}$.
 
 \begin{definition}\label{def:peq}
-  \textit{$\PEq$} is the set of equivalence relations whose membership can be
+  \textit{\PEq} is the set of equivalence relations whose membership can be
   decided in polynomial time.
-\end{definition}
 
-\begin{definition}\label{def:npeq}
-  \textit{$\NPEq$} is the set of equivalence relations whose membership can be
+  \textit{\NPEq} is the set of equivalence relations whose membership can be
   accepted in nondeterministic polynomial time.
 \end{definition}
 
