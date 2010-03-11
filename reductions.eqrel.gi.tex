@@ -153,8 +153,8 @@ problem.
   %% provide simply a reference? see the graph isomorphism book
 \end{proof}
 
-From Lemma \ref{lem:gi_ke_dirgi}, we can use a kernel reduction to directed
-graph isomorphism to show that a language kernel reduces to (undirected) graph
+From \autoref{lem:gi_ke_dirgi}, we can use a kernel reduction to directed graph
+isomorphism to show that a language kernel reduces to (undirected) graph
 isomorphism, as in the following two theorems.
 
 \begin{theorem}\label{thm:req_kr_dirgi}$R_{eq} \kr DirGI$\end{theorem}
@@ -204,8 +204,8 @@ isomorphism, as in the following two theorems.
 \end{proof}
 
 \begin{corollary}$R_{eq}\kr GI$\end{corollary}
-\begin{proof}Follows directly from Theorem \ref{thm:req_kr_dirgi} and Lemma
-  \ref{lem:gi_ke_dirgi}.\end{proof}
+\begin{proof}Follows directly from \autoref{thm:req_kr_dirgi} and
+  \autoref{lem:gi_ke_dirgi}.\end{proof}
 
 \begin{theorem}\label{thm:reqi_kr_dirgi}$R_{eqi}\kr DirGI$\end{theorem}
 \begin{proof}
@@ -223,8 +223,8 @@ isomorphism, as in the following two theorems.
     }
     \Return{$G_w=(V_w, E_w)$}
   \end{algorithm}
-  Notice that this machine, as in the machine in the proof of Theorem
-  \ref{thm:req_kr_dirgi}, creates a ``spine'' representing each bit of word
+  Notice that this machine, as in the machine in the proof of
+  \autoref{thm:req_kr_dirgi}, creates a ``spine'' representing each bit of word
   $w$.
 
   Suppose $(x, y)\in R_{eqi}$, so either $x=y$ or $x=\bar{y}$.
@@ -276,8 +276,8 @@ isomorphism, as in the following two theorems.
 \end{proof}
 
 \begin{corollary}$R_{eqi}\kr GI$\end{corollary}
-\begin{proof}Follows directly from Theorem \ref{thm:reqi_kr_dirgi} and Lemma
-  \ref{lem:gi_ke_dirgi}.\end{proof}
+\begin{proof}Follows directly from \autoref{thm:reqi_kr_dirgi} and
+  \autoref{lem:gi_ke_dirgi}.\end{proof}
 
 \begin{theorem}\label{thm:ra_kr_dirgi}$\forall a\in\sigmastar R_a \kr DirGI$
 \end{theorem}
@@ -392,5 +392,5 @@ isomorphism, as in the following two theorems.
 \end{proof}
 
 \begin{corollary}$R_a\kr GI$\end{corollary}
-\begin{proof}Follows directly from Theorem \ref{thm:ra_kr_dirgi} and Lemma
-  \ref{lem:gi_ke_dirgi}.\end{proof}
+\begin{proof}Follows directly from \autoref{thm:ra_kr_dirgi} and
+  \autoref{lem:gi_ke_dirgi}.\end{proof}

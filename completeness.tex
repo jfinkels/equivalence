@@ -1,7 +1,40 @@
+\begin{lemma}\label{lem:rl_eq_rel}Let $L\in\NP$, and let $V$ be a verifier for
+  $L$. Then $R_L=\{((a,x),(a,y))|x=y\plain{or}V(a,x\oplus y)\plain{accepts}\}$
+  is an equivalence relation.\end{lemma}
+\begin{proof}Want to show that $R_L$ is reflexive, symmetric, and transitive.
+  
+  To show $R_L$ is reflexive, we show that $((a,x),(a,x))\in R_L$, because
+  $x=x$.
+
+  To show $R_L$ is symmetric, consider $((a,x),(a,y))\in R_L$. In the case that
+  $x=y$, then $y=x$ because the equality relation is symmetric, so
+  $((a,x),(a,y))\in R_L$. In the case that $V(a,x\oplus y)$ accepts, then
+  $V(a,y\oplus x)$ accepts, because $\oplus$ is commutative, so
+  $((a,y),(a,x))\in R_L$.
+
+  To show $R_L$ is transitive, let $((a,x),(a,y)),((a,y),(a,z))\in R_L$. In the
+  case that $x=y$ and $y=z$, then $x=z$ by the transitivity of the equality
+  relation, so $((a,x),(a,z))\in R_L$. In the case that $x=y$ and $V(a, y\oplus
+  z)$ accepts, then $V(a, x\oplus z)$ accepts, so $((a,x),(a,z))\in R_L$. In
+  the case that $V(a, x\oplus y)$ and $y=z$, then $V(a, x\oplus z)$ accepts, so
+  $((a,x), (a,y))\in R_L$. In the case that $V(a, x\oplus y)$ accepts and $V(a,
+  y\oplus z)$ accepts, then 
+
+  TODO complete this proof
+  %% TODO complete this proof
+\end{proof}
+
 \begin{theorem}\label{thm:krc_npc}If a language $A$ is $\kr$-complete in \NPEq,
   then $A$ is $\mor$-complete in \NP. In other words, if $A$ is \NPEq-complete
   then $A$ is \NP-complete.\end{theorem}
 \begin{proof}
+  Let $L\in\NP$, so there exists deterministic polynomial time verifier, $V$,
+  for $L$ such that given an input $w$ and a correct certificate $c$, $w\in
+  L\iff V(w,c)$ accepts. Define $R_L=\{((a, x),(a, y))|x=y \plain{or} V(a,
+  x\oplus y) \plain{accepts}\}$. $R_L$ is an equivalence relation by
+  \autoref{lem:rl_eq_rel}.
+
+  TODO complete this proof
   %% TODO complete this proof
 \end{proof}
 
@@ -9,20 +42,9 @@
   \NP\,then $GI$ is not $\kr$-complete in \NPEq. In other words, if $GI$ is not
   \NP-complete then $GI$ is not \NPEq-complete.\end{corollary}
 \begin{proof}
-  This is a specific case of the contrapositive statement of Theorem
-  \ref{thm:krc_npc}.
+  This is a specific case of the contrapositive statement of
+  \autoref{thm:krc_npc}.
 \end{proof}
-
-\begin{definition}\label{def:gi_classes}$\GIker$ is the class of problems
-  which are polynomial-time equivalent under kernel reductions to $GI$. In
-  other words, $\GIker=\{A|A\kequiv GI\}$.
-
-  $\GIm$ is the class of problems which are polynomial-time, many-one
-  equivalent to $GI$. In other words, $\GIm=\{A|A\moequiv GI\}$.
-
-  $\GIt$ is the class of problems which are polynomial-time equivalent under
-  Turing reductions to $GI$. In other words, $\GIt=\{A|A\tequiv GI\}$.
-\end{definition}
 
 \begin{lemma}\label{lem:kr_mor}If $A\kr B$ then $A\mor B$.\end{lemma}
 \begin{proof}Since $A\kr B$, $\exists f\in\FP: (x,y)\in A\iff(f(x), f(y))\in
@@ -40,11 +62,8 @@
   \begin{algorithm}[H]
     Compute $f(w)$\;
     Run $N_B$ on input $f(w)$\;
-    \eIf{$N_B(f(w))$ accepts}{
-      \ACCEPT
-    }{
-      \REJECT
-    }
+    \lIf{$N_B(f(w))$ accepts}{\ACCEPT}\;
+    \lElse{\REJECT}\;
   \end{algorithm}
   Since $f$ runs in polynomial time and $N_B$ runs in non-deterministic
   polynomial time, $N_A$ runs in non-deterministic polynomial time. Therefore
@@ -52,26 +71,44 @@
 \end{proof}
 
 \begin{corollary}\label{cor:npeq_closed}$\NPEq$ is closed under polynomial time
-  kernel reductions. In other words, if $R\kr S$ and $S\in\NPEq$ then
-  $R\in\NPEq$.\end{corollary}
-\begin{proof}Follows directly from Lemmas \ref{lem:kr_mor} and
-  \ref{lem:np_closed}.\end{proof}
+  kernel reductions. In other words, if $R$ and $S$ are equivalence relations,
+  such that $R\kr S$ and $S\in\NPEq$, then $R\in\NPEq$.\end{corollary}
+\begin{proof}Suppose $S\in\NPEq$ and $R\kr S$. By \autoref{lem:kr_mor},
+  $R\mor S$. Since $S\in\NPEq\subset\NP$ and $R\mor S$, then $R\in\NP$ by
+  \autoref{lem:np_closed}. Since $R$ is an equivalence relation which can be
+  decided in non-deterministic polynomial time, it is by definition in \NPEq.
+\end{proof}
+
+\begin{definition}\label{def:gi_classes}$\GIker$ is the class of problems
+  which are polynomial-time equivalent under kernel reductions to $GI$. In
+  other words, $\GIker=\{A|A\kequiv GI\}$.
+
+  $\GIm$ is the class of problems which are polynomial-time, many-one
+  equivalent to $GI$. In other words, $\GIm=\{A|A\moequiv GI\}$.
+
+  $\GIt$ is the class of problems which are polynomial-time equivalent under
+  Turing reductions to $GI$. In other words, $\GIt=\{A|A\tequiv GI\}$.
+\end{definition}
+
+\begin{lemma}\end{lemma}
+\begin{proof}\end{proof}
 
 \begin{theorem}\label{thm:giker_neq_npeq}If $GI$ is not \NP-complete then
   $\GIker\neq\NPEq$.\end{theorem}
 \begin{proof}
-  Suppose $GI$ is not \NP-complete. By Corollary \ref{cor:gi_complete}, $GI$ is
-  not \NPEq-complete. Assume $\GIker=\NPEq$. By Definition
-  \ref{def:gi_classes}, $GI$ is complete under kernel reductions in
-  $\GIker$. Hence $GI$ is complete under kernel reductions in \NPEq, or in
-  other words, $GI$ is \NPEq-complete. This is a contradiction. Therefore
-  $\GIker\neq\NPEq$.
+  Suppose $GI$ is not \NP-complete. By \autoref{cor:gi_complete}, $GI$ is not
+  \NPEq-complete. Assume $\GIker=\NPEq$. By \autoref{def:gi_classes}, $GI$ is
+  complete under kernel reductions in $\GIker$. Hence $GI$ is complete under
+  kernel reductions in \NPEq, or in other words, $GI$ is \NPEq-complete. This
+  is a contradiction. Therefore $\GIker\neq\NPEq$.
 \end{proof}
 
 \begin{theorem}If $GI$ is not \NP-complete then
   $\GIker\subsetneq\NPEq$\end{theorem}
-\begin{proof}Let $A\in\GIker$. By Corollary \ref{cor:npeq_closed}, since $A\kr
+\begin{proof}Let $A\in\GIker$. By \autoref{cor:npeq_closed}, since $A\kr
   GI$ by definition of $\GIker$ and since $GI\in\NPEq$, $A\in\NPEq$. Hence
-  $GIker\subset\NPEq$. By Theorem \ref{thm:giker_neq_npeq}, if $GI$ is not
+  $\GIker\subset\NPEq$. By \autoref{thm:giker_neq_npeq}, if $GI$ is not
   \NP-complete then $\GIker\neq\NPEq$. Therefore
   $\GIker\subsetneq\NPEq$.\end{proof}
+
+Now the question is where does $\GIm$ live?
