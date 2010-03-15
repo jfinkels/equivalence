@@ -1,3 +1,4 @@
+%% TODO change this to use N(x\oplus y) accepts
 \begin{lemma}\label{lem:rl_eq_rel}Let $L\in\NP$, and let $V$ be a verifier for
   $L$. Then $R_L=\{((a,x),(a,y))|x=y\plain{or}V(a,x\oplus y)\plain{accepts}\}$
   is an equivalence relation in \PEq.\end{lemma}
@@ -30,25 +31,33 @@
   then $A$ is $\mor$-complete in \NP. In other words, if $A$ is \NPEq-complete
   then $A$ is \NP-complete.\end{theorem}
 \begin{proof}
-  Let $L\in\NP$, so there exists deterministic polynomial time verifier, $V$,
-  for $L$ such that given an input $w$ and a correct certificate $c$, $w\in
-  L\iff V(w,c)$ accepts. Define $R_L=\{((a, x),(a, y))|x=y \plain{or} V(a,
-  x\oplus y) \plain{accepts}\}$. $R_L$ is an equivalence relation in
-  $\PEq\subset\NPEq$ by \autoref{lem:rl_eq_rel}. Since $A$ is $\kr$-complete in
-  \NPEq, $R_L\kr A$, so $\exists f\in\FP:((a,x),(a,y))\in R_L\iff (f(a,x),
-  f(a,y))\in A$.
+  Let $L\in\NP$, so there exists a non-deterministic polynomial-time machine,
+  $N$, which decides $L$, that is, $w\in L\iff N(w)$ accepts. Define
+  $R_L=\{(x,y)|x=y \plain{or} N(x\oplus y) \plain{accepts}\}$. $R_L$ is an
+  equivalence relation in $\NPEq$ by \autoref{lem:rl_eq_rel}. Since $A$ is
+  $\kr$-complete in \NPEq, $R_L\kr A$, so $\exists f\in\FP:(x,y)\in R_L\iff
+  (f(x), f(y))\in A$.
 
   Construct $M\in\FP$ on input $w$:\\
   \begin{algorithm}[H]
-    $x\gets00\ldots01$\;
-    $y\gets w\oplus y$\;
-    \Return{$(f(w,x),f(w,y))$}
+    $x\gets0^{|w|-1}1$\;
+    $y\gets w\oplus x$\;
+    \Return{$(f(x),f(y))$}
   \end{algorithm}
 
+  Suppose $w\in L$, so $N(w)$ accepts. Since $x\oplus y=w$ by construction,
+  $N(x\oplus y)$ accepts. Hence $(x,y)\in R_L$, and $(f(x),f(y))\in A$, since
+  $A$ is $\kr$-complete in \NPEq. Since $M(w)=(f(x),f(y))$ by construction,
+  $M(w)\in A$.
   
+  Suppose $w\notin L$ so $N(w)$ does not accept. Since $x\oplus y=w$,
+  $N(x\oplus y)$ does not accept, so $(x,y)\notin R_L$ and since $A$ is
+  $\kr$-complete in \NPEq, $(f(x), f(y))\notin A$. Since $M(w)=(f(x),f(y))$ by
+  construction, $M(w)\notin A$.
 
-  TODO complete this proof
-  %% TODO complete this proof
+  Therefore $w\in L\iff M(w)\in A$, therefore $A$ is $\mor$-complete in \NP,
+  or in other words, $A$ is \NP-complete.
+  %% TODO double check this proof
 \end{proof}
 
 \begin{corollary}\label{cor:gi_complete}If $GI$ is not $\mor$-complete in
@@ -103,9 +112,6 @@
   Turing reductions to $GI$. In other words, $\GIt=\{A|A\tequiv GI\}$.
 \end{definition}
 
-\begin{lemma}\end{lemma}
-\begin{proof}\end{proof}
-
 \begin{theorem}\label{thm:giker_neq_npeq}If $GI$ is not \NP-complete then
   $\GIker\neq\NPEq$.\end{theorem}
 \begin{proof}
@@ -124,4 +130,9 @@
   \NP-complete then $\GIker\neq\NPEq$. Therefore
   $\GIker\subsetneq\NPEq$.\end{proof}
 
-Now the question is where does $\GIm$ live?
+Now the question is where does $\GIm$ live? There exist exotic problems which
+are not equivalence problems, but which are polynomial-time many-one equivalent
+to the graph isomorphism problem. For example, Kozen's M-tree clique problem is
+not an equivalence problem, but is polynomial-time many-one equivalent to the
+graph isomorphism problem.
+
