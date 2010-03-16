@@ -159,6 +159,28 @@
 
 Now the question is where does $\GIm$ live? There exist exotic problems which
 are not equivalence problems, but which are polynomial-time many-one equivalent
-to the graph isomorphism problem. For example, Kozen's M-tree clique problem is
-not an equivalence problem, but is polynomial-time many-one equivalent to the
-graph isomorphism problem.
+to the graph isomorphism problem. For example, Kozen's M-tree clique problem,
+the problem of recognizing a legitimate regular deck, and the problem of
+recognizing a self-complementary graph are \emph{not} equivalence problems, but
+they are indeed polynomial-time many-one equivalent to the graph isomorphism
+problem. Since they are not equivalence relations, they certainly cannot be
+kernel reduced to graph isomorphism, so $\GIk\subsetneq\GIm$.
+%% TODO references
+
+The next question is are there equivalence relations which many-one reduce to
+graph isomorphism but which do not kernel reduce to graph isomorphism?
+Informally, the question asks if there is some reduction relations such that
+the reduction \emph{requires} information about both elements in each pair
+(because a many-one reduction gets access to both elements $x$ and $y$ when
+$(x,y)\in R$ whereas a kernel reduction gets access only to one at a time). In
+fact, the problem of recognizing a self-complementary graph, when expressed as
+an equivalence relation, may be a candidate for such a problem.
+
+Examining most of the other problems in the class $\GIm$ reveals that nearly
+all other (known) reductions can be expressed as kernel reductions. Many of the
+techniques involve either edge replacement or composition of graphs, which can
+both be performed on either graph without knowledge of the other. However, the
+self-complementary graph problem, which is $SCGI=\{G|G \plain{is isomorphic to}
+\bar{G}\}$, does not seem to have this property. Note that this set can be
+alternately defined as an equivalence relation, $SCGI=\{(G_1,
+G_2)|G_1=\bar{G_2} or \}$.
