@@ -1,31 +1,58 @@
-%% TODO change this to use N(x\oplus y) accepts
-\begin{lemma}\label{lem:rl_eq_rel}Let $L\in\NP$, and let $V$ be a verifier for
-  $L$. Then $R_L=\{((a,x),(a,y))|x=y\plain{or}V(a,x\oplus y)\plain{accepts}\}$
-  is an equivalence relation in \PEq.\end{lemma}
-\begin{proof}Want to show that $R_L$ is reflexive, symmetric, and transitive.
+\begin{lemma}\label{lem:rl_eq_rel}Let $L\in\NP$, and let $N$ be the
+  non-deterministic polynomial-time machine that decides $L$.  Then
+  $R_L=\{(x,y)|x=y \plain{or} N(x\oplus y) \plain{accepts}\}$ is an equivalence
+  relation in \NPEq.\end{lemma}
+\begin{proof}To show that $R_L$ is an equivalence relation, we must show that
+  $R_L$ is reflexive, symmetric, and transitive.
   
-  To show $R_L$ is reflexive, we show that $((a,x),(a,x))\in R_L$, because
-  $x=x$.
+  Since $x=x$, $(x,x)\in R_L$, so $R_L$ is reflexive.
 
-  To show $R_L$ is symmetric, consider $((a,x),(a,y))\in R_L$. In the case that
-  $x=y$, then $y=x$ because the equality relation is symmetric, so
-  $((a,x),(a,y))\in R_L$. In the case that $V(a,x\oplus y)$ accepts, then
-  $V(a,y\oplus x)$ accepts, because $\oplus$ is commutative, so
-  $((a,y),(a,x))\in R_L$.
+  To show $R_L$ is symmetric, consider $(x,y)\in R_L$. In the case that $x=y$,
+  then $y=x$ because the equality relation is symmetric, so $(y,x)\in R_L$. In
+  the case that $N(x\oplus y)$ accepts, then $V(y\oplus x)$ accepts, because
+  $\oplus$ is commutative, so $(y,x)\in R_L$.
 
-  To show $R_L$ is transitive, let $((a,x),(a,y)),((a,y),(a,z))\in R_L$. In the
-  case that $x=y$ and $y=z$, then $x=z$ by the transitivity of the equality
-  relation, so $((a,x),(a,z))\in R_L$. In the case that $x=y$ and $V(a, y\oplus
-  z)$ accepts, then $V(a, x\oplus z)$ accepts, so $((a,x),(a,z))\in R_L$. In
-  the case that $V(a, x\oplus y)$ and $y=z$, then $V(a, x\oplus z)$ accepts, so
-  $((a,x), (a,y))\in R_L$. In the case that $V(a, x\oplus y)$ accepts and $V(a,
-  y\oplus z)$ accepts and $x\neq y$ and $y\neq z$, if $x=z$ then
-  $((a,x),(a,z))\in R_L$. If $x\neq z$, let $c_1=x\oplus y$ and let
+  To show $R_L$ is transitive, let $(x,y),(y,z)\in R_L$. In the case that $x=y$
+  and $y=z$, then $x=z$ by the transitivity of the equality relation, so
+  $(x,z)\in R_L$. In the case that $x=y$ and $N(y\oplus z)$ accepts, then
+  $N(x\oplus z)$ accepts, so $(x,z)\in R_L$. In the case that $N( x\oplus y)$
+  and $y=z$, then $N(x\oplus z)$ accepts, so $(x,z)\in R_L$. In the case that
+  $N(x\oplus y)$ accepts and $N(y\oplus z)$ accepts and $x\neq y$ and $y\neq
+  z$, if $x=z$ then $(x,z)\in R_L$. If $x\neq z$, let $c_1=x\oplus y$ and let
   $c_2=y\oplus z$. Then $c_1\oplus c_2=x\oplus y\oplus y\oplus z=x\oplus z$.
 
   TODO complete this proof
   %% TODO complete this proof
 \end{proof}
+
+%% proof for V(a, x xor y) in \PEq
+%% \begin{lemma}\label{lem:rl_eq_rel}Let $L\in\NP$, and let $V$ be a verifier for
+%%   $L$. Then $R_L=\{((a,x),(a,y))|x=y\plain{or}V(a,x\oplus y)\plain{accepts}\}$
+%%   is an equivalence relation in \PEq.\end{lemma}
+%% \begin{proof}Want to show that $R_L$ is reflexive, symmetric, and transitive.
+  
+%%   To show $R_L$ is reflexive, we show that $((a,x),(a,x))\in R_L$, because
+%%   $x=x$.
+
+%%   To show $R_L$ is symmetric, consider $((a,x),(a,y))\in R_L$. In the case that
+%%   $x=y$, then $y=x$ because the equality relation is symmetric, so
+%%   $((a,x),(a,y))\in R_L$. In the case that $V(a,x\oplus y)$ accepts, then
+%%   $V(a,y\oplus x)$ accepts, because $\oplus$ is commutative, so
+%%   $((a,y),(a,x))\in R_L$.
+
+%%   To show $R_L$ is transitive, let $((a,x),(a,y)),((a,y),(a,z))\in R_L$. In the
+%%   case that $x=y$ and $y=z$, then $x=z$ by the transitivity of the equality
+%%   relation, so $((a,x),(a,z))\in R_L$. In the case that $x=y$ and $V(a, y\oplus
+%%   z)$ accepts, then $V(a, x\oplus z)$ accepts, so $((a,x),(a,z))\in R_L$. In
+%%   the case that $V(a, x\oplus y)$ and $y=z$, then $V(a, x\oplus z)$ accepts, so
+%%   $((a,x), (a,y))\in R_L$. In the case that $V(a, x\oplus y)$ accepts and $V(a,
+%%   y\oplus z)$ accepts and $x\neq y$ and $y\neq z$, if $x=z$ then
+%%   $((a,x),(a,z))\in R_L$. If $x\neq z$, let $c_1=x\oplus y$ and let
+%%   $c_2=y\oplus z$. Then $c_1\oplus c_2=x\oplus y\oplus y\oplus z=x\oplus z$.
+
+%%   TODO complete this proof
+%%   %% TODO complete this proof
+%% \end{proof}
 
 \begin{theorem}\label{thm:krc_npc}If a language $A$ is $\kr$-complete in \NPEq,
   then $A$ is $\mor$-complete in \NP. In other words, if $A$ is \NPEq-complete
@@ -135,4 +162,3 @@ are not equivalence problems, but which are polynomial-time many-one equivalent
 to the graph isomorphism problem. For example, Kozen's M-tree clique problem is
 not an equivalence problem, but is polynomial-time many-one equivalent to the
 graph isomorphism problem.
-
