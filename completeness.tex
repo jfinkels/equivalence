@@ -1,166 +1,8 @@
-%% \begin{lemma}\label{lem:rl_eq_rel}Let $L\in\NP$, and let $N$ be the
-%%   non-deterministic polynomial-time machine that decides $L$.  Then
-%%   $R_L=\{(x,y)|x=y \plain{or} N(x\oplus y) \plain{accepts}\}$ is an equivalence
-%%   relation in \NPEq.\end{lemma}
-%% \begin{proof}To show that $R_L$ is an equivalence relation, we must show that
-%%   $R_L$ is reflexive, symmetric, and transitive.
-  
-%%   Since $x=x$, $(x,x)\in R_L$, so $R_L$ is reflexive.
-
-%%   To show $R_L$ is symmetric, consider $(x,y)\in R_L$. In the case that $x=y$,
-%%   then $y=x$ because the equality relation is symmetric, so $(y,x)\in R_L$. In
-%%   the case that $N(x\oplus y)$ accepts, then $V(y\oplus x)$ accepts, because
-%%   $\oplus$ is commutative, so $(y,x)\in R_L$.
-
-%%   To show $R_L$ is transitive, let $(x,y),(y,z)\in R_L$. In the case that $x=y$
-%%   and $y=z$, then $x=z$ by the transitivity of the equality relation, so
-%%   $(x,z)\in R_L$. In the case that $x=y$ and $N(y\oplus z)$ accepts, then
-%%   $N(x\oplus z)$ accepts, so $(x,z)\in R_L$. In the case that $N( x\oplus y)$
-%%   and $y=z$, then $N(x\oplus z)$ accepts, so $(x,z)\in R_L$. In the case that
-%%   $N(x\oplus y)$ accepts and $N(y\oplus z)$ accepts and $x\neq y$ and $y\neq
-%%   z$, if $x=z$ then $(x,z)\in R_L$. If $x\neq z$, let $c_1=x\oplus y$ and let
-%%   $c_2=y\oplus z$. Then $c_1\oplus c_2=x\oplus y\oplus y\oplus z=x\oplus z$.
-
-%%   TODO complete this proof
-%%   %% TODO complete this proof
-%% \end{proof}
-
-%% proof for V(a, x xor y) in \PEq
-%% \begin{lemma}\label{lem:rl_eq_rel}Let $L\in\NP$, and let $V$ be a verifier for
-%%   $L$. Then $R_L=\{((a,x),(a,y))|x=y\plain{or}V(a,x\oplus y)\plain{accepts}\}$
-%%   is an equivalence relation in \PEq.\end{lemma}
-%% \begin{proof}Want to show that $R_L$ is reflexive, symmetric, and transitive.
-  
-%%   To show $R_L$ is reflexive, we show that $((a,x),(a,x))\in R_L$, because
-%%   $x=x$.
-
-%%   To show $R_L$ is symmetric, consider $((a,x),(a,y))\in R_L$. In the case that
-%%   $x=y$, then $y=x$ because the equality relation is symmetric, so
-%%   $((a,x),(a,y))\in R_L$. In the case that $V(a,x\oplus y)$ accepts, then
-%%   $V(a,y\oplus x)$ accepts, because $\oplus$ is commutative, so
-%%   $((a,y),(a,x))\in R_L$.
-
-%%   To show $R_L$ is transitive, let $((a,x),(a,y)),((a,y),(a,z))\in R_L$. In the
-%%   case that $x=y$ and $y=z$, then $x=z$ by the transitivity of the equality
-%%   relation, so $((a,x),(a,z))\in R_L$. In the case that $x=y$ and $V(a, y\oplus
-%%   z)$ accepts, then $V(a, x\oplus z)$ accepts, so $((a,x),(a,z))\in R_L$. In
-%%   the case that $V(a, x\oplus y)$ and $y=z$, then $V(a, x\oplus z)$ accepts, so
-%%   $((a,x), (a,y))\in R_L$. In the case that $V(a, x\oplus y)$ accepts and $V(a,
-%%   y\oplus z)$ accepts and $x\neq y$ and $y\neq z$, if $x=z$ then
-%%   $((a,x),(a,z))\in R_L$. If $x\neq z$, let $c_1=x\oplus y$ and let
-%%   $c_2=y\oplus z$. Then $c_1\oplus c_2=x\oplus y\oplus y\oplus z=x\oplus z$.
-
-%%   TODO complete this proof
-%%   %% TODO complete this proof
-%% \end{proof}
-
-%% \begin{theorem}\label{thm:krc_npc}If a language $A$ is $\kr$-complete in \NPEq,
-%%   then $A$ is $\mor$-complete in \NP. In other words, if $A$ is \NPEq-complete
-%%   then $A$ is \NP-complete.\end{theorem}
-%% \begin{proof}
-%%   Let $L\in\NP$, so there exists a non-deterministic polynomial-time machine,
-%%   $N$, which decides $L$, that is, $w\in L\iff N(w)$ accepts. Define
-%%   $R_L=\{(x,y)|x=y \plain{or} N(x\oplus y) \plain{accepts}\}$. $R_L$ is an
-%%   equivalence relation in $\NPEq$ by \autoref{lem:rl_eq_rel}. Since $A$ is
-%%   $\kr$-complete in \NPEq, $R_L\kr A$, so $\exists f\in\FP:(x,y)\in R_L\iff
-%%   (f(x), f(y))\in A$.
-
-%%   Construct $M\in\FP$ on input $w$:\\
-%%   \begin{algorithm}[H]
-%%     $x\gets0^{|w|-1}1$\;
-%%     $y\gets w\oplus x$\;
-%%     \Return{$(f(x),f(y))$}
-%%   \end{algorithm}
-
-%%   Suppose $w\in L$, so $N(w)$ accepts. Since $x\oplus y=w$ by construction,
-%%   $N(x\oplus y)$ accepts. Hence $(x,y)\in R_L$, and $(f(x),f(y))\in A$, since
-%%   $A$ is $\kr$-complete in \NPEq. Since $M(w)=(f(x),f(y))$ by construction,
-%%   $M(w)\in A$.
-  
-%%   Suppose $w\notin L$ so $N(w)$ does not accept. Since $x\oplus y=w$,
-%%   $N(x\oplus y)$ does not accept, so $(x,y)\notin R_L$ and since $A$ is
-%%   $\kr$-complete in \NPEq, $(f(x), f(y))\notin A$. Since $M(w)=(f(x),f(y))$ by
-%%   construction, $M(w)\notin A$.
-
-%%   Therefore $w\in L\iff M(w)\in A$, therefore $A$ is $\mor$-complete in \NP,
-%%   or in other words, $A$ is \NP-complete.
-%%   %% TODO double check this proof
-%% \end{proof}
-
-%% \begin{corollary}\label{cor:gi_complete}If $GI$ is not $\mor$-complete in
-%%   \NP\,then $GI$ is not $\kr$-complete in \NPEq. In other words, if $GI$ is not
-%%   \NP-complete then $GI$ is not \NPEq-complete.\end{corollary}
-%% \begin{proof}
-%%   This is a specific case of the contrapositive statement of
-%%   \autoref{thm:krc_npc}.
-%% \end{proof}
-
-%% \begin{lemma}\label{lem:kr_mor}If $A\kr B$ then $A\mor B$.\end{lemma}
-%% \begin{proof}Since $A\kr B$, $\exists f\in\FP: (x,y)\in A\iff(f(x), f(y))\in
-%%   B$. Define $g\in FP$ by $g(x,y)=(f(x), f(y))$. Therefore $A\mor B$ by
-%%   $g$.\end{proof}
-
-%% \begin{lemma}\label{lem:np_closed}$\NP$ is closed under polynomial-time,
-%%   many-one reductions. In other words, if $A\mor B$ and $B\in\NP$ then
-%%   $A\in\NP$.\end{lemma}
-%% \begin{proof}
-%%   Since $B\in\NP$, there exists a non-deterministic polynomial time Turing
-%%   machine which decides $B$; call it $N_B$. Since $A\mor B$, $\exists f\in\FP$,
-%%   such that $w\in A\iff f(w)\in B$. Construct non-deterministic Turing machine
-%%   $N_A$ on input $w$:\\
-%%   \begin{algorithm}[H]
-%%     Compute $f(w)$\;
-%%     Run $N_B$ on input $f(w)$\;
-%%     \lIf{$N_B(f(w))$ accepts}{\ACCEPT}\;
-%%     \lElse{\REJECT}\;
-%%   \end{algorithm}
-%%   Since $f$ runs in polynomial time and $N_B$ runs in non-deterministic
-%%   polynomial time, $N_A$ runs in non-deterministic polynomial time. Therefore
-%%   $A\in\NP$.
-%% \end{proof}
-
-%% \begin{corollary}\label{cor:npeq_closed}$\NPEq$ is closed under polynomial time
-%%   kernel reductions. In other words, if $R$ and $S$ are equivalence relations,
-%%   such that $R\kr S$ and $S\in\NPEq$, then $R\in\NPEq$.\end{corollary}
-%% \begin{proof}Suppose $S\in\NPEq$ and $R\kr S$. By \autoref{lem:kr_mor},
-%%   $R\mor S$. Since $S\in\NPEq\subset\NP$ and $R\mor S$, then $R\in\NP$ by
-%%   \autoref{lem:np_closed}. Since $R$ is an equivalence relation which can be
-%%   decided in non-deterministic polynomial time, it is by definition in \NPEq.
-%% \end{proof}
-
-%% \begin{definition}\label{def:gi_classes}$\GIker$ is the class of problems
-%%   which are polynomial-time equivalent under kernel reductions to $GI$. In
-%%   other words, $\GIker=\{A|A\kequiv GI\}$.
-
-%%   $\GIm$ is the class of problems which are polynomial-time, many-one
-%%   equivalent to $GI$. In other words, $\GIm=\{A|A\moequiv GI\}$.
-
-%%   $\GIt$ is the class of problems which are polynomial-time equivalent under
-%%   Turing reductions to $GI$. In other words, $\GIt=\{A|A\tequiv GI\}$.
-%% \end{definition}
-
-%% \begin{theorem}\label{thm:giker_neq_npeq}If $GI$ is not \NP-complete then
-%%   $\GIker\neq\NPEq$.\end{theorem}
-%% \begin{proof}
-%%   Suppose $GI$ is not \NP-complete. By \autoref{cor:gi_complete}, $GI$ is not
-%%   \NPEq-complete. Assume $\GIker=\NPEq$. By \autoref{def:gi_classes}, $GI$ is
-%%   complete under kernel reductions in $\GIker$. Hence $GI$ is complete under
-%%   kernel reductions in \NPEq, or in other words, $GI$ is \NPEq-complete. This
-%%   is a contradiction. Therefore $\GIker\neq\NPEq$.
-%% \end{proof}
-
-%% \begin{theorem}If $GI$ is not \NP-complete then
-%%   $\GIker\subsetneq\NPEq$\end{theorem}
-%% \begin{proof}Let $A\in\GIker$. By \autoref{cor:npeq_closed}, since $A\kr
-%%   GI$ by definition of $\GIker$ and since $GI\in\NPEq$, $A\in\NPEq$. Hence
-%%   $\GIker\subset\NPEq$. By \autoref{thm:giker_neq_npeq}, if $GI$ is not
-%%   \NP-complete then $\GIker\neq\NPEq$. Therefore
-%%   $\GIker\subsetneq\NPEq$.\end{proof}
-
 \begin{definition}
-  $R_{KC}=\{((G_1, k_1), (G_2, k_2))| G_1 \plain{is isomorphic to} G_2
-  \plain{or} \\(G_1 \plain{has a clique of size} k_1 \plain{and} G_2 \plain{has
-    a clique of size} k_2 \plain{and} k_1=k_2)\}$
+  \hangindent=1.2in
+  $R_{KC}=\{((G_1, k_1), (G_2, k_2))| k_1=k_2 \plain{and} (G_1\cong G_2
+  \plain{or}\\ (G_1 \plain{has a clique of size} k_1 \plain{and} G_2 \plain{has
+  a clique of size} k_2))\}$
 \end{definition}
 
 \begin{theorem}$R_{KC}$ is an equivalence relation.\end{theorem}
@@ -223,15 +65,16 @@
   which comprise a clique of size $k$.
 
   To show that $R_{KC}\in\NP$, we construct a deterministic polynomial time
-  verifier $M$ for $R_{KC}$. On input $(((G_1, k), (G_2, k)), c)$:\\
+  verifier $M$ for $R_{KC}$. On input $(((G_1, k_1), (G_2, k_2)), c)$:\\
   \begin{algorithm}[H]
+    If $k_1\neq k_2$, \REJECT\;
     \If{$c$ \textnormal{is the encoding of a mapping}}{
       Run $M_1$ on input $(G_1, G_2, c)$\;
       If $M_1$ accepts, \ACCEPT; otherwise \REJECT\;
     }
     \If{$c=(c_1, c_2)$ \textnormal{is the encoding of two cliques}}{
-      Run $M_2$ on input $(G_1, k, c_1)$\;
-      Run $M_2$ on input $(G_2, k, c_2)$\;
+      Run $M_2$ on input $(G_1, k_1, c_1)$\;
+      Run $M_2$ on input $(G_2, k_2, c_2)$\;
       If $M_2$ accepts on both inputs, \ACCEPT; otherwise \REJECT\;
     }
   \end{algorithm}
@@ -251,12 +94,13 @@
   is \NP-hard. To do this, we construct a polynomial time many-one reduction
   from $CLIQUE$, which is \NP-complete, to $R_{KC}$.
 
-  Construct machine $M$ on input $(G, k)$ which outputs $((G, k), (K_k, k))$,
-  where $K_k$ is the complete graph with $k$ vertices.
+  Construct machine $M\in\FP$ on input $(G, k)$ which outputs $((G, k), (K_k,
+  k))$, where $K_k$ is the complete graph with $k$ vertices.
 
   Suppose $(G,k)\in CLIQUE$, so $G$ has a clique of size $k$. Then
   $M((G,k))=((G,k), (K_k, k))\in R_{KC}$, because $G$ has a clique of size
-  $k$ by hypothesis and $K_k$ has a clique of size $k$ by construction.
+  $k$ by hypothesis and $K_k$ has a clique of size $k$ by construction,
+  specifically, the set of all vertices in $K_k$.
   
   Suppose $(G,k)\notin CLIQUE$, so $G$ does not have a clique of size $k$ and
   $M((G,k))=((G,k), (K_k, k))$. If $G$ were isomorphic to $K_k$, then it would
@@ -276,16 +120,23 @@
   $R_{KC}\in\NPC$, so $R_{KC}\in\NPEq\cap\NPC$.
 \end{proof}
 
+Since $R_{KC}$ is both in $\NPEq$ and \NP-complete, we want to show that it may
+be a candidate for an \NPEq-complete, problem. In other words, is it true that
+all equivalence problems in $\NPEq$ kernel reduce to $R_{KC}$? A handful of
+equivalence problems in $\NPEq$ kernel reduce to graph isomorphism, and as the
+following theorem shows, we can kernel reduce the graph isomorphism problem to
+$R_{KC}$.
+
 \begin{theorem}$GI\kr R_{KC}$\end{theorem}
 \begin{proof}
   Construct machine $f\in\FP$ defined for all graphs $G=(V,E)$ by
   $f(G)=(G,|V|+1)$.
 
-  Suppose $(G_1, G_2)\in GI$, so $G_1$ is isomorphic to $G_2$. This implies
-  $|V_1|=|V_2|$ and thus $|V_1|+1=|V_2|+1$. Now $f(G_1)=(G_1, |V_1|+1)$ and
-  $f(G_2)=(G_2, |V_2|+1)$. Since $G_1$ is isomorphic to $G_2$ and
-  $|V_1|+1=|V_2|+1$, then $((G_1, |V_1|+1),(G_2, |V_2|+1))=(f(G_1), f(G_2))\in
-  R_{KC}$.
+  Let $G_1=(V_1, E_1)$ and $G_2=(V_2, E_2)$, and suppose $(G_1, G_2)\in GI$, so
+  $G_1$ is isomorphic to $G_2$. This implies $|V_1|=|V_2|$ and thus
+  $|V_1|+1=|V_2|+1$. Now $f(G_1)=(G_1, |V_1|+1)$ and $f(G_2)=(G_2,
+  |V_2|+1)$. Since $G_1$ is isomorphic to $G_2$ and $|V_1|+1=|V_2|+1$, then
+  $((G_1, |V_1|+1),(G_2, |V_2|+1))=(f(G_1), f(G_2))\in R_{KC}$.
   
   Suppose $(G_1, G_2)\notin GI$, so $G_1$ is not isomorphic to $G_2$. Since
   $G_1$ cannot have a clique of size $|V_1|+1$, and further, since $G_2$ cannot
