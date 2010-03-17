@@ -157,11 +157,12 @@
 %%   \NP-complete then $\GIker\neq\NPEq$. Therefore
 %%   $\GIker\subsetneq\NPEq$.\end{proof}
 
-\begin{definition}$R_{KC}=\{((G_1, k), (G_2, k))| G_1 \plain{is isomorphic to}
-  G_2 \plain{or} \\(G_1 \plain{has a clique of size} k \plain{and} G_2
-  \plain{has a clique of size} k)\}$\end{definition}
+\begin{definition}
+  $R_{KC}=\{((G_1, k_1), (G_2, k_2))| G_1 \plain{is isomorphic to} G_2
+  \plain{or} \\(G_1 \plain{has a clique of size} k_1 \plain{and} G_2 \plain{has
+    a clique of size} k_2 \plain{and} k_1=k_2)\}$
+\end{definition}
 
-% TODO note that this is true for a fixed k
 \begin{theorem}$R_{KC}$ is an equivalence relation.\end{theorem}
 \begin{proof}To show that $R_{KC}$ is an equivalence relation, we must show
   that it is reflexive, symmetric, and transitive.
@@ -169,26 +170,34 @@
   Since $G$ is isomorphic to $G$ for all graphs $G$, $((G,k),(G,k))\in R_{KC}$,
   for all $k\in\mathbb{N}$, so $R_{KC}$ is reflexive.
 
-  To show that $R_{KC}$ is symmetric, suppose $((G_1, k), (G_2, k))\in
+  To show that $R_{KC}$ is symmetric, suppose $((G_1, k_1), (G_2, k_2))\in
   R_{KC}$. In the case that $G_1$ is isomorphic to $G_2$, then $G_2$ is
   isomorphic to $G_1$ because the isomorphism relation is symmetric, so
-  $((G_2,k),(G_1,k))\in R_{KC}$. In the case that $G_1$ has a clique of size
-  $k$ and $G_2$ has a clique of size $k$, then $((G_2,k),(G_1,k))\in R_{KC}$
-  because the logical conjunction operation is commutative.
+  $((G_2,k_2),(G_1,k_1))\in R_{KC}$. In the case that $G_1$ has a clique of
+  size $k_1$ and $G_2$ has a clique of size $k_2$ and $k_1=k_2$, then
+  $((G_2,k_2),(G_1,k_1))\in R_{KC}$ because the logical conjunction operation
+  is commutative over propositions.
 
-  To show that $R_{KC}$ is transitive, suppose $((G_1, k), (G_2, k))\in R_{KC}$
-  and $((G_2, k), (G_3, k))\in R_{KC}$. In the case that $G_1$ is isomorphic to
-  $G_2$ and $G_2$ is isomorphic to $G_3$, then $G_1$ is isomorphic to $G_3$ so
-  $((G_1, k), (G_3, k))\in R_{KC}$. In the case that $G_1$ is isomorphic to
-  $G_2$ and $G_2$ has a clique of size $k$ and $G_3$ has a clique of size $k$,
-  then $G_1$ has a clique of size $k$ and $G_3$ has a clique of size $k$, so
-  $((G_1, k), (G_3, k))\in R_{KC}$. In the case that $G_1$ has a clique of size
-  $k$ and $G_2$ has a clique of size $k$ and $G_2$ is isomorphic to $G_3$, then
-  $G_1$ has a clique of size $k$ and $G_3$ has a clique of size $k$, so $((G_1,
-  k), (G_3, k))\in R_{KC}$. In the case that $G_1$ has a clique of size $k$ and
-  $G_2$ has a clique of size $k$ and $G_3$ has a clique of size $k$, then $G_1$
-  has a clique of size $k$ and $G_3$ has a clique of size $k$, so $((G_1, k),
-  (G_3, k))\in R_{KC}$.
+  To show that $R_{KC}$ is transitive, suppose $((G_1, k_1), (G_2, k_2))\in
+  R_{KC}$ and $((G_2, k_2), (G_3, k_3))\in R_{KC}$. Since $k_1=k_2$ and
+  $k_2=k_3$, then $k_1=k_3$ by the transitivity of the equality relation. There
+  are four possible cases for the remaining properties.
+
+  In the case that $G_1$ is isomorphic to $G_2$ and $G_2$ is isomorphic to
+  $G_3$, then $G_1$ is isomorphic to $G_3$ so $((G_1, k_1), (G_3, k_3))\in
+  R_{KC}$.
+
+  In the case that $G_1$ is isomorphic to $G_2$, $G_2$ has a clique of size
+  $k_2$, $G_3$ has a clique of size $k_3$, then $G_1$ has a clique of size
+  $k_2=k_1$, so $((G_1, k_1), (G_3, k_3))\in R_{KC}$.
+
+  In the case that $G_1$ has a clique of size $k_1$, $G_2$ has a clique of size
+  $k_2$, and $G_2$ is isomorphic to $G_3$, then $G_3$ has a clique
+  of size $k_2=k_3$, so $((G_1, k_1), (G_3, k_3))\in R_{KC}$.
+
+  In the case that $G_1$ has a clique of size $k_1$, $G_2$ has a clique of size
+  $k_2$, and $G_3$ has a clique of size $k_3$, then $((G_1, k_1), (G_3,
+  k_3))\in R_{KC}$.
 
   Therefore $R_{KC}$ is reflexive, symmetric, and transitive, hence it is an
   equivalence relation.
@@ -198,8 +207,9 @@
   k\}$\end{definition}
 
 \begin{lemma}$CLIQUE$ is \NP-complete.\end{lemma}
-\begin{proof}The proof is a polynomial time reduction from $3SAT$, which is
-  \NP-complete.\end{proof}
+\begin{proof}
+  The proof is a polynomial time reduction from $3SAT$, which is \NP-complete.
+\end{proof}
 
 %% TODO rewrite algorithms using \KwIn and \KwOut
 \begin{lemma}\label{lem:rkc_np}$R_{KC}\in\NP$\end{lemma}
@@ -230,13 +240,16 @@
 \end{proof}
 
 \begin{corollary}\label{cor:rkc_npeq}$R_{KC}\in\NPEq$\end{corollary}
-\begin{proof}Since $R_{KC}\in\NP$ by \autoref{lem:rkc_np} and $R_{KC}$ is an
-  equivalence problem, then by \autoref{def:peq}, $R_{KC}\in\NPEq$.\end{proof}
+\begin{proof}
+  Since $R_{KC}\in\NP$ by \autoref{lem:rkc_np} and $R_{KC}$ is an equivalence
+  problem, then by \autoref{def:peq}, $R_{KC}\in\NPEq$.
+\end{proof}
 
-\begin{theorem}$R_{KC}$ is \NP-complete.\end{theorem}
-\begin{proof}Since $R_{KC}\in\NP$ by \autoref{lem:rkc_np}, we need only show
-  that $R_{KC}$ is \NP-hard. To do this, we construct a polynomial time
-  many-one reduction from $CLIQUE$, which is \NP-complete, to $R_{KC}$.
+\begin{theorem}\label{thm:rkc_npc}$R_{KC}$ is \NP-complete.\end{theorem}
+\begin{proof}
+  Since $R_{KC}\in\NP$ by \autoref{lem:rkc_np}, we need only show that $R_{KC}$
+  is \NP-hard. To do this, we construct a polynomial time many-one reduction
+  from $CLIQUE$, which is \NP-complete, to $R_{KC}$.
 
   Construct machine $M$ on input $(G, k)$ which outputs $((G, k), (K_k, k))$,
   where $K_k$ is the complete graph with $k$ vertices.
@@ -252,12 +265,37 @@
   exists. Although $K_k$ certainly has a clique of size $k$, specifically the
   set of all its vertices, $G$ does not have a clique of size $k$ by
   hypothesis, so $((G, k), (K_k, k))\notin R_{KC}$.
+  
+  Therefore $(G,k)\in CLIQUE\iff M((G,k))\in R_{KC}$, so $CLIQUE\mor R_{KC}$,
+  and hence $R_{KC}$ is \NP-complete.
+\end{proof}
+
+\begin{theorem}$\NPC\cap\NPEq\neq\emptyset$\end{theorem}
+\begin{proof}
+  By \autoref{cor:rkc_npeq}, $R_{KC}\in\NPEq$, and by \autoref{thm:rkc_npc},
+  $R_{KC}\in\NPC$, so $R_{KC}\in\NPEq\cap\NPC$.
 \end{proof}
 
 \begin{theorem}$GI\kr R_{KC}$\end{theorem}
 \begin{proof}
+  Construct machine $f\in\FP$ defined for all graphs $G=(V,E)$ by
+  $f(G)=(G,|V|+1)$.
 
+  Suppose $(G_1, G_2)\in GI$, so $G_1$ is isomorphic to $G_2$. This implies
+  $|V_1|=|V_2|$ and thus $|V_1|+1=|V_2|+1$. Now $f(G_1)=(G_1, |V_1|+1)$ and
+  $f(G_2)=(G_2, |V_2|+1)$. Since $G_1$ is isomorphic to $G_2$ and
+  $|V_1|+1=|V_2|+1$, then $((G_1, |V_1|+1),(G_2, |V_2|+1))=(f(G_1), f(G_2))\in
+  R_{KC}$.
+  
+  Suppose $(G_1, G_2)\notin GI$, so $G_1$ is not isomorphic to $G_2$. Since
+  $G_1$ cannot have a clique of size $|V_1|+1$, and further, since $G_2$ cannot
+  have a clique of size $|V_2|+1$, then $((G_1, |V_1|+1), (G_2,
+  |V_2|+1))=(f(G_1), f(G_2))\notin R_{KC}$.
+
+  Therefore $(G_1, G_2)\in GI\iff (f(G_1), f(G_2))\in R_{KC}$, so $GI\kr
+  R_{KC}$.
 \end{proof}
+
 
 %% TODO rewrite this section
 
