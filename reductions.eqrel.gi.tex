@@ -123,11 +123,18 @@
   exclusively.
 
   Since the only edges in $E_x$ are the edges $(v_i, v_{one,0})$ when $x_i=1$
-  and $(v_i, v_{zero})$ when $x_i=0$, then $(v_i, v_{one,0})\in E_x \iff
-  (\phi(v_i), \phi(v_{one,0}))=(\phi_1(v_i), v_{one,0})\in E_y$, and $(v_i,
-  v_{zero})\in E_x \iff (\phi(v_i), \phi(v_{zero})) = (\phi_0(v_i),
-  v_{zero})\in E_y$. Therefore $\phi$ describes a graph isomorphism, so $G_1$
-  is isomorphic to $G_2$.
+  and $(v_i, v_{zero})$ when $x_i=0$, then 
+  \begin{displaymath}
+    (v_i, v_{one,0})\in E_x \iff (\phi(v_i), \phi(v_{one,0}))=(\phi_1(v_i),
+    v_{one,0})\in E_y
+  \end{displaymath}
+  and 
+  \begin{displaymath}
+    (v_i, v_{zero})\in E_x \iff (\phi(v_i), \phi(v_{zero})) = (\phi_0(v_i),
+    v_{zero})\in E_y
+  \end{displaymath}
+  Therefore $\phi$ describes a graph isomorphism, so $G_1$ is isomorphic to
+  $G_2$.
   
   Suppose $(x, y)\notin R_{bc}$, so $x$ and $y$ have a different number of
   ones. Let $k$ be the number of ones in $x$, and $l$ be the number of ones in
@@ -149,8 +156,12 @@ problem.
 
 \begin{lemma}\label{lem:gi_ke_dirgi}$GI\kequiv DirGI$\end{lemma}
 \begin{proof}
-  %% TODO complete this proof
-  %% provide simply a reference? see the graph isomorphism book
+  To show $GI\kr DirGI$, replace each undirected edge in the graph with a pair
+  of complementary directed edges.
+  
+  To show $DirGI\kr GI$, replace each directed edge in the graph with a set of
+  vertices and edges that enforces an ordering between the vertices.
+  %% TODO provide simply a reference? see the graph isomorphism book
 \end{proof}
 
 From \autoref{lem:gi_ke_dirgi}, we can use a kernel reduction to directed graph
