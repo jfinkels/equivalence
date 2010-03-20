@@ -114,18 +114,20 @@
   and hence $R_{KC}$ is \NP-complete.
 \end{proof}
 
-\begin{theorem}$\NPC\cap\NPEq\neq\emptyset$\end{theorem}
+\begin{lemma}\label{lem:kr_mor}If $A\kr B$ then $A\mor B$.\end{lemma}
 \begin{proof}
-  By \autoref{cor:rkc_npeq}, $R_{KC}\in\NPEq$, and by \autoref{thm:rkc_npc},
-  $R_{KC}\in\NPC$, so $R_{KC}\in\NPEq\cap\NPC$.
+  Since $A\kr B$, $\exists f\in\FP: (x,y)\in A\iff(f(x), f(y))\in B$. Define
+  $g\in FP$ by $g(x,y)=(f(x), f(y))$. Therefore $A\mor B$ by $g$.
 \end{proof}
 
-Since $R_{KC}$ is both in $\NPEq$ and \NP-complete, we want to show that it may
-be a candidate for an \NPEq-complete, problem. In other words, is it true that
-all equivalence problems in $\NPEq$ kernel reduce to $R_{KC}$? A handful of
-equivalence problems in $\NPEq$ kernel reduce to graph isomorphism, and as the
-following theorem shows, we can kernel reduce the graph isomorphism problem to
-$R_{KC}$.
+\begin{theorem}If a language $A$ is \NPEq-complete, then $A$ is
+  \NP-complete.\end{theorem}
+\begin{proof}
+  If $A$ is \NPEq-complete then $R_{KC}\kr A$, since $R_{KC}\in\NPEq$ by
+  \autoref{cor:rkc_npeq}. By \autoref{lem:kr_mor}, $R_{KC}\kr A\implies
+  R_{KC}\mor A$. Since $R_{KC}$ is \NP-complete by \autoref{thm:rkc_npc}, then
+  $A$ is \NP-complete.
+\end{proof}
 
 \begin{theorem}$GI\kr R_{KC}$\end{theorem}
 \begin{proof}
@@ -147,17 +149,19 @@ $R_{KC}$.
   R_{KC}$.
 \end{proof}
 
+%% TODO references
 Here is a list of problems which kernel reduce to the graph isomorphism
 problem:
 \begin{itemize}
+\item
 \end{itemize}
 
 Here is a list of problems which many-one reduce to graph isomorphism, but
 which do not have an immediately obvious kernel reduction:
 \begin{itemize}
+\item
 \end{itemize}
 
-%% TODO references
 Here is a list of problems which are not equivalence problems, but which still
 many-one reduce to the graph isomorphism problem:
 \begin{itemize}
@@ -167,32 +171,3 @@ many-one reduce to the graph isomorphism problem:
   problem; reflexivity does not hold)
 \item recognition of a legitimate regular deck
 \end{itemize}
-
-
-%% TODO rewrite this section
-
-to the graph isomorphism problem. For example, Kozen's M-tree clique problem,
-the problem of recognizing a legitimate regular deck, and the problem of
-recognizing a self-complementary graph are \emph{not} equivalence problems, but
-they are indeed polynomial-time many-one equivalent to the graph isomorphism
-problem. Since they are not equivalence relations, they certainly cannot be
-kernel reduced to graph isomorphism, so $\GIker\subsetneq\GIm$.
-%% TODO references
-
-The next question is are there equivalence relations which many-one reduce to
-graph isomorphism but which do not kernel reduce to graph isomorphism?
-Informally, the question asks if there is some reduction relations such that
-the reduction \emph{requires} information about both elements in each pair
-(because a many-one reduction gets access to both elements $x$ and $y$ when
-$(x,y)\in R$ whereas a kernel reduction gets access only to one at a time). In
-fact, the problem of recognizing a self-complementary graph, when expressed as
-an equivalence relation, may be a candidate for such a problem.
-
-Examining most of the other problems in the class $\GIm$ reveals that nearly
-all other (known) reductions can be expressed as kernel reductions. Many of the
-techniques involve either edge replacement or composition of graphs, which can
-both be performed on either graph without knowledge of the other. However, the
-self-complementary graph problem, which is $SCGI=\{G|G \plain{is isomorphic to}
-\bar{G}\}$, does not seem to have this property. Note that this set can be
-alternately defined as an equivalence relation, $SCGI=\{(G_1,
-G_2)|G_1=\bar{G_2} or \}$.
