@@ -4,7 +4,7 @@ the terms of their own respective licenses.
 
 To compile this article, do
 
-  pdflatex main.tex
+  pdflatex thesis.tex
 
 Except where otherwise noted, both the LaTeX markup and the content of the
 article are made available under the terms of the Creative Commons
