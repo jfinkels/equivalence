@@ -1,5 +1,5 @@
 %%%%
-%% main.tex
+%% thesis.tex
 %%
 %% Copyright 2010 Jeffrey Finkelstein
 %%
@@ -35,18 +35,19 @@
 \usepackage{complexity} % for typesetting complexity classes
 \usepackage{cclicenses} % for adding creative commons license symbols
 \usepackage{graphicx} % for including images
-\usepackage[pdftitle={Untitled}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
+\usepackage[pdftitle={On computational complexity of equivalence relations},
+  pdfauthor={Jeffrey Finkelstein}]{hyperref}
 \usepackage[all]{hypcap} % references to images will link to the image
 
 % don't print semicolons in pseudocode algorithms
 \dontprintsemicolon
 
 % define theorem, lemma, and definition environments and corresponding styles
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}{Lemma}[section]
-\newtheorem{corollary}{Corollary}[section]
+\newtheorem{theorem}{Theorem}%[section]
+\newtheorem{lemma}{Lemma}%[section]
+\newtheorem{corollary}{Corollary}%[section]
 \theoremstyle{definition} 
-\newtheorem{definition}{Definition}[section]
+\newtheorem{definition}{Definition}%[section]
 
 % define lemma, corollary, and definition context labels for /autoref command
 \newcommand{\lemmaname}{Lemma}
@@ -79,7 +80,7 @@
 \def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup} 
 
 % change figure numbering so it is per section
-\counterwithin{figure}{section}
+%\counterwithin{figure}{section}
 
 % define the author, title, and date
 \author{Jeffrey Finkelstein} 
@@ -94,31 +95,19 @@
 This is the abstract.
 \end{abstract}
 
-\section{Definitions}
-In the following definitions, $x,y\in\sigmastar$.
-
-Let $R_{par}=\{(x, y)|x \plain{and} y \plain{have the same parity}\}$.
-
-Let $R_{bc}=\{(x, y)|x \plain{and} y \plain{have the same number of ones}\}$.
-
-Let $R_{eq}=\{(x, y)|x = y\}$.
-
-Let $R_{eqi}=\{(x, y)|x = y \lor x = \bar{y}\}$.
-
-For any fixed $a\in\sigmastar$, let $R_{a}=\{(x, y)|x = y \lor x \oplus y =
-a\}$. ($R_{a}$ is a family of equivalence relations; $R_{a}$ is a different
-relation for each $a$.)
-
-Notice the following equivalent definitions, where $n=|x|=|y|=|a|$:
-$R_{eq}=\{(x, y)|x \oplus y = 0^n\}$, $R_{eqi}=\{(x, y)|x \oplus y = 0^n \lor
-x\oplus y = 1^n\}$, and $R_{a}=\{(x,y)|x \oplus y = 0^n \lor x \oplus y\ =
-a\}$.
-
-Let $GI=\{(G_1, G_2)|G_1$ and $G_2$ are undirected graphs and $G_1$ is
-isomorphic to $G_2\}$.
-
-Let $DirGI=\{(G_1, G_2)|G_1$ and $G_2$ are directed graphs and $G_1$ is
-isomorphic to $G_2\}$.
+\begin{definition}
+  Let $R\subseteq\sigmastar\times\sigmastar$. Then $R$ is an \emph{equivalence
+    relation} if the following conditions hold:
+  \renewcommand{\labelenumi}{\roman{enumi}.}
+  \begin{enumerate}
+  \item (reflexivity) $\forall x\in\sigmastar$, $(x, x)\in R$
+  \item (symmetry) $\forall x,y\in\sigmastar$, if $(x,y)\in R$ then $(y,x)\in
+    R$
+  \item (transitivity) $\forall x,y,z\in\sigmastar$, if $(x,y)\in R$ and
+    $(y,z)\in R$ then $(x,z)\in R$
+  \end{enumerate}
+  If $(x,y)\in R$, we say \emph{$x$ relates to $y$}, and we write $x\sim y$.
+\end{definition}
 
 \begin{definition}\label{def:peq}
   \textit{\PEq} is the set of equivalence relations whose membership can be
@@ -129,14 +118,30 @@ isomorphic to $G_2\}$.
 \end{definition}
 
 \begin{definition}\label{def:kr}
-  Let $R,S\subseteq\sigmastar\times\sigmastar$. We say $R$ \textit{kernel
-  reduces to} $S$ if $\exists f\in\FP:\forall x,y\in\sigmastar (x, y)\in R \iff
-  (f(x),f(y))\in S$. We denote this by $R\kr S$.
+  Let $R$ and $S$ be equivalence relations. We say $R$ \textit{polynomial time
+    kernel reduces to} $S$ if $\exists f\in\FP:\forall x,y\in\sigmastar (x,
+  y)\in R \iff (f(x),f(y))\in S$. We denote this by $R\kr S$.
   
-  We say $R$ \textit{is equivalent to} $S$ \textit{under kernel
-  reductions} if $R\kr S$ and $S\kr R$. We denote this by $R\kequiv
-  S$.
+  We say $R$ \textit{is kernel equivalent to} $S$ if $R\kr S$ and $S\kr R$. We
+  denote this by $R\kequiv S$.
 \end{definition}
+
+Note the difference between a kernel reduction and a many-one reduction. A
+kernel reduction maps $(x,y)\in R$ to $(f(x), f(y))\in S$, whereas a many-one
+reduction maps $(x,y)\in R$ to $f(x, y)\in S$. Informally, a kernel reduction
+gets access to both $x$ and $y$, but a kernel reduction gets access to only one
+at a time. Because of the many-one reduction is more powerful, we can prove the
+following lemma.
+
+\begin{lemma}\label{lem:kr_mor}If $A\kr B$ then $A\mor B$.\end{lemma}
+\begin{proof}
+  Since $A\kr B$, $\exists f\in\FP: (x,y)\in A\iff(f(x), f(y))\in B$. Define
+  $g\in FP$ by $g(x,y)=(f(x), f(y))$. Therefore $A\mor B$ by $g$.
+\end{proof}
+
+As an analog to polynomial time many-one completeness in \NP, we define a
+similar notion of polynomial time completeness under kernel reductions in
+\NPEq.
 
 \begin{definition}\label{def:kernel_complete}
   An equivalence relation $R$ is \textit{$\PEq$-complete} if $R\in\PEq$ and
@@ -146,7 +151,37 @@ isomorphic to $G_2\}$.
   $\forall S\in\NPEq$, $S\kr R$.
 \end{definition}
 
-\section{Relationships among equivalence relations}
+With these definitions in place, we can now define some example equivalence
+relations in $\PEq$.
+
+%% TODO should I make a note about assuming |x|=|y|
+\begin{definition}
+  $R_{par}=\{(x, y)|x$ and $y$ have the same parity$\}$
+\end{definition}
+
+\begin{definition}
+  $R_{bc}=\{(x, y)|x$ and $y$ have the same number of ones$\}$
+\end{definition}
+
+\begin{definition}
+  $R_{eq}=\{(x, y)|x=y\}$
+\end{definition}
+
+\begin{definition}
+  $R_{eqi}=\{(x, y)|x=y$ or $x=\bar{y}\}$
+\end{definition}
+
+\begin{definition}
+  Let $a\in\sigmastar$. $R_{a}=\{(x,y)|x=y$ or $x\oplus y=a\}$. ($R_{a}$ is a
+  family of equivalence relations; $R_{a}$ is a different relation for each
+  fixed $a$.)
+\end{definition}
+
+Notice the following equivalent definitions, where $n=|x|=|y|=|a|$:
+$R_{eq}=\{(x, y)|x \oplus y = 0^n\}$, $R_{eqi}=\{(x, y)|x \oplus y = 0^n$ or
+$x\oplus y = 1^n\}$, and $R_{a}=\{(x,y)|x \oplus y = 0^n$ or $x \oplus y\ =
+a\}$.
+
 %% TODO show that all the stated equivalence relations are actually eq. rel.s
 \begin{theorem}$R_{eq} \subsetneq R_{bc} \subsetneq R_{par}$\end{theorem}
 \begin{proof}
@@ -180,9 +215,6 @@ isomorphic to $G_2\}$.
 $R_{bc}$, and $R_{par}$. Note that if $a=0^n$, for $n=|x|=|y|$, then
 $R_{a}=R_{eq}$ and if $a=1^n$ then $R_{a}=R_{eqi}$.
 
-Since membership in $R_{par}$, $R_{bc}$, $R_{eq}$, $R_{eqi}$, and $R_a$ can be
-decided in polynomial time, so they are all members of \PEq.
-
 \begin{figure}
   \begin{center}
     \includegraphics[width=300pt,height=241pt,keepaspectratio=true]
@@ -195,8 +227,12 @@ decided in polynomial time, so they are all members of \PEq.
     1011) 7. (1000, 0000) }
 \end{figure}
 
-\section{Results}
-\subsection{Reductions among equivalence relation}
+Since membership in $R_{par}$, $R_{bc}$, $R_{eq}$, $R_{eqi}$, and $R_a$ can be
+decided in polynomial time, so they are all members of \PEq. Now we can examine
+kernel reductions between these members of \PEq. Notice that the following
+reductions reduce the more general equivalence relation to the more restrictive
+equivalence relation.
+
 \begin{theorem}$R_{par}\kr R_{bc}$\end{theorem}
 \begin{proof}
   Construct $M\in \FP$ on input $w\in\sigmastar$:\\
@@ -259,36 +295,19 @@ decided in polynomial time, so they are all members of \PEq.
   R_{eq}$.
 \end{proof}
 
-\subsection{Reductions from equivalence relations to graph isomorphism}
-%% \begin{lemma}\label{lem:gi_kr_dirgi}$GI\kr DirGI$\end{lemma}
-%% \begin{proof}
-%%   Construct machine $M\in\FP$ on input $G=(V,E)$:\\
-%%   \begin{algorithm}[H]
-%%     $V'\gets V$\;
-%%     $E'\gets\{\}$\;
-%%     \ForEach{$(u, v)\in E$}{
-%%       add directed edges $(u, v)$ and $(v, u)$ to $E'$
-%%     }
-%%     \Return{$G'=(V', E')$}
-%%   \end{algorithm}
-%%   Notice that this machine constructs the graph with all undirected edges of
-%%   the input graph replaced with two complementary directed edges incident to
-%%   both vertices.
+An equivalence problem of particular importance is the graph isomorphism
+problem. Although it is in \NP, it is not known to be \NP-complete and it is
+not known to be in \P. Since it is an equivalence problem in \NP, it is a
+member of \NPEq, so it may be of particular value to study kernel reductions to
+and from the graph isomorphism problem. We begin by examining kernel reductions
+from the $\PEq$ equivalence relations defined above to the graph isomorphism
+problem, which should intuitively be easy because the graph isomorphism problem
+is (seemingly) of greater complexity.
 
-%%   %% TODO complete this proof
-%% \end{proof}
-
-%% \begin{lemma}\label{lem:dirgi_kr_gi}$DirGI\kr GI$\end{lemma}
-%% \begin{proof}
-%%   %% TODO complete this proof
-%% \end{proof}
-
-%% TODO are these kernel reductions? they must be...
-
-%% There are other languages that are polynomial time kernel equivalent to
-%% graph isomorphism, including but not limited to finite automata equivalence,
-%% context-free grammar equivalence, multigraph isomorphism, hypergraph
-%% isomorphism, etc.
+\begin{definition}
+  $GI=\{(G_1, G_2)|G_1$ and $G_2$ are undirected graphs and $G_1$ is isomorphic
+  to $G_2\}$
+\end{definition}
 
 \begin{theorem}\label{thm:rpar_gi}$R_{par}\kr GI$\end{theorem}
 \begin{proof}
@@ -412,9 +431,14 @@ decided in polynomial time, so they are all members of \PEq.
 
 Unlike the reductions from $R_{par}$ and $R_{bc}$ to $GI$, in the reductions
 from $R_{eq}$ and $R_{eqi}$ to $GI$ the order of bits in each string $x$ and
-$y$ is significant. Therefore, we can use the following lemma to reduce these
-equivalence relation problems to the directed form of the graph isomorphism
-problem.
+$y$ is significant. As such, it may be easier to create kernel reductions from
+these equivalence relations to the directed graph isomorphism problem, which we
+can prove equivalent under kernel reductions to the graph isomorphism problem.
+
+\begin{definition}
+  $DirGI=\{(G_1, G_2)|G_1$ and $G_2$ are directed graphs and $G_1$ is
+  isomorphic to $G_2\}$
+\end{definition}
 
 \begin{lemma}\label{lem:gi_ke_dirgi}$GI\kequiv DirGI$\end{lemma}
 \begin{proof}
@@ -423,12 +447,12 @@ problem.
   
   To show $DirGI\kr GI$, replace each directed edge in the graph with a set of
   vertices and edges that enforces an ordering between the vertices.
-  %% TODO provide simply a reference? see the graph isomorphism book
+  %% TODO provide references for these reductions
 \end{proof}
 
-From \autoref{lem:gi_ke_dirgi}, we can use a kernel reduction to directed graph
-isomorphism to show that a language kernel reduces to (undirected) graph
-isomorphism, as in the following two theorems.
+From \autoref{lem:gi_ke_dirgi}, we can use a kernel reduction to the directed
+graph isomorphism problem to show that a language kernel reduces to the
+undirected graph isomorphism problem, as in the following theorems.
 
 \begin{theorem}\label{thm:req_kr_dirgi}$R_{eq} \kr DirGI$\end{theorem}
 \begin{proof}
@@ -454,7 +478,6 @@ isomorphism, as in the following two theorems.
   $(M(x), M(y))\in DirGI$.
   
   %% TODO is this sufficient proof?
-
   Suppose $(x, y)\notin R_{eq}$, so $x\neq y$. Suppose $|x|=|y|=n$. Run $M$ on
   input $x$ to yield $G_x=(V_x, E_x)$, and run $M$ on input $y$ to yield
   $G_y=(V_y, E_y)$. Since the graphs are directed, the ``spine'' created by the
@@ -668,12 +691,18 @@ isomorphism, as in the following two theorems.
 \begin{proof}Follows directly from \autoref{thm:ra_kr_dirgi} and
   \autoref{lem:gi_ke_dirgi}.\end{proof}
 
-\subsection{Completeness}
+One question we wish to answer is whether there exist \NPEq-complete problems
+(indeed, whether there exist \PEq-complete problems as well). While we can't
+yet describe what an \NPEq-complete problem, we can construct an \NP-complete
+equivalence relation as follows.
+
+Recall that a clique in a graph is a set of vertices, within which each vertex
+is connected to each other vertex by an edge.
+
 \begin{definition}
-  \hangindent=1.2in
-  $R_{KC}=\{((G_1, k_1), (G_2, k_2))| k_1=k_2 \plain{and} (G_1\cong G_2
-  \plain{or}\\ (G_1 \plain{has a clique of size} k_1 \plain{and} G_2 \plain{has
-  a clique of size} k_2))\}$
+%  \hangindent=1.2in 
+  $R_{KC}=\{((G_1, k_1), (G_2, k_2))| k_1=k_2$ and $(G_1\cong G_2$ or $(G_1$
+  has a clique of size $k_1$ and $G_2$ has a clique of size $k_2))\}$
 \end{definition}
 
 \begin{theorem}$R_{KC}$ is an equivalence relation.\end{theorem}
@@ -716,12 +745,14 @@ isomorphism, as in the following two theorems.
   equivalence relation.
 \end{proof}
 
-\begin{definition}$CLIQUE=\{(G,k)|G \plain{has a clique of size}
-  k\}$\end{definition}
+\begin{definition}
+  $CLIQUE=\{(G,k)|G \plain{has a clique of size} k\}$
+\end{definition}
 
 \begin{lemma}$CLIQUE$ is \NP-complete.\end{lemma}
 \begin{proof}
   The proof is a polynomial time reduction from $3SAT$, which is \NP-complete.
+  %% TODO reference
 \end{proof}
 
 %% TODO rewrite algorithms using \KwIn and \KwOut
@@ -785,11 +816,11 @@ isomorphism, as in the following two theorems.
   and hence $R_{KC}$ is \NP-complete.
 \end{proof}
 
-\begin{lemma}\label{lem:kr_mor}If $A\kr B$ then $A\mor B$.\end{lemma}
-\begin{proof}
-  Since $A\kr B$, $\exists f\in\FP: (x,y)\in A\iff(f(x), f(y))\in B$. Define
-  $g\in FP$ by $g(x,y)=(f(x), f(y))$. Therefore $A\mor B$ by $g$.
-\end{proof}
+So we have now shown that $R_{KC}\in\NPC\cap\NPEq$, where $\NPC$ is the set of
+all \NP-complete languages. With this fact we can show a relationship between
+completeness under kernel reductions and completeness under many-one reductions
+in $\NPEq$ which follows from the fact that a kernel reduction implies a
+many-one reduction.
 
 \begin{theorem}If a language $A$ is \NPEq-complete, then $A$ is
   \NP-complete.\end{theorem}
@@ -799,6 +830,9 @@ isomorphism, as in the following two theorems.
   R_{KC}\mor A$. Since $R_{KC}$ is \NP-complete by \autoref{thm:rkc_npc}, then
   $A$ is \NP-complete.
 \end{proof}
+
+Now what is the relationship between the graph isomorphism problem and
+$R_{KC}$? 
 
 \begin{theorem}$GI\kr R_{KC}$\end{theorem}
 \begin{proof}
@@ -842,7 +876,6 @@ many-one reduce to the graph isomorphism problem:
   problem; reflexivity does not hold)
 \item recognition of a legitimate regular deck
 \end{itemize}
-\section{References}
 %\bibliography{references}
 
 \end{document}
