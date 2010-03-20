@@ -822,8 +822,8 @@ completeness under kernel reductions and completeness under many-one reductions
 in $\NPEq$ which follows from the fact that a kernel reduction implies a
 many-one reduction.
 
-\begin{theorem}If a language $A$ is \NPEq-complete, then $A$ is
-  \NP-complete.\end{theorem}
+\begin{theorem}\label{thm:npeqc_npc}If an equivalence relation $A$ is
+  \NPEq-complete, then $A$ is \NP-complete.\end{theorem}
 \begin{proof}
   If $A$ is \NPEq-complete then $R_{KC}\kr A$, since $R_{KC}\in\NPEq$ by
   \autoref{cor:rkc_npeq}. By \autoref{lem:kr_mor}, $R_{KC}\kr A\implies
@@ -831,8 +831,17 @@ many-one reduction.
   $A$ is \NP-complete.
 \end{proof}
 
-Now what is the relationship between the graph isomorphism problem and
-$R_{KC}$? 
+%% TODO references for kernel reductions to graph isomorphism
+Of course, \autoref{thm:npeqc_npc} is not all that useful if \NPEq-complete
+problems do not exist. We wish to give some evidence that $R_{KC}$ (or a
+language similar to it) may be \NPEq-complete. We know that many problems in
+\NP, specifically many in \NPEq, kernel reduce to the graph isomorphism problem
+(the reductions were not explicitly presented as kernel reductions, but we can
+retroactively identify some of the techniques used as such). If we can show a
+polynomial time kernel reduction from graph isomorphism to $R_{KC}$, then we
+have found many $\NPEq$ problems which reduce to $R_{KC}$. Fortunately,
+$R_{KC}$ was constructed in such a way to allow such a kernel reduction to be
+possible.
 
 \begin{theorem}$GI\kr R_{KC}$\end{theorem}
 \begin{proof}
@@ -845,37 +854,15 @@ $R_{KC}$?
   |V_2|+1)$. Since $G_1$ is isomorphic to $G_2$ and $|V_1|+1=|V_2|+1$, then
   $((G_1, |V_1|+1),(G_2, |V_2|+1))=(f(G_1), f(G_2))\in R_{KC}$.
   
-  Suppose $(G_1, G_2)\notin GI$, so $G_1$ is not isomorphic to $G_2$. Since
-  $G_1$ cannot have a clique of size $|V_1|+1$, and further, since $G_2$ cannot
-  have a clique of size $|V_2|+1$, then $((G_1, |V_1|+1), (G_2,
-  |V_2|+1))=(f(G_1), f(G_2))\notin R_{KC}$.
+  Suppose $(G_1, G_2)\notin GI$, so $G_1$ is not isomorphic to $G_2$. Even in
+  the case that $|V_1|=|V_2|$, $G_1$ cannot have a clique of size $|V_1|+1$,
+  and $G_2$ cannot have a clique of size $|V_2|+1$. Thus $((G_1, |V_1|+1),
+  (G_2, |V_2|+1))=(f(G_1), f(G_2))\notin R_{KC}$.
 
   Therefore $(G_1, G_2)\in GI\iff (f(G_1), f(G_2))\in R_{KC}$, so $GI\kr
   R_{KC}$.
 \end{proof}
 
-%% TODO references
-Here is a list of problems which kernel reduce to the graph isomorphism
-problem:
-\begin{itemize}
-\item
-\end{itemize}
-
-Here is a list of problems which many-one reduce to graph isomorphism, but
-which do not have an immediately obvious kernel reduction:
-\begin{itemize}
-\item
-\end{itemize}
-
-Here is a list of problems which are not equivalence problems, but which still
-many-one reduce to the graph isomorphism problem:
-\begin{itemize}
-\item Kozen's M-tree clique problem
-\item recognition of a self-complementary graph
-\item self-complementary graph isomorphism (cannot be asked as an equivalnence
-  problem; reflexivity does not hold)
-\item recognition of a legitimate regular deck
-\end{itemize}
 %\bibliography{references}
 
 \end{document}
