@@ -128,10 +128,10 @@ This is the abstract.
 
 Note the difference between a kernel reduction and a many-one reduction. A
 kernel reduction maps $(x,y)\in R$ to $(f(x), f(y))\in S$, whereas a many-one
-reduction maps $(x,y)\in R$ to $f(x, y)\in S$. Informally, a kernel reduction
+reduction maps $(x,y)\in R$ to $f(x, y)\in S$. Informally, a many-one reduction
 gets access to both $x$ and $y$, but a kernel reduction gets access to only one
-at a time. Because of the many-one reduction is more powerful, we can prove the
-following lemma.
+at a time. Because the many-one reduction seems to be at least as powerful as
+the kernel reduction, we can prove the following lemma.
 
 \begin{lemma}\label{lem:kr_mor}If $A\kr B$ then $A\mor B$.\end{lemma}
 \begin{proof}
@@ -832,16 +832,17 @@ many-one reduction.
 \end{proof}
 
 %% TODO references for kernel reductions to graph isomorphism
+
 Of course, \autoref{thm:npeqc_npc} is not all that useful if \NPEq-complete
 problems do not exist. We wish to give some evidence that $R_{KC}$ (or a
 language similar to it) may be \NPEq-complete. We know that many problems in
 \NP, specifically many in \NPEq, kernel reduce to the graph isomorphism problem
-(the reductions were not explicitly presented as kernel reductions, but we can
-retroactively identify some of the techniques used as such). If we can show a
-polynomial time kernel reduction from graph isomorphism to $R_{KC}$, then we
-have found many $\NPEq$ problems which reduce to $R_{KC}$. Fortunately,
-$R_{KC}$ was constructed in such a way to allow such a kernel reduction to be
-possible.
+(in the past, the reductions have not explicitly been presented as kernel
+reductions, but we can retroactively identify some of the techniques used as
+such). If we can show a polynomial time kernel reduction from the graph
+isomorphism problem to $R_{KC}$, then we have found many $\NPEq$ problems which
+reduce to $R_{KC}$. Indeed, we defined $R_{KC}$ in such a way to allow a kernel
+reduction from the graph isomorphism problem to be possible.
 
 \begin{theorem}$GI\kr R_{KC}$\end{theorem}
 \begin{proof}
@@ -862,6 +863,12 @@ possible.
   Therefore $(G_1, G_2)\in GI\iff (f(G_1), f(G_2))\in R_{KC}$, so $GI\kr
   R_{KC}$.
 \end{proof}
+
+Now we wish to address the question of whether kernel reductions are different
+from many-one reductions. We wish to show that there exist two equivalence
+relations such that we can construct a many-one reduction but not a kernel
+reduction. To do this, we construct an equivalence relation in which
+information about \emph{both} elements is necessary for a reduction.
 
 %\bibliography{references}
 
