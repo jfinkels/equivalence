@@ -866,10 +866,37 @@ reduction from the graph isomorphism problem to be possible.
 \end{proof}
 
 Now we wish to address the question of whether kernel reductions are different
-from many-one reductions. We wish to show that there exist two equivalence
-relations such that we can construct a many-one reduction but not a kernel
-reduction. To do this, we construct an equivalence relation in which
-information about \emph{both} elements is necessary for a reduction.
+from many-one reductions.
+
+To show that they are in fact different, we need only exhibit two equivalence
+relations, $R$ and $S$, such that $R\mor S$ but $R\nkr S$. Intuitively, this
+means that when $(x,y)\in R$, there is some information shared between $x$ and
+$y$ which can not be separated from either. In other words, $x$ can only be
+understood with knowledge of $y$ and $y$ can only be understood with knowledge
+of $x$. In attempting to construct such a relation, we have found that
+reflexivity, symmetry, and transitivity of a relation seem to provide a
+significant obstacle to the possibility of sharing information between related
+elements.
+
+To show that the two reductions are the same, we need to prove that a many-one
+reduction implies a kernel reduction. Proving this seems even more difficult
+than proving the negation. A many-one reduction gets access to both related
+elements, and using a many-one reduction to construct a kernel reduction would
+require something like examining the machine which computes the many-one
+reduction and determining in which states that machine is ``using'' which of
+the elements.
+
+Still, we have no reason in particular to believe that a many-one reduction is
+different from a kernel reduction. %% TODO more explanation
+
+Reductions between the graph isomorphism problem and other equivalence problems
+in $\NPEq$ abound, and though they have traditionally been presented as
+many-one reductions, they are in fact kernel reductions. Equivalence problems
+which are equivalence under kernel reductions in $\NPEq$ to the graph
+isomorphism problem include
+\begin{itemize}
+  
+\end{itemize}
 
 %\bibliography{references}
 
