@@ -3,6 +3,8 @@
 *.pdf
 *.dvi
 *.out
+*.bbl
+*.blg
 *~
 *#
 #*
