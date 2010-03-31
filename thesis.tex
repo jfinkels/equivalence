@@ -24,11 +24,12 @@
 %%    the copyright holder.
 %%    * Nothing in this license impairs or restricts the author's moral rights.
 %%%%
-%\documentclass[draft]{article}
-\documentclass{article}
+\documentclass[draft]{article}
+%\documentclass{article}
 
 % package imports
 \usepackage[noend,linesnumbered,boxed]{algorithm2e} % for creating pseudocode
+\usepackage[margin=1in]{geometry} % for setting page margins
 \usepackage{amsmath} % for piecewise function definition
 \usepackage{amsthm} % for theorems, definitions, lemmas, and styles
 \usepackage{amssymb} % for strict subset symbol (\subsetneq)
@@ -694,8 +695,8 @@ undirected graph isomorphism problem, as in the following theorems.
 
 One question we wish to answer is whether there exist \NPEq-complete problems
 (indeed, whether there exist \PEq-complete problems as well). While we can't
-yet describe what an \NPEq-complete problem, we can construct an \NP-complete
-equivalence relation as follows.
+yet describe what an \NPEq-complete problem looks like, we can construct an
+\NP-complete equivalence relation.
 
 Recall that a clique in a graph is a set of vertices, within which each vertex
 is connected to each other vertex by an edge.
@@ -753,8 +754,7 @@ is connected to each other vertex by an edge.
 
 \begin{lemma}$CLIQUE$ is \NP-complete.\end{lemma}
 \begin{proof}
-  The proof is a polynomial time reduction from $3SAT$, which is \NP-complete.
-  %% TODO reference
+  The proof is omitted; we refer the reader to \cite{gj79} for the reduction.
 \end{proof}
 
 %% TODO rewrite algorithms using \KwIn and \KwOut
@@ -895,23 +895,25 @@ in $\NPEq$ abound, and though they have traditionally been presented as
 many-one reductions, they are in fact kernel reductions. Zemlyachenko,
 Korneenko and Tyshkevich notice this in \cite{zkt85}, and describe the kernel
 reductions in the terminology of category theory as follows: Let $C_1$ and
-$C_2$ be concrete categories (for example, the category of undirected graphs,
-the category of directed graphs, the category of context free grammars, etc.),
-let $x,y$ be objects in $C_1$, let $x', y'$ be objects in $C_2$, let
-$Mor_{C_1}(x,y)$ be the isomorphism between objects $x$ and $y$ in $C_1$, and
-let $Mor_{C_2}(x',y')$ be the isomorphism between objects $x'$ and $y'$ in
-$C_2$. Let $f:C_1\to C_2$ be a functor. Define $g:Mor(C_1)\to Mor(C_2)$ by
-$g(Mor_{C_1}(x,y))=Mor_{C_2}(f(x), f(y))$. If $g$ is bijective then $g$ is
-called a \emph{complete embedding}. If $g$ is a complete embedding then we say
-the isomorphism problem for objects in category $C_1$ \emph{reduces
+$C_2$ be concrete categories, let $x,y$ be objects in $C_1$, let $x', y'$ be
+objects in $C_2$, let $Mor_{C_1}(x,y)$ be the morphism between objects $x$ and
+$y$ in $C_1$, let $Mor_{C_2}(x',y')$ be the morphism between objects $x'$ and
+$y'$ in $C_2$, and let $f:C_1\to C_2$ be a functor. Define $g:Mor(C_1)\to
+Mor(C_2)$ by $g(Mor_{C_1}(x,y))=Mor_{C_2}(f(x), f(y))$. If $g$ is bijective
+then $g$ is called a \emph{complete embedding}. If $g$ is a complete embedding
+then we say the isomorphism problem for objects in category $C_1$ \emph{reduces
   functorially} to the isomorphism problem for objects in category $C_2$.
 %% TODO say that a bijection is not necessary for our definitions
+%% TODO grigor'ev83 describes a kernel reduction as an epimorphic functor
 
 Notice that in the above definition, if we let $R=\{(x,y)| x$ and $y$ are
 objects of $C_1$ and $x$ is isomorphic to $y$ by $Mor_{C_1}(x,y)\}$ and
 $S=\{(x,y)| x$ and $y$ are objects of $C_2$ and $x$ is isomorphic to $y$ by
 $Mor_{C_2}(x,y)\}$, then $R\kr S$ by $f$, and $R\mor S$ by $g$, the many-one
 reduction induced by the kernel reduction $f$.
+
+A functorial reduction as defined above is \emph{more restrictive} than a
+kernel reduction, so a functorial reduction implies a kernel reduction.
 
 In \cite{zkt85}, the authors provide a survey of categories for which
 isomorphism problems are polynomial-time functorially equivalent. For our
@@ -933,13 +935,15 @@ provided to the original reductions):
 \item $k$-uniform hypergraph isomorphism \cite{zkt85} \cite{hn70}
 \item finite automaton isomorphism \cite{booth78}
 \item lattice isomorphism \cite{frucht50}
-\item isomorphism of commutative nilpotent semigroups of class 3 % 14 1->14
-                                                                 % [32]
+\item isomorphism of commutative nilpotent semigroups of class 3 % [32]
 \item isomorphism of associative algebras of finite rank over a fixed
   algebraically closed field with a square of the radical equal to zero and
-  with a commutative factor with respect to the radical % 15 1<->15 [7]
+  with a commutative factor with respect to the radical \cite{grigoriev83}
+\item Markov decision process isomorphism % [wikipedia]
 \item context-free grammar isomorphism % [76]
-\item balanced incomplete block-scheme isomorphism %[48]
+\item balanced incomplete block-scheme isomorphism \cite{cc81}
+\item combinatorial isomorphism of convex polytopes represented by vertex-facet
+  incidences % wikipedia [26][27]
 \item etc? % [17, 78, 94] 
 
 % [17] A. I. Kostyukovich,''Polynomial equivalence of certain discrete
@@ -952,8 +956,19 @@ provided to the original reductions):
 
 \end{itemize}
 
-``Babai noted that a functorial reduction of graph isomorphism to isomorphism
-of Dedekind lattices does not exist [32]''.
+%% ``Babai noted that a functorial reduction of graph isomorphism to
+%% isomorphism of Dedekind lattices does not exist [32]''.
+
+The graph isomorphism has been (and continues to be) extensively studied. For
+more information, see \cite{kst93}.
+
+%% TODO study hard equivalence problems: boolean formula isomorphism? algebraic
+%% structure equivalence relations (bloniarz84)? regular expressions with + and
+%% times?  Aho, Sagic, Ullman 1978 (tableau equivalence is NP-complete)
+
+%% TODO check out known NP-complete equivalence problems
+
+%% TODO study P-complete problems, look for equivalence relations
 
 \section{References}
 \bibliographystyle{alpha} \bibliography{references}
