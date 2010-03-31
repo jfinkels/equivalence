@@ -41,6 +41,8 @@
   pdfauthor={Jeffrey Finkelstein}]{hyperref}
 \usepackage[all]{hypcap} % references to images will link to the image
 
+\usepackage{multicol}
+
 % don't print semicolons in pseudocode algorithms
 \dontprintsemicolon
 
@@ -94,7 +96,14 @@
 \symbolfootnote{\license}
 
 \begin{abstract}
-This is the abstract.
+  In this paper we analyze the notion of kernel reductions among equivalence
+  problems, as defined in Fortnow and Grochow, especially with respect to graph
+  isomorphism and its polynomial time many-one equivalent problems. We first
+  examine some examples of kernel reductions among easy equivalence relations,
+  to show that they make sense. We then examine the complexity of equivalence
+  problems which are complete under kernel reductions in \NP. We also show that
+  most known many-one reductions among isomorphism problems in $\NP$ are indeed
+  kernel reductions.
 \end{abstract}
 
 \begin{definition}
@@ -111,29 +120,35 @@ This is the abstract.
   If $(x,y)\in R$, we say \emph{$x$ relates to $y$}, and we write $x\sim y$.
 \end{definition}
 
+In \cite{fg09}, Fortnow and Grochow give a formal definition of a new class of
+languages: the class of equivalence problems which can be decided in polynomial
+time. They also provide a natural reduction for this class of problems. We
+provide the definitions, along with their generalizations in \NP, here.
+
 \begin{definition}\label{def:peq}
-  \textit{\PEq} is the set of equivalence relations whose membership can be
+  \textit{\PEq} is the class of equivalence relations whose membership can be
   decided in polynomial time.
 
-  \textit{\NPEq} is the set of equivalence relations whose membership can be
+  \textit{\NPEq} is the class of equivalence relations whose membership can be
   decided in nondeterministic polynomial time.
 \end{definition}
 
 \begin{definition}\label{def:kr}
   Let $R$ and $S$ be equivalence relations. We say $R$ \textit{polynomial time
-    kernel reduces to} $S$ if $\exists f\in\FP:\forall x,y\in\sigmastar (x,
-  y)\in R \iff (f(x),f(y))\in S$. We denote this by $R\kr S$.
+  kernel reduces to} $S$ if $\exists f\in\FP:\forall x,y\in\sigmastar (x, y)\in
+  R \iff (f(x),f(y))\in S$. We denote this by $R\kr S$.
   
   We say $R$ \textit{is kernel equivalent to} $S$ if $R\kr S$ and $S\kr R$. We
   denote this by $R\kequiv S$.
 \end{definition}
 
-Note the difference between a kernel reduction and a many-one reduction. A
+Note the difference between a kernel reduction and a many-one reduction: a
 kernel reduction maps $(x,y)\in R$ to $(f(x), f(y))\in S$, whereas a many-one
-reduction maps $(x,y)\in R$ to $f(x, y)\in S$. Informally, a many-one reduction
-gets access to both $x$ and $y$, but a kernel reduction gets access to only one
-at a time. Because the many-one reduction seems to be at least as powerful as
-the kernel reduction, we can prove the following lemma.
+reduction maps $(x,y)\in R$ to $f(x, y)\in S$, for some polynomial time
+computable function $f$. Informally, a many-one reduction gets access to both
+$x$ and $y$, but a kernel reduction gets access to only one at a time. Because
+the many-one reduction seems to be at least as powerful as the kernel
+reduction, we can prove the following lemma.
 
 \begin{lemma}\label{lem:kr_mor}If $A\kr B$ then $A\mor B$.\end{lemma}
 \begin{proof}
@@ -174,9 +189,9 @@ relations in $\PEq$.
 \end{definition}
 
 \begin{definition}
-  Let $a\in\sigmastar$. $R_{a}=\{(x,y)|x=y$ or $x\oplus y=a\}$. ($R_{a}$ is a
-  family of equivalence relations; $R_{a}$ is a different relation for each
-  fixed $a$.)
+  Let $a\in\sigmastar$. $R_{a}=\{(x,y)|x=y$ or $x\oplus y=a\}$. (Note that
+  $R_{a}$ is a family of equivalence relations; $R_{a}$ is a different relation
+  for each fixed $a$.)
 \end{definition}
 
 Notice the following equivalent definitions, where $n=|x|=|y|=|a|$:
@@ -230,7 +245,7 @@ $R_{a}=R_{eq}$ and if $a=1^n$ then $R_{a}=R_{eqi}$.
 \end{figure}
 
 Since membership in $R_{par}$, $R_{bc}$, $R_{eq}$, $R_{eqi}$, and $R_a$ can be
-decided in polynomial time, so they are all members of \PEq. Now we can examine
+decided in polynomial time, they are all members of \PEq. Now we can examine
 kernel reductions between these members of \PEq. Notice that the following
 reductions reduce the more general equivalence relation to the more restrictive
 equivalence relation.
@@ -922,6 +937,7 @@ polynomial time kernel equivalent to graph isomorphism. The problems presented
 in \cite{zkt85} which are equivalent under polynomial time kernel reductions to
 the graph isomorphism problem include the following (with further references
 provided to the original reductions):
+\begin{multicols}{2}
 \begin{itemize}
 \item directed graph isomorphism \cite{miller79}
 \item labeled tree isomorphism \cite{babai79}
@@ -955,6 +971,7 @@ provided to the original reductions):
 % [94]
 
 \end{itemize}
+\end{multicols}
 
 %% ``Babai noted that a functorial reduction of graph isomorphism to
 %% isomorphism of Dedekind lattices does not exist [32]''.
