@@ -972,7 +972,9 @@ All of the problems cited above fall in this class.
 \end{proof}
 
 %% TODO evidence
-There is evidence that shows that $GI$ is not \NP-complete. If this is true,
+There is evidence that shows that the graph isomorphism problem is not
+\NP-complete, specifically that it is not \NP-complete unless the polynomial
+time hierarchy collapses to the second level\cite{schoning87}. If this is true,
 then the following theorem about the complexity of all equivalence problems
 equivalent under polynomial time kernel reductions to the graph isomorphism
 problems follows.
@@ -988,11 +990,12 @@ problems follows.
   reduces to $GI$, $GI$ is complete under polynomial time kernel reductions in
   $\GIk$. Since $\GIk=\NPEq$, $GI$ is complete under polynomial time kernel
   reductions in $\NPEq$. By \autoref{thm:npeqc_npc}, $GI$ is $\mor$-complete in
-  $\NP$. 
+  $\NP$. This is a contradiction with the hypothesis that $GI$ is not
+  $\mor$-complete.
 \end{proof}
 
-The graph isomorphism has been (and continues to be) extensively studied. For
-more information, see \cite{kst93}.
+The graph isomorphism problem has been (and continues to be) extensively
+studied. For more information, see \cite{kst93}.
 
 %% TODO study hard equivalence problems: boolean formula isomorphism? algebraic
 %% structure equivalence relations (bloniarz84)? regular expressions with + and
