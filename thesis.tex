@@ -167,8 +167,8 @@ similar notion of polynomial time completeness under kernel reductions in
   $\forall S\in\NPEq$, $S\kr R$.
 \end{definition}
 
-With these definitions in place, we can now define some example equivalence
-relations in $\PEq$.
+With these definitions in place, we can now define some examples of equivalence
+relations in $\PEq$, tractible equivalence problems.
 
 %% TODO should I make a note about assuming |x|=|y|
 \begin{definition}
@@ -313,12 +313,13 @@ equivalence relation.
 
 An equivalence problem of particular importance is the graph isomorphism
 problem. Although it is in \NP, it is not known to be \NP-complete and it is
-not known to be in \P. Since it is an equivalence problem in \NP, it is a
-member of \NPEq, so it may be of particular value to study kernel reductions to
-and from the graph isomorphism problem. We begin by examining kernel reductions
-from the $\PEq$ equivalence relations defined above to the graph isomorphism
-problem, which should intuitively be easy because the graph isomorphism problem
-is (seemingly) of greater complexity.
+not known to be in \P. It is therefore a candidate for $\NP\backslash\P$ (if
+$P\neq\NP$). Since it is an equivalence problem in \NP, it is a member of
+\NPEq, so it may be of particular value to study kernel reductions to and from
+the graph isomorphism problem. We begin by examining kernel reductions from the
+$\PEq$ equivalence relations defined above to the graph isomorphism problem,
+which should intuitively be easy because the graph isomorphism problem is
+(seemingly) of greater complexity.
 
 \begin{definition}
   $GI=\{(G_1, G_2)|G_1$ and $G_2$ are undirected graphs and $G_1$ is isomorphic
@@ -709,8 +710,10 @@ undirected graph isomorphism problem, as in the following theorems.
 
 One question we wish to answer is whether there exist \NPEq-complete problems
 (indeed, whether there exist \PEq-complete problems as well). While we can't
-yet describe what an \NPEq-complete problem looks like, we can construct an
-\NP-complete equivalence relation.
+yet describe what an \NPEq-complete problem looks like, we know some
+\NP-complete equivalence problems. 
+
+%% TODO present one from G&J, then our own to show reduction from GI
 
 Recall that a clique in a graph is a set of vertices, within which each vertex
 is connected to each other vertex by an edge.
@@ -847,8 +850,6 @@ many-one reduction.
   $A$ is \NP-complete.
 \end{proof}
 
-%% TODO references for kernel reductions to graph isomorphism
-
 Of course, \autoref{thm:npeqc_npc} is not all that useful if \NPEq-complete
 problems do not exist. We wish to give some evidence that $R_{KC}$ (or a
 language similar to it) may be \NPEq-complete. We know that many problems in
@@ -879,30 +880,6 @@ reduction from the graph isomorphism problem to be possible.
   Therefore $(G_1, G_2)\in GI\iff (f(G_1), f(G_2))\in R_{KC}$, so $GI\kr
   R_{KC}$.
 \end{proof}
-
-Now we wish to address the question of whether kernel reductions are different
-from many-one reductions.
-
-To show that they are in fact different, we need only exhibit two equivalence
-relations, $R$ and $S$, such that $R\mor S$ but $R\nkr S$. Intuitively, this
-means that when $(x,y)\in R$, there is some information shared between $x$ and
-$y$ which can not be separated from either. In other words, $x$ can only be
-understood with knowledge of $y$ and $y$ can only be understood with knowledge
-of $x$. In attempting to construct such a relation, we have found that
-reflexivity, symmetry, and transitivity of a relation seem to provide a
-significant obstacle to the possibility of sharing information between related
-elements.
-
-To show that the two reductions are the same, we need to prove that a many-one
-reduction implies a kernel reduction. Proving this seems even more difficult
-than proving the negation. A many-one reduction gets access to both related
-elements, and using a many-one reduction to construct a kernel reduction would
-require something like examining the machine which computes the many-one
-reduction and determining in which states that machine is ``using'' which of
-the elements.
-
-Still, we have no reason in particular to believe that a many-one reduction is
-different from a kernel reduction. %% TODO more explanation
 
 Reductions between the graph isomorphism problem and other equivalence problems
 in $\NPEq$ abound, and though they have traditionally been presented as
@@ -975,16 +952,84 @@ provided to the original reductions):
 %% ``Babai noted that a functorial reduction of graph isomorphism to
 %% isomorphism of Dedekind lattices does not exist [32]''.
 
+We define the class of problems equivalent to graph isomorphism under
+polynomial time kernel reductions as follows:
+
+\begin{definition}
+  $\GIk=\{A|A\keq GI}$
+\end{definition}
+
+All of the problems cited above fall in this class.
+
+\begin{lemma}\label{lem:gik_npeq}
+  $\GIk\subset\NPEq$
+\end{lemma}
+\begin{proof}
+  Let $A\in\GIk$. Then $A\kr GI$ and hence $A\mor GI$. Since $GI\in\NP$ and
+  $\NP$ is closed under polynomial time many-one reductions, $A\in\NP$. Since
+  $A$ is an equivalence problem by definition (only equivalence problems can
+  kernel reduce), then $A\in\NPEq$. Therefore $\GIk\subseteq\NPEq$.
+\end{proof}
+
+%% TODO evidence
+There is evidence that shows that $GI$ is not \NP-complete. If this is true,
+then the following theorem about the complexity of all equivalence problems
+equivalent under polynomial time kernel reductions to the graph isomorphism
+problems follows.
+
+\begin{theorem}
+  If $GI$ is not $\mor$-complete in $\NP$, then $\GIk\subsetneq\NPEq$.
+\end{theorem}
+\begin{proof}
+  By \autoref{lem:gik_npeq}, $\GIk\subset\NPEq$.
+
+  Assume with the intention of producing a contradiction that
+  $\GIk=\NPEq$. Since every language $A$ in $\GIk$ polynomial time kernel
+  reduces to $GI$, $GI$ is complete under polynomial time kernel reductions in
+  $\GIk$. Since $\GIk=\NPEq$, $GI$ is complete under polynomial time kernel
+  reductions in $\NPEq$. By \autoref{thm:npeqc_npc}, $GI$ is $\mor$-complete in
+  $\NP$. 
+\end{proof}
+
 The graph isomorphism has been (and continues to be) extensively studied. For
 more information, see \cite{kst93}.
 
 %% TODO study hard equivalence problems: boolean formula isomorphism? algebraic
 %% structure equivalence relations (bloniarz84)? regular expressions with + and
-%% times?  Aho, Sagic, Ullman 1978 (tableau equivalence is NP-complete)
+%% times?  Aho, Sagic, Ullman 1978 (tableau equivalence is NP-complete) see
+%% boolean equivalence problems paper
 
 %% TODO check out known NP-complete equivalence problems
 
 %% TODO study P-complete problems, look for equivalence relations
+
+%% TODO #EqP number of equivalence classes?
+
+%% TODO show GIker is not NPEq if GI is not NP-complete
+
+Now we wish to address the question of whether kernel reductions are different
+from many-one reductions.
+
+To show that they are in fact different, we need only exhibit two equivalence
+relations, $R$ and $S$, such that $R\mor S$ but $R\nkr S$. Intuitively, this
+means that when $(x,y)\in R$, there is some information shared between $x$ and
+$y$ which can not be separated from either. In other words, $x$ can only be
+understood with knowledge of $y$ and $y$ can only be understood with knowledge
+of $x$. In attempting to construct such a relation, we have found that
+reflexivity, symmetry, and transitivity of a relation seem to provide a
+significant obstacle to the possibility of sharing information between related
+elements.
+
+To show that the two reductions are the same, we need to prove that a many-one
+reduction implies a kernel reduction. Proving this seems even more difficult
+than proving the negation. A many-one reduction gets access to both related
+elements, and using a many-one reduction to construct a kernel reduction would
+require something like examining the machine which computes the many-one
+reduction and determining in which states that machine is ``using'' which of
+the elements.
+
+Still, we have no reason in particular to believe that a many-one reduction is
+different from a kernel reduction. %% TODO more explanation
 
 \section{References}
 \bibliographystyle{alpha} \bibliography{references}
