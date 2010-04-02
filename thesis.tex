@@ -201,9 +201,9 @@ a\}$.
 %% TODO show that all the stated equivalence relations are actually eq. rel.s
 \begin{theorem}$R_{eq} \subsetneq R_{bc} \subsetneq R_{par}$\end{theorem}
 \begin{proof}
-  Let $(x, y)\in R_{eq}$, so $x=y$. Then $x$ has exactly the same number of ones
-  as $y$ (and the same number of zeros, and in the same order), so $(x, y) \in
-  R_{bc}$. Therefore, $R_{eq} \subset R_{bc}$.
+  Let $(x, y)\in R_{eq}$, so $x=y$. Then $x$ has exactly the same number of
+  ones as $y$ (and the same number of zeros, and in the same order), so $(x, y)
+  \in R_{bc}$. Therefore, $R_{eq} \subset R_{bc}$.
  
   Consider $x=1100$ and $y=0101$. Then $(x, y)\in R_{bc}$ but $(x, y) \notin
   R_{eq}$. Therefore $R_{eq} \neq R_{bc}$.
@@ -308,6 +308,40 @@ equivalence relation.
   $(M(x), M(y))\notin R_{eq}$.
 
   Therefore $(x, y)\in R_{bc} \iff (M(x), M(y))\in R_{eq}$, so $R_{bc}\kr
+  R_{eq}$.
+\end{proof}
+
+\begin{theorem}$R_{eqi}\kr R_{eq}$\end{theorem}
+\begin{proof}
+  Construct machine $M\in\FP$ on input $w\in\sigmastar$, where
+  $w=w_1w_2\cdotsw_{|w|}$:\\
+  \begin{algorithm}[H]
+    \eIf{$w_1=0$}{
+      \Return{$w$}
+    }{
+      \Return{$\bar{w}$}
+    }
+  \end{algorithm}
+  
+  Suppose $(x,y)\in R_{eqi}$, so either $x=y$ or $x=\bar{y}$. In the case that
+  $x=y$, $M(x)$ and $M(y)$ produce the same output. In the case that
+  $x=\bar{y}$, then either $x_1=1$ and $y_1=0$ or $x_1=0$ and $y_1=1$. Consider
+  without loss of generality the case that $x_1=1$ and $y_1=0$. Then $M(x)$
+  outputs $\bar{x}$ and $M(y)$ outputs $y$. Now $\bar{x}=\bar{\bar{y}}=y$, so
+  $M(x)=M(y)$. Therefore $(M(x),M(y))\in R_{eq}$.
+
+  Suppose $(x,y)\notin R_{eqi}$, so $x\neq y$ and $x\neq\bar{y}$. In the case
+  that $x_1=0$ and $y_1=0$, then $M(x)=x$ and $M(y)=y$. Since $x\neq y$, then
+  $M(x)\neq M(y)$, so $(M(x),M(y))\notin R_{eq}$. In the case that $x_1=0$ and
+  $y_1=1$, then $M(x)=x$ and $M(y)=\bar{y}$. Since $x\neq\bar{y}$, then
+  $M(x)\neq M(y)$, so $(M(x),M(y))\notin R_{eq}$. In the case that $x_1=1$ and
+  $y_1=0$, then $M(x)=\bar{x}$ and $M(y)=y$. Since $x\neq\bar{y}$, then
+  $\bar{x}\neq \bar{\bar{y}}=y$, so $M(x)\neq M(y)$, and $(M(x),M(y))\notin
+  R_{eq}$. In the case that $x_1=1$ and $y_1=1$, then $M(x)=\bar{x}$ and
+  $M(y)=\bar{y}$. Since $x\neq y$, then $\bar{x}\neq\bar{y}$, so $M(x)\neq
+  M(y)$, and $(M(x),M(y))\notin R_{eq}$.
+
+  Therefore $(x,y)\in R_{eqi}\iff (M(x), M(y))\in R_{eq}$, so $R_{eqi}\kr
   R_{eq}$.
 \end{proof}
 
