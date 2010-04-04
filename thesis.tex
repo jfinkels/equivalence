@@ -87,7 +87,7 @@
 
 % define the author, title, and date
 \author{Jeffrey Finkelstein} 
-\title{On computational complexity of equivalence relations}
+\title{On the computational complexity of equivalence relations}
 \date{\today} 
 
 \begin{document}
@@ -98,11 +98,13 @@
   In this paper we analyze the notion of kernel reductions among equivalence
   problems, as defined in Fortnow and Grochow, especially with respect to graph
   isomorphism and its polynomial time many-one equivalent problems. We first
-  examine some examples of kernel reductions among easy equivalence
-  relations. We then examine the complexity of equivalence problems which are
-  complete under kernel reductions in \NP. We also show that most known
-  many-one reductions among isomorphism problems in $\NP$ are indeed kernel
-  reductions.
+  examine some examples of kernel reductions among equivalence problems
+  decidable in polynomial time. In doing so, we consider the possibility of
+  whether the equality relation is in fact complete under kernel reductions
+  with respect to equivalence problems decidable in polynomial time. We then
+  examine the complexity of equivalence problems and kernel reductions in
+  \NP. We show that most known many-one reductions among isomorphism problems
+  in $\NP$ are indeed kernel reductions.
 \end{abstract}
 
 \begin{definition}
@@ -174,19 +176,15 @@ relations in $\PEq$, tractable equivalence problems.
 \begin{definition}
   $R_{par}=\{(x, y)|x$ and $y$ have the same parity$\}$
 \end{definition}
-
 \begin{definition}
   $R_{bc}=\{(x, y)|x$ and $y$ have the same number of ones$\}$
 \end{definition}
-
 \begin{definition}
-  $R_{eq}=\{(x, y)|x=y\}$
+  $R_{eq}=\{(x, y)|x=y\}$. This is called the \emph{equality relation}.
 \end{definition}
-
 \begin{definition}
   $R_{eqi}=\{(x, y)|x=y$ or $x=\bar{y}\}$
 \end{definition}
-
 \begin{definition}
   Let $a\in\sigmastar$. $R_{a}=\{(x,y)|x=y$ or $x\oplus y=a\}$. (Note that
   $R_{a}$ is a family of equivalence relations; $R_{a}$ is a different relation
@@ -311,10 +309,10 @@ equivalence relation.
   R_{eq}$.
 \end{proof}
 
-\begin{theorem}$R_{eqi}\kr R_{eq}$\end{theorem}
+\begin{theorem}\label{thm:reqi_req}$R_{eqi}\kr R_{eq}$\end{theorem}
 \begin{proof}
   Construct machine $M\in\FP$ on input $w\in\sigmastar$, where
-  $w=w_1w_2\cdotsw_{|w|}$:\\
+  $w=w_1w_2\cdots w_{|w|}$:\\
   \begin{algorithm}[H]
     \eIf{$w_1=0$}{
       \Return{$w$}
@@ -345,15 +343,130 @@ equivalence relation.
   R_{eq}$.
 \end{proof}
 
+\begin{theorem}Let $a\in\sigmastar$. Then $R_a\kr R_{eq}$.\end{theorem}
+\begin{proof}
+  Construct machine $M\in\FP$ on input $w\in\sigmastar$, where $|w|=|a|=n$,
+  $w=w_1w_2\cdots w_n$ and $a=a_1a_2\cdots a_n$:\\
+  \begin{algorithm}[H]
+    $s\gets((a_1, w_1), (a_2, w_2), \ldots, (a_n, w_n))$\;
+    Perform a stable sort on $s$ with each $a_i$ as the key, to obtain two
+    subsequences, $r$ and $r'$, where $r=(a_i, w_i)|_{a_i=0}$ and $r'=(a_j,
+    w_j)|_{a_j=0}$\;
+    Run the algorithm in \autoref{thm:reqi_req} on the concatenation of each
+    $w_j$ in $r'$ to obtain a new string $c$\;
+    \Return{the concatenation of each $w_i$, in the order of $r$, with the
+      string $c$}
+  \end{algorithm}
+  Notice that informally this machine splits up the problem into two easier
+  problems whose solutions are known: the first problem is the problem of
+  determining equality, the second problem is the problem of determining either
+  equality or bitwise complement.
+
+  Suppose $(x,y)\in R_a$, so either $x=y$ or $x\oplus y=a$. In the case that
+  $x=y$, then $M(x)$ and $M(y)$ output the same string, so $M(x)=M(y)$, and
+  hence $(M(x),M(y))\in R_{eq}$. Now consider the case in which $x\oplus
+  y=a$, which implies $x\oplus a=y$ and $y\oplus a=x$. Then $M(x)$ and $M(y)$
+  will first rearrange the bits of $x$ and $y$, respectively, by stable sorting
+  the bits of $a$. 
+
+  %% TODO complete this proof
+\end{proof}
+
+It seems that all of these ``bitwise'' equivalence problems reduce to the
+equality relation, $R_{eq}$, which seems to be the most restrictive equivalence
+relation in \P. Indeed, there are as many equivalence classes as there are
+unique strings, because each string is its own equivalence class. Is the
+equality relation \PEq-complete? To provide more evidence We will next examine
+an equivalence problem in \P that is not explicitly a problem involving the
+examination of bits in a string.
+
+\begin{definition}
+  Let $T_1=(V_1, E_1, r_1), T_2=(V_2, E_2, r_2)$, with $r_1\in V_1$ and $r_2\in
+  V_2$, be rooted trees. Then $T_1$ is \emph{isomorphic to} $T_2$ if
+  $\exists\phi:V_1\to V_2:\phi(r_1)=r_2$ and $(u,v)\in E_1\iff(\phi(u),
+  \phi(v))\in E_2$.
+\end{definition}
+\begin{definition}
+  $TI=\{(T_1,T_2)|T_1$ is isomorphic to $T_2\}$
+\end{definition}
+Informally, two trees are isomorphic if there is a permutation of the vertices
+of one tree which preserves edges in the other tree and preserves the root
+node.
+
+The tree isomorphism problem is in $\P$, and in fact, easier than \P. For a
+linear time algorithm for deciding isomorphism of trees see \cite{ahu74}, and
+for an alternating logarithmic time algorithm see \cite{buss97}.
+
+%% TODO tree canonization is in CF(FALOGTIME)\subset CF(P)
+%% TODO do the tree isomorphism algorithms reduce to equality?
+
+If the equality relation is \PEq-complete, then some collapses happen, as
+described in \cite{fg09}. We first restate the definition of another complexity
+class defined in \cite{fg09} (defined there as $\KerFP$).
+
+\begin{definition}
+  Let $R$ be an equivalence relation, an let $f\in\FP$. Then $f$ is a
+  \emph{complete invariant} for $R$ if $(x,y)\in R$ if and only if $f(x)=f(y)$.
+\end{definition}
+\begin{definition}\label{
+  $\FPKer=\{L|L$ is an equivalence relation with a complete invariant in
+  $\FP\}$
+\end{definition}
+
+\begin{lemma}\label{lem:ker_peq}
+  $\FPKer\subseteq\PEq$
+\end{lemma}
+\begin{proof}
+  Let $R\in\FPKer$. Then by definition $\exists f\in\FP: (x,y)\in R\iff
+  f(x)=f(y)$. To decide membership of $(x,y)\in\R$, use $f$ to decide whether
+  $f(x)=f(y)$. This is true if and only if $(x,y)\in R$. Therefore membership
+  in $R$ can be decided in polynomial time, hence $FPKer\subseteq\PEq$.
+\end{proof}
+
+For the sake of clarity, we provide a proof of the following claim made by
+Fortnow and Grochow:
+
+\begin{theorem}
+  Let $R\in\PEq$ be \PEq-complete. Then the following are equivalent:
+  \begin{enumerate}
+    \renewcommand{\labelenumi}{\roman{enumi}}
+  \item $R\in\FPKer$
+  \item $\FPKer=\PEq$
+  \item $R_{eq}$ is \PEq-complete
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  ($i\implies ii$) We know $\FPKer\subseteq\PEq$ by \autoref{lem:ker_peq}. It
+  remains to show that if $R\in\FPKer$ then $\PEq\subseteq\FPKer$. Let
+  $S\in\PEq$. Since $R$ is \PEq-complete, $S\kr R$ by some function $f\in\FP$,
+  that is, $(x,y)\in S\iff(f(x),f(y))\in R$. Since $R\in\FPKer$, $\exists
+  g\in\FP: (x,y)\in R\iff g(x)=g(y)$. Now $(x,y)\in S\iff (f(x),f(y))\in R\iff
+  (g\circ f)(x)=(g\circ f)(y)$. Therefore $\PEq\subseteq\FPKer$, hence
+  $\FPKer=\PEq$.
+
+  ($ii\implies iii$) Suppose $\FPKer=\PEq$. Then $\forall S\in\PEq$,
+  $S\in\FPKer$, so $\exists f\in\FP: (x,y)\in S\iff f(x)=f(y)$, or in other
+  words $(x,y)\in S\iff (f(x),f(y))\in R_{eq}$. Thus $R_{eq}$ is \PEq-complete.
+
+  ($iii\implies i$) Suppose $R_{eq}$ is \PEq-complete. Then $R\kr R_{eq}$, that
+  is, $\exists f\in\FP:(x,y)\in R\iff (f(x),f(y))\in R_{eq}$, or in other
+  words, $f(x)=f(y)$. Therefore $f$ is a complete invariant for $R$, so
+  $R\in\FPKer$.
+\end{proof}
+
+
+
+%% TODO new section
+
 An equivalence problem of particular importance is the graph isomorphism
 problem. Although it is in \NP, it is not known to be \NP-complete and it is
 not known to be in \P. It is therefore a candidate for $\NP\backslash\P$ (if
 $P\neq\NP$). Since it is an equivalence problem in \NP, it is a member of
 \NPEq, so it may be of particular value to study kernel reductions to and from
 the graph isomorphism problem. We begin by examining kernel reductions from the
-$\PEq$ equivalence relations defined above to the graph isomorphism problem,
-which should intuitively be easy because the graph isomorphism problem is
-(seemingly) of greater complexity.
+$\PEq$ equivalence relations defined above to the graph isomorphism problem.
+The reductions should intuitively be easy because the graph isomorphism problem
+is (seemingly) of greater complexity.
 
 \begin{definition}
   $GI=\{(G_1, G_2)|G_1$ and $G_2$ are undirected graphs and $G_1$ is isomorphic
