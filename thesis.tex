@@ -190,6 +190,16 @@ relations in $\PEq$, tractable equivalence problems.
   $R_{a}$ is a family of equivalence relations; $R_{a}$ is a different relation
   for each fixed $a$.)
 \end{definition}
+\begin{definition}
+  $R_{maj}=\{(x,y)|$ at least half of the bits in both $x$ and $y$ are ones, or
+  fewer than half of the bits in both $x$ and $y$ are ones$\}$
+\end{definition}
+\begin{definition}
+  Let $k\in\mathbb{N}$. $R_{tk}=\{(x,y)|x$ and $y$ both have at least $k$ ones
+  or $x$ and $y$ both have fewer than $k$ ones$\}$. (Note that $R_{tk}$ is a
+  family of equivalence relations; $R_{tk}$ is a different relation for each
+  fixed $k$. Notice also that if $k=|x|/2$ then $R_{tk}=R_{maj}$.)
+\end{definition}
 
 Notice the following equivalent definitions, where $n=|x|=|y|=|a|$:
 $R_{eq}=\{(x, y)|x \oplus y = 0^n\}$, $R_{eqi}=\{(x, y)|x \oplus y = 0^n$ or
@@ -408,7 +418,7 @@ class defined in \cite{fg09} (defined there as $\KerFP$).
   Let $R$ be an equivalence relation, an let $f\in\FP$. Then $f$ is a
   \emph{complete invariant} for $R$ if $(x,y)\in R$ if and only if $f(x)=f(y)$.
 \end{definition}
-\begin{definition}\label{
+\begin{definition}
   $\FPKer=\{L|L$ is an equivalence relation with a complete invariant in
   $\FP\}$
 \end{definition}
@@ -429,7 +439,7 @@ Fortnow and Grochow:
 \begin{theorem}
   Let $R\in\PEq$ be \PEq-complete. Then the following are equivalent:
   \begin{enumerate}
-    \renewcommand{\labelenumi}{\roman{enumi}}
+    \renewcommand{\labelenumi}{\roman{enumi}.}
   \item $R\in\FPKer$
   \item $\FPKer=\PEq$
   \item $R_{eq}$ is \PEq-complete
@@ -454,14 +464,18 @@ Fortnow and Grochow:
   $R\in\FPKer$.
 \end{proof}
 
+%% TODO restate FG09 Thm 4.3 If Ker=PEq then UP\subseteq BQP,  Cor 4.8 (pf?)
+%% note: this is apparently evidence that PEq is not equal to Ker
 
+%% TODO showing completeness of a problem should be somewhat easier because we
+%% are allowed to examine the entire computation history
 
-%% TODO new section
+%% TODO start a new section here
 
 An equivalence problem of particular importance is the graph isomorphism
 problem. Although it is in \NP, it is not known to be \NP-complete and it is
 not known to be in \P. It is therefore a candidate for $\NP\backslash\P$ (if
-$P\neq\NP$). Since it is an equivalence problem in \NP, it is a member of
+$\P\neq\NP$). Since it is an equivalence problem in \NP, it is a member of
 \NPEq, so it may be of particular value to study kernel reductions to and from
 the graph isomorphism problem. We begin by examining kernel reductions from the
 $\PEq$ equivalence relations defined above to the graph isomorphism problem.
