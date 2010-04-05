@@ -9,3 +9,8 @@
 *#
 #*
 .*
+
+poster/*.nav
+poster/*.snm
+poster/*.toc
+poster/logo.png
