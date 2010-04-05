@@ -48,13 +48,14 @@
   \begin{beamercolorbox}[rounded=true,leftskip=1cm,colsep*=.75ex]{block title}%
     \usebeamerfont*{block title}\insertblocktitle
   \end{beamercolorbox}%
-  {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
-  \usebeamerfont{block body}%
-  \begin{beamercolorbox}[rounded=true,colsep*=.75ex,sep=.75ex,vmode]{block body}%
-    \ifbeamercolorempty[bg]{block body}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
-  }
-  \setbeamertemplate{block end}{
-  \end{beamercolorbox}
+      {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
+      \usebeamerfont{block body}%
+      \begin{beamercolorbox}[rounded=true,colsep*=.75ex,sep=.75ex,vmode]{block
+          body}%
+        \ifbeamercolorempty[bg]{block body}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
+}
+\setbeamertemplate{block end}{
+      \end{beamercolorbox}
 }
 
 \setbeamertemplate{headline}{  
@@ -66,21 +67,24 @@
       \end{column}
       \begin{column}{.07\paperwidth}
         \begin{center}
-          %\includegraphics[width=.6\linewidth]{logos/i6-hks44}
+          %\includegraphics[width=.6\linewidth]{logo}
         \end{center}
         \vskip1ex
       \end{column}
       \begin{column}{.675\paperwidth}
         \vskip5ex
         \raggedleft
-        \usebeamercolor{title in headline}{\color{fg}\textbf{\veryHuge{\inserttitle}}\\[1ex]}
-        \usebeamercolor{author in headline}{\color{fg}\Large{\insertauthor}\\[1ex]}
-        \usebeamercolor{institute in headline}{\color{fg}\Large{\insertinstitute}\\[1ex]}     
+        \usebeamercolor{title in
+          headline}{\color{fg}\textbf{\veryHuge{\inserttitle}}\\[1ex]}
+        \usebeamercolor{author in
+          headline}{\color{fg}\Large{\insertauthor}\\[1ex]}
+        \usebeamercolor{institute in
+          headline}{\color{fg}\Large{\insertinstitute}\\[1ex]}
       \end{column}
       \begin{column}{.25\paperwidth}
         \vskip1cm
         \begin{center}
-          \includegraphics[width=.7\linewidth]{tuftslogo}
+          \includegraphics[width=.7\linewidth]{logo}
         \end{center}
         \vskip1.5cm
       \end{column}
@@ -89,33 +93,19 @@
     \end{columns}
   \end{beamercolorbox}
   
-%%      \begin{beamercolorbox}[sep=0.1cm,wd=.1\paperwidth,center]{logo in headline}
-%%        \vskip2ex
-%%      \end{beamercolorbox}  
-%%      \begin{beamercolorbox}[sep=1cm,wd=.7\paperwidth]{headline}
-%%        \usebeamercolor{title in headline}{\raggedright\color{fg}\textbf{\LARGE{\inserttitle}}\\[1ex]}
-%%        \usebeamercolor{author in headline}{\raggedright\color{fg}\large{\insertauthor}\\[1ex]}
-%%        \usebeamercolor{institute in headline}{\raggedright\color{fg}\large{\insertinstitute}\\[1ex]}     
-%%      \end{beamercolorbox}%
-%%      \begin{beamercolorbox}[sep=0.1cm,wd=.18\paperwidth,center]{logo in headline}
-%%        \includegraphics[height=5cm]{logos/rwth-hks44}
-%%        \vskip2ex
-%%      \end{beamercolorbox}  
-%%    \end{beamercolorbox}
-  
   \begin{beamercolorbox}[wd=\paperwidth]{lower separation line head}
     \rule{0pt}{2pt}
   \end{beamercolorbox}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{footline}{
   \begin{beamercolorbox}[wd=\paperwidth]{upper separation line foot}
     \rule{0pt}{2pt}
   \end{beamercolorbox}
   
   \begin{beamercolorbox}[ht=4ex,leftskip=1cm,rightskip=1cm]{footline}%
-    Lehrstuhl f\"ur Informatik 6 - Computer Science Department - RWTH Aachen University - Aachen, Germany \hfill Mail: \texttt{<surname>@cs.rwth-aachen.de} \hfill WWW: \texttt{http://www-i6.informatik.rwth-aachen.de}
+    Tufts University $\cdot$ Computer Science Department $\cdot$ Medford, MA
+    \hfill email: \texttt{jeffrey.finkelstein@tufts.edu} \hfill %info here%
     \vskip1ex
   \end{beamercolorbox}
 
@@ -124,5 +114,4 @@
   \end{beamercolorbox}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \mode<all>

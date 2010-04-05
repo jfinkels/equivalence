@@ -1,0 +1,55 @@
+\documentclass[final]{beamer}
+\mode<presentation>{\usetheme{I6pd}}
+
+\usepackage[english]{babel}
+\usepackage[orientation=landscape,size=a0]{beamerposter}
+
+\newcommand{\sigmastar}{\Sigma^*}
+
+\title{On the computational complexity of equivalence relations}
+\author{Jeffrey Finkelstein}
+\institute{Tufts University}
+\date{\today}
+
+\begin{document}
+\begin{frame}{} 
+  %  \vfill
+  \begin{columns}[t]
+    \begin{column}{.3\linewidth}
+      \begin{block}{\LARGE What is an equivalence relation?}
+        \Large 
+        \begin{itemize}
+        \item Let $\sigmastar=\{0,1\}^*$. Then
+          $R\subseteq\sigmastar\times\sigmastar$ is an \emph{equivalence
+          relation} if the following properties hold:
+          \begin{enumerate}
+          \item (reflexivity) $\forall x\in\sigmastar$, $(x,x)\in R$
+          \item (symmetry) $\forall x,y\in\sigmastar$, $(x,y)\in R\implies
+            (y,x)\in R$
+          \item (transitivity) $\forall x,y,z\in\sigmastar$, if $(x,y)\in R$ and
+            $(y,z)\in R$, then $(x,z)\in R$
+          \end{enumerate}
+          If $(x,y)\in R$, we use the notation $x\sim y$ and say \emph{$x$
+            relates to $y$}.
+          \item \PEq
+        
+      \end{block}
+      \begin{block}{Why are equivalence relations important?}
+        Many problems in theoretical and practical computer science are in fact
+        problems 
+      \end{block}
+    \end{column}
+    \begin{column}{.3\linewidth}
+      \begin{block}{\large Title}
+        Hey there
+      \end{block}
+    \end{column}
+    \begin{column}{.3\linewidth}
+      \begin{block}{\large Title}
+        Hey there, again!
+      \end{block}
+    \end{column}
+  \end{columns}
+  %\vfill
+\end{frame}
+\end{document}
