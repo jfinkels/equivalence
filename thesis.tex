@@ -374,10 +374,24 @@ equivalence relation.
 
   Suppose $(x,y)\in R_a$, so either $x=y$ or $x\oplus y=a$. In the case that
   $x=y$, then $M(x)$ and $M(y)$ output the same string, so $M(x)=M(y)$, and
-  hence $(M(x),M(y))\in R_{eq}$. Now consider the case in which $x\oplus
-  y=a$, which implies $x\oplus a=y$ and $y\oplus a=x$. Then $M(x)$ and $M(y)$
-  will first rearrange the bits of $x$ and $y$, respectively, by stable sorting
-  the bits of $a$. 
+  hence $(M(x),M(y))\in R_{eq}$. Now consider the case in which $x\oplus y=a$,
+  which implies $x\oplus a=y$ and $y\oplus a=x$. Then $M(x)$ and $M(y)$ will
+  first rearrange the bits of $x$ and $y$, respectively, by stable sorting the
+  bits of $a$. For all bits of $a$ which are zero, the corresponding bits of
+  $x$ and $y$ are equal, by hypothesis. For all bits of $a$ which are one, the
+  corresponding bits of $x$ and $y$ are complements of one another. Let $a_i$
+  be the leftmost bit of $a$ which is one. In the case that $x_i=1$ and
+  $y_i=0$, then the algorithm from \autoref{thm:reqi_req} will flip all the
+  bits of $x$ corresponding to bits of $a$ which are one. Since $y$ and $x$
+  were complements, at these bits only, now $M(x)=M(y)$, so $(M(x),M(y))\in
+  R_{eq}$. The argument for the case that $x_i=0$ and $y_i=1$ is symmetric.
+
+  Suppose $(x,y)\notin R_a$, so $x\neq y$ and $x\oplus y\neq a$. So $\exists
+  i,j\in\{1,2,\ldots,|x|\}: x_i\neq y_i$ and $x_j\oplus y_j\neq a$. Now $M(x)$
+  and $M(y)$ will rearrange the bits of $x$ and $y$, respectively, by stable
+  sorting the bits of $a$. Call these new strings $x'$ and $y'$, and the
+  corresponding permutation of indices $i$ and $j$, $i'$ and $j'$,
+  respectively. If $a_{i'}$ is zero then $x_{i'}\neq y_{i'}$.
 
   %% TODO complete this proof
 \end{proof}
@@ -430,39 +444,30 @@ class defined in \cite{fg09} (defined there as $\KerFP$).
   Let $R\in\FPKer$. Then by definition $\exists f\in\FP: (x,y)\in R\iff
   f(x)=f(y)$. To decide membership of $(x,y)\in\R$, use $f$ to decide whether
   $f(x)=f(y)$. This is true if and only if $(x,y)\in R$. Therefore membership
-  in $R$ can be decided in polynomial time, hence $FPKer\subseteq\PEq$.
+  in $R$ can be decided in polynomial time, hence $\FPKer\subseteq\PEq$.
 \end{proof}
 
 For the sake of clarity, we provide a proof of the following claim made by
 Fortnow and Grochow:
 
 \begin{theorem}
-  Let $R\in\PEq$ be \PEq-complete. Then the following are equivalent:
-  \begin{enumerate}
-    \renewcommand{\labelenumi}{\roman{enumi}.}
-  \item $R\in\FPKer$
-  \item $\FPKer=\PEq$
-  \item $R_{eq}$ is \PEq-complete
-  \end{enumerate}
+  $\FPKer=\PEq$ if and only if $R_{eq}$ is \PEq-complete.
 \end{theorem}
 \begin{proof}
-  ($i\implies ii$) We know $\FPKer\subseteq\PEq$ by \autoref{lem:ker_peq}. It
-  remains to show that if $R\in\FPKer$ then $\PEq\subseteq\FPKer$. Let
-  $S\in\PEq$. Since $R$ is \PEq-complete, $S\kr R$ by some function $f\in\FP$,
-  that is, $(x,y)\in S\iff(f(x),f(y))\in R$. Since $R\in\FPKer$, $\exists
-  g\in\FP: (x,y)\in R\iff g(x)=g(y)$. Now $(x,y)\in S\iff (f(x),f(y))\in R\iff
-  (g\circ f)(x)=(g\circ f)(y)$. Therefore $\PEq\subseteq\FPKer$, hence
-  $\FPKer=\PEq$.
+  For the forward direction, suppose $\FPKer=\PEq$. Let $S\in\PEq=\FPKer$, so
+  $\exists f\in\FP: (x,y)\in S\iff f(x)=f(y)\iff (f(x),f(y))\in R_{eq}\iff S\kr
+  R_{eq}$. Thus $R_{eq}$ is \PEq-complete.
 
-  ($ii\implies iii$) Suppose $\FPKer=\PEq$. Then $\forall S\in\PEq$,
-  $S\in\FPKer$, so $\exists f\in\FP: (x,y)\in S\iff f(x)=f(y)$, or in other
-  words $(x,y)\in S\iff (f(x),f(y))\in R_{eq}$. Thus $R_{eq}$ is \PEq-complete.
-
-  ($iii\implies i$) Suppose $R_{eq}$ is \PEq-complete. Then $R\kr R_{eq}$, that
-  is, $\exists f\in\FP:(x,y)\in R\iff (f(x),f(y))\in R_{eq}$, or in other
-  words, $f(x)=f(y)$. Therefore $f$ is a complete invariant for $R$, so
-  $R\in\FPKer$.
+  Conversely, suppose $R_{eq}$ is \PEq-complete. Then $\forall S\in\PEq$,
+  $\exists f\in\FP:(x,y)\in S\iff(f(x),f(y))\in R_{eq}\iff f(x)=f(y)$. Thus $f$
+  is a complete invariant for $S$ computable in polynomial time. Thus
+  $S\in\FPKer$, and hence $\PEq\subseteq\FPKer$. By \autoref{lem:ker_peq},
+  $\FPKer\subseteq\PEq$, therefore $\PEq=\FPKer$.
 \end{proof}
+
+Fortnow and Grochow provide evidence that $R_{eq}$ is \emph{not} \PEq-complete,
+by showing that something crazy happens if $\FPKer=\PEq$. Specifically, if
+$\FPKer=\PEq$ then $\UP\subseteq\BQP$\cite{fg09}.
 
 %% TODO restate FG09 Thm 4.3 If Ker=PEq then UP\subseteq BQP,  Cor 4.8 (pf?)
 %% note: this is apparently evidence that PEq is not equal to Ker
