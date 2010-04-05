@@ -10,7 +10,7 @@
 #*
 .*
 
-poster/*.nav
-poster/*.snm
-poster/*.toc
-poster/logo.png
+*.nav
+*.snm
+*.toc
+logo.png
