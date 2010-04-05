@@ -4,6 +4,8 @@
 \usepackage[english]{babel}
 \usepackage[orientation=landscape,size=a0]{beamerposter}
 
+\usepackage{complexity}
+
 \newcommand{\sigmastar}{\Sigma^*}
 
 \title{On the computational complexity of equivalence relations}
@@ -16,34 +18,71 @@
   %  \vfill
   \begin{columns}[t]
     \begin{column}{.3\linewidth}
+
       \begin{block}{\LARGE What is an equivalence relation?}
-        \Large 
+        \Large
         \begin{itemize}
         \item Let $\sigmastar=\{0,1\}^*$. Then
           $R\subseteq\sigmastar\times\sigmastar$ is an \emph{equivalence
           relation} if the following properties hold:
-          \begin{enumerate}
-          \item (reflexivity) $\forall x\in\sigmastar$, $(x,x)\in R$
-          \item (symmetry) $\forall x,y\in\sigmastar$, $(x,y)\in R\implies
+          \begin{list}
+            \Large
+          \item i. (reflexivity) $\forall x\in\sigmastar$, $(x,x)\in R$
+          \item ii. (symmetry) $\forall x,y\in\sigmastar$, $(x,y)\in R\implies
             (y,x)\in R$
-          \item (transitivity) $\forall x,y,z\in\sigmastar$, if $(x,y)\in R$ and
-            $(y,z)\in R$, then $(x,z)\in R$
-          \end{enumerate}
+          \item iii. (transitivity) $\forall x,y,z\in\sigmastar$, if $(x,y)\in
+            R$ and $(y,z)\in R$, then $(x,z)\in R$
+          \end{list}
           If $(x,y)\in R$, we use the notation $x\sim y$ and say \emph{$x$
             relates to $y$}.
-          \item \PEq
-        
+        \item $\PEq=\{R\subseteq\sigmastar\times\sigmastar|R$ is an
+          equivalence relation for which membership can be decided by a
+          deterministic Turing machine in polynomial time$\}$
+        \item $\NPEq=\{R\subseteq\sigmastar\times\sigmastar|R$ is an
+          equivalence relation for which membership can be decided by a
+          nondeterministic Turing machine in polynomial time$\}$
+        \end{itemize}
       \end{block}
-      \begin{block}{Why are equivalence relations important?}
-        Many problems in theoretical and practical computer science are in fact
-        problems 
+
+      \begin{block}{\LARGE Examples of equivalence relation in $\PEq$ and
+          $\NPEq$}
+        \Large
+        \begin{itemize}
+        \item in \PEq:
+          \begin{itemize}\Large
+          \item \emph{the equality relation}: $x\sim y$ if $x=y$
+          \item \emph{same parity}: $x\sim y$ if both have an even or odd
+            number of ones
+          \item \emph{same bitcount}: $x\sim y$ if both have the same number of
+            ones
+          \item \emph{same threshold}: $\forall k\in\mathbb{N}$, $x\sim y$ if
+            both have greater than $k$ ones
+          \item \emph{equal or inverse}: $x\sim y$ if $x=y$ or $x=\bar{y}$, the
+            bitwise complement of $y$
+          \end{itemize}
+        \item in $\NPEq$ (not known to be in \PEq):
+          \begin{itemize}\Large
+          \item \emph{graph isomorphism}: given two graphs, is there a
+            permutation of the vertices of one which preserves edges in the
+            other?
+          \end{itemize}
+        \end{itemize}
+      \end{block}
+
+      \begin{block}{\LARGE Why are equivalence relations important?}
+        \begin{itemize}
+        \item many applications throughout computer science
+          
+        \end{itemize}
       \end{block}
     \end{column}
+
     \begin{column}{.3\linewidth}
       \begin{block}{\large Title}
         Hey there
       \end{block}
     \end{column}
+
     \begin{column}{.3\linewidth}
       \begin{block}{\large Title}
         Hey there, again!
