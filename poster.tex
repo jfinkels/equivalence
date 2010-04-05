@@ -4,8 +4,12 @@
 \usepackage[english]{babel}
 \usepackage[orientation=landscape,size=a0]{beamerposter}
 
+\usepackage{color}
 \usepackage{complexity}
 
+%\usefonttheme{professionalfonts}
+
+\newcommand{\emphblue}[1]{\emph{\textcolor{blue}{#1}}}
 \newcommand{\sigmastar}{\Sigma^*}
 
 \title{On the computational complexity of equivalence relations}
@@ -23,56 +27,69 @@
         \Large
         \begin{itemize}
         \item Let $\sigmastar=\{0,1\}^*$. Then
-          $R\subseteq\sigmastar\times\sigmastar$ is an \emph{equivalence
-          relation} if the following properties hold:
+          $R\subseteq\sigmastar\times\sigmastar$ is an \emphblue{equivalence
+          relation} if the following properties hold for all
+          $x,y,z\in\sigmastar$:
           \begin{list}
             \Large
-          \item i. (reflexivity) $\forall x\in\sigmastar$, $(x,x)\in R$
-          \item ii. (symmetry) $\forall x,y\in\sigmastar$, $(x,y)\in R\implies
-            (y,x)\in R$
-          \item iii. (transitivity) $\forall x,y,z\in\sigmastar$, if $(x,y)\in
-            R$ and $(y,z)\in R$, then $(x,z)\in R$
+          \item i. (\emphblue{reflexivity}) $(x,x)\in R$
+          \item ii. (\emphblue{symmetry}) $(x,y)\in R\implies (y,x)\in R$
+          \item iii. (\emphblue{transitivity}) if $(x,y)\in R$ and $(y,z)\in
+            R$, then $(x,z)\in R$
           \end{list}
           If $(x,y)\in R$, we use the notation $x\sim y$ and say \emph{$x$
             relates to $y$}.
-        \item $\PEq=\{R\subseteq\sigmastar\times\sigmastar|R$ is an
-          equivalence relation for which membership can be decided by a
+        \item $\PEq=\{R\subseteq\sigmastar\times\sigmastar|R$ is an equivalence
+          relation for which membership can be \emphblue{decided} by a
           deterministic Turing machine in polynomial time$\}$
         \item $\NPEq=\{R\subseteq\sigmastar\times\sigmastar|R$ is an
-          equivalence relation for which membership can be decided by a
-          nondeterministic Turing machine in polynomial time$\}$
+          equivalence relation for which membership can be \emphblue{verified}
+          by a deterministic Turing machine in polynomial time$\}$
         \end{itemize}
       \end{block}
 
-      \begin{block}{\LARGE Examples of equivalence relation in $\PEq$ and
-          $\NPEq$}
+      \begin{block}{\LARGE Equivalence relations in $\PEq$ and $\NPEq$}
         \Large
         \begin{itemize}
+          \setlength{\itemsep}{20pt}
         \item in \PEq:
           \begin{itemize}\Large
-          \item \emph{the equality relation}: $x\sim y$ if $x=y$
-          \item \emph{same parity}: $x\sim y$ if both have an even or odd
-            number of ones
-          \item \emph{same bitcount}: $x\sim y$ if both have the same number of
-            ones
-          \item \emph{same threshold}: $\forall k\in\mathbb{N}$, $x\sim y$ if
-            both have greater than $k$ ones
-          \item \emph{equal or inverse}: $x\sim y$ if $x=y$ or $x=\bar{y}$, the
-            bitwise complement of $y$
+          \item \emphblue{the equality relation}: are two strings equal?
+          \item \emphblue{same parity}: do two strings have the same parity (even
+            or odd number of ones)?
+          \item \emphblue{same bitcount}: do two strings have the same number of
+            ones?
+          \item \emphblue{equal or complement}: are two strings either equal or
+            bitwise complements?
+          \item \emphblue{tree isomorphism}: are two trees the same up to a
+            relabeling of vertices?
           \end{itemize}
         \item in $\NPEq$ (not known to be in \PEq):
           \begin{itemize}\Large
-          \item \emph{graph isomorphism}: given two graphs, is there a
-            permutation of the vertices of one which preserves edges in the
-            other?
+          \item \emphblue{graph isomorphism}: are two graphs the same up to a
+            relabeling of vertices?
+          \item \emphblue{context-free grammar isomorphism}: do two context
+            free grammars produce the same language?
+          \item \emphblue{algebraic structure isomorphism}: given two algebraic
+            structures, are they the same up to relabeling of elements?
+          %\item these problems are actually all of equivalent complexity!
+          \end{itemize}
+        \item really hard (not known to be in \NPEq):
+          \begin{itemize}\Large
+          \item \emphblue{boolean formula isomorphism}: are two boolean
+            formulas the same up to a permutation of input variables?
           \end{itemize}
         \end{itemize}
       \end{block}
 
       \begin{block}{\LARGE Why are equivalence relations important?}
         \begin{itemize}
-        \item many applications throughout computer science
-          
+          \Large
+        \item graph isomorphism is a candidate for $\NP\backslash\P$ (a million
+          dollars!)
+        \item as a tool for studying computational complexity
+        \item applications in determining equivalence of structures in
+          practical computer science and engineering
         \end{itemize}
       \end{block}
     \end{column}
