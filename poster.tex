@@ -38,8 +38,8 @@
           \item iii. (\emphblue{transitivity}) if $(x,y)\in R$ and $(y,z)\in
             R$, then $(x,z)\in R$
           \end{list}
-          If $(x,y)\in R$, we use the notation $x\sim y$ and say \emph{$x$
-            relates to $y$}.
+          If $(x,y)\in R$, we use the notation $x\sim y$ and say $x$
+          \emphblue{relates to} $y$.
         \item $\PEq=\{R\subseteq\sigmastar\times\sigmastar|R$ is an equivalence
           relation for which membership can be \emphblue{decided} by a
           deterministic Turing machine in polynomial time$\}$
@@ -48,8 +48,8 @@
           by a deterministic Turing machine in polynomial time$\}$
         \end{itemize}
       \end{block}
-
-      \begin{block}{\LARGE How hard are equivalence relations?}
+      \vspace{2in}
+      \begin{block}{\LARGE How hard are equivalence problems?}
         \Large
         \begin{itemize}
           \setlength{\itemsep}{20pt}
@@ -72,7 +72,7 @@
           \item \emphblue{context-free grammar isomorphism}: do two context
             free grammars produce the same language?
           \item \emphblue{algebraic structure isomorphism}: given two algebraic
-            structures, are they the same up to relabeling of elements?
+            structures, are they the same up to a relabeling of elements?
             %\item these problems are actually all of equivalent complexity!
           \end{itemize}
         \item really hard (not known to be in \NPEq):
@@ -81,6 +81,21 @@
             formulas the same up to a permutation of input variables?
           \end{itemize}
         \end{itemize}
+      \end{block}
+
+    \end{column}
+
+    %% middle column
+    \begin{column}{.3\linewidth}
+
+      \begin{block}{\LARGE Kernel reductions between equivalence problems}
+        \Large In this figure the polynomial time computable function $f$ maps
+        binary strings to graphs such that if $a$ and $b$ are binary strings
+        with the same number of ones, then $f(a)$ is isomorphic to $f(b)$. In
+        this specific example, $x$ and $y$ both have two ones and $z$ has three
+        ones, therefore the graphs $f(x)$ and $f(y)$ are isomorphic, but
+        neither is isomorphic to $f(z)$.
+        \includegraphics{images/rbc_gi.png}
       \end{block}
 
       \begin{block}{\LARGE Why are equivalence relations important?}
@@ -93,17 +108,7 @@
           practical computer science and engineering
         \end{itemize}
       \end{block}
-    \end{column}
 
-    %% middle column
-    \begin{column}{.3\linewidth}
-      \begin{block}{\LARGE Kernel reduction between equivalence relation}
-        \Large In this figure the polynomial time computable function $f$ maps
-        binary strings to graphs such that if $a$ and $b$ are binary strings
-        with the same number of ones, then $f(a)$ is isomorphic to $f(b)$. In
-        this specific example, $x$ and $y$ both have three ones and 
-        \includegraphics{images/rbc_gi}
-      \end{block}
     \end{column}
 
     %% right column
@@ -125,17 +130,24 @@
         \end{itemize}
       \end{block}
 
+      \vspace{1.7in}
+
       \begin{block}{\LARGE What do kernel reductions look like?}
         \begin{itemize}\Large
         \item most known reductions between \emphblue{equivalence problems in
           $\NPEq$} and \emphblue{graph isomorphism} are kernel reductions
-        \item many equivalence problems in $\PEq$ reduce to equality
+        \item no obvious example of many-one reduction between equivalence
+          relations which is not induced by a kernel reduction
+        \item many equivalence problems in $\PEq$ reduce to \emphblue{equality}
         \item maps a \emphblue{single object} in one category to a
           \emphblue{single object} in another category (does not map pairs)
         \end{itemize}
       \end{block}
 
-      \begin{block}{\LARGE What do we want to study about kernel reductions?}
+      \vspace{1.7in}
+
+      \begin{block}{\LARGE What are we trying to learn about kernel
+          reductions?}
         \begin{itemize}\Large
         \item questions to address:
           \begin{itemize}\Large
@@ -143,7 +155,9 @@
             reductions?
           \item are there \PEq-complete problems? are there \NPEq-complete
             problems?
-          \item is the \emphblue{equality relation} \PEq-complete?
+          \item many ``bitwise'' equivalence relations kernel reduce to the
+            equality relation; is the \emphblue{equality relation}
+            \PEq-complete?
           \item what is the relationship between \NP-complete problems and
             \NPEq-complete problems?
           \end{itemize}
