@@ -387,11 +387,12 @@ equivalence relation.
   R_{eq}$. The argument for the case that $x_i=0$ and $y_i=1$ is symmetric.
 
   Suppose $(x,y)\notin R_a$, so $x\neq y$ and $x\oplus y\neq a$. So $\exists
-  i,j\in\{1,2,\ldots,|x|\}: x_i\neq y_i$ and $x_j\oplus y_j\neq a$. Now $M(x)$
-  and $M(y)$ will rearrange the bits of $x$ and $y$, respectively, by stable
-  sorting the bits of $a$. Call these new strings $x'$ and $y'$, and the
-  corresponding permutation of indices $i$ and $j$, $i'$ and $j'$,
-  respectively. If $a_{i'}$ is zero then $x_{i'}\neq y_{i'}$.
+  i,j\in\{1,2,\ldots,|x|\}: x_i\neq y_i$ and $x_j\oplus y_j\neq a_j$ (with the
+  possibility that $i=j$). Now $M(x)$ and $M(y)$ will rearrange the bits of $x$
+  and $y$, respectively, by stable sorting the bits of $a$. Call these new
+  strings $x'$ and $y'$, and the corresponding permutation of indices $i$ and
+  $j$, $i'$ and $j'$, respectively. If $a_{i'}$ is zero then $x_{i'}\neq
+  y_{i'}$.
 
   %% TODO complete this proof
 \end{proof}
