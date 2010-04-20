@@ -24,11 +24,11 @@
 %%    the copyright holder.
 %%    * Nothing in this license impairs or restricts the author's moral rights.
 %%%%
-%\documentclass[draft]{article}
-\documentclass{article}
+\documentclass[draft]{article}
+%\documentclass{article}
 
 % package imports
-\usepackage[noend,linesnumbered,boxed]{algorithm2e} % for creating pseudocode
+\usepackage[noend,noline,linesnumbered,boxed,oldcommands]{algorithm2e} % for creating pseudocode
 \usepackage{amsmath} % for piecewise function definition
 \usepackage{amsthm} % for theorems, definitions, lemmas, and styles
 \usepackage{amssymb} % for strict subset symbol (\subsetneq)
@@ -484,7 +484,12 @@ allows us a polynomial time computable function, even in the set of equivalence
 problems decidable in polynomial time, whereas proofs for \P-completeness allow
 only logarithmic space. This means we are allowed to examine the entire
 computation history of the machine which decides any language in $\PEq$ (for
-example, as the tableau of the deterministic polynomial time machine).
+example, as the tableau of the deterministic polynomial time machine). And from
+our examination of reductions among feasible equivalence problems, we can see
+that some reductions seem to solve the problem to be reduced first. This
+provides some intuition that polynomial time kernel reductions for problems in
+$\PEq$ may be too powerful. Indeed, the real restriction here is on the number
+of equivalence classes.
 
 %% TODO restate FG09 Thm 4.3 If Ker=PEq then UP\subseteq BQP,  Cor 4.8 (pf?)
 %% note: this is apparently evidence that PEq is not equal to Ker
