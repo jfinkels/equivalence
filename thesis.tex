@@ -383,53 +383,73 @@ equivalence relation.
   be the leftmost bit of $a$ which is one. In the case that $x_i=1$ and
   $y_i=0$, then the algorithm from \autoref{thm:reqi_req} will flip all the
   bits of $x$ corresponding to bits of $a$ which are one. Since $y$ and $x$
-  were complements, at these bits only, now $M(x)=M(y)$, so $(M(x),M(y))\in
+  were complements at these bits only, now $M(x)=M(y)$, so $(M(x),M(y))\in
   R_{eq}$. The argument for the case that $x_i=0$ and $y_i=1$ is symmetric.
 
   Suppose $(x,y)\notin R_a$, so $x\neq y$ and $x\oplus y\neq a$. So $\exists
-  i,j\in\{1,2,\ldots,|x|\}: x_i\neq y_i$ and $x_j\oplus y_j\neq a$. Now $M(x)$
-  and $M(y)$ will rearrange the bits of $x$ and $y$, respectively, by stable
-  sorting the bits of $a$. Call these new strings $x'$ and $y'$, and the
-  corresponding permutation of indices $i$ and $j$, $i'$ and $j'$,
-  respectively. If $a_{i'}$ is zero then $x_{i'}\neq y_{i'}$.
+  i,j\in\{1,2,\ldots,|x|\}: x_i\neq y_i$ and $x_j\oplus y_j\neq a_j$. Now
+  $M(x)$ and $M(y)$ will first rearrange the bits of $x$ and $y$, respectively,
+  by stable sorting the bits of $a$ in step 2. Call these intermediate strings
+  $x'$, $y'$ and $a'$, and the corresponding permutation of indices $i$ and $j$
+  to be $i'$ and $j'$, respectively. Note that the value of $a'_{j'}$
+  completely determines whether $(M(x),M(y))\in R_{eq}$.
 
-  %% TODO complete this proof
+  % In the case that $a'_{i'}=0$ then $x'_{i'}\neq y'_{i'}$, so $M(x)\neq M(y)$
+  % and $(M(x),M(y))\notin R_{eq}$.
+
+  In the case that $a'_{j'}=0$ then $x'_{j'}\oplus y'_{j'}\neq a'_{j'}\implies
+  x'_{j'}\oplus y'_{j'}\neq 0\implies x'_{j'}\neq y'_{j'}$ and hence
+  $(M(x),M(y))\notin R_{eq}$.
+
+  Consider the case in which $a'_{j'}=1$. Let $k$ be the index of the leftmost
+  one bit in $a$, and the index of its image after the stable sorting in step 2
+  $k'$. In the case that $x'_{k'}=1$ then $y'_{k'}=x'_{k'}\oplus
+  a'_{k'}=1\oplus1=0$. Since $x'_{k'}=1$, step 3 in the above algorithm will
+  invert each of the bits of $x'$ from index $k'$ to the end of that
+  string. Since $y'_{k'}=0$, step 3 will leave $y'$ unchanged. Since
+  $x'_{j'}\oplus y'_{j'}\neq a'_{j'}$ by assumption, then $x'_{j'}\oplus
+  y'_{j'}\neq 1\implies x'_{j'}\oplus y'_{j'}=0\implies x'_{j'}=y'_{j'}\implies
+  \bar{x'_{j'}}\neq y'_{j'}$. Hence $M(x)\neq M(y)$, so $(M(x),M(y))\notin
+  R_{eq}$. The argument for the case that $x'_{k'}=0$ is symmetric.
+
+  Therefore $(x,y)\in R_a\iff(M(x),M(y))\in R_{eq}$, so $R_a\kr R_{eq}$.
 \end{proof}
 
-It seems that all of these ``bitwise'' equivalence problems reduce to the
+It appears that all of these ``bitwise'' equivalence problems reduce to the
 equality relation, $R_{eq}$, which seems to be the most restrictive equivalence
 relation in \P. Indeed, there are as many equivalence classes as there are
-unique strings, because each string is its own equivalence class. Is the
-equality relation \PEq-complete? To provide more evidence We will next examine
-an equivalence problem in \P that is not explicitly a problem involving the
-examination of bits in a string.
+unique strings, because each string is its own equivalence class, and so it
+certainly has at least as many equivalence classes as any other equivalence
+relation defined on binary strings. However, there is evidence\cite{fg09} that
+the equality relation is not \PEq-complete. We restate this evidence after the
+following definitions.
 
-\begin{definition}
-  Let $T_1=(V_1, E_1, r_1), T_2=(V_2, E_2, r_2)$, with $r_1\in V_1$ and $r_2\in
-  V_2$, be rooted trees. Then $T_1$ is \emph{isomorphic to} $T_2$ if
-  $\exists\phi:V_1\to V_2:\phi(r_1)=r_2$ and $(u,v)\in E_1\iff(\phi(u),
-  \phi(v))\in E_2$.
-\end{definition}
-\begin{definition}
-  $TI=\{(T_1,T_2)|T_1$ is isomorphic to $T_2\}$
-\end{definition}
-Informally, two trees are isomorphic if there is a permutation of the vertices
-of one tree which preserves edges in the other tree and preserves the root
-node.
+% To provide more evidence we will next examine an equivalence problem in $\P$
+% that is not explicitly a problem involving the examination of bits in a
+% string.
 
-The tree isomorphism problem is in $\P$, and in fact, easier than \P. For a
-linear time algorithm for deciding isomorphism of trees see \cite{ahu74}, and
-for an alternating logarithmic time algorithm see \cite{buss97}.
+%% \begin{definition}
+%%   Let $T_1=(V_1, E_1, r_1), T_2=(V_2, E_2, r_2)$, with $r_1\in V_1$ and $r_2\in
+%%   V_2$, be rooted trees. Then $T_1$ is \emph{isomorphic to} $T_2$ if
+%%   $\exists\phi:V_1\to V_2:\phi(r_1)=r_2$ and $(u,v)\in E_1\iff(\phi(u),
+%%   \phi(v))\in E_2$.
+%% \end{definition}
+%% \begin{definition}
+%%   $TI=\{(T_1,T_2)|T_1$ is isomorphic to $T_2\}$
+%% \end{definition}
+%% Informally, two trees are isomorphic if there is a permutation of the vertices
+%% of one tree which preserves edges in the other tree and preserves the root
+%% node.
+
+%% The tree isomorphism problem is in $\P$, and in fact, easier than \P. For a
+%% linear time algorithm for deciding isomorphism of trees see \cite{ahu74}, and
+%% for an alternating logarithmic time algorithm see \cite{buss97}.
 
 %% TODO tree canonization is in CF(FALOGTIME)\subset CF(P)
 %% TODO do the tree isomorphism algorithms reduce to equality?
 
-If the equality relation is \PEq-complete, then some collapses happen, as
-described in \cite{fg09}. We first restate the definition of another complexity
-class defined in \cite{fg09} (defined there as $\KerFP$).
-
 \begin{definition}
-  Let $R$ be an equivalence relation, an let $f\in\FP$. Then $f$ is a
+  Let $R$ be an equivalence relation, and let $f\in\FP$. Then $f$ is a
   \emph{complete invariant} for $R$ if $(x,y)\in R$ if and only if $f(x)=f(y)$.
 \end{definition}
 \begin{definition}
@@ -466,8 +486,12 @@ Fortnow and Grochow:
 \end{proof}
 
 Fortnow and Grochow provide evidence that $R_{eq}$ is \emph{not} \PEq-complete,
-by showing that something crazy happens if $\FPKer=\PEq$. Specifically, if
-$\FPKer=\PEq$ then $\UP\subseteq\BQP$\cite{fg09}.
+by showing that if $\FPKer=\PEq$ then $\UP\subseteq\BQP$\cite{fg09}. To
+separate $\PEq$ from $\FPKer$, we need to exhibit an equivalence problem for
+which membership can be decided in polynomial time, but no polynomial time
+algorithm exists for computing a complete invariant, or equivalently, no
+reduction to the equality relation exists. Two such candidates identified by
+Fortnow and Grochow are the boolean function congruence problem and
 
 %% TODO restate FG09 Thm 4.3 If Ker=PEq then UP\subseteq BQP,  Cor 4.8 (pf?)
 %% note: this is apparently evidence that PEq is not equal to Ker
@@ -1022,11 +1046,11 @@ problems do not exist. We wish to give some evidence that $R_{KC}$ (or a
 language similar to it) may be \NPEq-complete. We know that many problems in
 \NP, specifically many in \NPEq, kernel reduce to the graph isomorphism problem
 (in the past, the reductions have not explicitly been presented as kernel
-reductions, but we can retroactively identify some of the techniques used as
-such). If we can show a polynomial time kernel reduction from the graph
-isomorphism problem to $R_{KC}$, then we have found many $\NPEq$ problems which
-reduce to $R_{KC}$. Indeed, we defined $R_{KC}$ in such a way to allow a kernel
-reduction from the graph isomorphism problem to be possible.
+reductions, but we can retroactively identify the techniques used as such). If
+we can show a polynomial time kernel reduction from the graph isomorphism
+problem to $R_{KC}$, then we have found many $\NPEq$ problems which reduce to
+$R_{KC}$. Indeed, we defined $R_{KC}$ in such a way to allow a kernel reduction
+from the graph isomorphism problem to be possible.
 
 \begin{theorem}$GI\kr R_{KC}$\end{theorem}
 \begin{proof}
@@ -1048,6 +1072,12 @@ reduction from the graph isomorphism problem to be possible.
   R_{KC}$.
 \end{proof}
 
+We constructed $R_{KC}$ in order to make this reduction easy, but there is in
+fact another known problem in $\NPEq\cap\NPC$. Garey and Johnson provide a
+single \NP-complete equivalence problem: a databases problem concerning the
+equivalence of tableaux.\cite{gj79} The original proof is a reduction from
+\TSAT.\cite{asu79}
+
 Reductions between the graph isomorphism problem and other equivalence problems
 in $\NPEq$ abound, and though they have traditionally been presented as
 many-one reductions, they are in fact kernel reductions. Zemlyachenko,
@@ -1061,7 +1091,6 @@ Mor(C_2)$ by $g(Mor_{C_1}(x,y))=Mor_{C_2}(f(x), f(y))$. If $g$ is bijective
 then $g$ is called a \emph{complete embedding}. If $g$ is a complete embedding
 then we say the isomorphism problem for objects in category $C_1$ \emph{reduces
   functorially} to the isomorphism problem for objects in category $C_2$.
-%% TODO say that a bijection is not necessary for our definitions
 %% TODO grigor'ev83 describes a kernel reduction as an epimorphic functor
 
 Notice that in the above definition, if we let $R=\{(x,y)| x$ and $y$ are
@@ -1071,7 +1100,10 @@ $Mor_{C_2}(x,y)\}$, then $R\kr S$ by $f$, and $R\mor S$ by $g$, the many-one
 reduction induced by the kernel reduction $f$.
 
 A functorial reduction as defined above is \emph{more restrictive} than a
-kernel reduction, so a functorial reduction implies a kernel reduction.
+kernel reduction, because it requires that there exist a bijection between the
+isomorphisms of the two categories. The definition of a kernel reduction does
+not demand this bijection, so a functorial reduction implies a kernel
+reduction.
 
 In \cite{zkt85}, the authors provide a survey of categories for which
 isomorphism problems are polynomial-time functorially equivalent. For our
@@ -1138,7 +1170,6 @@ All of the problems cited above fall in this class.
   kernel reduce), then $A\in\NPEq$. Therefore $\GIk\subseteq\NPEq$.
 \end{proof}
 
-%% TODO evidence
 There is evidence that shows that the graph isomorphism problem is not
 \NP-complete, specifically that it is not \NP-complete unless the polynomial
 time hierarchy collapses to the second level\cite{schoning87}. If this is true,
@@ -1166,16 +1197,7 @@ studied. For more information, see \cite{kst93}.
 
 %% TODO study hard equivalence problems: boolean formula isomorphism? algebraic
 %% structure equivalence relations (bloniarz84)? regular expressions with + and
-%% times?  Aho, Sagic, Ullman 1978 (tableau equivalence is NP-complete) see
-%% boolean equivalence problems paper
-
-%% TODO check out known NP-complete equivalence problems
-
-%% TODO study P-complete problems, look for equivalence relations
-
-%% TODO #EqP number of equivalence classes?
-
-%% TODO show GIker is not NPEq if GI is not NP-complete
+%% times?  see boolean equivalence problems paper
 
 Now we wish to address the question of whether kernel reductions are different
 from many-one reductions.
