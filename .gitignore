@@ -15,3 +15,7 @@
 *.toc
 logo.png
 references/
+algorithm2e.sty
+beamerposter.sty
+cclicenses.sty
+complexity.sty
