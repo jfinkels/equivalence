@@ -1,21 +1,29 @@
-The algorithm2e.sty, cclicenses.sty, chngcntr.sty and complexity.sty files are
-required to compile this article. Each of those LaTeX files are licensed under
-the terms of their own respective licenses.
+Besides pdflatex, compile-time dependencies include:
 
-To compile this article, run "compile.sh".
+* algorithm2e.sty
+* cclicenses.sty
+* chngcntr.sty
+* complexity.sty
 
-The beamerthemeI6pd.sty file is required to compile the poster. It also has its
-own license.
+On Ubuntu, the necessary packages are:
 
-To compile the poster, change to the "poster/" directory and run "compile.sh".
+* texlive-latex-base
+* texlive-fonts-recommended
+* texlive-science
+
+To compile this article, run 
+
+  compile-paper.sh
+
+The output is thesis.pdf.
+
+To compile the poster, run 
+
+  compile-poster.sh
+
+The output is poster.pdf.
 
 Except where otherwise noted, both the LaTeX markup and the content of the
 article and the poster are made available under the terms of the Creative
 Commons Attribution-ShareAlike 3.0 license,
 http://creativecommons.org/licenses/by-sa/3.0/.
-
-On Ubuntu, the necessary packages are 
-
-texlive-latex-base
-texlive-fonts-recommended
-texlive-science

@@ -24,22 +24,22 @@
 %%    the copyright holder.
 %%    * Nothing in this license impairs or restricts the author's moral rights.
 %%%%
-\documentclass[draft]{article}
-%\documentclass{article}
+%\documentclass[draft]{article}
+\documentclass{article}
 
 % package imports
 \usepackage[noend,linesnumbered,boxed]{algorithm2e} % for creating pseudocode
 \usepackage{amsmath} % for piecewise function definition
 \usepackage{amsthm} % for theorems, definitions, lemmas, and styles
 \usepackage{amssymb} % for strict subset symbol (\subsetneq)
-\usepackage{chngcntr} % for counting figures with section numbers
+%\usepackage{chngcntr} % for counting figures with section numbers
 \usepackage{complexity} % for typesetting complexity classes
 \usepackage{cclicenses} % for adding creative commons license symbols
 \usepackage[margin=1in]{geometry} % for setting page margins
 \usepackage{graphicx} % for including images
 \usepackage[pdftitle={On computational complexity of equivalence relations},
   pdfauthor={Jeffrey Finkelstein}]{hyperref}
-\usepackage[all]{hypcap} % references to images will link to the image
+%\usepackage[all]{hypcap} % references to images will link to the image
 \usepackage{multicol} % for list split over multiple columns
 
 % don't print semicolons in pseudocode algorithms
@@ -234,22 +234,6 @@ a\}$.
   Consider $x=1000$ and $y=0111$. Then $(x, y)\in R_{eqi}$ but $(x, y) \notin
   R_{eq}$. Therefore $R_{eq} \neq R_{eqi}$.
 \end{proof}
-
-\autoref{fig:containments} exhibits the containments among $R_{eq}$, $R_{eqi}$,
-$R_{bc}$, and $R_{par}$. Note that if $a=0^n$, for $n=|x|=|y|$, then
-$R_{a}=R_{eq}$ and if $a=1^n$ then $R_{a}=R_{eqi}$.
-
-\begin{figure}
-  \begin{center}
-    \includegraphics[width=300pt,height=241pt,keepaspectratio=true]
-                    {containments.png}
-  \end{center}
-  \caption{ \label{fig:containments} Containment relationships for equivalence
-    relations $R_{eq}$, $R_{eqi}$, $R_{bc}$, and $R_{par}$. The following are
-    example elements in the sets at the specified locations: 1. (1100, 1100)
-    2. (1010, 0101) 3. (1000, 0111) 4. (10000, 01111) 5. (1000, 0001) 6. (1000,
-    1011) 7. (1000, 0000) }
-\end{figure}
 
 Since membership in $R_{par}$, $R_{bc}$, $R_{eq}$, $R_{eqi}$, and $R_a$ can be
 decided in polynomial time, they are all members of \PEq. Now we can examine
