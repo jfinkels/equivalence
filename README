@@ -2,7 +2,6 @@ Besides pdflatex, compile-time dependencies include:
 
 * algorithm2e.sty
 * cclicenses.sty
-* chngcntr.sty
 * complexity.sty
 
 On Ubuntu, the necessary packages are:
