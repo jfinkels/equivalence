@@ -28,7 +28,12 @@
 %\documentclass{article}
 
 % package imports
-\usepackage[noend,noline,linesnumbered,boxed,oldcommands]{algorithm2e} % for creating pseudocode
+\usepackage[noend, % omit end of block tags
+  noline, % omit vertical block lines
+  linesnumbered, % number lines
+  boxed, % put a box around the algorithm
+  %oldcommands % newer versions of package have different command names
+]{algorithm2e} % for creating pseudocode
 \usepackage{amsmath} % for piecewise function definition
 \usepackage{amsthm} % for theorems, definitions, lemmas, and styles
 \usepackage{amssymb} % for strict subset symbol (\subsetneq)
