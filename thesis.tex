@@ -112,6 +112,39 @@
   in $\NP$ are indeed kernel reductions.
 \end{abstract}
 
+\section{Introduction}
+
+Who, what, where, when, why, how!
+
+\section{Preliminaries}
+
+% TODO how formal do these need to be? do i need first defs from BDG?
+\begin{definition}
+  Let $\Sigma=\{0,1\}$. Then $\sigmastar$ is the set of all strings consisting
+  of elements of $\Sigma$. In particular, $\sigmastar$ is the set of all binary
+  strings.
+\end{definition}
+
+\begin{definition}
+  $\P$ is the class of languages for which membership can be decided in
+  deterministic polynomial time.
+  
+  $\NP$ is the class of languages for which membership can be decided in
+  nondeterministic polynomial time.
+
+  $\NP$ can alternately be defined as the class of languages for which
+  membership can be verified in deterministic polynomial time.
+\end{definition}
+
+\begin{definition}
+  Let $A,B$ be languages. We say \emph{$A$ polynomial time, many-one reduces
+    to $B$} if $\exists f\in\FP: \forall w\in\sigmastar, w\in A\iff f(w)\in
+  B$. We denote this by $A\mor B$.
+  
+  We say $A$ \emph{is polynomial time, many-one equivalent to} $B$ if $A\mor
+  B$ and $B\mor A$. We denote this by $A\moequiv B$.
+\end{definition}
+
 \begin{definition}
   Let $R\subseteq\sigmastar\times\sigmastar$. Then $R$ is an \emph{equivalence
     relation} if the following conditions hold:
@@ -123,43 +156,87 @@
   \item (transitivity) $\forall x,y,z\in\sigmastar$, if $(x,y)\in R$ and
     $(y,z)\in R$ then $(x,z)\in R$
   \end{enumerate}
-  If $(x,y)\in R$, we say \emph{$x$ relates to $y$}, and we write $x\sim y$.
+  If $(x,y)\in R$, we say \emph{$x$ relates to $y$} or \emph{$x$ is equivalent
+    $y$ under $R$}. We denote this by $x\sim_R y$ or $x\sim y$.
 \end{definition}
+
+Note that an equivalence relation is a generalization of the idea of equality;
+whereas every object is equal to itself and only itself, many objects can be
+equivalent with respect to some equivalence relation.
+
+\begin{definition}
+  Let $R$ be an equivalence relation, let $x\in\sigmastar$. The
+  \emph{equivalence class} of $x$ is $[x]_R=\{y|(x,y)\in R\}$.
+\end{definition}
+For all equivalence relations, each element of $\sigmastar$ is in exactly one
+equivalence class, and the equivalence classes of an equivalence relation
+provide a partition of $\sigmastar$.
 
 In \cite{fg09}, Fortnow and Grochow give a formal definition of a new class of
 languages: the class of equivalence problems which can be decided in polynomial
-time. They also provide a natural reduction for this class of problems. We
-provide the definitions, along with their generalizations in \NP, here.
+time. They also provide a natural reduction for languages in this complexity
+class. We provide the definition, along with its generalization in \NP, here.
 
 \begin{definition}\label{def:peq}
-  \textit{\PEq} is the class of equivalence relations whose membership can be
+  \emph{\PEq} is the class of equivalence relations for which membership can be
   decided in polynomial time.
 
-  \textit{\NPEq} is the class of equivalence relations whose membership can be
-  decided in nondeterministic polynomial time.
+  \emph{\NPEq} is the class of equivalence relations for which membership can
+  be decided in nondeterministic polynomial time.
+
+  \emph{\NPEq} can alternately be defined as the class of equivalence relations
+  for which membership can be verified in deterministic polynomial time.
+\end{definition}
+
+We explicitly show here the containments among \P, \NP, \PEq, and \NPEq.
+\begin{lemma}
+  \mbox{} % to put the next item on a new line
+  \begin{enumerate}
+    \renewcommand{\labelenumi}{\roman{enumi}.}
+  \item $\P\subseteq\NP$
+  \item $\PEq\subsetneq\P$
+  \item $\NPEq\subsetneq\NP$
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  Any language which can be decided in deterministic polynomial time can be
+  verified in deterministic polynomial time, by deciding whether the input is
+  in the language, thus $\PEq\subseteq\NPEq$. $\PEq\subseteq\P$ and
+  $\NPEq\subseteq\NP$ follows immediately from the definitions. A language in
+  $\P$ which is not an equivalence relation is $MAJORITY=\{w|$ the number of
+  ones in $w$ is greater than $\frac{|w|}{2}\}$, so $\PEq\subsetneq\P$. A
+  language in $\NP$ which is not an equivalence relation is $\SAT=\{\phi|\phi$
+  is a satisfiable boolean formula$\}$, so $\NPEq\subsetneq\NP$.
+\end{proof}
+
+\begin{definition}
+  \emph{\FP} is the class of total computable functions which halt in
+  deterministic polynomial time.
 \end{definition}
 
 \begin{definition}\label{def:kr}
-  Let $R$ and $S$ be equivalence relations. We say $R$ \textit{polynomial time
-  kernel reduces to} $S$ if $\exists f\in\FP:\forall x,y\in\sigmastar (x, y)\in
-  R \iff (f(x),f(y))\in S$. We denote this by $R\kr S$.
+  Let $R$ and $S$ be equivalence relations. We say $R$ \emph{polynomial time
+    kernel reduces to} $S$ if $\exists f\in\FP:\forall x,y\in\sigmastar (x,
+  y)\in R \iff (f(x),f(y))\in S$. We denote this by $R\kr S$.
   
-  We say $R$ \textit{is kernel equivalent to} $S$ if $R\kr S$ and $S\kr R$. We
+  We say $R$ \emph{is kernel equivalent to} $S$ if $R\kr S$ and $S\kr R$. We
   denote this by $R\kequiv S$.
 \end{definition}
 
 Note the difference between a kernel reduction and a many-one reduction: a
 kernel reduction maps $(x,y)\in R$ to $(f(x), f(y))\in S$, whereas a many-one
 reduction maps $(x,y)\in R$ to $f(x, y)\in S$, for some polynomial time
-computable function $f$. Informally, a many-one reduction gets access to both
-$x$ and $y$, but a kernel reduction gets access to only one at a time. Because
-the many-one reduction seems to be at least as powerful as the kernel
-reduction, we can prove the following lemma.
+computable function $f$. Informally, a function which computes a many-one
+reduction has access to both $x$ and $y$, but a function which computes a
+kernel reduction has access to only one of $x$ and $y$ at a time. Because the
+many-one reduction seems to be at least as powerful as the kernel reduction, we
+can prove the following lemma, which is essential for proving
+\autoref{thm:npeqc_npc}.
 
-\begin{lemma}\label{lem:kr_mor}If $A\kr B$ then $A\mor B$.\end{lemma}
+\begin{lemma}\label{lem:kr_mor}If $R\kr S$ then $R\mor S$.\end{lemma}
 \begin{proof}
-  Since $A\kr B$, $\exists f\in\FP: (x,y)\in A\iff(f(x), f(y))\in B$. Define
-  $g\in FP$ by $g(x,y)=(f(x), f(y))$. Therefore $A\mor B$ by $g$.
+  Since $R\kr S$, $\exists f\in\FP: (x,y)\in R\iff(f(x), f(y))\in S$. Define
+  $g\in FP$ by $g((x,y))=(f(x), f(y))$. Therefore $R\mor S$ by $g$.
 \end{proof}
 
 As an analog to polynomial time many-one completeness in \NP, we define a
@@ -167,19 +244,22 @@ similar notion of polynomial time completeness under kernel reductions in
 \NPEq.
 
 \begin{definition}\label{def:kernel_complete}
-  An equivalence relation $R$ is \textit{$\PEq$-complete} if $R\in\PEq$ and
+  An equivalence relation $R$ is \emph{$\PEq$-complete} if $R\in\PEq$ and
   $\forall S\in\PEq$, $S\kr R$.
 
-  An equivalence relation $R$ is \textit{$\NPEq$-complete} if $R\in\NPEq$ and
+  An equivalence relation $R$ is \emph{$\NPEq$-complete} if $R\in\NPEq$ and
   $\forall S\in\NPEq$, $S\kr R$.
 \end{definition}
 
-With these definitions in place, we can now define some examples of equivalence
-relations in $\PEq$, tractable equivalence problems.
+\section{Kernel reductions among feasible equivalence problems}
 
-%% TODO should I make a note about assuming |x|=|y|
+With these definitions in place, we can now define some examples of equivalence
+relations in $\PEq$, feasible equivalence problems.
+
+%% TODO should I make a note about assuming |x|=|y|?
 \begin{definition}
-  $R_{par}=\{(x, y)|x$ and $y$ have the same parity$\}$
+  $R_{par}=\{(x, y)|x$ and $y$ have the same parity (even or odd number of
+  ones)$\}$
 \end{definition}
 \begin{definition}
   $R_{bc}=\{(x, y)|x$ and $y$ have the same number of ones$\}$
@@ -208,8 +288,9 @@ relations in $\PEq$, tractable equivalence problems.
 
 Notice the following equivalent definitions, where $n=|x|=|y|=|a|$:
 $R_{eq}=\{(x, y)|x \oplus y = 0^n\}$, $R_{eqi}=\{(x, y)|x \oplus y = 0^n$ or
-$x\oplus y = 1^n\}$, and $R_{a}=\{(x,y)|x \oplus y = 0^n$ or $x \oplus y\ =
-a\}$.
+$x\oplus y = 1^n\}$, and $R_a=\{(x,y)|x \oplus y = 0^n$ or $x \oplus y\ =
+a\}$. From these we can see that if $a=1^n$, then $R_a=R_{eqi}$, and if
+$a=0^n$, then $R_a=R_{eq}$.
 
 %% TODO show that all the stated equivalence relations are actually eq. rel.s
 \begin{theorem}$R_{eq} \subsetneq R_{bc} \subsetneq R_{par}$\end{theorem}
@@ -242,9 +323,73 @@ a\}$.
 
 Since membership in $R_{par}$, $R_{bc}$, $R_{eq}$, $R_{eqi}$, and $R_a$ can be
 decided in polynomial time, they are all members of \PEq. Now we can examine
-kernel reductions between these members of \PEq. Notice that the following
-reductions reduce the more general equivalence relation to the more restrictive
-equivalence relation.
+kernel reductions between these members of \PEq. Notice that in each of the
+reductions which follow the more general equivalence relation reduces to the
+more restrictive equivalence relation.
+
+We will here point out that $R_{par}$ is the most general of the above
+equivalence relations, and it has only two equivalence classes: $[0]$ and
+$[1]$. The only equivalence relation which is more general is the trivial
+equivalence relation in which all elements of $\sigmastar$ relate to all other
+elements, and it is its own equivalence class. The most restrictive is the
+equality relation, $R_{eq}$, in which each binary string is the sole element in
+its equivalence class. The other equivalence relations defined here also have a
+(countably) infinite number of equivalence classes.
+
+We wish to provide some intuition that problems in $\PEq$ under polynomial time
+kernel reductions are restricted \emph{not} by the reductions themselves, but
+by the number of equivalence classes in the languages. This point becomes
+somewhat clearer if we consider a kernel reduction from an equivalence relation
+with exactly two equivalence classes (like $R_{par}$) to an equivalence
+relation with at least two equivalence classes (like $R_{eq}$). Since we are
+allowed polynomial time for the kernel reduction, we can simply \emph{decide}
+whether a given word is in one equivalence class or the other, then map it to a
+corresponding representative of an equivalence class in the language to which
+we are reducing, depending in which of the two equivalence classes the given
+word is a member.
+%% TODO i know we can do this intuitively when writing an algorithm, but can we
+%% ``choose a representative'' algorithmically?
+% TODO find an NP problem with two equivalence classes, P=NP?
+
+%% TODO am i allowed to ``choose a representative''?
+%% \begin{theorem}
+%%   Let $R,S\in\PEq$. If $R$ has exactly two equivalence classes and $S$ has at
+%%   least two equivalence classes, then $R\kr S$.
+%% \end{theorem}
+%% \begin{proof}
+%%   Choose a representative of each equivalence class in $R$, call them $a$ and
+%%   $b$. Choose a representative of two equivalence classes in $S$, call them $j$
+%%   and $k$. Construct machine $M\in\FP$ on input $w\in\sigmastar$:
+%%   \begin{algorithm}[H]
+%%     \eIf{$w\in[a]$}{
+%%       \Return{j}
+%%     }{
+%%       \Return{k}
+%%     }
+%%   \end{algorithm}
+
+%%   Suppose $(x,y)\in R$, and without loss of generality, $x,y\in[a]$. Then
+%%   $M(x)=j$ and $M(y)=j$, so $(M(x),M(y))\in S$.
+
+%%   Suppose $(x,y)\notin R$, and without loss of generality, $x\in[a]$ and
+%%   $y\in[b]$. Then $M(x)=j$ and $M(y)=k$. Since equivalence classes form a
+%%   partition, their intersection is empty, so $(j,k)\notin S$. Thus
+%%   $(M(x),M(y))\notin S$.
+
+%%   Therefore $(x,y)\in R\iff (M(x),M(y))\in S$, and hence $R\kr S$.
+%% \end{proof}
+
+%% \begin{corollary}
+%%   Let $S\in\PEq$ be an equivalence relation with at least two equivalence
+%%   classes. Then $R_{par}\kr S$.
+%% \end{corollary}
+%% \begin{corollary}
+%%   $R_{par}\kr R_{eq}$
+%% \end{corollary}
+
+%% The kernel reductions we provide below from $R_{par}$ to $R_{bc}$ and then
+%% to $R_{eq}$ somewhat obfuscate this ``decide then map'' process, but that is
+%% essentially what is happening when these reductions are composed.
 
 \begin{theorem}$R_{par}\kr R_{bc}$\end{theorem}
 \begin{proof}
@@ -404,14 +549,12 @@ equivalence relation.
   Therefore $(x,y)\in R_a\iff(M(x),M(y))\in R_{eq}$, so $R_a\kr R_{eq}$.
 \end{proof}
 
-It appears that all of these ``bitwise'' equivalence problems reduce to the
-equality relation, $R_{eq}$, which seems to be the most restrictive equivalence
-relation in \P. Indeed, there are as many equivalence classes as there are
-unique strings, because each string is its own equivalence class, and so it
-certainly has at least as many equivalence classes as any other equivalence
-relation defined on binary strings. However, there is evidence\cite{fg09} that
-the equality relation is not \PEq-complete. We restate this evidence after the
-following definitions.
+It appears that all of these ``bitwise'' equivalence problems reduce under
+polynomial time kernel reductions to the equality relation, $R_{eq}$, the most
+restrictive equivalence relation in \PEq. However, there is evidence\cite{fg09}
+that the equality relation is not \PEq-complete. We restate this evidence after
+the following definitions.
+%% TODO Equality is in AC^0, right? But majority and parity are not in AC^0.
 
 % To provide more evidence we will next examine an equivalence problem in $\P$
 % that is not explicitly a problem involving the examination of bits in a
