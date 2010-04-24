@@ -292,6 +292,8 @@ $x\oplus y = 1^n\}$, and $R_a=\{(x,y)|x \oplus y = 0^n$ or $x \oplus y\ =
 a\}$. From these we can see that if $a=1^n$, then $R_a=R_{eqi}$, and if
 $a=0^n$, then $R_a=R_{eq}$.
 
+\subsection{Containments and equivalence classes}
+
 %% TODO show that all the stated equivalence relations are actually eq. rel.s
 \begin{theorem}$R_{eq} \subsetneq R_{bc} \subsetneq R_{par}$\end{theorem}
 \begin{proof}
@@ -324,8 +326,8 @@ $a=0^n$, then $R_a=R_{eq}$.
 Since membership in $R_{par}$, $R_{bc}$, $R_{eq}$, $R_{eqi}$, and $R_a$ can be
 decided in polynomial time, they are all members of \PEq. Now we can examine
 kernel reductions between these members of \PEq. Notice that in each of the
-reductions which follow the more general equivalence relation reduces to the
-more restrictive equivalence relation.
+reductions in the next section, the more general equivalence relation reduces
+to the more restrictive equivalence relation.
 
 We will here point out that $R_{par}$ is the most general of the above
 equivalence relations, and it has only two equivalence classes: $[0]$ and
@@ -335,6 +337,8 @@ elements, and it is its own equivalence class. The most restrictive is the
 equality relation, $R_{eq}$, in which each binary string is the sole element in
 its equivalence class. The other equivalence relations defined here also have a
 (countably) infinite number of equivalence classes.
+
+\subsection{Reductions}
 
 We wish to provide some intuition that problems in $\PEq$ under polynomial time
 kernel reductions are restricted \emph{not} by the reductions themselves, but
@@ -552,8 +556,8 @@ word is a member.
 It appears that all of these ``bitwise'' equivalence problems reduce under
 polynomial time kernel reductions to the equality relation, $R_{eq}$, the most
 restrictive equivalence relation in \PEq. However, there is evidence\cite{fg09}
-that the equality relation is not \PEq-complete. We restate this evidence after
-the following definitions.
+that the equality relation is not \PEq-complete. We restate this evidence in
+the next section.
 %% TODO Equality is in AC^0, right? But majority and parity are not in AC^0.
 
 % To provide more evidence we will next examine an equivalence problem in $\P$
@@ -579,7 +583,7 @@ the following definitions.
 
 %% TODO tree canonization is in CF(FALOGTIME)\subset CF(P)
 %% TODO do the tree isomorphism algorithms reduce to equality?
-
+\subsection{Complete invariants}
 \begin{definition}
   Let $R$ be an equivalence relation, and let $f\in\FP$. Then $f$ is a
   \emph{complete invariant} for $R$ if $(x,y)\in R$ if and only if $f(x)=f(y)$.
@@ -617,8 +621,9 @@ Fortnow and Grochow:
   $\FPKer\subseteq\PEq$, therefore $\PEq=\FPKer$.
 \end{proof}
 
+%% TODO what happens if UP is a subset of BQP?
 Fortnow and Grochow provide evidence that $R_{eq}$ is \emph{not} \PEq-complete,
-by showing that if $\FPKer=\PEq$ then $\UP\subseteq\BQP$\cite{fg09}. To
+by showing that if $\FPKer=\PEq$ then $\UP\subseteq\BQP$ \cite{fg09}. To
 separate $\PEq$ from $\FPKer$, we need to exhibit an equivalence problem for
 which membership can be decided in polynomial time, but no polynomial time
 algorithm exists for computing a complete invariant, or equivalently, no
@@ -626,6 +631,8 @@ reduction to the equality relation exists. Two such candidates identified by
 Fortnow and Grochow are the boolean function congruence problem and the
 subgroup equivalence problem.
 
+\subsection{Completeness}
+%% TODO P-completeness is for log-space reductions, right?
 It would appear that proving some language \PEq-complete should be easier than
 proving, for example, \P-completeness directly, because the kernel reduction
 allows us a polynomial time computable function, even in the set of equivalence
@@ -645,22 +652,40 @@ of equivalence classes.
 %% TODO showing completeness of a problem should be somewhat easier because we
 %% are allowed to examine the entire computation history
 
-%% TODO start a new section here
+\section{Kernel reductions among intractable problems}
+
+\subsection{The graph isomorphism problem}
 
 An equivalence problem of particular importance is the graph isomorphism
 problem. Although it is in \NP, it is not known to be \NP-complete and it is
 not known to be in \P. It is therefore a candidate for $\NP\backslash\P$ (if
 $\P\neq\NP$). Since it is an equivalence problem in \NP, it is a member of
 \NPEq, so it may be of particular value to study kernel reductions to and from
-the graph isomorphism problem. We begin by examining kernel reductions from the
-$\PEq$ equivalence relations defined above to the graph isomorphism problem.
-The reductions should intuitively be easy because the graph isomorphism problem
-is (seemingly) of greater complexity.
+the graph isomorphism problem. 
 
+\begin{definition}
+  Let $V$ be a set, $E$ be a collection of subsets of $V$ of size exactly
+  2. Then $G=(V, E)$ is called an \emph{undirected graph}. Elements of $V$ are
+  called \emph{vertices}, and elements of $E$ are called \emph{edges}.
+
+  If $E\subseteq V\times V$, then $G=(V, E)$ is a \emph{directed graph}.
+\end{definition}
+\begin{definition}
+  Let $G_1=(V_1,E_1)$ and $G_2=(V_2, E_2)$ be undirected graphs. Then $G_1$ is
+  \emph{isomorphic to} $G_2$ if $\exists \phi:V_1\to V_2:\{u,v\}\in E_1\iff
+  \{\phi(u), \phi(v)\}\in E_2$ and $\phi$ is a bijection.
+\end{definition}
 \begin{definition}
   $GI=\{(G_1, G_2)|G_1$ and $G_2$ are undirected graphs and $G_1$ is isomorphic
   to $G_2\}$
 \end{definition}
+
+\subsection{Kernel reductions to graph isomorphism}
+We begin by examining kernel reductions from the $\PEq$ equivalence relations
+defined above to the graph isomorphism problem. The reductions should
+intuitively be easy because the graph isomorphism problem is (seemingly) of
+greater complexity. We examine these upward reductions in order to gain some
+intuition that a kernel reduction makes sense, practically.
 
 %% TODO this may not be an allowable proof
 \begin{theorem}\label{thm:rpar_gi}$R_{par}\kr GI$\end{theorem}
