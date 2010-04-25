@@ -42,22 +42,28 @@
 \usepackage{cclicenses} % for adding creative commons license symbols
 %\usepackage[margin=1in]{geometry} % for setting page margins
 \usepackage{graphicx} % for including images
-\usepackage[pdftitle={On computational complexity of equivalence relations},
-  pdfauthor={Jeffrey Finkelstein}]{hyperref}
+\usepackage[
+  backref=section, % backlinks in references
+  pdftitle={On computational complexity of equivalence relations},
+  pdfauthor={Jeffrey Finkelstein}
+]{hyperref}
 %\usepackage[all]{hypcap} % references to images will link to the image
 %\usepackage{multicol} % for list split over multiple columns
 
 % don't print semicolons in pseudocode algorithms
 \dontprintsemicolon
 
-% define theorem, lemma, and definition environments and corresponding styles
+% define theorem, lemma, and definition environments and corresponding styles.
+% lemmata, corollaries, and definitions are numbered with the same counter as
+% that for theorems
 \newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}{Lemma}[section]
-\newtheorem{corollary}{Corollary}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition} 
-\newtheorem{definition}{Definition}[section]
+\newtheorem{definition}[theorem]{Definition}
 
 % define lemma, corollary, and definition context labels for /autoref command
+% (theorem is already defined)
 \newcommand{\lemmaname}{Lemma}
 \newcommand{\corollaryname}{Corollary}
 \newcommand{\definitionname}{Definition}
@@ -126,14 +132,19 @@ Who, what, where, when, why, how!
 \end{definition}
 
 \begin{definition}
-  $\P$ is the class of languages for which membership can be decided in
-  deterministic polynomial time.
+  A subset of $\sigmastar$ is called a \emph{language}.
+\end{definition}
+
+\begin{definition}
+  $\P$ is the class of languages for which membership can be decided by a
+  Turing machine running in deterministic polynomial time.
   
-  $\NP$ is the class of languages for which membership can be decided in
-  nondeterministic polynomial time.
+  $\NP$ is the class of languages for which membership can be decided by a
+  Turing machine running in nondeterministic polynomial time.
 
   $\NP$ can alternately be defined as the class of languages for which
-  membership can be verified in deterministic polynomial time.
+  membership can be verified by a Turing machine running in deterministic
+  polynomial time.
 \end{definition}
 
 \begin{definition}
@@ -179,13 +190,14 @@ class. We provide the definition, along with its generalization in \NP, here.
 
 \begin{definition}\label{def:peq}
   \emph{\PEq} is the class of equivalence relations for which membership can be
-  decided in polynomial time.
+  decided by a Turing machine running in deterministic polynomial time.
 
   \emph{\NPEq} is the class of equivalence relations for which membership can
-  be decided in nondeterministic polynomial time.
+  be decided by a Turing machine running in nondeterministic polynomial time.
 
   \emph{\NPEq} can alternately be defined as the class of equivalence relations
-  for which membership can be verified in deterministic polynomial time.
+  for which membership can be verified by a Turing machine running in
+  deterministic polynomial time.
 \end{definition}
 
 We explicitly show here the containments among \P, \NP, \PEq, and \NPEq.
@@ -335,8 +347,8 @@ $[1]$. The only equivalence relation which is more general is the trivial
 equivalence relation in which all elements of $\sigmastar$ relate to all other
 elements, and it is its own equivalence class. The most restrictive is the
 equality relation, $R_{eq}$, in which each binary string is the sole element in
-its equivalence class. The other equivalence relations defined here also have a
-(countably) infinite number of equivalence classes.
+its equivalence class. The other equivalence relations defined here also have
+an infinite number of equivalence classes.
 
 \subsection{Reductions}
 
