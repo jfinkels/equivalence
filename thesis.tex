@@ -345,10 +345,10 @@ We will here point out that $R_{par}$ is the most general of the above
 equivalence relations, and it has only two equivalence classes: $[0]$ and
 $[1]$. The only equivalence relation which is more general is the trivial
 equivalence relation in which all elements of $\sigmastar$ relate to all other
-elements, and it is its own equivalence class. The most restrictive is the
-equality relation, $R_{eq}$, in which each binary string is the sole element in
-its equivalence class. The other equivalence relations defined here also have
-an infinite number of equivalence classes.
+elements; it is its own equivalence class. The most restrictive is the equality
+relation, $R_{eq}$, in which each binary string is the sole element in its
+equivalence class. The other equivalence relations defined here also have an
+infinite number of equivalence classes.
 
 \subsection{Reductions}
 
@@ -368,44 +368,60 @@ word is a member.
 % TODO find an NP problem with two equivalence classes, P=NP?
 
 %% TODO am i allowed to ``choose a representative''?
-%% \begin{theorem}
-%%   Let $R,S\in\PEq$. If $R$ has exactly two equivalence classes and $S$ has at
-%%   least two equivalence classes, then $R\kr S$.
-%% \end{theorem}
-%% \begin{proof}
-%%   Choose a representative of each equivalence class in $R$, call them $a$ and
-%%   $b$. Choose a representative of two equivalence classes in $S$, call them $j$
-%%   and $k$. Construct machine $M\in\FP$ on input $w\in\sigmastar$:
-%%   \begin{algorithm}[H]
-%%     \eIf{$w\in[a]$}{
-%%       \Return{j}
-%%     }{
-%%       \Return{k}
-%%     }
-%%   \end{algorithm}
+%% TODO generalize to O(1) equivalence classes?
+%% TODO generalize to poly. eq. classes? polynomial in what?
+\begin{theorem}\label{thm:two_eq_classes}
+  Let $R,S\in\PEq$. Suppose $R$ has exactly two equivalence classes, $[a]$ and
+  $[b]$, and $S$ has at least two equivalence classes, including $[j]$ and
+  $[k]$. Given $a$, $b$, $j$, and $k$, $R\kr S$.
+\end{theorem}
+\begin{proof}
+  Since $R\in\PEq$, there exists a Turing machine, $M_R$, running in
+  deterministic polynomial time such that $\forall x,y\in\sigmastar, (x,y)\in
+  R\iff M_R((x,y))$ accepts.
 
-%%   Suppose $(x,y)\in R$, and without loss of generality, $x,y\in[a]$. Then
-%%   $M(x)=j$ and $M(y)=j$, so $(M(x),M(y))\in S$.
+  Construct machine $M\in\FP$ on input $w\in\sigmastar$:\\
+  \begin{algorithm}[H]
+    \eIf{$M_R((w, a))$ accepts}{
+      \Return{j}
+    }{
+      \Return{k}
+    }
+  \end{algorithm}
 
-%%   Suppose $(x,y)\notin R$, and without loss of generality, $x\in[a]$ and
-%%   $y\in[b]$. Then $M(x)=j$ and $M(y)=k$. Since equivalence classes form a
-%%   partition, their intersection is empty, so $(j,k)\notin S$. Thus
-%%   $(M(x),M(y))\notin S$.
+  Suppose $(x,y)\in R$, and without loss of generality, $x,y\in[a]$. Then
+  $M(x)=j$ and $M(y)=j$, so $(M(x),M(y))=(j,j)\in S$.
 
-%%   Therefore $(x,y)\in R\iff (M(x),M(y))\in S$, and hence $R\kr S$.
-%% \end{proof}
+  Suppose $(x,y)\notin R$, and without loss of generality, $x\in[a]$ and
+  $y\in[b]$. Then $M(x)=j$ and $M(y)=k$. Since equivalence classes form a
+  partition, their intersection is empty, so $(j,k)\notin S$. Thus
+  $(M(x),M(y))\notin S$.
 
-%% \begin{corollary}
-%%   Let $S\in\PEq$ be an equivalence relation with at least two equivalence
-%%   classes. Then $R_{par}\kr S$.
-%% \end{corollary}
-%% \begin{corollary}
-%%   $R_{par}\kr R_{eq}$
-%% \end{corollary}
+  Therefore $(x,y)\in R\iff (M(x),M(y))\in S$, and hence $R\kr S$.
+\end{proof}
 
-%% The kernel reductions we provide below from $R_{par}$ to $R_{bc}$ and then
-%% to $R_{eq}$ somewhat obfuscate this ``decide then map'' process, but that is
-%% essentially what is happening when these reductions are composed.
+\begin{corollary}\label{cor:rpar_kr_s}
+  Let $S\in\PEq$ be an equivalence relation with at least two equivalence
+  classes, including $[j]$ and $[k]$. Given $j$ and $k$, $R_{par}\kr S$.
+\end{corollary}
+\begin{proof}
+  The two equivalence classes of $R_{par}$ are $[0]$ and $[1]$. Use
+  \autoref{thm:two_eq_classes} to construct a kernel reduction from $R_{par}$
+  to $S$.
+\end{proof}
+
+\begin{corollary}
+  $R_{par}\kr R_{eq}$
+\end{corollary}
+\begin{proof}
+  Two equivalence classes of $R_{eq}$ are $[0]$ and $[1]$. Use
+  \autoref{cor:rpar_kr_s} to construct a kernel reduction from $R_{par}$ to
+  $S$.
+\end{proof}
+
+The kernel reductions we provide below from $R_{par}$ to $R_{bc}$ and then to
+$R_{eq}$ somewhat obfuscate this ``decide then map'' process, but that is
+essentially what is happening when these reductions are composed.
 
 \begin{theorem}$R_{par}\kr R_{bc}$\end{theorem}
 \begin{proof}
@@ -468,6 +484,9 @@ word is a member.
   Therefore $(x, y)\in R_{bc} \iff (M(x), M(y))\in R_{eq}$, so $R_{bc}\kr
   R_{eq}$.
 \end{proof}
+
+The equivalence relations $R_{eqi}$, which is a generalization of $R_{eq}$, and
+$R_a$, which is a generalization of $R_{eqi}$, also reduce to equality.
 
 \begin{theorem}\label{thm:reqi_req}$R_{eqi}\kr R_{eq}$\end{theorem}
 \begin{proof}
@@ -544,9 +563,6 @@ word is a member.
   to be $i'$ and $j'$, respectively. Note that the value of $a'_{j'}$
   completely determines whether $(M(x),M(y))\in R_{eq}$.
 
-  % In the case that $a'_{i'}=0$ then $x'_{i'}\neq y'_{i'}$, so $M(x)\neq M(y)$
-  % and $(M(x),M(y))\notin R_{eq}$.
-
   In the case that $a'_{j'}=0$ then $x'_{j'}\oplus y'_{j'}\neq a'_{j'}\implies
   x'_{j'}\oplus y'_{j'}\neq 0\implies x'_{j'}\neq y'_{j'}$ and hence
   $(M(x),M(y))\notin R_{eq}$.
@@ -570,6 +586,43 @@ polynomial time kernel reductions to the equality relation, $R_{eq}$, the most
 restrictive equivalence relation in \PEq. However, there is evidence\cite{fg09}
 that the equality relation is not \PEq-complete. We restate this evidence in
 the next section.
+
+We now present a theorem formalizing the intuition we have gained about
+reductions among equivalence relations with different numbers of equivalence
+classes.
+\begin{theorem}
+  Let $R$ and $S$ be equivalence relations. Suppose $S$ has $n$ equivalence
+  classes. If the number of equivalence classes in $R$ is greater than $n$,
+  then $R\nkr S$.
+\end{theorem}
+\begin{proof}
+  Assume with the intention of producing a contradiction that $R\kr S$. Then
+  $\exists f\in\FP:\forall x,y\in\sigmastar, (x,y)\in R\iff (f(x),f(y))\in
+  S$.
+
+  Consider the partition of $R$ induced by its equivalence classes,
+  $R=\bigcup{[r_i]}$, where each $r_i$ is a representative of an equivalence
+  class in $R$. Since each $r_i$ is in exactly one equivalence class, $\forall
+  i,j$, with $i\neq j$, $(r_i, r_j)\notin R$. Specifically, $\forall i,j \leq
+  n+1$, $(r_i, r_j)$. Now $\forall i,j \leq n+1$, $(f(x),f(y))\notin S$. Thus
+  $S$ must have at least $n+1$ equivalence classes. This is a contradiction
+  with the hypothesis that $S$ has $n$ equivalence classes.
+
+  Therefore $R\nkr S$.
+\end{proof}
+
+\begin{corollary}
+  $R_{eq}\nkr R_{par}$
+\end{corollary}
+\begin{proof}
+  $R_{eq}$ has a (countably) infinite number of equivalence classes (one for
+  each binary string). $R_{par}$ has two equivalence classes.
+\end{proof}
+
+Our intuition now is that the problem of determining whether one equivalence
+relation kernel reduces to another reduces to the problem of determining
+representatives of equivalence classes in both equivalence relations.
+
 %% TODO Equality is in AC^0, right? But majority and parity are not in AC^0.
 
 % To provide more evidence we will next examine an equivalence problem in $\P$
