@@ -167,9 +167,9 @@ found, for example, in \cite{sipser06}.
 \end{definition}
 
 \begin{definition}
-  Let $A,B$ be languages. We say \emph{$A$ polynomial time, many-one reduces
-    to $B$} if $\exists f\in\FP: \forall w\in\sigmastar, w\in A\iff f(w)\in
-  B$. We denote this by $A\mor B$.
+  Let $A,B$ be languages. We say \emph{$A$ polynomial time, many-one reduces to
+    $B$} if $\exists f\in\FP:\forall w\in\sigmastar$, $w\in A\iff f(w)\in
+    B$. We denote this by $A\mor B$.
   
   We say $A$ \emph{is polynomial time, many-one equivalent to} $B$ if $A\mor
   B$ and $B\mor A$. We denote this by $A\moequiv B$.
@@ -241,15 +241,10 @@ We explicitly show here the containments among \P, \NP, \PEq, and \NPEq.
   is a satisfiable boolean formula$\}$, so $\NPEq\subsetneq\NP$.
 \end{proof}
 
-\begin{definition}
-  \emph{\FP} is the class of total computable functions which halt in
-  deterministic polynomial time.
-\end{definition}
-
 \begin{definition}\label{def:kr}
   Let $R$ and $S$ be equivalence relations. We say $R$ \emph{polynomial time
-    kernel reduces to} $S$ if $\exists f\in\FP:\forall x,y\in\sigmastar (x,
-  y)\in R \iff (f(x),f(y))\in S$. We denote this by $R\kr S$.
+    kernel reduces to} $S$ if $\exists f\in\FP:\forall x,y\in\sigmastar$, $(x,
+    y)\in R \iff (f(x),f(y))\in S$. We denote this by $R\kr S$.
   
   We say $R$ \emph{is kernel equivalent to} $S$ if $R\kr S$ and $S\kr R$. We
   denote this by $R\kequiv S$.
@@ -267,8 +262,9 @@ can prove the following lemma, which is essential for proving
 
 \begin{lemma}\label{lem:kr_mor}If $R\kr S$ then $R\mor S$.\end{lemma}
 \begin{proof}
-  Since $R\kr S$, $\exists f\in\FP: (x,y)\in R\iff(f(x), f(y))\in S$. Define
-  $g\in FP$ by $g((x,y))=(f(x), f(y))$. Therefore $R\mor S$ by $g$.
+  Since $R\kr S$, $\exists f\in\FP:\forall x,y\in\sigmastar$, $(x,y)\in
+  R\iff(f(x), f(y))\in S$. Define $g\in\FP$ by $g((x,y))=(f(x),
+  f(y))$. Therefore $R\mor S$ by $g$.
 \end{proof}
 
 As an analog to polynomial time many-one completeness in \NP, we define a
