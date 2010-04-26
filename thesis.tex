@@ -614,7 +614,7 @@ restrictive equivalence relation in \PEq. However, there is evidence\cite{fg09}
 that the equality relation is not \PEq-complete. We restate this evidence in
 the next section.
 
-We now present a theorem formalizing the intuition we have gained about
+We now present theorems formalizing the intuition we have gained about
 reductions among equivalence relations with different numbers of equivalence
 classes.
 \begin{theorem}
@@ -648,6 +648,66 @@ classes.
 Our intuition now is that the problem of determining whether one equivalence
 relation kernel reduces to another reduces to the problem of determining
 representatives of equivalence classes in both equivalence relations.
+
+\begin{theorem}\label{thm:repr_kr}
+  Let $R,S$ be equivalence relations. Suppose $R\in\PEq$. Suppose $R$ has a
+  finite number of equivalence classes, $n$, and the number of equivalence
+  classes of $S$ is greater than or equal to $n$ (possibly countably
+  infinite). Let $REP(R)$ be a set of representatives of equivalence classes in
+  $R$, and $REP(S)$ be a set of representatives of equivalence classes in $S$.
+  If $\exists f\colon REP(R)\to REP(S)$ such that $f\in\FP$ and $f$ is
+  injective, then $R\kr S$.
+\end{theorem}
+\begin{proof}
+  Since $R\in\PEq$, $\exists M_R$, a deterministic Turing machine running in
+  polynomial time, such that $(x,y)\in R\iff M_R((x,y))$ accepts. Construct
+  $M\in\FP$ on input $w\in\sigmastar$:\\
+  \begin{algorithm}[H]
+    \For{$r_i\in REP(R)$}{
+      \If{$M_R((w,r_i))$ accepts}{
+        \Return{$f(r_i)$}
+      }
+    }
+  \end{algorithm}
+  Notice that each $w\in\sigmastar$ is in exactly one equivalence class in $R$,
+  because the equivalence classes partition $\sigmastar$. Therefore this
+  algorithm always outputs something on each input.
+
+  Suppose $(x,y)\in R$, so $(x, r_i)\in R$ and $(y,r_i)\in R$ for some $r_i\in
+  REP(R)$. Then $M(x)$ outputs $f(r_i)$ and $M(y)$ outputs $f(r_i)$, so $(M(x),
+  M(y))=(f(r_i), f(r_i))\in S$.
+
+  Suppose $(x,y)\in R$. So $\exists r_i, r_j\in REP(R)$, with $r_i\neq r_j$,
+  such that $(x,r_i)\in R$ and $(y, r_j)\in R$. Then $M(x)$ outputs $f(r_i)$
+  and $M(y)$ outputs $f(r_j)$. Since $f$ is injective, $r_i\neq r_j\implies
+  f(r_i)\neq f(r_j)$. Since $f(r_i)$ and $f(r_j)$ are distinct elements in
+  $REP(S)$, they are representatives of two distinct equivalence classes. Since
+  every element of $S$ is in exactly one equivalence class, and since
+  $[f(r_i)]\neq[f(r_j)]$, it follows that $(f(r_i), f(r_j))=(M(x), M(y))\notin
+  S$.
+
+  Therefore $(x,y)\in R\iff (M(x), M(y))\in S$, so $R\kr S$.
+\end{proof}
+
+\begin{theorem}
+  Let $R,S$ be equivalence relations. Suppose $R\in\PEq$. Suppose $R$ has a
+  finite number of equivalence classes, $n$, and the number of equivalence
+  classes of $S$ is greater than or equal to $n$ (possibly countably
+  infinite). If $\exists E_R,E_S\in\FP$ and $\exists i,j\in\mathbb{N}$ such
+  that $E_R(i)$ outputs the encoding of $REP(R)$ and $E_S(j)$ outputs the
+  encoding of at least $n$ elements of $REP(S)$, then $R\kr S$.
+\end{theorem}
+\begin{proof}
+  Run $E_R(i)$ to produce the encoding of $REP(R)$ and run $E_S(j)$ to produce
+  the encoding of at least $n$ elements of $REP(S)$. Define $f\in\FP$ as
+  follows: the $i\text{th}$ element in the encoding of $REP(R)$ maps to the
+  $i\text{th}$ element in the encoding of at least $n$ elements of
+  $REP(S)$. Since any (correct) encoding of $REP(R)$ includes only one of each
+  element in the set, the function $f$ is well-defined. Since any (correct)
+  encoding of at least $n$ elements of $REP(S)$ includes at most only one of
+  each element in the set, $f$ is injective. The function $f$ now satisfies the
+  conditions in the hypothesis in \autoref{thm:repr_kr}, so the result follows.
+\end{proof}
 
 %% TODO Equality is in AC^0, right? But majority and parity are not in AC^0.
 
