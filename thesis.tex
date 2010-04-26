@@ -432,7 +432,7 @@ word is a member.
 \begin{proof}
   Two equivalence classes of $R_{eq}$ are $[0]$ and $[1]$. Use
   \autoref{cor:rpar_kr_s} to construct a kernel reduction from $R_{par}$ to
-  $S$.
+  $R_{eq}$.
 \end{proof}
 
 The kernel reductions we provide below from $R_{par}$ to $R_{bc}$ and then to
@@ -483,19 +483,25 @@ essentially what is happening when these reductions are composed.
 
 \begin{theorem}$R_{bc}\kr R_{eq}$\end{theorem}
 \begin{proof}
-  Construct $M\in \FP$ on input $w\in\sigmastar$ which sorts the bits of $w$
-  using an efficient (polynomial-time) sorting algorithm. Notice that if
-  $|w|=n$ and $w$ contains $k$ ones, this machine outputs the string
-  $0^{n-k}1^k$.
+  Construct $M\in \FP$ on input $w\in\sigmastar$, where $w=w_1w_2\cdots
+  w_{|w|}$:\\
+  \begin{algorithm}[H]
+    Sort the bits of $w$\;
+    $i\gets1$\;
+    \While{$w_i=0$}{
+      Write a blank at index $i$\;
+      $i\gets i+1$\;
+    }
+  \end{algorithm}
+  Notice that if $w$ contains $k$ ones, this machine outputs the string $1^k$.
 
   Suppose $(x, y)\in R_{bc}$, so $x$ and $y$ have the same number of ones, say
-  $k$. Thus $M(x)=M(y)=0^{n-k}1^k$, so $(M(x), M(y))\in R_{eq}$.
+  $k$. Thus $M(x)=M(y)=1^k$, so $(M(x), M(y))\in R_{eq}$.
   
   Suppose $(x, y)\notin R_{bc}$, so $x$ and $y$ have a different number of
   ones. Suppose $x$ has $k$ ones and $y$ has $l$ ones, for some
-  $k,l\in\mathbb{N}$. Assume without loss of generality that $k>l$. Then
-  $M(x)=0^{n-k}1^{k}$ and $M(y)=0^{n-l}1^{l}$, so $M(x)\neq M(y)$. Thus
-  $(M(x), M(y))\notin R_{eq}$.
+  $k,l\in\mathbb{N}$, with $k\neq l$. Then $M(x)=1^{k}$ and $M(y)=1^{l}$, so
+  $M(x)\neq M(y)$. Thus $(M(x), M(y))\notin R_{eq}$.
 
   Therefore $(x, y)\in R_{bc} \iff (M(x), M(y))\in R_{eq}$, so $R_{bc}\kr
   R_{eq}$.
@@ -523,14 +529,19 @@ $R_a$, which is a generalization of $R_{eqi}$, also reduce to equality.
   outputs $\bar{x}$ and $M(y)$ outputs $y$. Now $\bar{x}=\bar{\bar{y}}=y$, so
   $M(x)=M(y)$. Therefore $(M(x),M(y))\in R_{eq}$.
 
-  Suppose $(x,y)\notin R_{eqi}$, so $x\neq y$ and $x\neq\bar{y}$. In the case
-  that $x_1=0$ and $y_1=0$, then $M(x)=x$ and $M(y)=y$. Since $x\neq y$, then
-  $M(x)\neq M(y)$, so $(M(x),M(y))\notin R_{eq}$. In the case that $x_1=0$ and
-  $y_1=1$, then $M(x)=x$ and $M(y)=\bar{y}$. Since $x\neq\bar{y}$, then
-  $M(x)\neq M(y)$, so $(M(x),M(y))\notin R_{eq}$. In the case that $x_1=1$ and
-  $y_1=0$, then $M(x)=\bar{x}$ and $M(y)=y$. Since $x\neq\bar{y}$, then
-  $\bar{x}\neq \bar{\bar{y}}=y$, so $M(x)\neq M(y)$, and $(M(x),M(y))\notin
-  R_{eq}$. In the case that $x_1=1$ and $y_1=1$, then $M(x)=\bar{x}$ and
+  Suppose $(x,y)\notin R_{eqi}$, so $x\neq y$ and $x\neq\bar{y}$. 
+
+  In the case that $x_1=0$ and $y_1=0$, then $M(x)=x$ and $M(y)=y$. Since
+  $x\neq y$, then $M(x)\neq M(y)$, so $(M(x),M(y))\notin R_{eq}$.
+
+  In the case that $x_1=0$ and $y_1=1$, then $M(x)=x$ and $M(y)=\bar{y}$. Since
+  $x\neq\bar{y}$, then $M(x)\neq M(y)$, so $(M(x),M(y))\notin R_{eq}$.
+
+  In the case that $x_1=1$ and $y_1=0$, then $M(x)=\bar{x}$ and $M(y)=y$. Since
+  $x\neq\bar{y}$, then $\bar{x}\neq \bar{\bar{y}}=y$, so $M(x)\neq M(y)$, and
+  $(M(x),M(y))\notin R_{eq}$. 
+
+  In the case that $x_1=1$ and $y_1=1$, then $M(x)=\bar{x}$ and
   $M(y)=\bar{y}$. Since $x\neq y$, then $\bar{x}\neq\bar{y}$, so $M(x)\neq
   M(y)$, and $(M(x),M(y))\notin R_{eq}$.
 
