@@ -28,11 +28,12 @@
 \documentclass{article}
 
 % package imports
+\usepackage{aliascnt} % for correct autoref labeling of non-theorems
 \usepackage[noend, % omit end of block tags
   noline, % omit vertical block lines
   linesnumbered, % number lines
   boxed, % put a box around the algorithm
-  %oldcommands % newer versions of package have different command names
+  oldcommands % newer versions of package have different command names
 ]{algorithm2e} % for creating pseudocode
 \usepackage{amsmath} % for piecewise function definition
 \usepackage{amsthm} % for theorems, definitions, lemmas, and styles
@@ -57,12 +58,20 @@
 % lemmata, corollaries, and definitions are numbered with the same counter as
 % that for theorems
 \newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-\theoremstyle{definition} 
-\newtheorem{definition}[theorem]{Definition}
 
-% define lemma, corollary, and definition context labels for /autoref command
+\newaliascnt{lemma}{theorem} % for correct autoref labeling of non-theorems
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+
+\newaliascnt{definition}{theorem}
+\theoremstyle{definition} \newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+
+% define lemma, corollary, and definition context labels for \autoref command
 % (theorem is already defined)
 \newcommand{\lemmaname}{Lemma}
 \newcommand{\corollaryname}{Corollary}
@@ -151,6 +160,13 @@ The equivalence of these two definitions of the complexity class $\NP$ can be
 found, for example, in \cite{sipser06}.
 
 \begin{definition}
+  $\FP$ is the class of total functions computable by a Turing machine running
+  in polynomial time. Specifically, $f\colon\mathbb{N}\to\mathbb{N}$ is in
+  $\FP$ if there exists a Turing machine which, on input $n$, halts with $f(n)$
+  on its tape.
+\end{definition}
+
+\begin{definition}
   Let $A,B$ be languages. We say \emph{$A$ polynomial time, many-one reduces
     to $B$} if $\exists f\in\FP: \forall w\in\sigmastar, w\in A\iff f(w)\in
   B$. We denote this by $A\mor B$.
@@ -180,7 +196,8 @@ equivalent with respect to some equivalence relation.
 
 \begin{definition}
   Let $R$ be an equivalence relation, let $x\in\sigmastar$. The
-  \emph{equivalence class} of $x$ is $[x]_R=\{y|(x,y)\in R\}$.
+  \emph{equivalence class} of $x$ is $[x]_R=\{y|(x,y)\in R\}$. When the context
+  is clear, we sometimes omit the subscript, and just write $[x]$.
 \end{definition}
 For all equivalence relations, each element of $\sigmastar$ is in exactly one
 equivalence class, and the equivalence classes of an equivalence relation
@@ -594,9 +611,8 @@ We now present a theorem formalizing the intuition we have gained about
 reductions among equivalence relations with different numbers of equivalence
 classes.
 \begin{theorem}
-  Let $R$ and $S$ be equivalence relations. Suppose $S$ has $n$ equivalence
-  classes. If the number of equivalence classes in $R$ is greater than $n$,
-  then $R\nkr S$.
+  Let $R,S\in\PEq$. Suppose $S$ has $n$ equivalence classes. If the number of
+  equivalence classes in $R$ is greater than $n$, then $R\nkr S$.
 \end{theorem}
 \begin{proof}
   Assume with the intention of producing a contradiction that $R\kr S$. Then
@@ -743,8 +759,8 @@ the graph isomorphism problem.
 \end{definition}
 \begin{definition}
   Let $G_1=(V_1,E_1)$ and $G_2=(V_2, E_2)$ be undirected graphs. Then $G_1$ is
-  \emph{isomorphic to} $G_2$ if $\exists \phi:V_1\to V_2:\{u,v\}\in E_1\iff
-  \{\phi(u), \phi(v)\}\in E_2$ and $\phi$ is a bijection.
+  \emph{isomorphic to} $G_2$ if $\exists \phi\colon V_1\to V_2:\{u,v\}\in
+  E_1\iff \{\phi(u), \phi(v)\}\in E_2$ and $\phi$ is a bijection.
 \end{definition}
 \begin{definition}
   $GI=\{(G_1, G_2)|G_1$ and $G_2$ are undirected graphs and $G_1$ is isomorphic
@@ -783,8 +799,8 @@ intuition that a kernel reduction makes sense, practically.
   number of times. Similarly for $M$ on input $y$. Therefore $M(x)$ outputs
   $G_x=(V_x, E_x)$, where $V_x=\{v_o, v_p\}$ and $E_x=\{\}$, and $M(y)$ outputs
   $G_y=(V_y, E_y)$, where $V_y=\{v_o, v_p\}$ and $E_y=\{\}$. Then $G_x$ is
-  isomorphic to $G_y$ by the identity function, $I:V_x\to V_y$, defined by
-  $I(v)=v, \forall v\in V_x$.
+  isomorphic to $G_y$ by the identity function, $I\colon V_x\to V_y$, defined
+  by $I(v)=v, \forall v\in V_x$.
 
   If $x$ and $y$ both have odd parity, $x$ contains $2k+1$ ones and $y$
   contains $2l+1$ ones, for some $k,l\in\mathbb{N}$. Since $2k+1$ is odd,
@@ -792,8 +808,8 @@ intuition that a kernel reduction makes sense, practically.
   it removes the edge. Similarly for $M$ on input $y$. Therefore $M(x)$ outputs
   $G_x=(V_x, E_x)$, where $V_x=\{v_o, v_p\}$ and $E_x=\{(v_o, v_p)\}$, and
   $M(y)$ outputs $G_y=(V_y, E_y)$, where $V_y=\{v_o, v_p\}$ and $E_y=\{(v_o,
-  v_p)\}$. Then $G_x$ is isomorphic to $G_y$ by the identity function,
-  $I:V_x\to V_y$, defined by $I(v)=v, \forall v\in V_x$.
+  v_p)\}$. Then $G_x$ is isomorphic to $G_y$ by the identity function, $I\colon
+  V_x\to V_y$, defined by $I(v)=v, \forall v\in V_x$.
 
   Suppose $(x, y)\notin R_{par}$, so without loss of generality, $x$ has even
   parity and $y$ has odd parity. Then $x$ contains $2k$ ones and $y$ contains
@@ -836,9 +852,9 @@ intuition that a kernel reduction makes sense, practically.
   $V_{w,b}=\{v_i|w_i=b\}$, so $V_x=V_{x,1} \cup V_{x,0}$ and $V_y=V_{y,1} \cup
   V_{y,0}$. Note that $|V_{x,1}|=|V_{y,1}|=k$ and
   $|V_{x,0}|=|V_{y,0}|=n-k$. Since $|V_{x,1}|=|V_{y,1}|=k$, there exists a
-  bijection between them, call it $\phi_1:V_{x,1}\to V_{y,1}$. Similarly, since
-  $|V_{x,0}|=|V_{y,0}|=k$, there exists a bijection between them, call it
-  $\phi_0:V_{x,0}\to V_{y,0}$. Define $\phi:V_x\to V_y$ by
+  bijection between them, call it $\phi_1\colon V_{x,1}\to V_{y,1}$. Similarly,
+  since $|V_{x,0}|=|V_{y,0}|=k$, there exists a bijection between them, call it
+  $\phi_0\colon V_{x,0}\to V_{y,0}$. Define $\phi\colon V_x\to V_y$ by
   \begin{displaymath}
     \phi(v) = 
     \begin{cases}
@@ -979,7 +995,7 @@ undirected graph isomorphism problem, as in the following theorems.
   In the case that $x=y$, $M(x)$ and $M(y)$ output exactly the same graph, so
   $G_x$ is isomorphic to $G_y$, and hence $(M(x), M(y))\in DirGI$.
 
-  In the case that $x=\bar{y}$, define $\phi:V_x\to V_y$ by
+  In the case that $x=\bar{y}$, define $\phi\colon V_x\to V_y$ by
   \begin{displaymath}
     \phi(v)=
     \begin{cases}
@@ -1006,8 +1022,8 @@ undirected graph isomorphism problem, as in the following theorems.
   y_j=1$. Now $x_i=y_i=0$ implies $(v_i, v_{zero})\in E_x$ and $(v_i,
   v_{zero})\in E_y$. Also, $x_j=0$ implies $(v_j, v_{zero})\in E_x$ and $y_j=1$
   implies $(v_j, v_{one})\in E_y$. Assume, with the goal of producing a
-  contradiction, that there exists a bijection, $\phi:V_x\to V_y$ such that
-  $(u,v)\in E_x\iff(\phi(u),\phi(v))\in E_y$, $\forall u,v\in V_x$. Since
+  contradiction, that there exists a bijection, $\phi\colon V_x\to V_y$ such
+  that $(u,v)\in E_x\iff(\phi(u),\phi(v))\in E_y$, $\forall u,v\in V_x$. Since
   $\phi$ must map vertices on the ``spine'' of $G_x$ to corresponding vertices
   in $G_y$, and since $(v_i, v_{zero})\in E_x$, then $(\phi(v_i),
   \phi(v_{zero}))=(v_i, \phi(v_{zero}))$ must be in $E_y$. The only edge of
@@ -1061,8 +1077,8 @@ undirected graph isomorphism problem, as in the following theorems.
   In the case that $x=y$, $M(x)$ and $M(y)$ output exactly the same graph, so
   $G_x$ is isomorphic to $G_y$, and hence $(M(x), M(y))\in DirGI$.
   
-  Consider the case in which $x\neq y$, but $x\oplus y=a$. Define $\phi:V_x\to
-  V_y$ by
+  Consider the case in which $x\neq y$, but $x\oplus y=a$. Define $\phi\colon
+  V_x\to V_y$ by
   \begin{displaymath}
     \phi(v)=
     \begin{cases}
@@ -1338,11 +1354,12 @@ reductions in the terminology of category theory as follows: Let $C_1$ and
 $C_2$ be concrete categories, let $x,y$ be objects in $C_1$, let $x', y'$ be
 objects in $C_2$, let $Mor_{C_1}(x,y)$ be the morphism between objects $x$ and
 $y$ in $C_1$, let $Mor_{C_2}(x',y')$ be the morphism between objects $x'$ and
-$y'$ in $C_2$, and let $f:C_1\to C_2$ be a functor. Define $g:Mor(C_1)\to
-Mor(C_2)$ by $g(Mor_{C_1}(x,y))=Mor_{C_2}(f(x), f(y))$. If $g$ is bijective
-then $g$ is called a \emph{complete embedding}. If $g$ is a complete embedding
-then we say the isomorphism problem for objects in category $C_1$ \emph{reduces
-  functorially} to the isomorphism problem for objects in category $C_2$.
+$y'$ in $C_2$, and let $f\colon C_1\to C_2$ be a functor. Define $g\colon
+Mor(C_1)\to Mor(C_2)$ by $g(Mor_{C_1}(x,y))=Mor_{C_2}(f(x), f(y))$. If $g$ is
+bijective then $g$ is called a \emph{complete embedding}. If $g$ is a complete
+embedding then we say the isomorphism problem for objects in category $C_1$
+\emph{reduces functorially} to the isomorphism problem for objects in category
+$C_2$.
 %% TODO grigor'ev83 describes a kernel reduction as an epimorphic functor
 
 Notice that in the above definition, if we let $R=\{(x,y)| x$ and $y$ are
