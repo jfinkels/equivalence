@@ -24,8 +24,7 @@
 %%    the copyright holder.
 %%    * Nothing in this license impairs or restricts the author's moral rights.
 %%%%
-\documentclass[draft]{article}
-%\documentclass{article}
+\documentclass{amsart}
 
 % package imports
 \usepackage{aliascnt} % for correct autoref labeling of non-theorems
@@ -41,10 +40,10 @@
 %\usepackage{chngcntr} % for counting figures with section numbers
 \usepackage{complexity} % for typesetting complexity classes
 \usepackage{cclicenses} % for adding creative commons license symbols
-%\usepackage[margin=1in]{geometry} % for setting page margins
+\usepackage{fullpage}
 \usepackage{graphicx} % for including images
 \usepackage[
-  backref=section, % backlinks in references
+  backref=page, % backlinks in references
   pdftitle={On the computational complexity of equivalence relations under
     kernel reductions},
   pdfauthor={Jeffrey Finkelstein}
@@ -55,12 +54,13 @@
 % don't print semicolons in pseudocode algorithms
 \dontprintsemicolon
 
-% define theorem, lemma, and definition environments and corresponding styles.
-% lemmata, corollaries, and definitions are numbered with the same counter as
-% that for theorems
+% Define theorem, lemma, and definition environments and corresponding styles.
+% Lemmata, corollaries, and definitions are numbered with the same counter as
+% that for theorems. We have to do some black magic to get the \autoref labels
+% to work correctly.
 \newtheorem{theorem}{Theorem}[section]
 
-\newaliascnt{lemma}{theorem} % for correct autoref labeling of non-theorems
+\newaliascnt{lemma}{theorem}
 \newtheorem{lemma}[lemma]{Lemma}
 \aliascntresetthe{lemma}
 
@@ -113,8 +113,6 @@
 \date{\today} 
 
 \begin{document}
-\maketitle
-\symbolfootnote{\license}
 
 \begin{abstract}
   In this paper we analyze the notion of kernel reductions among equivalence
@@ -128,6 +126,9 @@
   \NP. We show that most known many-one reductions among isomorphism problems
   in $\NP$ are indeed kernel reductions.
 \end{abstract}
+
+\maketitle
+\symbolfootnote{\license}
 
 \section{Introduction}
 
@@ -809,7 +810,7 @@ restriction here is on the number of equivalence classes in each language.
 %% TODO showing completeness of a problem should be somewhat easier because we
 %% are allowed to examine the entire computation history
 
-\section{Kernel reductions among intractable\\problems}
+\section{Kernel reductions among intractable problems}
 
 \subsection{The graph isomorphism problem}
 
@@ -1229,7 +1230,7 @@ undirected graph isomorphism problem, as in the following theorems.
 \begin{proof}Follows directly from \autoref{thm:ra_kr_dirgi} and
   \autoref{lem:gi_ke_dirgi}.\end{proof}
 
-\subsection{Graph isomorphism and \NPEq-completeness}
+\subsection{Graph isomorphism and \texorpdfstring{\NPEq}{NPEq}-completeness}
 
 One question we wish to address is whether there exist \NPEq-complete problems
 (indeed, whether there exist \PEq-complete problems as well). While we can't
@@ -1458,11 +1459,11 @@ categories.
 \item polar graph isomorphism \cite{zkt85}
 \item two-color graph isomorphism \cite{zkt85}
 \item finite model isomorphism \cite{miller79} %\cite{babai77}
-\item color graph isomorphism \cite{zkt85} \cite{miller77} \cite{pultr64}
+\item color graph isomorphism \cite{zkt85, miller77, pultr64}
 \item stable graph isomorphism \cite{wl68}
 \item multigraph isomorphism \cite{zkt85} 
 \item hypergraph isomorphism \cite{zkt85} 
-\item $k$-uniform hypergraph isomorphism \cite{zkt85} \cite{hn70}
+\item $k$-uniform hypergraph isomorphism \cite{zkt85, hn70}
 \item finite automaton isomorphism \cite{booth78}
 \item lattice isomorphism \cite{frucht50}
 \item isomorphism of commutative nilpotent semigroups of class 3 
@@ -1566,6 +1567,6 @@ Still, we have no reason in particular to believe that a many-one reduction is
 different from a kernel reduction.
 %% TODO more explanation
 
-\bibliographystyle{alpha} \bibliography{references}
+\bibliographystyle{amsalpha} \bibliography{references}
 
 \end{document}
