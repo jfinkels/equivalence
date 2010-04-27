@@ -24,8 +24,8 @@
 %%    the copyright holder.
 %%    * Nothing in this license impairs or restricts the author's moral rights.
 %%%%
-%\documentclass[draft]{article}
-\documentclass{article}
+\documentclass[draft]{article}
+%\documentclass{article}
 
 % package imports
 \usepackage{aliascnt} % for correct autoref labeling of non-theorems
@@ -33,7 +33,7 @@
   noline, % omit vertical block lines
   linesnumbered, % number lines
   boxed, % put a box around the algorithm
-  oldcommands % newer versions of package have different command names
+  %oldcommands % newer versions of package have different command names
 ]{algorithm2e} % for creating pseudocode
 \usepackage{amsmath} % for piecewise function definition
 \usepackage{amsthm} % for theorems, definitions, lemmas, and styles
@@ -45,7 +45,8 @@
 \usepackage{graphicx} % for including images
 \usepackage[
   backref=section, % backlinks in references
-  pdftitle={On computational complexity of equivalence relations},
+  pdftitle={On the computational complexity of equivalence relations under
+    kernel reductions},
   pdfauthor={Jeffrey Finkelstein}
 ]{hyperref}
 %\usepackage[all]{hypcap} % references to images will link to the image
@@ -107,7 +108,8 @@
 
 % define the author, title, and date
 \author{Jeffrey Finkelstein} 
-\title{On the computational complexity of equivalence relations}
+\title{On the computational complexity of equivalence relations under kernel
+  reductions}
 \date{\today} 
 
 \begin{document}
@@ -226,6 +228,7 @@ We explicitly show here the containments among \P, \NP, \PEq, and \NPEq.
   \begin{enumerate}
     \renewcommand{\labelenumi}{\roman{enumi}.}
   \item $\P\subseteq\NP$
+  \item $\PEq\subseteq\NPEq$
   \item $\PEq\subsetneq\P$
   \item $\NPEq\subsetneq\NP$
   \end{enumerate}
@@ -233,7 +236,8 @@ We explicitly show here the containments among \P, \NP, \PEq, and \NPEq.
 \begin{proof}
   Any language which can be decided in deterministic polynomial time can be
   verified in deterministic polynomial time, by deciding whether the input is
-  in the language, thus $\PEq\subseteq\NPEq$. $\PEq\subseteq\P$ and
+  in the language, thus $\P\subseteq\NP$. The same argument applies to
+  equivalence problems, so $\PEq\subseteq\NPEq$.  $\PEq\subseteq\P$ and
   $\NPEq\subseteq\NP$ follows immediately from the definitions. A language in
   $\P$ which is not an equivalence relation is $MAJORITY=\{w|$ the number of
   ones in $w$ is greater than $\frac{|w|}{2}\}$, so $\PEq\subsetneq\P$. A
@@ -670,12 +674,12 @@ representatives of equivalence classes in both equivalence relations.
     }
   \end{algorithm}
   Notice that each $w\in\sigmastar$ is in exactly one equivalence class in $R$,
-  because the equivalence classes partition $\sigmastar$. Therefore this
-  algorithm always outputs something on each input.
+  because the equivalence classes partition $\sigmastar$, so $M_R((w,r_i))$
+  accepts exactly once when $(w,r_i)\in R$.
 
   Suppose $(x,y)\in R$, so $(x, r_i)\in R$ and $(y,r_i)\in R$ for some $r_i\in
-  REP(R)$. Then $M(x)$ outputs $f(r_i)$ and $M(y)$ outputs $f(r_i)$, so $(M(x),
-  M(y))=(f(r_i), f(r_i))\in S$.
+  REP(R)$. Then $M(x)$ outputs $f(r_i)$ and $M(y)$ outputs $f(r_i)$. Since
+  $(f(r_i), f(r_i))\in S$, then $(M(x), M(y))\in S$.
 
   Suppose $(x,y)\in R$. So $\exists r_i, r_j\in REP(R)$, with $r_i\neq r_j$,
   such that $(x,r_i)\in R$ and $(y, r_j)\in R$. Then $M(x)$ outputs $f(r_i)$
@@ -805,7 +809,7 @@ restriction here is on the number of equivalence classes in each language.
 %% TODO showing completeness of a problem should be somewhat easier because we
 %% are allowed to examine the entire computation history
 
-\section{Kernel reductions among intractable problems}
+\section{Kernel reductions among intractable\\problems}
 
 \subsection{The graph isomorphism problem}
 
@@ -1535,7 +1539,7 @@ studied. For more information, see \cite{kst93}.
 %% structure equivalence relations (bloniarz84)? regular expressions with + and
 %% times?  see boolean equivalence problems paper
 
-\section{Difference between kernel reductions and many-one reductions}
+\section{Kernel reductions vs. many-one reductions}
 
 Now we wish to address the question of whether kernel reductions are different
 from many-one reductions.
