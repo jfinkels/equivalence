@@ -869,8 +869,9 @@ intuition that a kernel reduction makes sense, practically.
     $E_w\gets\{\}$ \tcp{undirected edges}\;
     \For{$i=1$ \KwTo $|w|$}{
       \If{$w_i=1$}{
-        \eIf{$(v_o, v_p)\in E_w$}{add undirected edge $(v_o, v_p)$ to $E_w$\;}
-            {remove $(v_o, v_p)$ from $E_w$\;}
+        \eIf{$\{v_o, v_p\}\in E_w$}
+            {add undirected edge $\{v_o, v_p\}$ to $E_w$\;}
+            {remove $\{v_o, v_p\}$ from $E_w$\;}
       }
     }
     \Return $G_w=(V_w, E_w)$
@@ -881,35 +882,37 @@ intuition that a kernel reduction makes sense, practically.
 
   If $x$ and $y$ both have even parity, $x$ contains $2k$ ones and $y$ contains
   $2l$ ones, for some $k,l\in\mathbb{N}$. Since $2k$ is even, machine $M$ on
-  input $x$ adds then removes the edge $(v_o, v_p)$ to and from $E_x$ an equal
-  number of times. Similarly for $M$ on input $y$. Therefore $M(x)$ outputs
-  $G_x=(V_x, E_x)$, where $V_x=\{v_o, v_p\}$ and $E_x=\{\}$, and $M(y)$ outputs
-  $G_y=(V_y, E_y)$, where $V_y=\{v_o, v_p\}$ and $E_y=\{\}$. Then $G_x$ is
-  isomorphic to $G_y$ by the identity function, $I\colon V_x\to V_y$, defined
-  by $I(v)=v, \forall v\in V_x$.
+  input $x$ adds then removes the edge $\{v_o, v_p\}$ to and from $E_x$ an
+  equal number of times. Similarly for $M$ on input $y$. Therefore $M(x)$
+  outputs $G_x=(V_x, E_x)$, where $V_x=\{v_o, v_p\}$ and $E_x=\{\}$, and $M(y)$
+  outputs $G_y=(V_y, E_y)$, where $V_y=\{v_o, v_p\}$ and $E_y=\{\}$. Then $G_x$
+  is isomorphic to $G_y$ by the identity function, $I\colon V_x\to V_y$,
+  defined by $I(v)=v, \forall v\in V_x$.
 
   If $x$ and $y$ both have odd parity, $x$ contains $2k+1$ ones and $y$
   contains $2l+1$ ones, for some $k,l\in\mathbb{N}$. Since $2k+1$ is odd,
-  machine $M$ on input $x$ adds edge $(v_o, v_p)$ to $E_x$ one more time than
+  machine $M$ on input $x$ adds edge $\{v_o, v_p\}$ to $E_x$ one more time than
   it removes the edge. Similarly for $M$ on input $y$. Therefore $M(x)$ outputs
-  $G_x=(V_x, E_x)$, where $V_x=\{v_o, v_p\}$ and $E_x=\{(v_o, v_p)\}$, and
-  $M(y)$ outputs $G_y=(V_y, E_y)$, where $V_y=\{v_o, v_p\}$ and $E_y=\{(v_o,
-  v_p)\}$. Then $G_x$ is isomorphic to $G_y$ by the identity function, $I\colon
-  V_x\to V_y$, defined by $I(v)=v, \forall v\in V_x$.
+  $G_x=(V_x, E_x)$, where $V_x=\{v_o, v_p\}$ and $E_x=\{\{v_o, v_p\}\}$, and
+  $M(y)$ outputs $G_y=(V_y, E_y)$, where $V_y=\{v_o, v_p\}$ and $E_y=\{\{v_o,
+  v_p\}\}$. Then $G_x$ is isomorphic to $G_y$ by the identity function,
+  $I\colon V_x\to V_y$, defined by $I(v)=v, \forall v\in V_x$.
 
-  Suppose $(x, y)\notin R_{par}$, so without loss of generality, $x$ has even
-  parity and $y$ has odd parity. Then $x$ contains $2k$ ones and $y$ contains
-  $2l+1$ ones, for some $k,l\in\mathbb{N}$. Since $2k$ is even, machine $M$ on
-  input $x$ adds then removes the edge $(v_o, v_p)$ to and from $E_x$ an equal
-  number of times. Since $2l+1$ is odd, machine $M$ on input $y$ adds edge
-  $(v_o, v_p)$ to $E_y$ one more time than it removes the edge. Therefore
-  $M(x)$ outputs $G_x=(V_x, E_x)$, where $V_x=\{v_o, v_p\}$ and $E_x=\{\}$, and
-  $M(y)$ outputs $G_y=(V_y, E_y)$, where $V_y=\{v_o, v_p\}$ and $E_y=\{(v_o,
-  v_p)\}$. Since $(v_o, v_p)\in E_y$ but $(v_o, v_p)\notin E_x$, so no
-  bijection exists between $V_x$ and $V_y$ which preserves edges. Therefore,
-  $G_x$ is not isomorphic to $G_y$ so $(M(x), M(y))\notin GI$.
+  Suppose $\pair{x}{y}\notin R_{par}$, so without loss of generality, $x$ has
+  even parity and $y$ has odd parity. Then $x$ contains $2k$ ones and $y$
+  contains $2l+1$ ones, for some $k,l\in\mathbb{N}$. Since $2k$ is even,
+  machine $M$ on input $x$ adds then removes the edge $\{v_o, v_p\}$ to and
+  from $E_x$ an equal number of times. Since $2l+1$ is odd, machine $M$ on
+  input $y$ adds edge $\{v_o, v_p\}$ to $E_y$ one more time than it removes the
+  edge. Therefore $M(x)$ outputs $G_x=(V_x, E_x)$, where $V_x=\{v_o, v_p\}$ and
+  $E_x=\{\}$, and $M(y)$ outputs $G_y=(V_y, E_y)$, where $V_y=\{v_o, v_p\}$ and
+  $E_y=\{\{v_o, v_p\}\}$. Since $\{v_o, v_p\}\in E_y$ but $\{v_o, v_p\}\notin
+  E_x$, so no bijection exists between $V_x$ and $V_y$ which preserves
+  edges. Therefore, $G_x$ is not isomorphic to $G_y$ so
+  $\pair{M(x)}{M(y)}\notin GI$.
 
-  Therefore $(x, y)\in R_{par} \iff (M(x), M(y)) \in GI$, so $R_{par} \kr GI$.
+  Therefore $\pair{x}{y}\in R_{par} \iff \pair{M(x)}{M(y)} \in GI$, so $R_{par}
+  \kr GI$.
 \end{proof}
 
 \begin{theorem}\label{thm:rbc_gi}$R_{bc}\kr GI$\end{theorem}
@@ -918,22 +921,22 @@ intuition that a kernel reduction makes sense, practically.
   \begin{algorithm}[H]
     $V_w\gets\{v_1, v_2, \ldots, v_{|w|}, v_{zero}, v_{one,0}, v_{one,1},
     v_{one,2}\}$\;
-    $E_w\gets\{(v_{one,0}, v_{one,1}), (v_{one,1}, v_{one,2}), (v_{one,2},
-    v_{one,0})\}$\tcp{undirected edges}\; 
+    $E_w\gets\{\{v_{one,0}, v_{one,1}\}, \{v_{one,1}, v_{one,2}\}, \{v_{one,2},
+    v_{one,0}\}\}$\tcp{undirected edges}\; 
     \For{$i=1$ \KwTo $|w|$}{
       \eIf{$w_i=1$}{
-        add undirected edge $(v_i, v_{one,0})$ to $E_w$\;
+        add undirected edge $\{v_i, v_{one,0}\}$ to $E_w$\;
       }{
-        add undirected edge $(v_i, v_{zero})$ to $E_w$\;
+        add undirected edge $\{v_i, v_{zero}\}$ to $E_w$\;
       }
     }
     \Return{$G_w=(V_w, E_w)$}
   \end{algorithm}
   
-  Suppose $(x, y)\in R_{bc}$, so $x$ and $y$ have the same number of ones, say
-  $k\in\mathbb{N}$. Assume $|x|=|y|=n$, so both $x$ and $y$ have $n-k$
-  zeros. Define $E_{w,1}=\{(v_i, v_{one,0})|i\in\{1,2,\ldots,n\}, w_i = 1\}$
-  and $E_{w,0}=\{(v_i, v_{zero})|i\in\{1,2,\ldots,n\}, w_i = 0\}$, so $E_x =
+  Suppose $\pair{x}{y}\in R_{bc}$, so $x$ and $y$ have the same number of ones,
+  say $k\in\mathbb{N}$. Assume $|x|=|y|=n$, so both $x$ and $y$ have $n-k$
+  zeros. Define $E_{w,1}=\{\{v_i, v_{one,0}\}|i\in\{1,2,\ldots,n\}, w_i = 1\}$
+  and $E_{w,0}=\{\{v_i, v_{zero}\}|i\in\{1,2,\ldots,n\}, w_i = 0\}$, so $E_x =
   E_{x,1}\cup E_{x,0}$ and $E_y = E_{y,1} \cup E_{y,0}$ by construction. Define
   $V_{w,b}=\{v_i|w_i=b\}$, so $V_x=V_{x,1} \cup V_{x,0}$ and $V_y=V_{y,1} \cup
   V_{y,0}$. Note that $|V_{x,1}|=|V_{y,1}|=k$ and
@@ -955,8 +958,8 @@ intuition that a kernel reduction makes sense, practically.
   single $x_i$, because each $x_i$ can be either a one or a zero,
   exclusively.
 
-  Since the only edges in $E_x$ are the edges $(v_i, v_{one,0})$ when $x_i=1$
-  and $(v_i, v_{zero})$ when $x_i=0$, then 
+  Since the only edges in $E_x$ are the edges $\{v_i, v_{one,0}\}$ when $x_i=1$
+  and $\{v_i, v_{zero}\}$ when $x_i=0$, then
   \begin{displaymath}
     (v_i, v_{one,0})\in E_x \iff (\phi(v_i), \phi(v_{one,0}))=(\phi_1(v_i),
     v_{one,0})\in E_y
@@ -969,16 +972,18 @@ intuition that a kernel reduction makes sense, practically.
   Therefore $\phi$ describes a graph isomorphism, so $G_1$ is isomorphic to
   $G_2$.
   
-  Suppose $(x, y)\notin R_{bc}$, so $x$ and $y$ have a different number of
+  Suppose $\pair{x}{y}\notin R_{bc}$, so $x$ and $y$ have a different number of
   ones. Let $k$ be the number of ones in $x$, and $l$ be the number of ones in
   $y$, with $k\neq l$. Suppose without loss of generality that $k>l$. Define
   $E_{w,0}$ and $E_{w,1}$ as above. Now $|E_{x,1}|=k$ and $|E_{y,1}|=l$. Since
   $k>l$, $E_{x,1}$ has at least one more edge adjacent to the triangle created
   by the vertices $\{v_{one,0},v_{one,1},v_{one,2}\}$ than does $E_{y,1}$. Thus
   no possible bijection exists between $V_x$ and $V_y$ which preserves all
-  edges. Thus $G_x$ is not isomorphic to $G_y$, so $(M(x), M(y))\notin GI$.
+  edges. Thus $G_x$ is not isomorphic to $G_y$, so $\pair{M(x)}{M(y)}\notin
+  GI$.
 
-  Therefore $(x, y)\in R_{bc} \iff (M(x), M(y))\in GI$, so $R_{bc}\kr GI$.
+  Therefore $\pair{x}{y}\in R_{bc} \iff \pair{M(x)}{M(y)}\in GI$, so $R_{bc}\kr
+  GI$.
 \end{proof}
 
 Unlike the reductions from $R_{par}$ and $R_{bc}$ to $GI$, in the reductions
@@ -989,7 +994,7 @@ problem, which we can prove equivalent under kernel reductions to the graph
 isomorphism problem.
 
 \begin{definition}
-  $DirGI=\{(G_1, G_2)|G_1$ and $G_2$ are directed graphs and $G_1$ is
+  $DirGI=\{\pair{G_1}{G_2}|G_1$ and $G_2$ are directed graphs and $G_1$ is
   isomorphic to $G_2\}$
 \end{definition}
 
@@ -1000,7 +1005,6 @@ isomorphism problem.
   
   To show $DirGI\kr GI$, replace each directed edge in the graph with a set of
   vertices and edges that enforces an ordering between the vertices.
-  %% TODO provide references for these reductions
 \end{proof}
 
 From \autoref{lem:gi_ke_dirgi}, we can use a kernel reduction to the directed
