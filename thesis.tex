@@ -24,7 +24,8 @@
 %%    the copyright holder.
 %%    * Nothing in this license impairs or restricts the author's moral rights.
 %%%%
-\documentclass{amsart}
+%\documentclass{amsart}
+\documentclass{article}
 
 % package imports
 \usepackage{aliascnt} % for correct autoref labeling of non-theorems
@@ -86,8 +87,9 @@
 \newcommand{\kequiv}{\equiv^{p}_{ker}} % is equivalent under kernel reductions
 \newcommand{\mor}{\leq^{p}_{m}} % many-one reduces
 \newcommand{\moequiv}{\equiv^{p}_m} % is equivalent under many-one reductions
-\newcommand{\tequiv}{\equiv^{p}_T} % is equivalent under Turing reductions
+%\newcommand{\tequiv}{\equiv^{p}_T} % is equivalent under Turing reductions
 \newcommand{\defn}[1]{\emph{#1}} % emphasize words which are being defined
+\newcommand{\pair}[2]{\langle#1,#2\rangle} % pairing function
 
 % create the creative commons license
 \newcommand{\license}{\begin{tabular}[h]{r l}
@@ -115,21 +117,12 @@
 
 \begin{document}
 
-\begin{abstract}
-  In this paper we analyze the notion of kernel reductions among equivalence
-  problems, as defined in Fortnow and Grochow. We first examine what kernel
-  reductions look like, practically, among feasible equivalence problems. We
-  next provide some evidence that the restriction of a polynomial time kernel
-  reduction is not on the time complexity of the reduction, but on the number
-  of equivalence classes in the equivalence relations being reduced. We then
-  examine the graph isomorphism problem and problems equivalent to it under
-  polynomial time many-one reductions, and find that of these problems the ones
-  which are equivalence problems are in fact equivalence to the graph
-  isomorphism problem under polynomial time kernel reductions.
-\end{abstract}
-
 \maketitle
 \symbolfootnote{\license}
+
+\begin{abstract}
+  \input{abstract}
+\end{abstract}
 
 %% \section{Introduction}
 
@@ -147,6 +140,17 @@
 \begin{definition}
   A subset of $\sigmastar$ is called a \defn{language}.
 \end{definition}
+
+Since we wish to consider only sets whose members are binary strings, in order
+to define sets of pairs of binary strings we need to make use of a
+\defn{pairing function}, $\pair{\cdot}{\cdot}\colon
+\sigmastar\times\sigmastar\to\sigmastar$. For example, consider the pairing
+function defined as follows: $\pair{x}{y}$ duplicates each bit in $x$ and $y$
+to produce $\hat{x}$ and $\hat{y}$, respectively, then outputs
+$\hat{x}01\hat{y}$. For example, $\pair{0110}{1100}=001111000111110000$.
+
+For a more thorough treatment of languages, alphabets, encodings, pairing
+functions, etc., see \cite{bdg95}.
 
 \begin{definition}
   $\P$ is the class of languages for which membership can be decided by a
@@ -180,15 +184,15 @@ found, for example, in \cite{sipser06}.
 \end{definition}
 
 \begin{definition}
-  Let $R\subseteq\sigmastar\times\sigmastar$. Then $R$ is an \defn{equivalence
-    relation} if the following conditions hold:
-  \renewcommand{\labelenumi}{\roman{enumi}.}
+  Let $U$ be a set. Let $R\subseteq U\times U$. Then $R$ is an
+    \defn{equivalence relation} on $U$ if the following conditions hold:
+    \renewcommand{\labelenumi}{\roman{enumi}.}
   \begin{enumerate}
-  \item (reflexivity) $\forall x\in\sigmastar$, $(x, x)\in R$
-  \item (symmetry) $\forall x,y\in\sigmastar$, if $(x,y)\in R$ then $(y,x)\in
+  \item (reflexivity) $\forall x\in U$, $(x, x)\in R$
+  \item (symmetry) $\forall x,y\in U$, if $(x,y)\in R$ then $(y,x)\in
     R$
-  \item (transitivity) $\forall x,y,z\in\sigmastar$, if $(x,y)\in R$ and
-    $(y,z)\in R$ then $(x,z)\in R$
+  \item (transitivity) $\forall x,y,z\in U$, if $(x,y)\in R$ and $(y,z)\in R$
+    then $(x,z)\in R$
   \end{enumerate}
   If $(x,y)\in R$, we say \defn{$x$ relates to $y$} or \defn{$x$ is equivalent
     to $y$ under $R$}. We denote this by $x\sim_R y$ or $x\sim y$.
@@ -199,13 +203,14 @@ whereas every object is equal to itself and only itself, many objects can be
 equivalent with respect to some equivalence relation.
 
 \begin{definition}
-  Let $R$ be an equivalence relation, let $x\in\sigmastar$. The
-  \defn{equivalence class} of $x$ is $[x]_R=\{y|(x,y)\in R\}$. When the context
-  is clear, we sometimes omit the subscript, and just write $[x]$.
+  Let $U$ be a set, let $R$ be an equivalence relation on $U$, let $x\in
+  U$. The \defn{equivalence class} of $x$ is $[x]_R=\{y\in U|(x,y)\in
+  R\}$. When the context is clear, we sometimes omit the subscript, and just
+  write $[x]$.
 \end{definition}
-For all equivalence relations, each element of $\sigmastar$ is in exactly one
+For all equivalence relations, each element of $U$ is in exactly one
 equivalence class, and the equivalence classes of an equivalence relation
-provide a partition of $\sigmastar$.
+provide a partition of $U$.
 
 In \cite{fg09}, Fortnow and Grochow give a formal definition of a new class of
 languages: the class of equivalence problems which can be decided in polynomial
@@ -248,29 +253,31 @@ We explicitly show here the containments among \P, \NP, \PEq, and \NPEq.
 \end{proof}
 
 \begin{definition}\label{def:kr}
-  Let $R$ and $S$ be equivalence relations. We say $R$ \defn{polynomial time
-    kernel reduces to} $S$ if $\exists f\in\FP:\forall x,y\in\sigmastar$, $(x,
-    y)\in R \iff (f(x),f(y))\in S$. We denote this by $R\kr S$.
+  Let $R$ and $S$ be equivalence relations on $\sigmastar$. We say $R$
+  \defn{polynomial time kernel reduces to} $S$ if $\exists f\in\FP:\forall
+  x,y\in\sigmastar$, $\pair{x}{y}\in R \iff \pair{f(x)}{f(y)}\in S$. We denote
+  this by $R\kr S$.
   
   We say $R$ \defn{is kernel equivalent to} $S$ if $R\kr S$ and $S\kr R$. We
   denote this by $R\kequiv S$.
 \end{definition}
 
 Note the difference between a kernel reduction and a many-one reduction: a
-kernel reduction maps $(x,y)\in R$ to $(f(x), f(y))\in S$, whereas a many-one
-reduction maps $(x,y)\in R$ to $f(x, y)\in S$, for some polynomial time
-computable function $f$. Informally, a function which computes a many-one
-reduction has access to both $x$ and $y$, but a function which computes a
-kernel reduction has access to only one of $x$ and $y$ at a time. Because the
-many-one reduction seems to be at least as powerful as the kernel reduction, we
-can prove the following lemma, which is essential for proving
-\autoref{thm:npeqc_npc}.
+kernel reduction maps $\pair{x}{y}\in R$ to $\pair{f(x)}{f(y)}\in S$, whereas a
+many-one reduction maps $\pair{x}{y}\in R$ to $f(\pair{x, y})\in S$, for some
+polynomial time computable function $f$. Informally, a function which computes
+a many-one reduction has access to both $x$ and $y$, but a function which
+computes a kernel reduction has access to only one of $x$ and $y$ at a
+time. Because the many-one reduction seems to be at least as powerful as the
+kernel reduction, we can prove the following lemma, which is essential for
+proving \autoref{thm:npeqc_npc}.
 
-\begin{lemma}\label{lem:kr_mor}If $R\kr S$ then $R\mor S$.\end{lemma}
+\begin{lemma}\label{lem:kr_mor}Let $R,S$ be equivalence relations on
+  $\sigmastar$. If $R\kr S$ then $R\mor S$.\end{lemma}
 \begin{proof}
-  Since $R\kr S$, $\exists f\in\FP:\forall x,y\in\sigmastar$, $(x,y)\in
-  R\iff(f(x), f(y))\in S$. Define $g\in\FP$ by $g((x,y))=(f(x),
-  f(y))$. Therefore $R\mor S$ by $g$.
+  Since $R\kr S$, $\exists f\in\FP:\forall x,y\in\sigmastar$, $\pair{x}{y}\in
+  R\iff\pair{f(x)}{f(y)}\in S$. Define $g\in\FP$ by
+  $g(\pair{x}{y})=\pair{f(x)}{f(y)}$. Therefore $R\mor S$ by $g$.
 \end{proof}
 
 As an analog to polynomial time many-one completeness in \NP, we define a
@@ -292,22 +299,22 @@ relations in $\PEq$, feasible equivalence problems.
 
 %% TODO should I make a note about assuming |x|=|y|?
 \begin{definition}
-  $R_{par}=\{(x, y)|x$ and $y$ have the same parity (even or odd number of
+  $R_{par}=\{\pair{x}{y}|x$ and $y$ have the same parity (even or odd number of
   ones)$\}$
 \end{definition}
 \begin{definition}
-  $R_{bc}=\{(x, y)|x$ and $y$ have the same number of ones$\}$
+  $R_{bc}=\{\pair{x}{y}|x$ and $y$ have the same number of ones$\}$
 \end{definition}
 \begin{definition}
-  $R_{eq}=\{(x, y)|x=y\}$. This is called the \defn{equality relation}.
+  $R_{eq}=\{\pair{x}{y}|x=y\}$. This is called the \defn{equality relation}.
 \end{definition}
 \begin{definition}
-  $R_{eqi}=\{(x, y)|x=y$ or $x=\bar{y}\}$
+  $R_{eqi}=\{\pair{x}{y}|x=y$ or $x=\bar{y}\}$
 \end{definition}
 \begin{definition}
-  Let $a\in\sigmastar$. $R_{a}=\{(x,y)|x=y$ or $x\oplus y=a\}$. (Note that
-  $R_{a}$ is a family of equivalence relations; $R_{a}$ is a different relation
-  for each fixed $a$.)
+  Let $a\in\sigmastar$. $R_{a}=\{\pair{x}{y}|x=y$ or $x\oplus y=a\}$. (Note
+  that $R_{a}$ is a family of equivalence relations; $R_{a}$ is a different
+  relation for each fixed $a$.)
 \end{definition}
 %% \begin{definition}
 %%   $R_{maj}=\{(x,y)|$ at least half of the bits in both $x$ and $y$ are ones, or
@@ -321,40 +328,40 @@ relations in $\PEq$, feasible equivalence problems.
 %% \end{definition}
 
 Notice the following equivalent definitions, where $n=|x|=|y|=|a|$:
-$R_{eq}=\{(x, y)|x \oplus y = 0^n\}$, $R_{eqi}=\{(x, y)|x \oplus y = 0^n$ or
-$x\oplus y = 1^n\}$, and $R_a=\{(x,y)|x \oplus y = 0^n$ or $x \oplus y\ =
-a\}$. From these we can see that if $a=1^n$, then $R_a=R_{eqi}$, and if
-$a=0^n$, then $R_a=R_{eq}$.
+$R_{eq}=\{\pair{x}{y}|x \oplus y = 0^n\}$, $R_{eqi}=\{\pair{x}{y}|x \oplus y =
+0^n$ or $x\oplus y = 1^n\}$, and $R_a=\{\pair{x}{y}|x \oplus y = 0^n$ or $x
+\oplus y\ = a\}$. From these we can see that if $a=1^n$, then $R_a=R_{eqi}$,
+and if $a=0^n$, then $R_a=R_{eq}$.
 
 \subsection{Containments and equivalence classes}
 
 %% TODO show that all the stated equivalence relations are actually eq. rel.s
 \begin{theorem}$R_{eq} \subsetneq R_{bc} \subsetneq R_{par}$\end{theorem}
 \begin{proof}
-  Let $(x, y)\in R_{eq}$, so $x=y$. Then $x$ has exactly the same number of
-  ones as $y$ (and the same number of zeros, and in the same order), so $(x, y)
-  \in R_{bc}$. Therefore, $R_{eq} \subset R_{bc}$.
+  Let $\pair{x, y}\in R_{eq}$, so $x=y$. Then $x$ has exactly the same number
+  of ones as $y$ (and the same number of zeros, and in the same order), so
+  $\pair{x}{y}\in R_{bc}$. Therefore, $R_{eq} \subset R_{bc}$.
  
-  Consider $x=1100$ and $y=0101$. Then $(x, y)\in R_{bc}$ but $(x, y) \notin
-  R_{eq}$. Therefore $R_{eq} \neq R_{bc}$.
+  Consider $x=1100$ and $y=0101$. Then $\pair{x}{y}\in R_{bc}$ but $\pair{x}{y}
+  \notin R_{eq}$. Therefore $R_{eq} \neq R_{bc}$.
 
-  Let $(x, y)\in R_{bc}$, so $x$ and $y$ have the same number of ones. Let $k$
-  be the number of ones in $x$, and $l$ be the number of ones in $y$. Then
-  $l=k$, which implies $l \equiv k$ (mod 2). Therefore $x$ and $y$ have
-  the same parity, so $(x, y)\in R_{par}$. Therefore $R_{bc} \subset R_{par}$.
+  Let $\pair{x}{y}\in R_{bc}$, so $x$ and $y$ have the same number of ones. Let
+  $k$ be the number of ones in $x$, and $l$ be the number of ones in $y$. Then
+  $l=k$, which implies $l \equiv k$ (mod 2). Therefore $x$ and $y$ have the
+  same parity, so $\pair{x}{y}\in R_{par}$. Therefore $R_{bc} \subset R_{par}$.
 
-  Consider $x=1000$ and $y=1011$. Then $(x, y)\in R_{par}$ but $(x, y) \notin
-  R_{bc}$. Therefore $R_{bc} \neq R_{par}$.
+  Consider $x=1000$ and $y=1011$. Then $\pair{x}{y}\in R_{par}$ but
+  $\pair{x}{y} \notin R_{bc}$. Therefore $R_{bc} \neq R_{par}$.
 \end{proof}
 
 \begin{theorem}$R_{eq} \subsetneq R_{eqi}$\end{theorem}
 \begin{proof}
-  Let $(x, y)\in R_{eq}$, so $x=y$. Then $(x, y)$ satisfies the property
-  specified in the definition of $R_{eqi}$, specifically that $x=y$, so
-  $(x, y) \in R_{eqi}$. Therefore $R_{eq} \subset R_{eqi}$.
+  Let $\pair{x}{y}\in R_{eq}$, so $x=y$. Then $\pair{x}{y}$ satisfies the
+  property specified in the definition of $R_{eqi}$, specifically that $x=y$,
+  so $\pair{x}{y} \in R_{eqi}$. Therefore $R_{eq} \subset R_{eqi}$.
 
-  Consider $x=1000$ and $y=0111$. Then $(x, y)\in R_{eqi}$ but $(x, y) \notin
-  R_{eq}$. Therefore $R_{eq} \neq R_{eqi}$.
+  Consider $x=1000$ and $y=0111$. Then $\pair{x}{y}\in R_{eqi}$ but
+  $\pair{x}{y} \notin R_{eq}$. Therefore $R_{eq} \neq R_{eqi}$.
 \end{proof}
 
 Since membership in $R_{par}$, $R_{bc}$, $R_{eq}$, $R_{eqi}$, and $R_a$ can be
@@ -399,27 +406,27 @@ word is a member.
 \end{theorem}
 \begin{proof}
   Since $R\in\PEq$, there exists a Turing machine, $M_R$, running in
-  deterministic polynomial time such that $\forall x,y\in\sigmastar, (x,y)\in
-  R\iff M_R((x,y))$ accepts.
+  deterministic polynomial time such that $\forall x,y\in\sigmastar,
+  \pair{x}{y}\in R\iff M_R(\pair{x}{y})$ accepts.
 
   Construct machine $M\in\FP$ on input $w\in\sigmastar$:\\
   \begin{algorithm}[H]
-    \eIf{$M_R((w, a))$ accepts}{
+    \eIf{$M_R(\pair{w}{a})$ accepts}{
       \Return{j}
     }{
       \Return{k}
     }
   \end{algorithm}
 
-  Suppose $(x,y)\in R$, and without loss of generality, $x,y\in[a]$. Then
-  $M(x)=j$ and $M(y)=j$, so $(M(x),M(y))=(j,j)\in S$.
+  Suppose $\pair{x}{y}\in R$, and without loss of generality, $x,y\in[a]$. Then
+  $M(x)=j$ and $M(y)=j$, so $\pair{M(x)}{M(y)}=\pair{j}{j}\in S$.
 
-  Suppose $(x,y)\notin R$, and without loss of generality, $x\in[a]$ and
+  Suppose $\pair{x}{y}\notin R$, and without loss of generality, $x\in[a]$ and
   $y\in[b]$. Then $M(x)=j$ and $M(y)=k$. Since equivalence classes form a
   partition, their intersection is empty, so $(j,k)\notin S$. Thus
-  $(M(x),M(y))\notin S$.
+  $\pair{M(x)}{M(y)}\notin S$.
 
-  Therefore $(x,y)\in R\iff (M(x),M(y))\in S$, and hence $R\kr S$.
+  Therefore $\pair{x}{y}\in R\iff \pair{M(x)}{M(y)}\in S$, and hence $R\kr S$.
 \end{proof}
 
 \begin{corollary}\label{cor:rpar_kr_s}
@@ -463,27 +470,27 @@ essentially what is happening when these reductions are composed.
   Notice that this is the machine which finds pairs of ones and writes zeros in
   their place, one pair at a time.
 
-  Suppose $(x, y)\in R_{par}$, so either $x$ and $y$ both have even parity or
-  $x$ and $y$ both have odd parity.
+  Suppose $\pair{x}{y}\in R_{par}$, so either $x$ and $y$ both have even parity
+  or $x$ and $y$ both have odd parity.
   
   If $x$ and $y$ both have even parity, $x$ contains $2k$ ones and $y$ contains
   $2l$ ones, for some $k,l\in\mathbb{N}$. $M(x)$ and $M(y)$ both output the
   string $0^{|x|}$, and since both $M(x)$ and $M(y)$ have a bitcount of zero,
-  $(M(x), M(y))\in R_{bc}$.
+  $\pair{M(x)}{M(y)}\in R_{bc}$.
 
   If $x$ and $y$ both have odd parity, $x$ contains $2k+1$ ones and $y$
   contains $2l+1$ ones, for some $k,l\in\mathbb{N}$. $M(x)$ and $M(y)$ both
   output a string containing a single one, so both $M(x)$ and $M(y)$ have a
-  bitcount of one, $(M(x), M(y))\in R_{bc}$.
+  bitcount of one, $\pair{M(x)}{M(y)}\in R_{bc}$.
 
-  Suppose $(x, y)\notin R_{par}$, so without loss of generality, $x$ has even
-  parity and $y$ has odd parity. Then $x$ contains $2k$ ones and $y$ contains
-  $2l+1$ ones, for some $k,l\in\mathbb{N}$. Thus $M(x)$ outputs the string
-  $0^{|x|}$ and $M(y)$ outputs the string containing a single one. Since the
-  bitcount of $M(x)$ is zero and the bitcount of $M(y)$ is one,
-  $(M(x), M(y))\notin R_{bc}$.
+  Suppose $\pair{x}{y}\notin R_{par}$, so without loss of generality, $x$ has
+  even parity and $y$ has odd parity. Then $x$ contains $2k$ ones and $y$
+  contains $2l+1$ ones, for some $k,l\in\mathbb{N}$. Thus $M(x)$ outputs the
+  string $0^{|x|}$ and $M(y)$ outputs the string containing a single one. Since
+  the bitcount of $M(x)$ is zero and the bitcount of $M(y)$ is one,
+  $\pair{M(x)}{M(y)}\notin R_{bc}$.
 
-  Therefore $(x, y)\in R_{par} \iff (M(x), M(y))\in R_{bc}$, so
+  Therefore $\pair{x}{y}\in R_{par} \iff \pair{M(x)}{M(y)}\in R_{bc}$, so
   $R_{par} \kr R_{bc}$.
 \end{proof}
 
@@ -501,16 +508,16 @@ essentially what is happening when these reductions are composed.
   \end{algorithm}
   Notice that if $w$ contains $k$ ones, this machine outputs the string $1^k$.
 
-  Suppose $(x, y)\in R_{bc}$, so $x$ and $y$ have the same number of ones, say
-  $k$. Thus $M(x)=M(y)=1^k$, so $(M(x), M(y))\in R_{eq}$.
+  Suppose $\pair{x}{y}\in R_{bc}$, so $x$ and $y$ have the same number of ones,
+  say $k$. Thus $M(x)=M(y)=1^k$, so $\pair{M(x)}{M(y)}\in R_{eq}$.
   
-  Suppose $(x, y)\notin R_{bc}$, so $x$ and $y$ have a different number of
+  Suppose $\pair{x}{y}\notin R_{bc}$, so $x$ and $y$ have a different number of
   ones. Suppose $x$ has $k$ ones and $y$ has $l$ ones, for some
   $k,l\in\mathbb{N}$, with $k\neq l$. Then $M(x)=1^{k}$ and $M(y)=1^{l}$, so
-  $M(x)\neq M(y)$. Thus $(M(x), M(y))\notin R_{eq}$.
+  $M(x)\neq M(y)$. Thus $\pair{M(x)}{M(y)}\notin R_{eq}$.
 
-  Therefore $(x, y)\in R_{bc} \iff (M(x), M(y))\in R_{eq}$, so $R_{bc}\kr
-  R_{eq}$.
+  Therefore $\pair{x}{y}\in R_{bc} \iff \pair{M(x)}{M(y)}\in R_{eq}$, so
+  $R_{bc}\kr R_{eq}$.
 \end{proof}
 
 The equivalence relations $R_{eqi}$, which is a generalization of $R_{eq}$, and
@@ -528,8 +535,8 @@ $R_a$, which is a generalization of $R_{eqi}$, also reduce to equality.
     }
   \end{algorithm}
   
-  Suppose $(x,y)\in R_{eqi}$, so either $x=y$ or $x=\bar{y}$. In the case that
-  $x=y$, $M(x)$ and $M(y)$ produce the same output. In the case that
+  Suppose $\pair{x}{y}\in R_{eqi}$, so either $x=y$ or $x=\bar{y}$. In the case
+  that $x=y$, $M(x)$ and $M(y)$ produce the same output. In the case that
   $x=\bar{y}$, then either $x_1=1$ and $y_1=0$ or $x_1=0$ and $y_1=1$. Consider
   without loss of generality the case that $x_1=1$ and $y_1=0$. Then $M(x)$
   outputs $\bar{x}$ and $M(y)$ outputs $y$. Now $\bar{x}=\bar{\bar{y}}=y$, so
