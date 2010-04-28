@@ -540,26 +540,26 @@ $R_a$, which is a generalization of $R_{eqi}$, also reduce to equality.
   $x=\bar{y}$, then either $x_1=1$ and $y_1=0$ or $x_1=0$ and $y_1=1$. Consider
   without loss of generality the case that $x_1=1$ and $y_1=0$. Then $M(x)$
   outputs $\bar{x}$ and $M(y)$ outputs $y$. Now $\bar{x}=\bar{\bar{y}}=y$, so
-  $M(x)=M(y)$. Therefore $(M(x),M(y))\in R_{eq}$.
+  $M(x)=M(y)$. Therefore $\pair{M(x)}{M(y)}\in R_{eq}$.
 
-  Suppose $(x,y)\notin R_{eqi}$, so $x\neq y$ and $x\neq\bar{y}$. 
+  Suppose $\pair{x}{y}\notin R_{eqi}$, so $x\neq y$ and $x\neq\bar{y}$. 
 
   In the case that $x_1=0$ and $y_1=0$, then $M(x)=x$ and $M(y)=y$. Since
-  $x\neq y$, then $M(x)\neq M(y)$, so $(M(x),M(y))\notin R_{eq}$.
+  $x\neq y$, then $M(x)\neq M(y)$, so $\pair{M(x)}{M(y)}\notin R_{eq}$.
 
   In the case that $x_1=0$ and $y_1=1$, then $M(x)=x$ and $M(y)=\bar{y}$. Since
-  $x\neq\bar{y}$, then $M(x)\neq M(y)$, so $(M(x),M(y))\notin R_{eq}$.
+  $x\neq\bar{y}$, then $M(x)\neq M(y)$, so $\pair{M(x)}{M(y)}\notin R_{eq}$.
 
   In the case that $x_1=1$ and $y_1=0$, then $M(x)=\bar{x}$ and $M(y)=y$. Since
   $x\neq\bar{y}$, then $\bar{x}\neq \bar{\bar{y}}=y$, so $M(x)\neq M(y)$, and
-  $(M(x),M(y))\notin R_{eq}$. 
+  $\pair{M(x)}{M(y)}\notin R_{eq}$. 
 
   In the case that $x_1=1$ and $y_1=1$, then $M(x)=\bar{x}$ and
   $M(y)=\bar{y}$. Since $x\neq y$, then $\bar{x}\neq\bar{y}$, so $M(x)\neq
-  M(y)$, and $(M(x),M(y))\notin R_{eq}$.
+  M(y)$, and $\pair{M(x)}{M(y)}\notin R_{eq}$.
 
-  Therefore $(x,y)\in R_{eqi}\iff (M(x), M(y))\in R_{eq}$, so $R_{eqi}\kr
-  R_{eq}$.
+  Therefore $\pair{x}{y}\in R_{eqi}\iff \pair{M(x)}{M(y)}\in R_{eq}$, so
+  $R_{eqi}\kr R_{eq}$.
 \end{proof}
 
 \begin{theorem}Let $a\in\sigmastar$. Then $R_a\kr R_{eq}$.\end{theorem}
@@ -581,31 +581,32 @@ $R_a$, which is a generalization of $R_{eqi}$, also reduce to equality.
   determining equality, the second problem is the problem of determining either
   equality or bitwise complement.
 
-  Suppose $(x,y)\in R_a$, so either $x=y$ or $x\oplus y=a$. In the case that
-  $x=y$, then $M(x)$ and $M(y)$ output the same string, so $M(x)=M(y)$, and
-  hence $(M(x),M(y))\in R_{eq}$. Now consider the case in which $x\oplus y=a$,
-  which implies $x\oplus a=y$ and $y\oplus a=x$. Then $M(x)$ and $M(y)$ will
-  first rearrange the bits of $x$ and $y$, respectively, by stable sorting the
-  bits of $a$. For all bits of $a$ which are zero, the corresponding bits of
-  $x$ and $y$ are equal, by hypothesis. For all bits of $a$ which are one, the
-  corresponding bits of $x$ and $y$ are complements of one another. Let $a_i$
-  be the leftmost bit of $a$ which is one. In the case that $x_i=1$ and
-  $y_i=0$, then the algorithm from \autoref{thm:reqi_req} will flip all the
-  bits of $x$ corresponding to bits of $a$ which are one. Since $y$ and $x$
-  were complements at these bits only, now $M(x)=M(y)$, so $(M(x),M(y))\in
-  R_{eq}$. The argument for the case that $x_i=0$ and $y_i=1$ is symmetric.
+  Suppose $\pair{x}{y}\in R_a$, so either $x=y$ or $x\oplus y=a$. In the case
+  that $x=y$, then $M(x)$ and $M(y)$ output the same string, so $M(x)=M(y)$,
+  and hence $\pair{M(x)}{M(y)}\in R_{eq}$. Now consider the case in which
+  $x\oplus y=a$, which implies $x\oplus a=y$ and $y\oplus a=x$. Then $M(x)$ and
+  $M(y)$ will first rearrange the bits of $x$ and $y$, respectively, by stable
+  sorting the bits of $a$. For all bits of $a$ which are zero, the
+  corresponding bits of $x$ and $y$ are equal, by hypothesis. For all bits of
+  $a$ which are one, the corresponding bits of $x$ and $y$ are complements of
+  one another. Let $a_i$ be the leftmost bit of $a$ which is one. In the case
+  that $x_i=1$ and $y_i=0$, then the algorithm from \autoref{thm:reqi_req} will
+  flip all the bits of $x$ corresponding to bits of $a$ which are one. Since
+  $y$ and $x$ were complements at these bits only, now $M(x)=M(y)$, so
+  $\pair{M(x)}{M(y)}\in R_{eq}$. The argument for the case that $x_i=0$ and
+  $y_i=1$ is symmetric.
 
-  Suppose $(x,y)\notin R_a$, so $x\neq y$ and $x\oplus y\neq a$. So $\exists
-  i,j\in\{1,2,\ldots,|x|\}: x_i\neq y_i$ and $x_j\oplus y_j\neq a_j$. Now
-  $M(x)$ and $M(y)$ will first rearrange the bits of $x$ and $y$, respectively,
-  by stable sorting the bits of $a$ in step 2. Call these intermediate strings
-  $x'$, $y'$ and $a'$, and the corresponding permutation of indices $i$ and $j$
-  to be $i'$ and $j'$, respectively. Note that the value of $a'_{j'}$
-  completely determines whether $(M(x),M(y))\in R_{eq}$.
+  Suppose $\pair{x}{y}\notin R_a$, so $x\neq y$ and $x\oplus y\neq a$. So
+  $\exists i,j\in\{1,2,\ldots,|x|\}: x_i\neq y_i$ and $x_j\oplus y_j\neq
+  a_j$. Now $M(x)$ and $M(y)$ will first rearrange the bits of $x$ and $y$,
+  respectively, by stable sorting the bits of $a$ in step 2. Call these
+  intermediate strings $x'$, $y'$ and $a'$, and the corresponding permutation
+  of indices $i$ and $j$ to be $i'$ and $j'$, respectively. Note that the value
+  of $a'_{j'}$ completely determines whether $\pair{M(x)}{M(y)}\in R_{eq}$.
 
   In the case that $a'_{j'}=0$ then $x'_{j'}\oplus y'_{j'}\neq a'_{j'}\implies
   x'_{j'}\oplus y'_{j'}\neq 0\implies x'_{j'}\neq y'_{j'}$ and hence
-  $(M(x),M(y))\notin R_{eq}$.
+  $\pair{M(x)}{M(y)}\notin R_{eq}$.
 
   Consider the case in which $a'_{j'}=1$. Let $k$ be the index of the leftmost
   one bit in $a$, and the index of its image after the stable sorting in step 2
@@ -615,10 +616,12 @@ $R_a$, which is a generalization of $R_{eqi}$, also reduce to equality.
   string. Since $y'_{k'}=0$, step 3 will leave $y'$ unchanged. Since
   $x'_{j'}\oplus y'_{j'}\neq a'_{j'}$ by assumption, then $x'_{j'}\oplus
   y'_{j'}\neq 1\implies x'_{j'}\oplus y'_{j'}=0\implies x'_{j'}=y'_{j'}\implies
-  \bar{x'_{j'}}\neq y'_{j'}$. Hence $M(x)\neq M(y)$, so $(M(x),M(y))\notin
-  R_{eq}$. The argument for the case that $x'_{k'}=0$ is symmetric.
+  \bar{x'_{j'}}\neq y'_{j'}$. Hence $M(x)\neq M(y)$, so
+  $\pair{M(x)}{M(y)}\notin R_{eq}$. The argument for the case that $x'_{k'}=0$
+  is symmetric.
 
-  Therefore $(x,y)\in R_a\iff(M(x),M(y))\in R_{eq}$, so $R_a\kr R_{eq}$.
+  Therefore $\pair{x}{y}\in R_a\iff\pair{M(x)}{M(y)}\in R_{eq}$, so $R_a\kr
+  R_{eq}$.
 \end{proof}
 
 It appears that all of these ``bitwise'' equivalence problems reduce under
@@ -636,16 +639,17 @@ classes.
 \end{theorem}
 \begin{proof}
   Assume with the intention of producing a contradiction that $R\kr S$. Then
-  $\exists f\in\FP:\forall x,y\in\sigmastar, (x,y)\in R\iff (f(x),f(y))\in
-  S$.
+  $\exists f\in\FP:\forall x,y\in\sigmastar, \pair{x}{y}\in R\iff
+  \pair{f(x)}{f(y)}\in S$.
 
   Consider the partition of $R$ induced by its equivalence classes,
   $R=\bigcup{[r_i]}$, where each $r_i$ is a representative of an equivalence
   class in $R$. Since each $r_i$ is in exactly one equivalence class, $\forall
-  i,j$, with $i\neq j$, $(r_i, r_j)\notin R$. Specifically, $\forall i,j \leq
-  n+1$, $(r_i, r_j)$. Now $\forall i,j \leq n+1$, $(f(x),f(y))\notin S$. Thus
-  $S$ must have at least $n+1$ equivalence classes. This is a contradiction
-  with the hypothesis that $S$ has $n$ equivalence classes.
+  i,j$, with $i\neq j$, $\pair{r_i}{r_j}\notin R$. Specifically, $\forall i,j
+  \leq n+1$, $\pair{r_i}{r_j}$. Now $\forall i,j \leq n+1$,
+  $\pair{f(x)}{f(y)}\notin S$. Thus $S$ must have at least $n+1$ equivalence
+  classes. This is a contradiction with the hypothesis that $S$ has $n$
+  equivalence classes.
 
   Therefore $R\nkr S$.
 \end{proof}
@@ -673,33 +677,33 @@ representatives of equivalence classes in both equivalence relations.
 \end{theorem}
 \begin{proof}
   Since $R\in\PEq$, $\exists M_R$, a deterministic Turing machine running in
-  polynomial time, such that $(x,y)\in R\iff M_R((x,y))$ accepts. Construct
-  $M\in\FP$ on input $w\in\sigmastar$:\\
+  polynomial time, such that $\pair{x}{y}\in R\iff M_R(\pair{x}{y})$
+  accepts. Construct $M\in\FP$ on input $w\in\sigmastar$:\\
   \begin{algorithm}[H]
     \For{$r_i\in REP(R)$}{
-      \If{$M_R((w,r_i))$ accepts}{
+      \If{$M_R(\pair{w}{r_i})$ accepts}{
         \Return{$f(r_i)$}
       }
     }
   \end{algorithm}
   Notice that each $w\in\sigmastar$ is in exactly one equivalence class in $R$,
-  because the equivalence classes partition $\sigmastar$, so $M_R((w,r_i))$
-  accepts exactly once when $(w,r_i)\in R$.
+  because the equivalence classes partition $\sigmastar$, so
+  $M_R(\pair{w}{r_i})$ accepts exactly once when $\pair{w}{r_i}\in R$.
 
-  Suppose $(x,y)\in R$, so $(x, r_i)\in R$ and $(y,r_i)\in R$ for some $r_i\in
-  REP(R)$. Then $M(x)$ outputs $f(r_i)$ and $M(y)$ outputs $f(r_i)$. Since
-  $(f(r_i), f(r_i))\in S$, then $(M(x), M(y))\in S$.
+  Suppose $\pair{x}{y}\in R$, so $\pair{x}{r_i}\in R$ and $\pair{y}{r_i}\in R$
+  for some $r_i\in REP(R)$. Then $M(x)$ outputs $f(r_i)$ and $M(y)$ outputs
+  $f(r_i)$. Since $\pair{f(r_i)}{f(r_i)}\in S$, then $\pair{M(x)}{M(y)}\in S$.
 
-  Suppose $(x,y)\in R$. So $\exists r_i, r_j\in REP(R)$, with $r_i\neq r_j$,
-  such that $(x,r_i)\in R$ and $(y, r_j)\in R$. Then $M(x)$ outputs $f(r_i)$
-  and $M(y)$ outputs $f(r_j)$. Since $f$ is injective, $r_i\neq r_j\implies
-  f(r_i)\neq f(r_j)$. Since $f(r_i)$ and $f(r_j)$ are distinct elements in
-  $REP(S)$, they are representatives of two distinct equivalence classes. Since
-  every element of $S$ is in exactly one equivalence class, and since
-  $[f(r_i)]\neq[f(r_j)]$, it follows that $(f(r_i), f(r_j))=(M(x), M(y))\notin
-  S$.
+  Suppose $\pair{x}{y}\in R$. So $\exists r_i, r_j\in REP(R)$, with $r_i\neq
+  r_j$, such that $\pair{x}{r_i}\in R$ and $\pair{y}{r_j}\in R$. Then $M(x)$
+  outputs $f(r_i)$ and $M(y)$ outputs $f(r_j)$. Since $f$ is injective,
+  $r_i\neq r_j\implies f(r_i)\neq f(r_j)$. Since $f(r_i)$ and $f(r_j)$ are
+  distinct elements in $REP(S)$, they are representatives of two distinct
+  equivalence classes. Since every element of $S$ is in exactly one equivalence
+  class, and since $[f(r_i)]\neq[f(r_j)]$, it follows that
+  $\pair{f(r_i)}{f(r_j)}=\pair{M(x)}{M(y)}\notin S$.
 
-  Therefore $(x,y)\in R\iff (M(x), M(y))\in S$, so $R\kr S$.
+  Therefore $\pair{x}{y}\in R\iff \pair{M(x)}{M(y)}\in S$, so $R\kr S$.
 \end{proof}
 
 \begin{theorem}
@@ -749,22 +753,24 @@ representatives of equivalence classes in both equivalence relations.
 %% TODO do the tree isomorphism algorithms reduce to equality?
 \subsection{Complete invariants}
 \begin{definition}
-  Let $R$ be an equivalence relation, and let $f\in\FP$. Then $f$ is a
-  \defn{complete invariant} for $R$ if $(x,y)\in R$ if and only if $f(x)=f(y)$.
+  Let $R$ be an equivalence relation on $A$, and let $f\colon A\to A$. Then $f$
+  is a \defn{complete invariant} for $R$ if $(x,y)\in R$ if and only if
+  $f(x)=f(y)$.
 \end{definition}
 \begin{definition}
-  $\FPKer=\{L|L$ is an equivalence relation with a complete invariant in
-  $\FP\}$
+  $\FPKer=\{L|L$ is an equivalence relation on $\sigmastar$ with a complete
+  invariant in $\FP\}$
 \end{definition}
 
 \begin{lemma}\label{lem:ker_peq}
   $\FPKer\subseteq\PEq$
 \end{lemma}
 \begin{proof}
-  Let $R\in\FPKer$. Then by definition $\exists f\in\FP: (x,y)\in R\iff
-  f(x)=f(y)$. To decide membership of $(x,y)\in\R$, use $f$ to decide whether
-  $f(x)=f(y)$. This is true if and only if $(x,y)\in R$. Therefore membership
-  in $R$ can be decided in polynomial time, hence $\FPKer\subseteq\PEq$.
+  Let $R\in\FPKer$. Then by definition $\exists f\in\FP: \pair{x}{y}\in R\iff
+  f(x)=f(y)$. To decide membership of $\pair{x}{y}\in\R$, use $f$ to decide
+  whether $f(x)=f(y)$. This is true if and only if $\pair{x}{y}\in
+  R$. Therefore membership in $R$ can be decided in polynomial time, hence
+  $\FPKer\subseteq\PEq$.
 \end{proof}
 
 For the sake of clarity, we provide a proof of the following claim made by
@@ -775,14 +781,14 @@ Fortnow and Grochow:
 \end{theorem}
 \begin{proof}
   For the forward direction, suppose $\FPKer=\PEq$. Let $S\in\PEq=\FPKer$, so
-  $\exists f\in\FP: (x,y)\in S\iff f(x)=f(y)\iff (f(x),f(y))\in R_{eq}\iff S\kr
-  R_{eq}$. Thus $R_{eq}$ is \PEq-complete.
+  $\exists f\in\FP: \pair{x}{y}\in S\iff f(x)=f(y)\iff \pair{f(x)}{f(y)}\in
+  R_{eq}\iff S\kr R_{eq}$. Thus $R_{eq}$ is \PEq-complete.
 
   Conversely, suppose $R_{eq}$ is \PEq-complete. Then $\forall S\in\PEq$,
-  $\exists f\in\FP:(x,y)\in S\iff(f(x),f(y))\in R_{eq}\iff f(x)=f(y)$. Thus $f$
-  is a complete invariant for $S$ computable in polynomial time. Thus
-  $S\in\FPKer$, and hence $\PEq\subseteq\FPKer$. By \autoref{lem:ker_peq},
-  $\FPKer\subseteq\PEq$, therefore $\PEq=\FPKer$.
+  $\exists f\in\FP:\pair{x}{y}\in S\iff\pair{f(x)}{f(y)}\in R_{eq}\iff
+  f(x)=f(y)$. Thus $f$ is a complete invariant for $S$ computable in polynomial
+  time. Thus $S\in\FPKer$, and hence $\PEq\subseteq\FPKer$. By
+  \autoref{lem:ker_peq}, $\FPKer\subseteq\PEq$, therefore $\PEq=\FPKer$.
 \end{proof}
 
 %% TODO what happens if UP is a subset of BQP?
@@ -843,8 +849,8 @@ the graph isomorphism problem.
   E_1\iff \{\phi(u), \phi(v)\}\in E_2$ and $\phi$ is a bijection.
 \end{definition}
 \begin{definition}
-  $GI=\{(G_1, G_2)|G_1$ and $G_2$ are undirected graphs and $G_1$ is isomorphic
-  to $G_2\}$
+  $GI=\{\pair{G_1}{G_2}|G_1$ and $G_2$ are undirected graphs and $G_1$ is
+  isomorphic to $G_2\}$
 \end{definition}
 
 \subsection{Kernel reductions to graph isomorphism}
@@ -870,8 +876,8 @@ intuition that a kernel reduction makes sense, practically.
     \Return $G_w=(V_w, E_w)$
   \end{algorithm}
 
-  Suppose $(x, y)\in R_{par}$, so either $x$ and $y$ both have even parity or
-  $x$ and $y$ both have odd parity. 
+  Suppose $\pair{x}{y}\in R_{par}$, so either $x$ and $y$ both have even parity
+  or $x$ and $y$ both have odd parity.
 
   If $x$ and $y$ both have even parity, $x$ contains $2k$ ones and $y$ contains
   $2l$ ones, for some $k,l\in\mathbb{N}$. Since $2k$ is even, machine $M$ on
