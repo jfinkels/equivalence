@@ -90,6 +90,7 @@
 %\newcommand{\tequiv}{\equiv^{p}_T} % is equivalent under Turing reductions
 \newcommand{\defn}[1]{\emph{#1}} % emphasize words which are being defined
 \newcommand{\pair}[2]{\langle#1,#2\rangle} % pairing function
+\newcommand{\triple}[3]{\langle#1,#2,#3\rangle} % generalization of pairing fn.
 
 % create the creative commons license
 \newcommand{\license}{\begin{tabular}[h]{r l}
@@ -147,7 +148,13 @@ to define sets of pairs of binary strings we need to make use of a
 \sigmastar\times\sigmastar\to\sigmastar$. For example, consider the pairing
 function defined as follows: $\pair{x}{y}$ duplicates each bit in $x$ and $y$
 to produce $\hat{x}$ and $\hat{y}$, respectively, then outputs
-$\hat{x}01\hat{y}$. For example, $\pair{0110}{1100}=001111000111110000$.
+$\hat{x}01\hat{y}$. For example, the pair $(0110, 1100)$ can be encoded as
+$\pair{0110}{1100}=001111000111110000$.
+
+For tuples of arbitrary fixed length we define the encoding inductively using
+the pairing function. For example, the triple $(x,y,z)$ can be encoded as
+$\triple{x}{y}{z}=\pair{\pair{x}{y}}{z}$, and so on for tuples with a greater
+number of elements.
 
 For a more thorough treatment of languages, alphabets, encodings, pairing
 functions, etc., see \cite{bdg95}.
@@ -616,7 +623,7 @@ $R_a$, which is a generalization of $R_{eqi}$, also reduce to equality.
   string. Since $y'_{k'}=0$, step 3 will leave $y'$ unchanged. Since
   $x'_{j'}\oplus y'_{j'}\neq a'_{j'}$ by assumption, then $x'_{j'}\oplus
   y'_{j'}\neq 1\implies x'_{j'}\oplus y'_{j'}=0\implies x'_{j'}=y'_{j'}\implies
-  \bar{x'_{j'}}\neq y'_{j'}$. Hence $M(x)\neq M(y)$, so
+  \overline{x'_{j'}}\neq y'_{j'}$. Hence $M(x)\neq M(y)$, so
   $\pair{M(x)}{M(y)}\notin R_{eq}$. The argument for the case that $x'_{k'}=0$
   is symmetric.
 
@@ -1030,13 +1037,14 @@ undirected graph isomorphism problem, as in the following theorems.
   vertex $v'_i$ and directed edge $(v_i, v'_i)$ adjacent to the spine whenever
   $w_i$ is a one, $\forall i\in\{1,2,\ldots,|w|\}$.
 
-  Suppose $(x, y)\in R_{eq}$, so $x=y$. Then $M(x)$ and $M(y)$ produce the same
-  graph, so $G_x$ is isomorphic to $G_y$ by the identity mapping. Therefore
-  $(M(x), M(y))\in DirGI$.
+  Suppose $\pair{x}{y}\in R_{eq}$, so $x=y$. Then $M(x)$ and $M(y)$ produce the
+  same graph, so $G_x$ is isomorphic to $G_y$ by the identity
+  mapping. Therefore $\pair{M(x)}{M(y)}\in DirGI$.
   
   %% TODO is this sufficient proof?
-  Suppose $(x, y)\notin R_{eq}$, so $x\neq y$. Suppose $|x|=|y|=n$. Run $M$ on
-  input $x$ to yield $G_x=(V_x, E_x)$, and run $M$ on input $y$ to yield
+
+  Suppose $\pair{x}{y}\notin R_{eq}$, so $x\neq y$. Suppose $|x|=|y|=n$. Run
+  $M$ on input $x$ to yield $G_x=(V_x, E_x)$, and run $M$ on input $y$ to yield
   $G_y=(V_y, E_y)$. Since the graphs are directed, the ``spine'' created by the
   vertices $\{v_1, v_2, \ldots, v_n\}$ and the edges $\{(v_1, v_2), (v_2, v_3),
   \ldots, (v_{n-1}, v_n)\}$ must correspond in both $G_x$ and $G_y$. Let $i$ be
@@ -1049,11 +1057,11 @@ undirected graph isomorphism problem, as in the following theorems.
   ``spine'' of $V_y$, and specifically $v_i$ in $V_x$ must map to $v_i$ in
   $V_y$, $(v_i, v'_i)\in E_x$ implies $(v_i, v'_i)\in E_y$. But $(v_i,
   v'_i)\notin E_y$ because $y_i=0$. This is a contradiction. Therefore no such
-  mapping exists, so $G_x$ is not isomorphic to $G_y$, and hence $(M(x),
-  M(y))\notin DirGI$.
+  mapping exists, so $G_x$ is not isomorphic to $G_y$, and hence
+  $\pair{M(x)}{M(y)}\notin DirGI$.
 
-  Therefore $(x, y)\in R_{eq} \iff (M(x), M(y))\in DirGI$, so $R_{eq}\kr
-  DirGI$.
+  Therefore $\pair{x}{y}\in R_{eq} \iff \pair{M(x)}{M(y)}\in DirGI$, so
+  $R_{eq}\kr DirGI$.
 \end{proof}
 
 \begin{corollary}$R_{eq}\kr GI$\end{corollary}
@@ -1080,10 +1088,10 @@ undirected graph isomorphism problem, as in the following theorems.
   \autoref{thm:req_kr_dirgi}, creates a ``spine'' representing each bit of word
   $w$.
 
-  Suppose $(x, y)\in R_{eqi}$, so either $x=y$ or $x=\bar{y}$.
+  Suppose $\pair{x}{y}\in R_{eqi}$, so either $x=y$ or $x=\bar{y}$.
 
   In the case that $x=y$, $M(x)$ and $M(y)$ output exactly the same graph, so
-  $G_x$ is isomorphic to $G_y$, and hence $(M(x), M(y))\in DirGI$.
+  $G_x$ is isomorphic to $G_y$, and hence $\pair{M(x)}{M(y)}\in DirGI$.
 
   In the case that $x=\bar{y}$, define $\phi\colon V_x\to V_y$ by
   \begin{displaymath}
@@ -1103,10 +1111,10 @@ undirected graph isomorphism problem, as in the following theorems.
   (v_i, v_{zero})\in E_y$. The rest of the edges in $E_x$ map directly to the
   corresponding edges in $E_y$ by $(v_{i-1}, v_i) \mapsto (\phi(v_{i-1}),
   \phi(v_i))=(v_{i-1}, v_i)$, $\forall i\in\{2,3,\ldots,|x|\}$. Therefore,
-  $\phi$ describes an isomorphism between $G_x$ and $G_y$, so $(M(x), M(y))\in
-  DirGI$.
+  $\phi$ describes an isomorphism between $G_x$ and $G_y$, so
+  $\pair{M(x)}{M(y)}\in DirGI$.
 
-  Suppose $(x, y)\notin R_{eqi}$, so $x\neq y$ and $x\neq\bar{y}$. Thus
+  Suppose $\pair{x}{y}\notin R_{eqi}$, so $x\neq y$ and $x\neq\bar{y}$. Thus
   $\exists i,j\in\{1,2,\ldots,|x|\}, i\neq j,$ such that $x_i=y_i\land x_j\neq
   y_j$. Suppose without loss of generality that $x_i=y_i=0$ and $0=x_j\neq
   y_j=1$. Now $x_i=y_i=0$ implies $(v_i, v_{zero})\in E_x$ and $(v_i,
@@ -1121,11 +1129,11 @@ undirected graph isomorphism problem, as in the following theorems.
   $(v_j, v_{zero})\in E_x$, $(\phi(v_j), \phi(v_{zero}))=(v_j, v_{zero})\in
   E_y$. But the only edge in $E_y$ with source vertex $v_j$ is, by
   construction, $(v_j, v_{one})$. This is a contradiction. Hence no such
-  bijection exists, so $G_x$ is not isomorphic to $G_y$, and $(M(x),
-  M(y))\notin DirGI$.
+  bijection exists, so $G_x$ is not isomorphic to $G_y$, and
+  $\pair{M(x)}{M(y)}\notin DirGI$.
 
-  Therefore $(x, y)\in R_{eqi} \iff (M(x), M(y))\in DirGI$, so $R_{eqi}\kr
-  DirGI$.
+  Therefore $\pair{x}{y}\in R_{eqi} \iff \pair{M(x)}{M(y)}\in DirGI$, so
+  $R_{eqi}\kr DirGI$.
 \end{proof}
 
 \begin{corollary}$R_{eqi}\kr GI$\end{corollary}
@@ -1162,10 +1170,10 @@ undirected graph isomorphism problem, as in the following theorems.
   the disjoint union of two distinct graphs, one representing the bits of $w$
   and the other representing the bits of $w\oplus a$.
   
-  Suppose $(x,y)\in R_a$, so either $x=y$ or $x\oplus y=a$.
+  Suppose $\pair{x}{y}\in R_a$, so either $x=y$ or $x\oplus y=a$.
   
   In the case that $x=y$, $M(x)$ and $M(y)$ output exactly the same graph, so
-  $G_x$ is isomorphic to $G_y$, and hence $(M(x), M(y))\in DirGI$.
+  $G_x$ is isomorphic to $G_y$, and hence $\pair{M(x)}{M(y)}\in DirGI$.
   
   Consider the case in which $x\neq y$, but $x\oplus y=a$. Define $\phi\colon
   V_x\to V_y$ by
@@ -1207,20 +1215,20 @@ undirected graph isomorphism problem, as in the following theorems.
   containing vertex $u_i\in V_y$ and directed edge $(v_i, u_i)\in E_y$. Now
   $\phi(u'_i)=u_i$ is well-defined, and $(v'_i, u'_i)\in E_x\iff (\phi(v'_i),
   \phi(u'_i))=(v_i, u_i)\in E_y$. Therefore $\phi$ describes an isomorphism
-  between graphs $G_x$ and $G_y$, so $(M(x),M(y))\in DirGI$.
+  between graphs $G_x$ and $G_y$, so $\pair{M(x)}{M(y)}\in DirGI$.
 
-  Suppose $(x, y)\notin R_a$, so $x\neq y$ and $x\oplus y\neq a$. Thus $\exists
-  i,j\in\{1, 2, \ldots, n\}: x_i\neq y_i$ and $x_j\oplus y_j\neq a_j$ (with the
-  possibility that $i=j$). Because $M(x)$ and $M(y)$ both produce graphs which
-  are the disjoint union of two distinct subgraphs, $(U_x, F_x)$ and $(U'_x,
-  F'_x)$ in $G_x$ and $(U_y, F_y)$ and $(U'_y, F'_y)$ in $G_y$, if the graphs
-  $G_x$ and $G_y$ were isomorphic, the bijection between them must either map
-  vertices of $U_x$ to $U_y$ and $U'_x$ to $U'_y$ or map vertices of $U_x$ to
-  $U'_y$ and $U'_x$ to $U_y$. The only possible bijections must map either
-  $v_i\in U_x$ to $v_i\in U_y$ and $v'_i\in U'_x$ to $v'_i\in U'_y$ or $v_i\in
-  U_x$ to $v'_i\in U'_y$ and $v'_i\in U'_x$ and $v_i\in U_y$, $\forall i\in\{1,
-  2, \ldots, n\}$, because of the chain of directed edges between each vertex
-  of adjacent index.
+  Suppose $\pair{x}{y}\notin R_a$, so $x\neq y$ and $x\oplus y\neq a$. Thus
+  $\exists i,j\in\{1, 2, \ldots, n\}: x_i\neq y_i$ and $x_j\oplus y_j\neq a_j$
+  (with the possibility that $i=j$). Because $M(x)$ and $M(y)$ both produce
+  graphs which are the disjoint union of two distinct subgraphs, $(U_x, F_x)$
+  and $(U'_x, F'_x)$ in $G_x$ and $(U_y, F_y)$ and $(U'_y, F'_y)$ in $G_y$, if
+  the graphs $G_x$ and $G_y$ were isomorphic, the bijection between them must
+  either map vertices of $U_x$ to $U_y$ and $U'_x$ to $U'_y$ or map vertices of
+  $U_x$ to $U'_y$ and $U'_x$ to $U_y$. The only possible bijections must map
+  either $v_i\in U_x$ to $v_i\in U_y$ and $v'_i\in U'_x$ to $v'_i\in U'_y$ or
+  $v_i\in U_x$ to $v'_i\in U'_y$ and $v'_i\in U'_x$ and $v_i\in U_y$, $\forall
+  i\in\{1, 2, \ldots, n\}$, because of the chain of directed edges between each
+  vertex of adjacent index.
 
   Assume without loss of generality that $x_i=1$ and $y_i=0$, which implies
   $(v_i, u_i)\in F_x$ but $(v_i, u_i)\notin F_y$. Now $\phi$ cannot map $v_i\in
@@ -1239,9 +1247,10 @@ undirected graph isomorphism problem, as in the following theorems.
   $y_j=0$, and $a_j=0$, then $y_j\oplus a_j=0$, so $(v_j, u_j)\in F_x$ but
   $(v'_j, u'_j)\notin F'_y$. This is a contradiction. Therefore no such
   bijection $\phi$ exists. Therefore $G_x$ is not isomorphic to $G_y$, thus
-  $(M(x), M(y))\notin DirGI$.
+  $\pair{M(x)}{M(y)}\notin DirGI$.
 
-  Therefore $(x, y)\in R_a\iff (M(x), M(y))\in DirGI$, so $R_a\kr DirGI$.
+  Therefore $\pair{x}{y}\in R_a\iff \pair{M(x)}{M(y)}\in DirGI$, so $R_a\kr
+  DirGI$.
 \end{proof}
 
 \begin{corollary}$R_a\kr GI$\end{corollary}
@@ -1270,52 +1279,58 @@ clique.
 %% TODO what about letting k be fixed first, then using ((G_1, k),(G_2,k))
 \begin{definition}
 %  \hangindent=1.2in 
-  $R_{KC}=\{((G_1, k_1), (G_2, k_2))| k_1=k_2$ and $(G_1\cong G_2$ or $(G_1$
-  has a clique of size $k_1$ and $G_2$ has a clique of size $k_2))\}$
+  $R_{KC}=\{\pair{\pair{G_1}{k_1}}{\pair{G_2}{k_2}}| k_1=k_2$ and $(G_1\cong
+  G_2$ or $(G_1$ has a clique of size $k_1$ and $G_2$ has a clique of size
+  $k_2))\}$
 \end{definition}
 
-\begin{theorem}$R_{KC}$ is an equivalence relation.\end{theorem}
+\begin{theorem}
+  $R_{KC}$ is an equivalence relation on $\sigmastar$.
+\end{theorem}
 \begin{proof}To show that $R_{KC}$ is an equivalence relation, we must show
   that it is reflexive, symmetric, and transitive.
 
-  Since $G$ is isomorphic to $G$ for all graphs $G$, $((G,k),(G,k))\in R_{KC}$,
-  for all $k\in\mathbb{N}$, so $R_{KC}$ is reflexive.
+  Since $G$ is isomorphic to $G$ for all graphs $G$,
+  $\pair{\pair{G}{k}}{\pair{G}{k}}\in R_{KC}$, for all $k\in\mathbb{N}$, so
+  $R_{KC}$ is reflexive.
 
-  To show that $R_{KC}$ is symmetric, suppose $((G_1, k_1), (G_2, k_2))\in
-  R_{KC}$. In the case that $G_1$ is isomorphic to $G_2$, then $G_2$ is
-  isomorphic to $G_1$ because the isomorphism relation is symmetric, so
-  $((G_2,k_2),(G_1,k_1))\in R_{KC}$. In the case that $G_1$ has a clique of
-  size $k_1$ and $G_2$ has a clique of size $k_2$ and $k_1=k_2$, then
-  $((G_2,k_2),(G_1,k_1))\in R_{KC}$ because the logical conjunction operation
-  is commutative over propositions.
+  To show that $R_{KC}$ is symmetric, suppose
+  $\pair{\pair{G_1}{k_1}}{\pair{G_2}{k_2}}\in R_{KC}$. In the case that $G_1$
+  is isomorphic to $G_2$, then $G_2$ is isomorphic to $G_1$ because the
+  isomorphism relation is symmetric, so
+  $\pair{\pair{G_2}{k_2}}{\pair{G_1}{k_1}}\in R_{KC}$. In the case that $G_1$
+  has a clique of size $k_1$ and $G_2$ has a clique of size $k_2$ and
+  $k_1=k_2$, then $\pair{\pair{G_2}{k_2}}{\pair{G_1}{k_1}}\in R_{KC}$ because
+  the logical conjunction operation is commutative over propositions.
 
-  To show that $R_{KC}$ is transitive, suppose $((G_1, k_1), (G_2, k_2))\in
-  R_{KC}$ and $((G_2, k_2), (G_3, k_3))\in R_{KC}$. Since $k_1=k_2$ and
+  To show that $R_{KC}$ is transitive, suppose
+  $\pair{\pair{G_1}{k_1}}{\pair{G_2}{k_2}}\in R_{KC}$ and
+  $\pair{\pair{G_2}{k_2}}{\pair{G_3}{k_3}}\in R_{KC}$. Since $k_1=k_2$ and
   $k_2=k_3$, then $k_1=k_3$ by the transitivity of the equality relation. There
   are four possible cases for the remaining properties.
 
   In the case that $G_1$ is isomorphic to $G_2$ and $G_2$ is isomorphic to
-  $G_3$, then $G_1$ is isomorphic to $G_3$ so $((G_1, k_1), (G_3, k_3))\in
-  R_{KC}$.
+  $G_3$, then $G_1$ is isomorphic to $G_3$ so
+  $\pair{\pair{G_1}{k_1}}{\pair{G_3}{k_3}}\in R_{KC}$.
 
   In the case that $G_1$ is isomorphic to $G_2$, $G_2$ has a clique of size
   $k_2$, $G_3$ has a clique of size $k_3$, then $G_1$ has a clique of size
-  $k_2=k_1$, so $((G_1, k_1), (G_3, k_3))\in R_{KC}$.
+  $k_2=k_1$, so $\pair{\pair{G_1}{k_1}}{\pair{G_3}{k_3}}\in R_{KC}$.
 
   In the case that $G_1$ has a clique of size $k_1$, $G_2$ has a clique of size
   $k_2$, and $G_2$ is isomorphic to $G_3$, then $G_3$ has a clique
-  of size $k_2=k_3$, so $((G_1, k_1), (G_3, k_3))\in R_{KC}$.
+  of size $k_2=k_3$, so $\pair{\pair{G_1}{k_1}}{\pair{G_3}{k_3}}\in R_{KC}$.
 
   In the case that $G_1$ has a clique of size $k_1$, $G_2$ has a clique of size
-  $k_2$, and $G_3$ has a clique of size $k_3$, then $((G_1, k_1), (G_3,
-  k_3))\in R_{KC}$.
+  $k_2$, and $G_3$ has a clique of size $k_3$, then
+  $\pair{\pair{G_1}{k_1}}{\pair{G_3}{k_3}}\in R_{KC}$.
 
   Therefore $R_{KC}$ is reflexive, symmetric, and transitive, hence it is an
   equivalence relation.
 \end{proof}
 
 \begin{definition}
-  $CLIQUE=\{(G,k)|G$ has a clique of size $k\}$
+  $CLIQUE=\{\pair{G}{k}|G$ has a clique of size $k\}$
 \end{definition}
 
 \begin{lemma}$CLIQUE$ is \NP-complete.\end{lemma}
@@ -1327,24 +1342,25 @@ clique.
 \begin{lemma}\label{lem:rkc_np}$R_{KC}\in\NP$\end{lemma}
 \begin{proof}
   Since $GI\in\NP$, it has a deterministic polynomial time verifier, $M_1$,
-  which accepts on input $(G_1, G_2, c)$, where $c$ is the isomorphism from
-  vertices of $G_1$ to vertices of $G_2$.
+  which accepts on input $\triple{G_1}{G_2}{c}$, where $c$ is the isomorphism
+  from vertices of $G_1$ to vertices of $G_2$.
 
   Since $CLIQUE\in\NP$, it has a deterministic polynomial time verifier, $M_2$,
-  which accepts on input $(G, k, c)$, where $c$ is the set of vertices in $G$
-  which comprise a clique of size $k$.
+  which accepts on input $\triple{G}{k}{c}$, where $c$ is the set of vertices
+  in $G$ which comprise a clique of size $k$.
 
   To show that $R_{KC}\in\NP$, we construct a deterministic polynomial time
-  verifier $M$ for $R_{KC}$. On input $(((G_1, k_1), (G_2, k_2)), c)$:\\
+  verifier $M$ for $R_{KC}$. On input
+  $\triple{\pair{G_1}{k_1}}{\pair{G_2}{k_2}}{c}$:\\
   \begin{algorithm}[H]
     If $k_1\neq k_2$, \REJECT\;
     \If{$c$ \textnormal{is the encoding of a mapping}}{
-      Run $M_1$ on input $(G_1, G_2, c)$\;
+      Run $M_1$ on input $\triple{G_1}{G_2}{c}$\;
       If $M_1$ accepts, \ACCEPT; otherwise \REJECT\;
     }
-    \If{$c=(c_1, c_2)$ \textnormal{is the encoding of two cliques}}{
-      Run $M_2$ on input $(G_1, k_1, c_1)$\;
-      Run $M_2$ on input $(G_2, k_2, c_2)$\;
+    \If{$c=\pair{c_1}{c_2}$ \textnormal{is the encoding of two cliques}}{
+      Run $M_2$ on input $\triple{G_1}{k_1}{c_1}$\;
+      Run $M_2$ on input $\triple{G_2}{k_2}{c_2}$\;
       If $M_2$ accepts on both inputs, \ACCEPT; otherwise \REJECT\;
     }
   \end{algorithm}
@@ -1364,23 +1380,24 @@ clique.
   is \NP-hard. To do this, we construct a polynomial time many-one reduction
   from $CLIQUE$, which is \NP-complete, to $R_{KC}$.
 
-  Construct machine $M\in\FP$ on input $(G, k)$ which outputs $((G, k), (K_k,
-  k))$, where $K_k$ is the complete graph with $k$ vertices.
+  Construct machine $M\in\FP$ on input $\pair{G}{k}$ which outputs
+  $\pair{\pair{G}{k}}{\pair{K_k}{k}}$, where $K_k$ is the complete graph with
+  $k$ vertices.
 
-  Suppose $(G,k)\in CLIQUE$, so $G$ has a clique of size $k$. Then
-  $M((G,k))=((G,k), (K_k, k))\in R_{KC}$, because $G$ has a clique of size
-  $k$ by hypothesis and $K_k$ has a clique of size $k$ by construction,
-  specifically, the set of all vertices in $K_k$.
+  Suppose $\pair{G}{k}\in CLIQUE$, so $G$ has a clique of size $k$. Then
+  $M(\pair{G}{k})=\pair{\pair{G}{k}}{\pair{K_k}{k}}\in R_{KC}$, because $G$ has
+  a clique of size $k$ by hypothesis and $K_k$ has a clique of size $k$ by
+  construction, specifically, the set of all vertices in $K_k$.
   
-  Suppose $(G,k)\notin CLIQUE$, so $G$ does not have a clique of size $k$ and
-  $M((G,k))=((G,k), (K_k, k))$. If $G$ were isomorphic to $K_k$, then it would
-  have a clique of size $k$, specifically the set of all its vertices, but this
-  is a contradiction with the hypothesis so no such isomorphism
-  exists. Although $K_k$ certainly has a clique of size $k$, specifically the
-  set of all its vertices, $G$ does not have a clique of size $k$ by
-  hypothesis, so $((G, k), (K_k, k))\notin R_{KC}$.
+  Suppose $\pair{G}{k}\notin CLIQUE$, so $G$ does not have a clique of size $k$
+  and $M(\pair{G}{k})=\pair{\pair{G}{k}}{\pair{K_k}{k}}$. If $G$ were
+  isomorphic to $K_k$, then it would have a clique of size $k$, specifically
+  the set of all its vertices, but this is a contradiction with the hypothesis
+  so no such isomorphism exists. Although $K_k$ certainly has a clique of size
+  $k$, specifically the set of all its vertices, $G$ does not have a clique of
+  size $k$ by hypothesis, so $\pair{\pair{G}{k}}{\pair{K_k}{k}}\notin R_{KC}$.
   
-  Therefore $(G,k)\in CLIQUE\iff M((G,k))\in R_{KC}$, so $CLIQUE\mor R_{KC}$,
+  Therefore $\pair{G}{k}\in CLIQUE\iff M(\pair{G}{k})\in R_{KC}$, so $CLIQUE\mor R_{KC}$,
   and hence $R_{KC}$ is \NP-complete.
 \end{proof}
 
@@ -1413,21 +1430,23 @@ from the graph isomorphism problem to be possible.
 \begin{theorem}$GI\kr R_{KC}$\end{theorem}
 \begin{proof}
   Construct machine $f\in\FP$ defined for all graphs $G=(V,E)$ by
-  $f(G)=(G,|V|+1)$.
+  $f(G)=\pair{G}{|V|+1}$.
 
-  Let $G_1=(V_1, E_1)$ and $G_2=(V_2, E_2)$, and suppose $(G_1, G_2)\in GI$, so
-  $G_1$ is isomorphic to $G_2$. This implies $|V_1|=|V_2|$ and thus
-  $|V_1|+1=|V_2|+1$. Now $f(G_1)=(G_1, |V_1|+1)$ and $f(G_2)=(G_2,
-  |V_2|+1)$. Since $G_1$ is isomorphic to $G_2$ and $|V_1|+1=|V_2|+1$, then
-  $((G_1, |V_1|+1),(G_2, |V_2|+1))=(f(G_1), f(G_2))\in R_{KC}$.
-  
-  Suppose $(G_1, G_2)\notin GI$, so $G_1$ is not isomorphic to $G_2$. Even in
-  the case that $|V_1|=|V_2|$, $G_1$ cannot have a clique of size $|V_1|+1$,
-  and $G_2$ cannot have a clique of size $|V_2|+1$. Thus $((G_1, |V_1|+1),
-  (G_2, |V_2|+1))=(f(G_1), f(G_2))\notin R_{KC}$.
-
-  Therefore $(G_1, G_2)\in GI\iff (f(G_1), f(G_2))\in R_{KC}$, so $GI\kr
+  Let $G_1=(V_1, E_1)$ and $G_2=(V_2, E_2)$, and suppose $\pair{G_1}{G_2}\in
+  GI$, so $G_1$ is isomorphic to $G_2$. This implies $|V_1|=|V_2|$ and thus
+  $|V_1|+1=|V_2|+1$. Now $f(G_1)=\pair{G_1}{|V_1|+1}$ and $f(G_2)=\pair{G_2}{
+  |V_2|+1}$. Since $G_1$ is isomorphic to $G_2$ and $|V_1|+1=|V_2|+1$, then
+  $\pair{\pair{G_1}{|V_1|+1}}{\pair{G_2}{|V_2|+1}}=\pair{f(G_1)}{f(G_2)}\in
   R_{KC}$.
+  
+  Suppose $\pair{G_1}{G_2}\notin GI$, so $G_1$ is not isomorphic to $G_2$. Even
+  in the case that $|V_1|=|V_2|$, $G_1$ cannot have a clique of size $|V_1|+1$,
+  and $G_2$ cannot have a clique of size $|V_2|+1$. Thus
+  $\pair{\pair{G_1}{|V_1|+1}}{\pair{G_2}{|V_2|+1}}=\pair{f(G_1)}{f(G_2)}\notin
+  R_{KC}$.
+
+  Therefore $\pair{G_1}{G_2}\in GI\iff \pair{f(G_1)}{f(G_2)}\in R_{KC}$, so
+  $GI\kr R_{KC}$.
 \end{proof}
 
 We constructed $R_{KC}$ in order to make this reduction easy, but there is in
@@ -1452,10 +1471,10 @@ embedding then we say the isomorphism problem for objects in category $C_1$
 $C_2$.
 %% TODO grigor'ev83 describes a kernel reduction as an epimorphic functor
 
-Notice that in the above definition, if we let $R=\{(x,y)| x$ and $y$ are
+Notice that in the above definition, if we let $R=\{\pair{x}{y}| x$ and $y$ are
 objects of $C_1$ and $x$ is isomorphic to $y$ by $Mor_{C_1}(x,y)\}$ and
-$S=\{(x,y)| x$ and $y$ are objects of $C_2$ and $x$ is isomorphic to $y$ by
-$Mor_{C_2}(x,y)\}$, then $R\kr S$ by $f$, and $R\mor S$ by $g$, the many-one
+$S=\{\pair{x}{y}| x$ and $y$ are objects of $C_2$ and $x$ is isomorphic to $y$
+by $Mor_{C_2}(x,y)\}$, then $R\kr S$ by $f$, and $R\mor S$ by $g$, the many-one
 reduction induced by the kernel reduction $f$.
 
 A functorial reduction as defined above is \emph{more restrictive} than a
@@ -1565,11 +1584,11 @@ from many-one reductions.
 
 To show that they are in fact different, we need only exhibit two equivalence
 relations, $R$ and $S$, such that $R\mor S$ but $R\nkr S$. Intuitively, this
-means that when $(x,y)\in R$, there is some information shared between $x$ and
-$y$ which can not be separated from either. In other words, $x$ can only be
-understood with knowledge of $y$ and $y$ can only be understood with knowledge
-of $x$. In attempting to construct such a relation, we have found that
-reflexivity, symmetry, and transitivity of a relation seem to provide a
+means that when $\pair{x}{y}\in R$, there is some information shared between
+$x$ and $y$ which can not be separated from either. In other words, $x$ can
+only be understood with knowledge of $y$ and $y$ can only be understood with
+knowledge of $x$. In attempting to construct such a relation, we have found
+that reflexivity, symmetry, and transitivity of a relation seem to provide a
 significant obstacle to the possibility of sharing information between related
 elements.
 
