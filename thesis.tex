@@ -33,7 +33,7 @@
   noline, % omit vertical block lines
   linesnumbered, % number lines
   boxed, % put a box around the algorithm
-  oldcommands % newer versions of package have different command names
+  %oldcommands % newer versions of package have different command names
 ]{algorithm2e} % for creating pseudocode
 \usepackage{amsmath} % for piecewise function definition
 \usepackage{amsthm} % for theorems, definitions, lemmas, and styles
@@ -84,7 +84,10 @@
 \newcommand{\sigmastar}{\Sigma^{*}} % the set of all binary strings
 \newcommand{\kr}{\leq^{p}_{ker}} % kernel-reduces
 \newcommand{\nkr}{\nleq^{p}_{ker}} % does not kernel-reduce
+\newcommand{\krnt}{\leq_{ker}} % kernel-reduces without time bound
+\newcommand{\nkrnt}{\nleq_{ker}} % does not kernel-reduce without time bound
 \newcommand{\kequiv}{\equiv^{p}_{ker}} % is equivalent under kernel reductions
+\newcommand{\kequivnt}{\equiv_{ker}} % is equivalent without time bound
 \newcommand{\mor}{\leq^{p}_{m}} % many-one reduces
 \newcommand{\moequiv}{\equiv^{p}_m} % is equivalent under many-one reductions
 %\newcommand{\tequiv}{\equiv^{p}_T} % is equivalent under Turing reductions
@@ -254,19 +257,23 @@ We explicitly show here the containments among \P, \NP, \PEq, and \NPEq.
   equivalence problems, so $\PEq\subseteq\NPEq$.  $\PEq\subseteq\P$ and
   $\NPEq\subseteq\NP$ follows immediately from the definitions. A language in
   $\P$ which is not an equivalence relation is $MAJORITY=\{w|$ the number of
-  ones in $w$ is greater than $\frac{|w|}{2}\}$, so $\PEq\subsetneq\P$. A
-  language in $\NP$ which is not an equivalence relation is $\SAT=\{\phi|\phi$
-  is a satisfiable boolean formula$\}$, so $\NPEq\subsetneq\NP$.
+  ones in $w$ is greater than $\frac{|w|}{2}\}$, so $\PEq\subsetneq\P$. In
+  fact, if $MAJORITY\in\mathcal{C}$, where $\mathcal{C}$ is any complexity
+  class, then \CEq$\neq\mathcal{C}$. $MAJORITY\in\P\subseteq\NP$, therefore
+  $\NPEq\subsetneq\NP$.
 \end{proof}
 
 \begin{definition}\label{def:kr}
   Let $R$ and $S$ be equivalence relations on $\sigmastar$. We say $R$
-  \defn{polynomial time kernel reduces to} $S$ if $\exists f\in\FP:\forall
-  x,y\in\sigmastar$, $\pair{x}{y}\in R \iff \pair{f(x)}{f(y)}\in S$. We denote
-  this by $R\kr S$.
+  \defn{kernel reduces to} $S$ if $\exists
+  f\colon\sigmastar\to\sigmastar:\forall x,y\in\sigmastar$, $\pair{x}{y}\in R
+  \iff \pair{f(x)}{f(y)}\in S$. We denote this by $R\krnt S$.
   
-  We say $R$ \defn{is kernel equivalent to} $S$ if $R\kr S$ and $S\kr R$. We
-  denote this by $R\kequiv S$.
+  We say $R$ \defn{is kernel equivalent to} $S$ if $R\krnt S$ and $S\krnt
+  R$. We denote this by $R\kequivnt S$.
+
+  If $f\in\FP$, then we say $R$ \defn{polynomial time kernel reduces to} $S$,
+  and use the notation $R\kr S$ and $R\kequiv S$.
 \end{definition}
 
 Note the difference between a kernel reduction and a many-one reduction: a
@@ -640,33 +647,40 @@ the next section.
 We now present theorems formalizing the intuition we have gained about
 reductions among equivalence relations with different numbers of equivalence
 classes.
-\begin{theorem}
-  Let $R,S\in\PEq$. Suppose $S$ has $n$ equivalence classes. If the number of
-  equivalence classes in $R$ is greater than $n$, then $R\nkr S$.
+\begin{theorem}\label{thm:numbers}
+  Let $R$ and $S$ be equivalence relations on $\sigmastar$. Suppose $R$ has $n$
+  equivalence classes and $S$ has $m$ equivalence classes. If $n>m$ then
+  $R\nkrnt S$ (that is, $R$ does not kernel reduce to $S$, regardless of any
+  time bound on the function computing the reduction).
 \end{theorem}
 \begin{proof}
-  Assume with the intention of producing a contradiction that $R\kr S$. Then
-  $\exists f\in\FP:\forall x,y\in\sigmastar, \pair{x}{y}\in R\iff
-  \pair{f(x)}{f(y)}\in S$.
+  Assume with the intention of producing a contradiction that $R\krnt S$. Then
+  $\exists f\colon\sigmastar\to\sigmastar:\forall x,y\in\sigmastar$,
+  $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
 
-  Consider the partition of $R$ induced by its equivalence classes,
-  $R=\bigcup{[r_i]}$, where each $r_i$ is a representative of an equivalence
-  class in $R$. Since each $r_i$ is in exactly one equivalence class, $\forall
-  i,j$, with $i\neq j$, $\pair{r_i}{r_j}\notin R$. Specifically, $\forall i,j
-  \leq n+1$, $\pair{r_i}{r_j}$. Now $\forall i,j \leq n+1$,
-  $\pair{f(x)}{f(y)}\notin S$. Thus $S$ must have at least $n+1$ equivalence
-  classes. This is a contradiction with the hypothesis that $S$ has $n$
-  equivalence classes.
+  Since $R$ has $n$ equivalence classes, each equivalence class is non-empty,
+  and the equivalence classes partition $R$, then $\exists
+  r_1,\ldots,r_n\in\sigmastar: R=[r_1]_R\cup\cdots\cup[r_n]_R$.  Since each
+  element of $R$ is in exactly one equivalence class, $\forall i,j\leq n$,
+  $i=j\iff\pair{r_i}{r_j}\in R\iff\pair{f(r_i)}{f(r_j)}\in S$. Therefore the
+  image of each $r_i$ is in some equivalence class in $S$.  Also, $\forall
+  i,j\leq n$, $i\neq j\iff \pair{r_i}{r_j}\notin R\iff
+  \pair{f(r_i)}{f(r_j)}\notin S$. Therefore, the image of each $r_i$ does not
+  relate to the image of any other $r_j$, for $i\neq j$, and $i,j\leq
+  n$. Therefore each of the equivalence classes $[f(r_1)]_S,\ldots,[f(r_n)]_S$
+  is disjoint, so $S$ has at least $n$ equivalence classes. But $n>m$. This is
+  a contradiction with the hypothesis that $S$ has $m$ equivalence classes.
 
   Therefore $R\nkr S$.
 \end{proof}
 
 \begin{corollary}
-  $R_{eq}\nkr R_{par}$
+  $R_{eq}\nkrnt R_{par}$
 \end{corollary}
 \begin{proof}
   $R_{eq}$ has a (countably) infinite number of equivalence classes (one for
-  each binary string). $R_{par}$ has two equivalence classes.
+  each binary string). $R_{par}$ has two equivalence classes. Therefore these
+  equivalence classes meet the conditions of \autoref{thm:numbers}.
 \end{proof}
 
 Our intuition now is that the problem of determining whether one equivalence
@@ -701,7 +715,7 @@ representatives of equivalence classes in both equivalence relations.
   for some $r_i\in REP(R)$. Then $M(x)$ outputs $f(r_i)$ and $M(y)$ outputs
   $f(r_i)$. Since $\pair{f(r_i)}{f(r_i)}\in S$, then $\pair{M(x)}{M(y)}\in S$.
 
-  Suppose $\pair{x}{y}\in R$. So $\exists r_i, r_j\in REP(R)$, with $r_i\neq
+  Suppose $\pair{x}{y}\notin R$. So $\exists r_i, r_j\in REP(R)$, with $r_i\neq
   r_j$, such that $\pair{x}{r_i}\in R$ and $\pair{y}{r_j}\in R$. Then $M(x)$
   outputs $f(r_i)$ and $M(y)$ outputs $f(r_j)$. Since $f$ is injective,
   $r_i\neq r_j\implies f(r_i)\neq f(r_j)$. Since $f(r_i)$ and $f(r_j)$ are
@@ -805,25 +819,27 @@ separate $\PEq$ from $\FPKer$, we need to exhibit an equivalence problem for
 which membership can be decided in polynomial time, but no polynomial time
 algorithm exists for computing a complete invariant, or equivalently, no
 reduction to the equality relation exists. Two such candidates identified by
-Fortnow and Grochow are the boolean function congruence problem and the
+Fortnow and Grochow are the Boolean function congruence problem and the
 subgroup equivalence problem.
 
 %% TODO say something else about candidates
 
 \subsection{Completeness}
-%% TODO P-completeness is for log-space reductions, right?  It would appear
-that proving some language \PEq-complete should be easier than proving, for
-example, \P-completeness directly, because the kernel reduction allows us a
-polynomial time computable function, even in the set of equivalence problems
-\emph{decidable} in polynomial time, whereas proofs for \P-completeness under
-many-one reductions allow only logarithmic space. This means we are allowed to
-examine the entire computation history of the machine which decides any
-language in $\PEq$ (for example, as the tableau of the deterministic polynomial
-time machine). And from our examination of reductions among feasible
-equivalence problems, we can see that some reductions seem to solve the problem
-to be reduced first. This provides some intuition that polynomial time kernel
-reductions for problems in $\PEq$ may be too powerful. Again, the real
-restriction here is on the number of equivalence classes in each language.
+%% TODO P-completeness is for log-space reductions, right?  
+
+It would appear that proving some language \PEq-complete should be easier than
+proving, for example, \P-completeness directly, because the kernel reduction
+allows us a polynomial time computable function, even in the set of equivalence
+problems \emph{decidable} in polynomial time, whereas proofs for
+\P-completeness under many-one reductions allow only logarithmic space. This
+means we are allowed to examine the entire computation history of the machine
+which decides any language in $\PEq$ (for example, as the tableau of the
+deterministic polynomial time machine). And from our examination of reductions
+among feasible equivalence problems, we can see that some reductions seem to
+solve the problem to be reduced first. This provides some intuition that
+polynomial time kernel reductions for problems in $\PEq$ may be too
+powerful. Again, the real restriction here is on the number of equivalence
+classes in each language.
 
 %% TODO restate FG09 Thm 4.3 If Ker=PEq then UP\subseteq BQP,  Cor 4.8 (pf?)
 %% note: this is apparently evidence that PEq is not equal to Ker
@@ -843,7 +859,7 @@ $\P\neq\NP$). Since it is an equivalence problem in \NP, it is a member of
 the graph isomorphism problem. 
 
 \begin{definition}
-  Let $V$ be a set, $E$ be a collection of subsets of $V$ of size exactly
+  Let $V$ be a set, let $E$ be a collection of subsets of $V$ of size exactly
   2. Then $G=(V, E)$ is called an \defn{undirected graph}. Elements of $V$ are
   called \defn{vertices}, and elements of $E$ are called \defn{edges}.
 
@@ -854,10 +870,19 @@ the graph isomorphism problem.
   Let $G_1=(V_1,E_1)$ and $G_2=(V_2, E_2)$ be undirected graphs. Then $G_1$ is
   \defn{isomorphic to} $G_2$ if $\exists \phi\colon V_1\to V_2:\{u,v\}\in
   E_1\iff \{\phi(u), \phi(v)\}\in E_2$ and $\phi$ is a bijection.
+
+  If $G_1=(V_1,E_1)$ and $G_2=(V_2, E_2)$ are directed graphs, then $G_1$ is
+  \defn{isomorphic to} $G_2$ if $\exists \phi\colon V_1\to V_2:(u,v)\in E_1\iff
+  (\phi(u), \phi(v))\in E_2$ and $\phi$ is a bijection.
 \end{definition}
 \begin{definition}
-  $GI=\{\pair{G_1}{G_2}|G_1$ and $G_2$ are undirected graphs and $G_1$ is
-  isomorphic to $G_2\}$
+  Let $GI=\{\pair{G_1}{G_2}|G_1$ and $G_2$ are undirected graphs and $G_1$ is
+  isomorphic to $G_2\}$. Deciding membership in $GI$ is the \defn{graph
+    isomorphism problem}.
+
+  Let $DirGI=\{\pair{G_1}{G_2}|G_1$ and $G_2$ are directed graphs and $G_1$ is
+  isomorphic to $G_2\}$. Deciding membership in $DirGI$ is the \defn{directed
+    graph isomorphism problem}.
 \end{definition}
 
 \subsection{Kernel reductions to graph isomorphism}
@@ -873,11 +898,11 @@ intuition that a kernel reduction makes sense, practically.
   Construct $M\in \FP$ on input $w\in\sigmastar$:\\
   \begin{algorithm}[H]
     $V_w\gets\{v_p, v_o\}$\;
-    $E_w\gets\{\}$ \tcp{undirected edges}\;
+    $E_w\gets\{\}$\;
     \For{$i=1$ \KwTo $|w|$}{
       \If{$w_i=1$}{
         \eIf{$\{v_o, v_p\}\in E_w$}
-            {add undirected edge $\{v_o, v_p\}$ to $E_w$\;}
+            {add $\{v_o, v_p\}$ to $E_w$\;}
             {remove $\{v_o, v_p\}$ from $E_w$\;}
       }
     }
@@ -929,12 +954,12 @@ intuition that a kernel reduction makes sense, practically.
     $V_w\gets\{v_1, v_2, \ldots, v_{|w|}, v_{zero}, v_{one,0}, v_{one,1},
     v_{one,2}\}$\;
     $E_w\gets\{\{v_{one,0}, v_{one,1}\}, \{v_{one,1}, v_{one,2}\}, \{v_{one,2},
-    v_{one,0}\}\}$\tcp{undirected edges}\; 
+    v_{one,0}\}\}$\;
     \For{$i=1$ \KwTo $|w|$}{
       \eIf{$w_i=1$}{
-        add undirected edge $\{v_i, v_{one,0}\}$ to $E_w$\;
+        add $\{v_i, v_{one,0}\}$ to $E_w$\;
       }{
-        add undirected edge $\{v_i, v_{zero}\}$ to $E_w$\;
+        add $\{v_i, v_{zero}\}$ to $E_w$\;
       }
     }
     \Return{$G_w=(V_w, E_w)$}
@@ -998,20 +1023,21 @@ from $R_{eq}$, $R_{eqi}$, and $R_a$ to $GI$ the order of bits in each string
 $x$ and $y$ is significant. As such, it may be easier to create kernel
 reductions from these equivalence relations to the directed graph isomorphism
 problem, which we can prove equivalent under kernel reductions to the graph
-isomorphism problem.
+isomorphism problem. 
 
-\begin{definition}
-  $DirGI=\{\pair{G_1}{G_2}|G_1$ and $G_2$ are directed graphs and $G_1$ is
-  isomorphic to $G_2\}$
-\end{definition}
-
-\begin{lemma}\label{lem:gi_ke_dirgi}$GI\kequiv DirGI$\end{lemma}
+\begin{lemma}[\cite{kst93} and \cite{miller77}]\label{lem:gi_ke_dirgi}
+  $GI\kequiv DirGI$
+\end{lemma}
 \begin{proof}
   To show $GI\kr DirGI$, replace each undirected edge in the graph with a pair
   of complementary directed edges.
   
   To show $DirGI\kr GI$, replace each directed edge in the graph with a set of
-  vertices and edges that enforces an ordering between the vertices.
+  vertices and edges that enforces an ordering between the vertices. In
+  \cite{miller77}, for example, when given vertices $x$ and $y$ with directed
+  edge $(x,y)$, the author adds the vertices $\{v_1, v_2, \ldots, v_7\}$ with
+  undirected edges $\{\{x, v_1\}, \{v_1,v_4\}, \{v_4,y\}, \{v_1,v_2\},
+  \{v_2,v_3\}, \{v_4,v_5\}, \{v_5,v_6\}, \{v_6,v_7\}\}$.
 \end{proof}
 
 From \autoref{lem:gi_ke_dirgi}, we can use a kernel reduction to the directed
