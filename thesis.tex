@@ -731,20 +731,34 @@ representatives of equivalence classes in both equivalence relations.
   Let $R,S$ be equivalence relations. Suppose $R\in\PEq$. Suppose $R$ has a
   finite number of equivalence classes, $n$, and the number of equivalence
   classes of $S$ is greater than or equal to $n$ (possibly countably
-  infinite). If $\exists E_R,E_S\in\FP$ and $\exists i,j\in\mathbb{N}$ such
-  that $E_R(i)$ outputs the encoding of $REP(R)$ and $E_S(j)$ outputs the
-  encoding of at least $n$ elements of $REP(S)$, then $R\kr S$.
+  infinite). If $\exists E_R,E_S\in\FP$ and $\exists i,j\in\sigmastar$ such
+  that $E_R$ on input $i$ outputs the encoding of $REP(R)$ and $E_S$ on input
+  $j$ outputs the encoding of at least $n$ elements of $REP(S)$, then $R\kr S$.
 \end{theorem}
 \begin{proof}
-  Run $E_R(i)$ to produce the encoding of $REP(R)$ and run $E_S(j)$ to produce
-  the encoding of at least $n$ elements of $REP(S)$. Define $f\in\FP$ as
-  follows: the $i\text{th}$ element in the encoding of $REP(R)$ maps to the
-  $i\text{th}$ element in the encoding of at least $n$ elements of
-  $REP(S)$. Since any (correct) encoding of $REP(R)$ includes only one of each
-  element in the set, the function $f$ is well-defined. Since any (correct)
-  encoding of at least $n$ elements of $REP(S)$ includes at most only one of
-  each element in the set, $f$ is injective. The function $f$ now satisfies the
-  conditions in the hypothesis in \autoref{thm:repr_kr}, so the result follows.
+  We compute the kernel reduction using the following procedure.
+
+  Run $E_R$ on input $i$ to produce the encoding of $REP(R)$. The output of
+  this machine is $\langle r_1, r_2, \ldots, r_n\rangle$, where $r_1,\dots,r_n$
+  are representatives of the equivalence classes in $R$.
+
+  Run $E_S$ on input $j$ to produce the encoding of at least $n$ elements of
+  $REP(S)$. The length of the output of $E_S$ on input $j$ is bounded by some
+  polynomial in the length of $j$, say $p(|j|)$. Since $p(|j|)$ is finite, then
+  the number of elements of $REP(S)$ which $E_S$ outputs when run on input $j$
+  must be finite. Call this number $m$. By hypothesis $m\geq n$. So the output
+  of this function is $\langle s_1, s_2, \ldots, s_m\rangle$, where
+  $s_1,\ldots, s_m$ are representatives of $m$ equivalence classes in $S$.
+
+  Define $f\in\FP$ by $f(r_l)=s_l$, for all $l\leq n$. We now wish to show that
+  $f$ is injective. Suppose $r_l,r_q\in R$ and $r_l\neq r_q$. Then $f(r_l)=s_l$
+  and $f(r_q)=s_q$. Since each element in the encoding of $m$ elements of
+  $REP(S)$ which is output by $E_S$ on input $j$ is unique (as each
+  representative is in its own equivalence class), $s_l\neq s_q$, and hence
+  $f(r_l)\neq f(r_q)$. Therefore $f$ is injective.
+
+  The function $f$ now satisfies the conditions in the hypothesis of
+  \autoref{thm:repr_kr}, so the result follows.
 \end{proof}
 
 %% TODO Equality is in AC^0, right? But majority and parity are not in AC^0.
@@ -1599,9 +1613,9 @@ isomorphism problem in $\NP$, unless $\P=\NP$.
 The graph isomorphism problem has been (and continues to be) extensively
 studied. For more information, see \cite{kst93}.
 
-%% TODO study hard equivalence problems: boolean formula isomorphism? algebraic
+%% TODO study hard equivalence problems: Boolean formula isomorphism? algebraic
 %% structure equivalence relations (bloniarz84)? regular expressions with + and
-%% times?  see boolean equivalence problems paper
+%% times?  see Boolean equivalence problems paper
 
 \section{Kernel reductions vs. many-one reductions}
 
