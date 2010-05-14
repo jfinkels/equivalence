@@ -178,6 +178,12 @@ The equivalence of these two definitions of the complexity class $\NP$ can be
 found, for example, in \cite{sipser06}.
 
 \begin{definition}
+  Let $S$, $T$ be sets, let $S'\subseteq S$, and let $f:S'\to T$ be a
+  function. Then $f$ is called a \defn{partial function from $S$ to $T$}. If
+  $S'=S$ then $f$ is called a \defn{total function from $S$ to $T$}.
+\end{definition}
+
+\begin{definition}
   $\FP$ is the class of total functions computable by a Turing machine running
   in polynomial time. Specifically, $f\colon\mathbb{N}\to\mathbb{N}$ is in
   $\FP$ if there exists a Turing machine which, on input $n$, halts with $f(n)$
@@ -218,9 +224,9 @@ equivalent with respect to some equivalence relation.
   R\}$. When the context is clear, we sometimes omit the subscript, and just
   write $[x]$.
 \end{definition}
-For all equivalence relations, each element of $U$ is in exactly one
-equivalence class, and the equivalence classes of an equivalence relation
-provide a partition of $U$.
+For all equivalence relations on a set $U$, each element of $U$ is in exactly
+one equivalence class and $U=\bigcup_{x\in U}{[x]}$, so the equivalence classes
+of an equivalence relation provide a partition of $U$.
 
 In \cite{fg09}, Fortnow and Grochow give a formal definition of a new class of
 languages: the class of equivalence problems which can be decided in polynomial
@@ -278,7 +284,7 @@ We explicitly show here the containments among \P, \NP, \PEq, and \NPEq.
 
 Note the difference between a kernel reduction and a many-one reduction: a
 kernel reduction maps $\pair{x}{y}\in R$ to $\pair{f(x)}{f(y)}\in S$, whereas a
-many-one reduction maps $\pair{x}{y}\in R$ to $f(\pair{x, y})\in S$, for some
+many-one reduction maps $\pair{x}{y}\in R$ to $f(\pair{x}{y})\in S$, for some
 polynomial time computable function $f$. Informally, a function which computes
 a many-one reduction has access to both $x$ and $y$, but a function which
 computes a kernel reduction has access to only one of $x$ and $y$ at a
@@ -317,7 +323,9 @@ relations in $\PEq$, feasible equivalence problems.
   ones)$\}$
 \end{definition}
 \begin{definition}
-  $R_{bc}=\{\pair{x}{y}|x$ and $y$ have the same number of ones$\}$
+  $R_{bc}=\{\pair{x}{y}|x$ and $y$ have the same number of ones$\}$. We use the
+  subscript ``$bc$'' to denote that pairs of binary strings in this equivalence
+  relation have the same bitcount (number of ones).
 \end{definition}
 \begin{definition}
   $R_{eq}=\{\pair{x}{y}|x=y\}$. This is called the \defn{equality relation}.
