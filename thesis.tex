@@ -48,7 +48,7 @@
   pdftitle={On the computational complexity of equivalence relations under
     kernel reductions},
   pdfauthor={Jeffrey Finkelstein}
-]{hyperref}
+]{hyperref} % for pdf links when rendering \ref and \cite commands
 %\usepackage[all]{hypcap} % references to images will link to the image
 %\usepackage{multicol} % for list split over multiple columns
 
@@ -245,6 +245,19 @@ class. We provide the definition, along with its generalization in \NP, here.
   deterministic polynomial time.
 \end{definition}
 
+Technically, an equivalence relation on $\sigmastar$ is a set of pairs of
+binary strings, but $\PEq$ and $\NPEq$ are classes of \emph{languages}, which
+are sets of binary strings (not pairs). We use the pairing function discussed
+above to encode pairs of binary strings in an equivalence relation (that is,
+the binary strings which relate) as single binary strings. For example an
+equivalence relation $R\subseteq\sigmastar\times\sigmastar$ can be encoded as a
+language $L_R=\{\pair{x}{y}|(x,y)\in R\}$. Then we can discuss membership of
+$L_R$ in complexity classes such as $\PEq$ or $\NPEq$, etc. Throughout this
+paper, we will abuse these formalities and use the convention that an
+equivalence relation is defined as its corresponding encoding described here,
+so that we may simply consider equivalence relations as members of complexity
+classes, and consider reductions among them.
+
 We explicitly show here the containments among \P, \NP, \PEq, and \NPEq.
 \begin{lemma}
   \mbox{} % to put the next item on a new line
@@ -319,25 +332,56 @@ relations in $\PEq$, feasible equivalence problems.
 
 %% TODO should I make a note about assuming |x|=|y|?
 \begin{definition}
-  $R_{par}=\{\pair{x}{y}|x$ and $y$ have the same parity (even or odd number of
-  ones)$\}$
+  The \defn{parity function}, $\pi\colon \sigmastar\to\{0,1\}$, is defined by
+  $\pi(w)=0$ if the number of ones in $w$ is even, and $\pi(w)=1$ if the number
+  of ones in $w$ is odd, for all $w\in\sigmastar$.
 \end{definition}
 \begin{definition}
-  $R_{bc}=\{\pair{x}{y}|x$ and $y$ have the same number of ones$\}$. We use the
-  subscript ``$bc$'' to denote that pairs of binary strings in this equivalence
-  relation have the same bitcount (number of ones).
+  $R_{par}=\{\pair{x}{y}|\pi(x)=\pi(y)\}$
+\end{definition}
+We use the subscript ``$par$'' to denote that pairs of binary strings in this
+equivalence relation have the same parity.
+
+\begin{definition}
+  The \defn{bitcount function}, $\beta\colon \sigmastar\to\mathbb{N}$, is
+  defined by $\beta(w)$ equals the number of ones in $w$, for all
+  $w\in\sigmastar$.
 \end{definition}
 \begin{definition}
-  $R_{eq}=\{\pair{x}{y}|x=y\}$. This is called the \defn{equality relation}.
+  $R_{bc}=\{\pair{x}{y}| \beta(x)=\beta(y)\}$
+\end{definition}
+We use the subscript ``$bc$'' to denote that pairs of binary strings in this
+equivalence relation have the same bitcount.
+
+\begin{definition}
+  $R_{eq}=\{\pair{x}{y}|x=y\}$
+\end{definition}
+$R_{eq}$ is called the \defn{equality relation}.
+
+\begin{definition}
+  The \defn{bitwise complement function},
+  $\bar\cdot\colon\sigmastar\to\sigmastar$, is defined for all
+  $w\in\sigmastar$, where $w=w_1 w_2 \cdots w_{|w|}$, by $\overline{w_i}=0$ if
+  $w_i=1$ and $\overline{w_i}=1$ if $w_i=0$, for all $i\leq|w|$.
 \end{definition}
 \begin{definition}
-  $R_{eqi}=\{\pair{x}{y}|x=y$ or $x=\bar{y}\}$
+  $R_{eqc}=\{\pair{x}{y}|x=y$ or $x=\bar{y}\}$
+\end{definition}
+We use the subscript ``$eqc$'' to denote that pairs of binary strings in this
+equivalence relation are either equal or bitwise complements.
+
+\begin{definition}
+  The \defn{exclusive or operation},
+  $\oplus\colon\sigmastar\times\sigmastar\to\sigmastar$ is defined for all
+  $x,y\in\sigmastar$, where $|x|=|y|=n$, $x=x_1 x_2 \cdots x_n$ and $y=y_1 y_2
+  \cdots y_n$, by $x_i \oplus y_i=0$ if $x_i=y_i$ and $x_i \oplus y_i=1$ if
+  $x_i\neq y_i$, for all $i\leq n$.
 \end{definition}
 \begin{definition}
-  Let $a\in\sigmastar$. $R_{a}=\{\pair{x}{y}|x=y$ or $x\oplus y=a\}$. (Note
-  that $R_{a}$ is a family of equivalence relations; $R_{a}$ is a different
-  relation for each fixed $a$.)
+  Let $a\in\sigmastar$. $R_{a}=\{\pair{x}{y}|x=y$ or $x\oplus y=a\}$
 \end{definition}
+Note that $R_{a}$ is a family of equivalence relations. $R_{a}$ is a different
+relation for each fixed $a\in\sigmastar$.
 %% \begin{definition}
 %%   $R_{maj}=\{(x,y)|$ at least half of the bits in both $x$ and $y$ are ones, or
 %%   fewer than half of the bits in both $x$ and $y$ are ones$\}$
@@ -350,9 +394,9 @@ relations in $\PEq$, feasible equivalence problems.
 %% \end{definition}
 
 Notice the following equivalent definitions, where $n=|x|=|y|=|a|$:
-$R_{eq}=\{\pair{x}{y}|x \oplus y = 0^n\}$, $R_{eqi}=\{\pair{x}{y}|x \oplus y =
+$R_{eq}=\{\pair{x}{y}|x \oplus y = 0^n\}$, $R_{eqc}=\{\pair{x}{y}|x \oplus y =
 0^n$ or $x\oplus y = 1^n\}$, and $R_a=\{\pair{x}{y}|x \oplus y = 0^n$ or $x
-\oplus y\ = a\}$. From these we can see that if $a=1^n$, then $R_a=R_{eqi}$,
+\oplus y\ = a\}$. From these we can see that if $a=1^n$, then $R_a=R_{eqc}$,
 and if $a=0^n$, then $R_a=R_{eq}$.
 
 \subsection{Containments and equivalence classes}
@@ -376,17 +420,17 @@ and if $a=0^n$, then $R_a=R_{eq}$.
   $\pair{x}{y} \notin R_{bc}$. Therefore $R_{bc} \neq R_{par}$.
 \end{proof}
 
-\begin{theorem}$R_{eq} \subsetneq R_{eqi}$\end{theorem}
+\begin{theorem}$R_{eq} \subsetneq R_{eqc}$\end{theorem}
 \begin{proof}
   Let $\pair{x}{y}\in R_{eq}$, so $x=y$. Then $\pair{x}{y}$ satisfies the
-  property specified in the definition of $R_{eqi}$, specifically that $x=y$,
-  so $\pair{x}{y} \in R_{eqi}$. Therefore $R_{eq} \subset R_{eqi}$.
+  property specified in the definition of $R_{eqc}$, specifically that $x=y$,
+  so $\pair{x}{y} \in R_{eqc}$. Therefore $R_{eq} \subset R_{eqc}$.
 
-  Consider $x=1000$ and $y=0111$. Then $\pair{x}{y}\in R_{eqi}$ but
-  $\pair{x}{y} \notin R_{eq}$. Therefore $R_{eq} \neq R_{eqi}$.
+  Consider $x=1000$ and $y=0111$. Then $\pair{x}{y}\in R_{eqc}$ but
+  $\pair{x}{y} \notin R_{eq}$. Therefore $R_{eq} \neq R_{eqc}$.
 \end{proof}
 
-Since membership in $R_{par}$, $R_{bc}$, $R_{eq}$, $R_{eqi}$, and $R_a$ can be
+Since membership in $R_{par}$, $R_{bc}$, $R_{eq}$, $R_{eqc}$, and $R_a$ can be
 decided in polynomial time, they are all members of \PEq. Now we can examine
 kernel reductions between these members of \PEq. Notice that in each of the
 reductions in the next section, the more general equivalence relation reduces
@@ -396,7 +440,8 @@ We will here point out that $R_{par}$ is the most general of the above
 equivalence relations, and it has only two equivalence classes: $[0]$ and
 $[1]$. The only equivalence relation which is more general is the trivial
 equivalence relation in which all elements of $\sigmastar$ relate to all other
-elements; it is its own equivalence class. The most restrictive is the equality
+elements; $\sigmastar$ itself is the only equivalence class of this equivalence
+relation. The most restrictive equivalence relation then is the equality
 relation, $R_{eq}$, in which each binary string is the sole element in its
 equivalence class. The other equivalence relations defined here also have an
 infinite number of equivalence classes.
@@ -542,10 +587,10 @@ essentially what is happening when these reductions are composed.
   $R_{bc}\kr R_{eq}$.
 \end{proof}
 
-The equivalence relations $R_{eqi}$, which is a generalization of $R_{eq}$, and
-$R_a$, which is a generalization of $R_{eqi}$, also reduce to equality.
+The equivalence relations $R_{eqc}$, which is a generalization of $R_{eq}$, and
+$R_a$, which is a generalization of $R_{eqc}$, also reduce to equality.
 
-\begin{theorem}\label{thm:reqi_req}$R_{eqi}\kr R_{eq}$\end{theorem}
+\begin{theorem}\label{thm:reqi_req}$R_{eqc}\kr R_{eq}$\end{theorem}
 \begin{proof}
   Construct machine $M\in\FP$ on input $w\in\sigmastar$, where
   $w=w_1w_2\cdots w_{|w|}$:\\
@@ -557,14 +602,14 @@ $R_a$, which is a generalization of $R_{eqi}$, also reduce to equality.
     }
   \end{algorithm}
   
-  Suppose $\pair{x}{y}\in R_{eqi}$, so either $x=y$ or $x=\bar{y}$. In the case
+  Suppose $\pair{x}{y}\in R_{eqc}$, so either $x=y$ or $x=\bar{y}$. In the case
   that $x=y$, $M(x)$ and $M(y)$ produce the same output. In the case that
   $x=\bar{y}$, then either $x_1=1$ and $y_1=0$ or $x_1=0$ and $y_1=1$. Consider
   without loss of generality the case that $x_1=1$ and $y_1=0$. Then $M(x)$
   outputs $\bar{x}$ and $M(y)$ outputs $y$. Now $\bar{x}=\bar{\bar{y}}=y$, so
   $M(x)=M(y)$. Therefore $\pair{M(x)}{M(y)}\in R_{eq}$.
 
-  Suppose $\pair{x}{y}\notin R_{eqi}$, so $x\neq y$ and $x\neq\bar{y}$. 
+  Suppose $\pair{x}{y}\notin R_{eqc}$, so $x\neq y$ and $x\neq\bar{y}$. 
 
   In the case that $x_1=0$ and $y_1=0$, then $M(x)=x$ and $M(y)=y$. Since
   $x\neq y$, then $M(x)\neq M(y)$, so $\pair{M(x)}{M(y)}\notin R_{eq}$.
@@ -580,8 +625,8 @@ $R_a$, which is a generalization of $R_{eqi}$, also reduce to equality.
   $M(y)=\bar{y}$. Since $x\neq y$, then $\bar{x}\neq\bar{y}$, so $M(x)\neq
   M(y)$, and $\pair{M(x)}{M(y)}\notin R_{eq}$.
 
-  Therefore $\pair{x}{y}\in R_{eqi}\iff \pair{M(x)}{M(y)}\in R_{eq}$, so
-  $R_{eqi}\kr R_{eq}$.
+  Therefore $\pair{x}{y}\in R_{eqc}\iff \pair{M(x)}{M(y)}\in R_{eq}$, so
+  $R_{eqc}\kr R_{eq}$.
 \end{proof}
 
 \begin{theorem}Let $a\in\sigmastar$. Then $R_a\kr R_{eq}$.\end{theorem}
@@ -835,6 +880,7 @@ Fortnow and Grochow:
 \end{proof}
 
 %% TODO what happens if UP is a subset of BQP?
+%% TODO define UP and BQP?
 Fortnow and Grochow provide evidence that $R_{eq}$ is \emph{not} \PEq-complete,
 by showing that if $\FPKer=\PEq$ then $\UP\subseteq\BQP$ \cite{fg09}. To
 separate $\PEq$ from $\FPKer$, we need to exhibit an equivalence problem for
@@ -897,6 +943,9 @@ the graph isomorphism problem.
   \defn{isomorphic to} $G_2$ if $\exists \phi\colon V_1\to V_2:(u,v)\in E_1\iff
   (\phi(u), \phi(v))\in E_2$ and $\phi$ is a bijection.
 \end{definition}
+Intuitively, the bijection $\phi$ is a relabeling of vertices of $G_1$ which
+preserves adjacency in $G_2$.
+
 \begin{definition}
   Let $GI=\{\pair{G_1}{G_2}|G_1$ and $G_2$ are undirected graphs and $G_1$ is
   isomorphic to $G_2\}$. Deciding membership in $GI$ is the \defn{graph
@@ -1041,7 +1090,7 @@ intuition that a kernel reduction makes sense, practically.
 \end{proof}
 
 Unlike the reductions from $R_{par}$ and $R_{bc}$ to $GI$, in the reductions
-from $R_{eq}$, $R_{eqi}$, and $R_a$ to $GI$ the order of bits in each string
+from $R_{eq}$, $R_{eqc}$, and $R_a$ to $GI$ the order of bits in each string
 $x$ and $y$ is significant. As such, it may be easier to create kernel
 reductions from these equivalence relations to the directed graph isomorphism
 problem, which we can prove equivalent under kernel reductions to the graph
@@ -1116,7 +1165,7 @@ undirected graph isomorphism problem, as in the following theorems.
 \begin{proof}Follows directly from \autoref{thm:req_kr_dirgi} and
   \autoref{lem:gi_ke_dirgi}.\end{proof}
 
-\begin{theorem}\label{thm:reqi_kr_dirgi}$R_{eqi}\kr DirGI$\end{theorem}
+\begin{theorem}\label{thm:reqi_kr_dirgi}$R_{eqc}\kr DirGI$\end{theorem}
 \begin{proof}
   Construct machine $M\in \FP$ on input $w\in\sigmastar$:\\
   \begin{algorithm}[H]
@@ -1136,7 +1185,7 @@ undirected graph isomorphism problem, as in the following theorems.
   \autoref{thm:req_kr_dirgi}, creates a ``spine'' representing each bit of word
   $w$.
 
-  Suppose $\pair{x}{y}\in R_{eqi}$, so either $x=y$ or $x=\bar{y}$.
+  Suppose $\pair{x}{y}\in R_{eqc}$, so either $x=y$ or $x=\bar{y}$.
 
   In the case that $x=y$, $M(x)$ and $M(y)$ output exactly the same graph, so
   $G_x$ is isomorphic to $G_y$, and hence $\pair{M(x)}{M(y)}\in DirGI$.
@@ -1162,7 +1211,7 @@ undirected graph isomorphism problem, as in the following theorems.
   $\phi$ describes an isomorphism between $G_x$ and $G_y$, so
   $\pair{M(x)}{M(y)}\in DirGI$.
 
-  Suppose $\pair{x}{y}\notin R_{eqi}$, so $x\neq y$ and $x\neq\bar{y}$. Thus
+  Suppose $\pair{x}{y}\notin R_{eqc}$, so $x\neq y$ and $x\neq\bar{y}$. Thus
   $\exists i,j\in\{1,2,\ldots,|x|\}, i\neq j,$ such that $x_i=y_i\land x_j\neq
   y_j$. Suppose without loss of generality that $x_i=y_i=0$ and $0=x_j\neq
   y_j=1$. Now $x_i=y_i=0$ implies $(v_i, v_{zero})\in E_x$ and $(v_i,
@@ -1180,15 +1229,15 @@ undirected graph isomorphism problem, as in the following theorems.
   bijection exists, so $G_x$ is not isomorphic to $G_y$, and
   $\pair{M(x)}{M(y)}\notin DirGI$.
 
-  Therefore $\pair{x}{y}\in R_{eqi} \iff \pair{M(x)}{M(y)}\in DirGI$, so
-  $R_{eqi}\kr DirGI$.
+  Therefore $\pair{x}{y}\in R_{eqc} \iff \pair{M(x)}{M(y)}\in DirGI$, so
+  $R_{eqc}\kr DirGI$.
 \end{proof}
 
-\begin{corollary}$R_{eqi}\kr GI$\end{corollary}
+\begin{corollary}$R_{eqc}\kr GI$\end{corollary}
 \begin{proof}Follows directly from \autoref{thm:reqi_kr_dirgi} and
   \autoref{lem:gi_ke_dirgi}.\end{proof}
 
-\begin{theorem}\label{thm:ra_kr_dirgi}$\forall a\in\sigmastar R_a \kr DirGI$
+\begin{theorem}\label{thm:ra_kr_dirgi}$\forall a\in\sigmastar$, $R_a \kr DirGI$
 \end{theorem}
 \begin{proof}
   Let $a\in\sigmastar$. Construct machine $M\in\FP$ on input $w\in\sigmastar$
