@@ -1106,9 +1106,9 @@ isomorphism problem.
   To show $DirGI\kr GI$, replace each directed edge in the graph with a set of
   vertices and edges that enforces an ordering between the vertices. In
   \cite{miller77}, for example, when given vertices $x$ and $y$ with directed
-  edge $(x,y)$, the author adds the vertices $\{v_1, v_2, \ldots, v_7\}$ with
-  undirected edges $\{\{x, v_1\}, \{v_1,v_4\}, \{v_4,y\}, \{v_1,v_2\},
-  \{v_2,v_3\}, \{v_4,v_5\}, \{v_5,v_6\}, \{v_6,v_7\}\}$.
+  edge $(x,y)$, the author adds the vertices $\{v_1$, $v_2$, $\ldots$, $v_7\}$
+  with undirected edges $\{\{x, v_1\}$, $\{v_1,v_4\}$, $\{v_4,y\}$,
+  $\{v_1,v_2\}$, $\{v_2,v_3\}$, $\{v_4,v_5\}$, $\{v_5,v_6\}$, $\{v_6,v_7\}\}$.
 \end{proof}
 
 From \autoref{lem:gi_ke_dirgi}, we can use a kernel reduction to the directed
@@ -1674,7 +1674,7 @@ studied. For more information, see \cite{kst93}.
 %% structure equivalence relations (bloniarz84)? regular expressions with + and
 %% times?  see Boolean equivalence problems paper
 
-\section{Kernel reductions vs. many-one reductions}
+\section{Kernel reductions vs. many-one reductions} \label{sec:diffs}
 
 Now we wish to address the question of whether kernel reductions are different
 from many-one reductions.
@@ -1700,6 +1700,25 @@ the elements.
 Still, we have no reason in particular to believe that a many-one reduction is
 different from a kernel reduction.
 %% TODO more explanation
+
+\section{Future work}
+
+We hope to extend the result in \autoref{thm:reps} to equivalence problems with
+an infinite number of equivalence classes. In other words, we wish to answer
+the question of whether we can \emph{always} compute a kernel reduction among
+equivalence problems in $\PEq$, if the reduction is allowed polynomial time.
+
+We also hope to continue working on showing that a many-one reduction does not
+imply a kernel reduction for equivalence problems, by finding two equivalence
+problems for which there is a many-one reduction but not a kernel
+reduction. Perhaps Kolmogorov complexity or quantum entanglement of related
+members of an equivalence relation holds the key to sharing information among
+related binary strings.
+
+\section{Acknowledgments}
+
+Thanks to Ben Hescott, Anselm Blumer, Mary Glaser and Sam Guyer for valuable
+input.
 
 \bibliographystyle{amsalpha} \bibliography{references}
 
