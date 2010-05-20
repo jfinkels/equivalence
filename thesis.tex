@@ -33,7 +33,7 @@
   noline, % omit vertical block lines
   linesnumbered, % number lines
   boxed, % put a box around the algorithm
-  oldcommands % newer versions of package have different command names
+  %oldcommands % newer versions of package have different command names
 ]{algorithm2e} % for creating pseudocode
 \usepackage{amsmath} % for piecewise function definition
 \usepackage{amsthm} % for theorems, definitions, lemmas, and styles
@@ -325,7 +325,7 @@ similar notion of polynomial time completeness under kernel reductions in
   $\forall S\in\NPEq$, $S\kr R$.
 \end{definition}
 
-\section{Kernel reductions among feasible equivalence problems}
+\section{Kernel reductions among feasible equivalence problems} \label{sec:p}
 
 With these definitions in place, we can now define some examples of equivalence
 relations in $\PEq$, feasible equivalence problems.
@@ -780,7 +780,7 @@ representatives of equivalence classes in both equivalence relations.
   Therefore $\pair{x}{y}\in R\iff \pair{M(x)}{M(y)}\in S$, so $R\kr S$.
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{thm:reps}
   Let $R,S$ be equivalence relations. Suppose $R\in\PEq$. Suppose $R$ has a
   finite number of equivalence classes, $n$, and the number of equivalence
   classes of $S$ is greater than or equal to $n$ (possibly countably
@@ -915,7 +915,7 @@ classes in each language.
 %% TODO showing completeness of a problem should be somewhat easier because we
 %% are allowed to examine the entire computation history
 
-\section{Kernel reductions among intractable problems}
+\section{Kernel reductions among intractable problems} \label{sec:np}
 
 \subsection{The graph isomorphism problem}
 
@@ -1600,14 +1600,14 @@ categories.
 \item $k$-uniform hypergraph isomorphism \cite{zkt85, hn70}
 \item finite automaton isomorphism \cite{booth78}
 \item lattice isomorphism \cite{frucht50}
-\item isomorphism of commutative nilpotent semigroups of class 3 
+%\item isomorphism of commutative nilpotent semigroups of class 3 
   % [32] L. Babai, ``On the isomorphism problem.''  App. to
   % Proc. Conf. Foundat. Comput. Theory, Poland (1977), pp. 19-23.
 \item isomorphism of associative algebras of finite rank over a fixed
   algebraically closed field with a square of the radical equal to zero and
   with a commutative factor with respect to the radical \cite{grigoriev83}
 \item Markov decision process isomorphism \cite{nr08}
-\item context-free grammar isomorphism
+%\item context-free grammar isomorphism
   % [76] H. B. Hunt, III and D. J. Rosenkrantz, ``Complexity of grammatical
   % similarity relations,'' Proc. Conf. Theor. Comput. Sci.,
   % Comput. Sci. Dept., Univ. Waterloo, Ontario (1978), pp. 139-145.

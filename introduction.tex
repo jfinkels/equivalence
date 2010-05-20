@@ -1,0 +1,22 @@
+Problems of determining equivalence of objects abound in theoretical computer
+science and have widespread applications in a more practical setting. Indeed,
+one of the most well-studied open problems in computer science is determining
+the computational complexity of the graph isomorphism problem ($GI$). If
+$\P\neq\NP$, then $GI$ is a candidate for $\P\backslash\NP$.
+
+A recent paper by Fortnow and Grochow \cite{fg09} defines a new kind of
+reduction among equivalence relations, a \defn{kernel reduction}, which may be
+more natural than the usual many-one reduction for problems of determining
+equivalence. They suggest considering polynomial time kernel reductions for
+equivalence problems in \P, but in \autoref{sec:p} we will provide some
+evidence that allowing a polynomial time kernel reduction among equivalence
+relations for which membership can be decided in polynomial time may be too
+powerful. The main result to this effect is \autoref{thm:reps}, in which we
+show that the problem of computing a polynomial time kernel reduction among
+feasible equivalence problems can, under certain conditions, be reduced to the
+problem of computing representatives of equivalence classes for each respective
+equivalence relation.
+
+In \autoref{sec:np} we attempt to determine whether there exist any equivalence
+problems which are complete under polynomial time kernel reductions, and what
+they look like. We also analyze the class of equivalence problems which 
