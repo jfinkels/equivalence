@@ -88,6 +88,7 @@
 \newcommand{\nkrnt}{\nleq_{ker}} % does not kernel-reduce without time bound
 \newcommand{\kequiv}{\equiv^{p}_{ker}} % is equivalent under kernel reductions
 \newcommand{\kequivnt}{\equiv_{ker}} % is equivalent without time bound
+\newcommand{\kri}{\leq^{p}_{ker,1\text{--}1}} % 1-1 kernel-reduces
 \newcommand{\mor}{\leq^{p}_{m}} % many-one reduces
 \newcommand{\moequiv}{\equiv^{p}_m} % is equivalent under many-one reductions
 %\newcommand{\tequiv}{\equiv^{p}_T} % is equivalent under Turing reductions
@@ -197,6 +198,12 @@ found, for example, in \cite{sipser06}.
   
   We say $A$ \defn{is polynomial time, many-one equivalent to} $B$ if $A\mor
   B$ and $B\mor A$. We denote this by $A\moequiv B$.
+\end{definition}
+
+\begin{definition}
+  If a language $A$ is in $\NP$ and $\forall B\in\NP$, $B\mor A$, then we say
+  $A$ is \defn{\NP-complete}, $A$ is \defn{complete under $\mor$ reductions in
+    \NP}, or $A$ is \defn{$\mor$-complete}.
 \end{definition}
 
 \begin{definition}
@@ -1673,6 +1680,77 @@ studied. For more information, see \cite{kst93}.
 %% TODO study hard equivalence problems: Boolean formula isomorphism? algebraic
 %% structure equivalence relations (bloniarz84)? regular expressions with + and
 %% times?  see Boolean equivalence problems paper
+
+\subsection{\texorpdfstring{\NP}{NP}-Completeness and
+  \texorpdfstring{\NPEq}{NPEq}-completeness}
+
+We can further characterize equivalence problems which are \NP-complete and
+\NPEq-complete. First we define an extension of a kernel reduction, and the
+corresponding notion of completeness.
+
+\begin{definition}
+  Let $R$ and $S$ be equivalence relations on $\sigmastar$. We say $R$
+  \defn{polynomial time, injective, kernel reduces to} $S$ if $\exists
+  f\in\FP:\forall x,y\in\sigmastar$, $\pair{x}{y}\in R \iff
+  \pair{f(x)}{f(y)}\in S$ and $f$ is injective. We denote this by $R\kri S$.
+\end{definition}
+
+\begin{definition}
+  If $R\in\NPEq$ and $\forall S\in\NPEq$, $S\kri R$, then $R$ is
+  \defn{$\kri$-complete in \NPEq}.
+\end{definition}
+
+Recall that $\NPC$ is the set of all languages in $\NP$ which
+are complete under $\mor$-reductions.
+
+\begin{theorem}
+  $\exists A\in\NPC:$ if $A$ is $\kr$-complete in $\NPEq$, then $A$ is not
+  $\kri$-complete in $\NPEq$.
+\end{theorem}
+\begin{proof}
+  Let $A=\{\pair{\pair{G_1}{k_1}}{\pair{G_2}{k_2}}| k_1=k_2$ and $(G_1\cong
+  G_2$ or $(G_1$ has a clique of size $k_1$ and $G_2$ has a clique of size
+  $k_2$ and $|V_1|=|V_2|))\}$, where $G_1=(V_1, E_1)$ and $G_2=(V_2,
+  E_2)$. The only difference between this equivalence relation and $R_{KC}$ is
+  the condition that $G_1$ and $G_2$ must have the same number of vertices.
+
+  $A$ is $\mor$-complete in $\NP$ by a reduction from $CLIQUE$ similar to the
+  one in \autoref{thm:rkc_npc}. If $G=(V,E)$, we can compute in polynomial time
+  the reduction $f$ defined by
+  $\pair{G}{k}\mapsto\pair{\pair{G}{k}}{\pair{K^+_k}{k}}$, where $K^+_k$ is the
+  complete graph of $k$ vertices with $|V|-k$ vertices added (without any
+  connecting edges), if $|V|\geq k$. If $|V|<k$, then $K^+_k=K_k$. To show $f$
+  is a many-one reduction from $CLIQUE$, first suppose $\pair{G}{k}\in CLIQUE$,
+  so $G$ has a clique of size $k$, which implies $|V|\geq k$. Hence, $G$ has a
+  clique of size $k$, $K^+_k$ has a clique of size $k$, and $|V|$ equals the
+  number of vertices in $K^+_k$ (by construction). Therefore
+  $\pair{\pair{G}{k}}{\pair{K^+_k}{k}}\in A$. Suppose $\pair{G}{k}\notin
+  CLIQUE$, so $G$ does not have a clique of size $k$. $K^+_k$ has a clique of
+  size $k$ by definition, so the only case left to check is whether $G$ is
+  isomorphic to $K^+_k$. If they were isomorphic, then $G$ would have a clique
+  of size $k$, but this is a contradiction with the hypothesis, so
+  $\pair{\pair{G}{k}}{\pair{K^+_k}{k}}\notin A$. Therefore $CLIQUE\mor A$, and
+  hence $A$ is $\mor$-complete in $\NP$.
+
+  Now suppose $A$ is also $\kr$-complete in $\NPEq$. Since
+  $R_{bc}\in\PEq\subseteq\NPEq$, then $R_{bc}\kr A$.
+
+  First, we will consider the equivalence classes in $R_{bc}$. There are a
+  countably infinite number of equivalence classes in $R_{bc}$; they are $[0],
+  [1], [11], [111], \ldots$. Each equivalence class is itself infinite as well;
+  if $w\in\sigmastar$ then $[w]$ includes also $[0w], [00w], [000w],
+  \ldots$.
+
+  % TODO is the number of n vertex graphs correct
+
+  There are an infinite number of equivalence classes in $A$, as well. However,
+  each equivalence class contains only a finite number of elements. If
+  $G=(V,E)$, then $[\pair{G}{k}]$ includes also all pairs $\pair{H}{k}$, where
+  $G$ is isomorphic to $H$, and all pairs $\pair{J}{k}$, where $G$ and $J$ have
+  the same number of vertices and both have a clique of size $k$. The set of
+  all pairs $\pair{H}{k}$ is finite, because there are only a finite number of
+  graphs on $|V|$ vertices (specifically, $2^\frac{|V|(|V|-1)}{2}$).
+\end{proof}
 
 \section{Kernel reductions vs. many-one reductions} \label{sec:diffs}
 
