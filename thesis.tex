@@ -354,7 +354,7 @@ equivalence relation have the same parity.
   defined by $\beta(w)$ equals the number of ones in $w$, for all
   $w\in\sigmastar$.
 \end{definition}
-\begin{definition}
+\begin{definition}\label{def:rbc}
   $R_{bc}=\{\pair{x}{y}| \beta(x)=\beta(y)\}$
 \end{definition}
 We use the subscript ``$bc$'' to denote that pairs of binary strings in this
@@ -1700,6 +1700,18 @@ corresponding notion of completeness.
   \defn{$\kri$-complete in \NPEq}.
 \end{definition}
 
+\begin{lemma}\label{lem:image}
+  Let $R,S$ be equivalence relations on $\sigmastar$, and let
+  $w\in\sigmastar$. Suppose $R\kr S$, by some $f\in\FP$. Then
+  $f([w]_R)\subseteq [f(w)]_S$. In other words, the image of an equivalence
+  class of $R$ is a subset of an equivalence class of $S$.
+\end{lemma}
+\begin{proof}
+  Since $w\in [w]_R$, $f(w)\in f([w]_R)$. Let $x\in f([w]_R)$. Then $(x,
+  f(w))\in S$, so $x\in [f(w)]_S$. Therefore $f([w]_R)\subseteq [f(w)]_S$.
+\end{proof}
+
+
 Recall that $\NPC$ is the set of all languages in $\NP$ which
 are complete under $\mor$-reductions.
 
@@ -1732,25 +1744,43 @@ are complete under $\mor$-reductions.
   $\pair{\pair{G}{k}}{\pair{K^+_k}{k}}\notin A$. Therefore $CLIQUE\mor A$, and
   hence $A$ is $\mor$-complete in $\NP$.
 
-  Now suppose $A$ is also $\kr$-complete in $\NPEq$. Since
-  $R_{bc}\in\PEq\subseteq\NPEq$, then $R_{bc}\kr A$.
+  First, we will consider the equivalence classes in the equivalence relation
+  $R_{bc}$, as defined in \autoref{def:rbc}. There are an infinite number of
+  equivalence classes in $R_{bc}$; specifically, they are $[0], [1], [11],
+  [111],$ etc. Each equivalence class is itself infinite as well: if
+  $w\in\sigmastar$ then $[w]$ includes also $[0w], [00w], [000w],$ etc.
 
-  First, we will consider the equivalence classes in $R_{bc}$. There are a
-  countably infinite number of equivalence classes in $R_{bc}$; they are $[0],
-  [1], [11], [111], \ldots$. Each equivalence class is itself infinite as well;
-  if $w\in\sigmastar$ then $[w]$ includes also $[0w], [00w], [000w],
-  \ldots$.
+  % TODO is the number of n vertex graphs correct?
 
-  % TODO is the number of n vertex graphs correct
-
-  There are an infinite number of equivalence classes in $A$, as well. However,
+  Next, we will consider the equivalence classes in $A$. There are an infinite
+  number of equivalence classes in $A$, as well (because there are an infinite
+  number of graphs, and an infinite number of natural numbers). However, in $A$
   each equivalence class contains only a finite number of elements. If
-  $G=(V,E)$, then $[\pair{G}{k}]$ includes also all pairs $\pair{H}{k}$, where
-  $G$ is isomorphic to $H$, and all pairs $\pair{J}{k}$, where $G$ and $J$ have
-  the same number of vertices and both have a clique of size $k$. The set of
-  all pairs $\pair{H}{k}$ is finite, because there are only a finite number of
-  graphs on $|V|$ vertices (specifically, $2^\frac{|V|(|V|-1)}{2}$).
+  $G=(V,E)$, then $[\pair{G}{k}]$ includes all pairs $\pair{H}{k}$, where $G$
+  is isomorphic to $H$, and all pairs $\pair{J}{k}$, where $G$ and $J$ have the
+  same number of vertices and both have a clique of size $k$. Since there are
+  only a finite number of graphs on $|V|$ vertices (specifically,
+  $2^\frac{|V|(|V|-1)}{2}$), and any graph isomorphic to $G$ must have $|V|$
+  vertices, the number of graphs isomorphic to $G$ is finite. Furthermore, the
+  number of graphs with both $|V|$ vertices and a clique of size $k$ is also
+  finite. Therefore, the equivalence class $[\pair{G}{k}]$ is finite.
+
+  Now suppose $A$ is $\kr$-complete in $\NPEq$, as specified in the hypothesis
+  of this theorem. Since $R_{bc}\in\PEq\subseteq\NPEq$, then $R_{bc}\kr A$, so
+  $\exists f\in\FP: w\in\R_{bc}\iff f(w)\in A$.
+
+  Let $w\in\sigmastar$. Then $f(w)=\pair{G}{k}$ for some graph $G$ and some
+  $k\in\mathbb{N}$. By the above arguments, $[w]_{R_{bc}}$ is infinite and
+  $[f(w)]_A=[\pair{G}{k}]_A$ is finite. By \autoref{lem:image},
+  $f([w]_{R_{bc}})\subseteq [f(w)]_A$. Consider $f|_{[w]_{R_{bc}}}$, that is,
+  $f$ restricted to the domain $[w]_{R_{bc}}$. Then $f|_{[w]_{R_{bc}}}$ is a
+  mapping from an infinite set (specifically $[w]_{R_{bc}}$) to a finite set
+  (specifically $[f(w)]_A=[\pair{G}{k}]_A$). By the pigeonhole principle,
+  $f|_{[w]_{R_{bc}}}$ is not injective. Hence the unrestricted reduction $f$ is
+  not injective, and therefore $A$ is not $\kri$-complete in \NPEq.
 \end{proof}
+
+%% TODO what is the significance of this theorem
 
 \section{Kernel reductions vs. many-one reductions} \label{sec:diffs}
 
