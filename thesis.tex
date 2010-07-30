@@ -167,7 +167,7 @@ functions, etc., see \cite{bdg95}.
   Turing machine running in deterministic polynomial time.
   
   $\NP$ is the class of languages for which membership can be decided by a
-  Turing machine running in nondeterministic polynomial time.
+  Turing machine running in non-deterministic polynomial time.
 
   $\NP$ can alternately be defined as the class of languages for which
   membership can be verified by a Turing machine running in deterministic
@@ -244,7 +244,7 @@ class. We provide the definition, along with its generalization in \NP, here.
   decided by a Turing machine running in deterministic polynomial time.
 
   \defn{\NPEq} is the class of equivalence relations for which membership can
-  be decided by a Turing machine running in nondeterministic polynomial time.
+  be decided by a Turing machine running in non-deterministic polynomial time.
 
   \defn{\NPEq} can alternately be defined as the class of equivalence relations
   for which membership can be verified by a Turing machine running in
@@ -1553,10 +1553,11 @@ from the graph isomorphism problem to be possible.
 \end{proof}
 
 We constructed $R_{KC}$ in order to make this reduction easy, but there is in
-fact another known problem in $\NPEq\cap\NPC$. Garey and Johnson provide a
+fact another well-known problem in $\NPEq\cap\NPC$. Garey and Johnson provide a
 single \NP-complete equivalence problem: a databases problem concerning the
 equivalence of tableaux.\cite{gj79} The original proof is a reduction from
-\TSAT.\cite{asu79}
+\TSAT \cite{asu79}. Equivalence relations in $\NPEq\cap\NPC$ are easy to find;
+we describe another in the proof of \autoref{thm:npeqc_neq_npc}.
 
 Reductions between the graph isomorphism problem and other equivalence problems
 in $\NPEq$ abound, and though they have traditionally been presented as
@@ -1683,6 +1684,31 @@ studied. For more information, see \cite{kst93}.
 \subsection{\texorpdfstring{\NP}{NP}-Completeness and
   \texorpdfstring{\NPEq}{NPEq}-completeness}
 
+We first provide this straightforward corollary of \autoref{thm:numbers}, which
+gives some structure to \PEq- and \NPEq-complete problems, if they exist.
+
+\begin{corollary}\label{cor:npeqc_infinite}
+  \mbox{}
+  \begin{enumerate}
+    \renewcommand{\labelenumi}{\roman{enumi}.}
+  \item If an equivalence relation has a finite number of equivalence classes,
+    then it is not \PEq-complete.
+  \item If an equivalence relation has a finite number of equivalence classes,
+    then it is not \NPEq-complete.
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  Suppose $R$ is an equivalence relation. Assume with the intention of
+  producing a contradiction that $R$ is \PEq-complete. $R_{eq}$ has an infinite
+  number of equivalence classes (specifically, one for each binary string), and
+  $R$ has a finite number of equivalence classes, by assumption. By
+  \autoref{thm:numbers}, $R\nkr R_{eq}$. But since $R_{eq}\in\PEq$, then
+  $R_{eq}\kr R$. This is a contradiction. Therefore $R$ is not \PEq-complete.
+
+  The proof is the same in \NPEq, because $R_{eq}\in\PEq\subseteq\NPEq$.
+\end{proof}
+
+
 We can further characterize equivalence problems which are \NP-complete and
 \NPEq-complete. First we define an extension of a kernel reduction, and the
 corresponding notion of completeness.
@@ -1708,7 +1734,6 @@ corresponding notion of completeness.
   Since $w\in [w]_R$, $f(w)\in f([w]_R)$. Let $x\in f([w]_R)$. Then $(x,
   f(w))\in S$, so $x\in [f(w)]_S$. Therefore $f([w]_R)\subseteq [f(w)]_S$.
 \end{proof}
-
 
 Recall that $\NPC$ is the set of all languages in $\NP$ which
 are complete under $\mor$-reductions.
