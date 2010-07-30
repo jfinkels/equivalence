@@ -25,7 +25,7 @@
 %%    * Nothing in this license impairs or restricts the author's moral rights.
 %%%%
 %\documentclass{amsart}
-\documentclass{article}
+\documentclass[draft]{article}
 
 % package imports
 \usepackage{aliascnt} % for correct autoref labeling of non-theorems
@@ -166,7 +166,7 @@ functions, etc., see \cite{bdg95}.
   Turing machine running in deterministic polynomial time.
   
   $\NP$ is the class of languages for which membership can be decided by a
-  Turing machine running in nondeterministic polynomial time.
+  Turing machine running in non-deterministic polynomial time.
 
   $\NP$ can alternately be defined as the class of languages for which
   membership can be verified by a Turing machine running in deterministic
@@ -196,6 +196,12 @@ found, for example, in \cite{sipser06}.
   
   We say $A$ \defn{is polynomial time, many-one equivalent to} $B$ if $A\mor
   B$ and $B\mor A$. We denote this by $A\moequiv B$.
+\end{definition}
+
+\begin{definition}
+  If a language $A$ is in $\NP$ and $\forall B\in\NP$, $B\mor A$, then we say
+  $A$ is \defn{\NP-complete}, $A$ is \defn{complete under $\mor$ reductions in
+    \NP}, or $A$ is \defn{$\mor$-complete}.
 \end{definition}
 
 \begin{definition}
@@ -237,7 +243,7 @@ class. We provide the definition, along with its generalization in \NP, here.
   decided by a Turing machine running in deterministic polynomial time.
 
   \defn{\NPEq} is the class of equivalence relations for which membership can
-  be decided by a Turing machine running in nondeterministic polynomial time.
+  be decided by a Turing machine running in non-deterministic polynomial time.
 
   \defn{\NPEq} can alternately be defined as the class of equivalence relations
   for which membership can be verified by a Turing machine running in
@@ -1546,7 +1552,7 @@ from the graph isomorphism problem to be possible.
 \end{proof}
 
 We constructed $R_{KC}$ in order to make this reduction easy, but there is in
-fact another known problem in $\NPEq\cap\NPC$. Garey and Johnson provide a
+fact another well-known problem in $\NPEq\cap\NPC$. Garey and Johnson provide a
 single \NP-complete equivalence problem: a databases problem concerning the
 equivalence of tableaux.\cite{gj79} The original proof is a reduction from
 \TSAT.\cite{asu79}
