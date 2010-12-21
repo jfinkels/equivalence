@@ -1,0 +1,308 @@
+%%%%
+%% equivalence.tex
+%%
+%% Copyright 2010 Jeffrey Finkelstein
+%%
+%% Except where otherwise noted, this work is made available under the terms of
+%% the Creative Commons Attribution-ShareAlike 3.0 license,
+%% http://creativecommons.org/licenses/by-sa/3.0/.
+%%
+%% You are free:
+%%    * to Share — to copy, distribute and transmit the work
+%%    * to Remix — to adapt the work
+%% Under the following conditions:
+%%    * Attribution — You must attribute the work in the manner specified by
+%%    the author or licensor (but not in any way that suggests that they
+%%    endorse you or your use of the work).
+%%    * Share Alike — If you alter, transform, or build upon this work, you may
+%%    distribute the resulting work only under the same, similar or a 
+%%    compatible license.
+%%    * For any reuse or distribution, you must make clear to others the 
+%%    license terms of this work. The best way to do this is with a link to the
+%%    web page http://creativecommons.org/licenses/by-sa/3.0/.
+%%    * Any of the above conditions can be waived if you get permission from
+%%    the copyright holder.
+%%    * Nothing in this license impairs or restricts the author's moral rights.
+%%%%
+\documentclass{article}
+
+% package imports
+\usepackage{aliascnt} % for correct autoref labeling of non-theorems
+\usepackage[noend, noline, linesnumbered, boxed]{algorithm2e}
+\usepackage{amsthm} % for theorems, definitions, lemmas, and styles
+\usepackage{amsmath} % for \implies
+\usepackage{amssymb} % for \nleq
+\usepackage{complexity} % for typesetting complexity classes
+\usepackage{cclicenses} % for adding creative commons license symbols
+%\usepackage{fullpage} % for making the text take up the full page
+\usepackage[
+  backref=page, % backlinks in references
+  pdftitle={On the computational complexity of equivalence relations under
+    kernel reductions},
+  pdfauthor={Jeffrey Finkelstein}
+]{hyperref} % for pdf links when rendering \ref and \cite commands
+
+% Define theorem, lemma, and definition environments and corresponding styles.
+% Lemmata, corollaries, and definitions are numbered with the same counter as
+% that for theorems. We have to do some black magic to get the \autoref labels
+% to work correctly.
+\newtheorem{theorem}{Theorem}[section]
+
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+
+\newaliascnt{definition}{theorem}
+\theoremstyle{definition} \newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+
+% define lemma, corollary, and definition context labels for \autoref command
+% (theorem is already defined)
+\newcommand{\lemmaname}{Lemma}
+\newcommand{\corollaryname}{Corollary}
+\newcommand{\definitionname}{Definition}
+
+% custom shortcut commands
+%\newcommand{\plain}[1]{\,\text{#1}\,} % plain text inside math environments
+\newcommand{\sigmastar}{\{0, 1\}^{*}} % the set of all binary strings
+\newcommand{\kr}{\leq^{p}_{ker}} % kernel-reduces
+\newcommand{\nkr}{\nleq^{p}_{ker}} % does not kernel-reduce
+\newcommand{\krnt}{\leq_{ker}} % kernel-reduces without time bound
+\newcommand{\nkrnt}{\nleq_{ker}} % does not kernel-reduce without time bound
+\newcommand{\kequiv}{\equiv^{p}_{ker}} % is equivalent under kernel reductions
+\newcommand{\kequivnt}{\equiv_{ker}} % is equivalent without time bound
+\newcommand{\kri}{\leq^{p}_{ker,1\text{--}1}} % 1-1 kernel-reduces
+\newcommand{\mor}{\leq^{p}_{m}} % many-one reduces
+\newcommand{\moequiv}{\equiv^{p}_m} % is equivalent under many-one reductions
+%\newcommand{\tequiv}{\equiv^{p}_T} % is equivalent under Turing reductions
+\newcommand{\defn}[1]{\emph{#1}} % emphasize words which are being defined
+\newcommand{\pair}[2]{\langle#1,#2\rangle} % pairing function
+\newcommand{\triple}[3]{\langle#1,#2,#3\rangle} % generalization of pairing fn.
+
+% create the creative commons license
+\newcommand{\license}{\begin{tabular}[h]{r l}
+    \bysa & \parbox{275pt}{Copyright 2010 Jeffrey Finkelstein. 
+      Except where otherwise noted, this work is licensed
+      under http://creativecommons.org/licenses/by-sa/3.0/}
+\end{tabular}}
+
+% redefine footnote so it has no reference and no number
+\long\def\symbolfootnote#1{\begingroup%
+\def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup} 
+
+% define the author, title, and date
+\author{Jeffrey Finkelstein} 
+\title{On the computational complexity of equivalence relations under kernel
+  reductions}
+\date{\today} 
+
+\begin{document}
+
+\maketitle
+\symbolfootnote{\license}
+
+\begin{theorem}\label{thm:numbers}
+  Let $R$ and $S$ be equivalence relations on $\sigmastar$. Suppose $R$ has $n$
+  equivalence classes and $S$ has $m$ equivalence classes. If $n>m$ then
+  $R\nkrnt S$ (that is, $R$ does not kernel reduce to $S$, regardless of any
+  time bound on the function computing the reduction).
+\end{theorem}
+\begin{proof}
+  Assume with the intention of producing a contradiction that $R\krnt S$. Then
+  there exists a computable function $f$ such that $\forall x,y$,
+  $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
+
+  Since $R$ has $n$ non-empty equivalence classes which form a partition of
+  $\sigmastar$, then $\exists r_1,\ldots,r_n\in\sigmastar$ such that
+  $R=[r_1]_R\cup\cdots\cup[r_n]_R$.  Since each element of $R$ is in exactly
+  one equivalence class, $\forall i,j\leq n$, $i=j\iff\pair{r_i}{r_j}\in
+  R\iff\pair{f(r_i)}{f(r_j)}\in S$. Therefore the image of each $r_i$ is in
+  some equivalence class in $S$.  Also, $\forall i,j\leq n$, $i\neq j\iff
+  \pair{r_i}{r_j}\notin R\iff \pair{f(r_i)}{f(r_j)}\notin S$. Therefore, the
+  image of each $r_i$ does not relate to the image of any other $r_j$, for
+  $i\neq j$, and $i,j\leq n$. Therefore each of the equivalence classes
+  $[f(r_1)]_S,\ldots,[f(r_n)]_S$ is disjoint, so $S$ has at least $n$
+  equivalence classes. But $n>m$. This is a contradiction with the hypothesis
+  that $S$ has $m$ equivalence classes.
+
+  Therefore $R\nkrnt S$.
+\end{proof}
+
+\begin{corollary}\label{cor:finite}
+  \mbox{}
+  \begin{enumerate}
+    \renewcommand{\labelenumi}{\roman{enumi}.}
+  \item If an equivalence relation has a finite number of equivalence classes,
+    then it is not \PEq-complete.
+  \item If an equivalence relation has a finite number of equivalence classes,
+    then it is not \NPEq-complete.
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  Suppose $R$ is an equivalence relation. Assume with the intention of
+  producing a contradiction that $R$ is
+  \PEq-complete. $R_{eq}=\{\pair{x}{y}|x=y\}$ has an infinite number of
+  equivalence classes (specifically, one for each binary string), and $R$ has a
+  finite number of equivalence classes, by assumption. By
+  \autoref{thm:numbers}, $R\nkr R_{eq}$. But since $R_{eq}\in\PEq$, then
+  $R_{eq}\kr R$. This is a contradiction. Therefore $R$ is not \PEq-complete.
+
+  The proof is the same in \NPEq, because $R_{eq}\in\PEq\subseteq\NPEq$.
+\end{proof}
+
+\begin{theorem}\label{thm:repr_kr}
+  Let $R,S$ be equivalence relations on $\sigmastar$. Suppose
+  $R\in\PEq$. Suppose also that $R$ has $n$ equivalence classes and the number
+  of equivalence classes of $S$ is greater than or equal to $n$ (possibly
+  countably infinite). Let $REP(R)$ be a set of representatives of equivalence
+  classes in $R$, and $REP(S)$ be a set of representatives of equivalence
+  classes in $S$. If there exists a function $f\colon REP(R)\to REP(S)$ such
+  that $f\in\FP$ and $f$ is injective, then $R\kr S$.
+\end{theorem}
+\begin{proof}
+  Since $R\in\PEq$, $\exists M_R$, a deterministic Turing machine running in
+  polynomial time, such that $\pair{x}{y}\in R\iff M_R(\pair{x}{y})$
+  accepts. Construct $g\in\FP$ on input $w\in\sigmastar$:\\
+  \begin{algorithm}[H]
+    \For{$r_i\in REP(R)$}{
+      \If{$M_R(\pair{w}{r_i})$ accepts}{
+        \Return{$f(r_i)$}
+      }
+    }
+  \end{algorithm}
+  Notice that each $w\in\sigmastar$ is in exactly one equivalence class in $R$,
+  because the equivalence classes partition $\sigmastar$, so
+  $M_R(\pair{w}{r_i})$ accepts exactly once during the loop, when
+  $\pair{w}{r_i}\in R$.
+
+  Suppose $\pair{x}{y}\in R$, so $\pair{x}{r_i}\in R$ and $\pair{y}{r_i}\in R$
+  for some $r_i\in REP(R)$. Then $g(x)$ outputs $f(r_i)$ and $g(y)$ outputs
+  $f(r_i)$. Since $\pair{f(r_i)}{f(r_i)}\in S$, then $\pair{g(x)}{g(y)}\in S$.
+
+  Suppose $\pair{x}{y}\notin R$. So $\exists r_i, r_j\in REP(R)$, with $r_i\neq
+  r_j$, such that $\pair{x}{r_i}\in R$ and $\pair{y}{r_j}\in R$. Then $g(x)$
+  outputs $f(r_i)$ and $g(y)$ outputs $f(r_j)$. Since $f$ is injective,
+  $r_i\neq r_j\implies f(r_i)\neq f(r_j)$. Since $f(r_i)$ and $f(r_j)$ are
+  distinct elements in $REP(S)$, they are representatives of two distinct
+  equivalence classes. Since every element of $S$ is in exactly one equivalence
+  class, and since $[f(r_i)]\neq[f(r_j)]$, it follows that
+  $\pair{f(r_i)}{f(r_j)}=\pair{g(x)}{g(y)}\notin S$.
+
+  Therefore $\pair{x}{y}\in R\iff \pair{g(x)}{g(y)}\in S$, so $R\kr S$.
+\end{proof}
+
+%% TODO define computably enumerable
+\begin{theorem}\label{thm:reps}
+  Let $R,S$ be equivalence relations on $\sigmastar$. Suppose
+  $R\in\PEq$. Suppose also that $R$ has $n$ equivalence classes and the number
+  of equivalence classes of $S$ is greater than or equal to $n$ (possibly
+  countably infinite). Let $REP(R)$ be a set of representatives of equivalence
+  classes in $R$, and $REP(S)$ be a set of representatives of equivalence
+  classes in $S$. If $REP(R)$ and $REP(S)$ are computably enumerable then $R\kr
+  S$.
+\end{theorem}
+\begin{proof}
+  We compute the kernel reduction using the following procedure.
+
+  Enumerate $REP(R)$ to produce $\{r_1, r_2, \ldots, r_n\}$, where each $r_i$
+  is a representative of a distinct equivalence class of $R$. Enumerate
+  $REP(S)$ to produce $\{s_1, s_2, \ldots, s_n\}$, where each $s_i$ is a
+  representative of a distinct equivalence class of $S$. Note that we only need
+  to output representatives of $n$ equivalence classes of $S$ though it may
+  have more.
+
+  Define $f\in\FP$ by $f(r_i)=s_i$, $\forall i\leq n$. We now wish to show that
+  $f$ is injective. Suppose $r_i,r_j\in R$ and $r_i\neq r_j$. Then $f(r_i)=s_i$
+  and $f(r_j)=s_j$. $r_i\neq r_j\implies i\neq j\implies s_i\neq s_j\implies
+  f(s_i)\neq f(s_j)$. Therefore $f$ is injective.
+
+  The function $f$ now satisfies the conditions in the hypothesis of
+  \autoref{thm:repr_kr}, so the result follows.
+\end{proof}
+
+Note that computing the representatives of $R$ and $S$ takes some amount of
+time \emph{independent} of the size of the input to the transducer $f$.
+
+\begin{lemma}\label{lem:image}
+  Let $R,S$ be equivalence relations on $\sigmastar$, and let
+  $w\in\sigmastar$. Suppose $R\kr S$, by some $f\in\FP$. Then
+  $f([w]_R)\subseteq [f(w)]_S$. In other words, the image of an equivalence
+  class of $R$ is a subset of an equivalence class of $S$.
+\end{lemma}
+\begin{proof}
+  Since $w\in [w]_R$, $f(w)\in f([w]_R)$. Let $x\in f([w]_R)$. Then $(x,
+  f(w))\in S$, so $x\in [f(w)]_S$. Therefore $f([w]_R)\subseteq [f(w)]_S$.
+\end{proof}
+
+\begin{theorem}
+  There exists an \NP-complete language $A$ such that if $A$ is $\kr$-complete
+  in $\NPEq$, then $A$ is not $\kri$-complete in $\NPEq$.
+\end{theorem}
+\begin{proof}
+  Let $A=\{\pair{\pair{G_1}{k_1}}{\pair{G_2}{k_2}}| k_1=k_2$ and $(G_1\cong
+  G_2$ or $(G_1$ has a clique of size $k_1$ and $G_2$ has a clique of size
+  $k_2$ and $|V_1|=|V_2|))\}$, where $G_1=(V_1, E_1)$ and $G_2=(V_2, E_2)$. The
+  only difference between this equivalence relation and $R_{KC}$ is the
+  condition that $G_1$ and $G_2$ must have the same number of vertices.
+
+  $A$ is $\mor$-complete in $\NP$ by a reduction from $CLIQUE$ similar to the
+  one in \autoref{thm:rkc_npc}.  If $G=(V,E)$, we can compute in polynomial
+  time the reduction $f$ defined by
+  $\pair{G}{k}\mapsto\pair{\pair{G}{k}}{\pair{K^+_k}{k}}$, where $K^+_k$ is the
+  complete graph of $k$ vertices with $|V|-k$ vertices added (without any
+  connecting edges), if $|V|\geq k$. If $|V|<k$, then $K^+_k=K_k$. To show $f$
+  is a many-one reduction from $CLIQUE$, first suppose $\pair{G}{k}\in CLIQUE$,
+  so $G$ has a clique of size $k$, which implies $|V|\geq k$. Hence, $G$ has a
+  clique of size $k$, $K^+_k$ has a clique of size $k$, and $|V|$ equals the
+  number of vertices in $K^+_k$ (by construction). Therefore
+  $\pair{\pair{G}{k}}{\pair{K^+_k}{k}}\in A$. Suppose $\pair{G}{k}\notin
+  CLIQUE$, so $G$ does not have a clique of size $k$. $K^+_k$ has a clique of
+  size $k$ by definition, so the only case left to check is whether $G$ is
+  isomorphic to $K^+_k$. If they were isomorphic, then $G$ would have a clique
+  of size $k$, but this is a contradiction with the hypothesis, so
+  $\pair{\pair{G}{k}}{\pair{K^+_k}{k}}\notin A$. Therefore $CLIQUE\mor A$, and
+  hence $A$ is $\mor$-complete in $\NP$.
+
+  Now, we will consider the equivalence classes in the equivalence relation
+  $R_{bc}$, as defined in \autoref{def:rbc}. There are an infinite number of
+  equivalence classes in $R_{bc}$; specifically, they are $[\lambda], [1],
+  [11], [111],$ etc. Each equivalence class is itself infinite as well: if
+  $w\in\sigmastar$ then $[w]$ contains $w, 0w, 00w, 000w,$ etc.
+
+  % TODO is the number of n vertex graphs correct?
+
+  Next, we will consider the equivalence classes in $A$. There are an infinite
+  number of equivalence classes in $A$, as well (because there are an infinite
+  number of graphs, and an infinite number of natural numbers). However, in $A$
+  each equivalence class contains only a finite number of elements. If
+  $G=(V,E)$, then $[\pair{G}{k}]$ includes all pairs $\pair{H}{k}$, where $G$
+  is isomorphic to $H$, and all pairs $\pair{J}{k}$, where $G$ and $J$ have the
+  same number of vertices and both have a clique of size $k$. Since there are
+  only a finite number of graphs on $|V|$ vertices, and any graph isomorphic to
+  $G$ must have $|V|$ vertices, the number of graphs isomorphic to $G$ is
+  finite. Furthermore, the number of graphs with both $|V|$ vertices and a
+  clique of size $k$ is also finite. Therefore, the equivalence class
+  $[\pair{G}{k}]$ is finite.
+
+  Now suppose $A$ is $\kr$-complete in $\NPEq$, as specified in the hypothesis
+  of this theorem. Since $R_{bc}\in\PEq\subseteq\NPEq$, then $R_{bc}\kr A$, so
+  $\exists f\in\FP$ such that $w\in\R_{bc}\iff f(w)\in A$.
+
+  Let $w\in\sigmastar$. Then $f(w)=\pair{G}{k}$ for some graph $G$ and some
+  $k\in\mathbb{N}$. By the above arguments, $[w]_{R_{bc}}$ is infinite and
+  $[f(w)]_A=[\pair{G}{k}]_A$ is finite. By \autoref{lem:image},
+  $f([w]_{R_{bc}})\subseteq [f(w)]_A$. Consider $f|_{[w]_{R_{bc}}}$, that is,
+  $f$ restricted to the domain $[w]_{R_{bc}}$. Then $f|_{[w]_{R_{bc}}}$ is a
+  mapping from an infinite set (specifically $[w]_{R_{bc}}$) to a finite set
+  (specifically $[f(w)]_A=[\pair{G}{k}]_A$). By the pigeonhole principle,
+  $f|_{[w]_{R_{bc}}}$ is not injective. Hence the unrestricted reduction $f$ is
+  not injective, and therefore $A$ is not $\kri$-complete in \NPEq.
+\end{proof}
+
+\bibliographystyle{amsalpha} \bibliography{references}
+
+\end{document}

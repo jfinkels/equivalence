@@ -1,5 +1,5 @@
 #!/bin/sh
 
-pdflatex thesis && bibtex thesis && pdflatex thesis && pdflatex thesis
+pdflatex equivalence && bibtex equivalence && pdflatex equivalence && pdflatex equivalence
 
 exit 0
