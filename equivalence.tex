@@ -52,6 +52,10 @@
 \newtheorem{lemma}[lemma]{Lemma}
 \aliascntresetthe{lemma}
 
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+
 \newaliascnt{corollary}{theorem}
 \newtheorem{corollary}[corollary]{Corollary}
 \aliascntresetthe{corollary}
@@ -65,19 +69,22 @@
 \newcommand{\lemmaname}{Lemma}
 \newcommand{\corollaryname}{Corollary}
 \newcommand{\definitionname}{Definition}
+\newcommand{\propositionname}{Proposition}
 
 % custom shortcut commands
-%\newcommand{\plain}[1]{\,\text{#1}\,} % plain text inside math environments
+\newcommand{\plain}[1]{\,\text{#1}\,} % plain text inside math environments
 \newcommand{\sigmastar}{\{0, 1\}^{*}} % the set of all binary strings
-\newcommand{\kr}{\leq^{p}_{ker}} % kernel-reduces
-\newcommand{\nkr}{\nleq^{p}_{ker}} % does not kernel-reduce
+\newcommand{\kj}{\overset{ker}{\oplus}} % kernel join
+\newcommand{\kr}{\leq^{P}_{ker}} % kernel-reduces
+\newcommand{\nkr}{\nleq^{P}_{ker}} % does not kernel-reduce
 \newcommand{\krnt}{\leq_{ker}} % kernel-reduces without time bound
 \newcommand{\nkrnt}{\nleq_{ker}} % does not kernel-reduce without time bound
-\newcommand{\kequiv}{\equiv^{p}_{ker}} % is equivalent under kernel reductions
+\newcommand{\kequiv}{\equiv^{P}_{ker}} % is equivalent under kernel reductions
 \newcommand{\kequivnt}{\equiv_{ker}} % is equivalent without time bound
-\newcommand{\kri}{\leq^{p}_{ker,1\text{--}1}} % 1-1 kernel-reduces
-\newcommand{\mor}{\leq^{p}_{m}} % many-one reduces
-\newcommand{\moequiv}{\equiv^{p}_m} % is equivalent under many-one reductions
+\newcommand{\kri}{\leq^{P}_{ker,1\text{--}1}} % 1-1 kernel-reduces
+\newcommand{\mor}{\leq^{P}_{m}} % many-one reduces
+\newcommand{\moequiv}{\equiv^{P}_m} % is equivalent under many-one reductions
+\newcommand{\symdiff}{\bigtriangleup} % set symmetric difference
 %\newcommand{\tequiv}{\equiv^{p}_T} % is equivalent under Turing reductions
 \newcommand{\defn}[1]{\emph{#1}} % emphasize words which are being defined
 \newcommand{\pair}[2]{\langle#1,#2\rangle} % pairing function
@@ -104,6 +111,19 @@
 
 \maketitle
 \symbolfootnote{\license}
+
+\begin{proposition}\label{prop:compose}
+  If $R\kr S$ and $S\kr T$ then $R\kr T$. In other words, polynomial time
+  kernel reductions compose.
+\end{proposition}
+\begin{proof}
+  Let $f$ and $g$ be the polynomial time kernel reductions from $R$ to $S$ and
+  from $S$ to $T$, respectively. Then $g\circ f$ computes a polynomial time
+  kernel reduction from $R$ to $T$. It is polynomial time computable because
+  polynomial time computable functions compose, and $\pair{x}{y}\in R$ if and
+  only if $\pair{f(x)}{f(y)}\in S$ if and only if $\pair{g(f(x))}{g(f(y))}\in
+  T$.
+\end{proof}
 
 \begin{theorem}\label{thm:numbers}
   Let $R$ and $S$ be equivalence relations on $\sigmastar$. Suppose $R$ has $n$
@@ -154,6 +174,7 @@
   The proof is the same in \NPEq, because $R_{eq}\in\PEq\subseteq\NPEq$.
 \end{proof}
 
+%% TODO extend this theorem to countably infinite sets
 \begin{theorem}\label{thm:repr_kr}
   Let $R,S$ be equivalence relations on $\sigmastar$. Suppose
   $R\in\PEq$. Suppose also that $R$ has $n$ equivalence classes and the number
@@ -301,6 +322,263 @@ time \emph{independent} of the size of the input to the transducer $f$.
   (specifically $[f(w)]_A=[\pair{G}{k}]_A$). By the pigeonhole principle,
   $f|_{[w]_{R_{bc}}}$ is not injective. Hence the unrestricted reduction $f$ is
   not injective, and therefore $A$ is not $\kri$-complete in \NPEq.
+\end{proof}
+
+\section{Analog of Ladner's theorem}
+
+\begin{definition}
+  A class of languages $\mathcal{C}$ is \defn{closed under finite variations}
+  if and only if $A\in \mathcal{C}$ and $A\symdiff B$ is finite implies $B\in
+  \mathcal{C}$ for all $B$.
+\end{definition}
+
+\begin{definition}
+  Given an alphabet $\Sigma$ with at least two different symbols, say $0$ and
+  $1$, the \defn{kernel join} of two equivalence relations $R$ and $S$ over
+  $\Sigma^*$ is $R\kj S=\{\pair{x0}{y0}|\pair{x}{y}\in
+  R\}\cup\{\pair{x1}{y1}|\pair{x}{y}\in S\}$.
+\end{definition}
+
+\begin{theorem}
+  If $R$ and $S$ are equivalence relations on $\Sigma^*$, then $R\kj S$ is an
+  equivalence relation.
+\end{theorem}
+\begin{proof}
+  %% TODO Are non-empty strings okay?
+
+  Let $x$, $y$ and $z$ be non-empty strings in $\Sigma^*$.
+  
+  Since $x$ is non-empty, $x=x'0$ or $x=x'1$. Since $R$ is reflexive,
+  $\pair{x'}{x'}\in R$. Hence $\pair{x}{x}\in R\kj S$. Therefore $R\kj S$ is
+  reflexive.
+  
+  Suppose $\pair{x}{y}\in R\kj S$. Then either $x=x'0$, $y=y'0$ and
+  $\pair{x'}{y'}\in R$ or $x=x'1$, $y=y'1$ and $\pair{x'}{y'}\in S$. In either
+  case, symmetry follows from the symmetry of $R$ or $S$.
+
+  Suppose $\pair{x}{y}$ and $\pair{y}{z}$ are both in $R\kj S$. In the case
+  that $x=x'0$, $y=y'0$ and $\pair{x'}{y'}\in R$, and that $z=z'0$ and
+  $\pair{y'}{z'}\in R$, then by the transitivity of $R$, $\pair{x'}{z'}\in R$,
+  so $\pair{x}{z}\in R\kj S$. The argument is similar in the case that $x=x'1$,
+  $y=y'1$ and $z=z'1$. It is a contradiction for the other two cases to exist,
+  since $y$ cannot be equal to both $y'0$ and $y'1$.
+
+  Since $R\kj S$ is reflexive, symmetric and transitive, $R\kj S$ is an
+  equivalence relation.
+\end{proof}
+
+\begin{proposition}\label{prop:symdiff}
+  Symmetric difference of equivalence relations preserves symmetry.
+\end{proposition}
+\begin{proof}
+  Let $R$ and $S$ be equivalence relations. Let $(x,y)\in(R\symdiff S)$. In
+  the case that $(x,y)\in R$ and $(x,y)\notin S$, then $(y,x)\in R$. If $(y,x)$
+  were in $S$, then $(x,y)$ would also be in $S$, by symmetry, but this is a
+  contradiction. Hence $(y,x)\in R$ and $(y,x)\notin S$. The argument for the
+  other case is symmetric. Therefore $(x,y)\in(R\symdiff S)\implies
+  (y,x)\in(R\symdiff S)$.
+\end{proof}
+
+\begin{definition}
+  Let $r\colon\mathbb{N}\to\mathbb{N}$ be a computable function such that
+  $r(m)>m$ for all $m$. Define the set $G[r]$ as
+  \begin{displaymath}
+    G[r]=\{x\in\Sigma^*|r^n(0)\leq|x|<r^{n+1}(0) \plain{for some even} n\}
+  \end{displaymath}
+  where $r^n(m)$ denotes the $n$-fold application of $r$ to $m$:
+  \begin{displaymath}
+    \overbrace{r\circ r\circ r\circ\cdots\circ r}^{n \text{times}}(m)
+  \end{displaymath}
+  $G[r]$ is called the \defn{gap language} generated by $r$.
+\end{definition}
+
+\begin{lemma}\label{lem:gap_p}
+  If $r$ is time constructible, then $G[r]\in\P$.
+\end{lemma}
+\begin{proof}
+\end{proof}
+
+We will denote the Cartesian product $G[r]\times G[r]$ by the slightly more
+succinct ${G[r]}^2$, and $\overline{G[r]}\times\overline{G[r]}$ by
+$\overline{G[r]}^2$. Elements of ${G[r]}^2$ are pairs of strings whose lengths
+are in the ``even gaps'' of $r$, while elements of $\overline{G[r]}^2$ are
+pairs of strings whose lengths are in the ``odd gaps'' of $r$.
+
+\begin{lemma}
+  ${G[r]}^2$ and $\overline{G[r]}^2$ are partial equivalence relations (that
+  is, they are symmetric and transitive).
+\end{lemma}
+\begin{proof}
+  We will prove the theorem for ${G[r]}^2$; a symmetric argument proves the
+  theorem for $\overline{G[r]}^2$.
+
+  Let $x,y\in\Sigma^*$. Suppose $\pair{x}{y}\in {G[r]}^2$, so the lengths of
+  $x$ and $y$ are both in an even gap of $r$. Then $\pair{y}{x}\in{G[r]}^2$, so
+  ${G[r]}^2$ is symmetric. Now let $z\in\Sigma^*$ and suppose also that
+  $\pair{y}{z}\in {G[r]}^2$. Then $y$ and $z$ are both in an even gap of $r$,
+  so $x$, $y$ and $z$ are all in some even gap of $r$, and hence
+  $\pair{x}{z}\in {G[r]}^2$. Therefore ${G[r]}^2$ is transitive.
+\end{proof}
+
+\begin{theorem}\label{thm:diag}
+  Let $R_1$ and $R_2$ be decidable equivalence relations, and let
+  $\mathcal{C}_1$ and $\mathcal{C}_2$ be classes of decidable equivalence
+  relations such that:
+  \begin{enumerate}
+  \item $R_1\notin\mathcal{C}_1$
+  \item $R_2\notin\mathcal{C}_2$
+  \item $\mathcal{C}_1$ and $\mathcal{C}_2$ are computably enumerable
+  \item $\mathcal{C}_1$ and $\mathcal{C}_2$ are closed under finite variations
+  \end{enumerate}
+  Then there exists a decidable equivalence relation $R$ such that:
+  \begin{enumerate}
+  \item $R\notin \mathcal{C}_1$
+  \item $R\notin \mathcal{C}_2$
+  \item $R\kr R_1\kj R_2$
+  \end{enumerate}
+\end{theorem}
+\begin{proof} %% TODO use \pair command for pairs
+  Let $P_1, P_2, \ldots$ and $Q_1, Q_2, \ldots$ be enumerations of Turing
+  machines deciding the languages in $\mathcal{C}_1$ and $\mathcal{C}_2$
+  respectively. Define the functions
+  \begin{eqnarray*}
+    r_1(n)=\underset{i\leq n}{max}\{|z_{i,n}|\}+1 & \text{and} &
+    r_2(n)=\underset{i\leq n}{max}\{|z'_{i,n}|\}+1
+  \end{eqnarray*}
+  where $z_{i,n}$ is the smallest word in $\Sigma^*$ such that there exists an
+  $x\in\Sigma^*$, with $n<|x|\leq|z_{i,n}|$, such that $(z_{i,n},
+  x)\in(L(P_i)\symdiff R_1)$, and $z'_{i,n}$ is the smallest word in $\Sigma^*$
+  such that there exists an $x'\in\Sigma^*$, with $n<|x'|\leq|z'_{i,n}|$, such
+  that $(z'_{i,n}, x')\in(L(Q_i)\symdiff R_2)$. Note that it also suffices to
+  find an $x$ and $x'$ such that $(x, z_{i,n})\in(L(P_i)\symdiff R_1)$ and
+  $(x', z'_{i,n})\in(L(Q_i)\symdiff R_2)$, since symmetric difference on
+  equivalence relations preserves symmetry by \autoref{prop:symdiff}.
+
+  We claim that $z_{i,n}$ and $z'_{i,n}$ always exist. Assume that no such
+  $z_{i,n}$ exists, so there are no words such that there exists an
+  $x\in\Sigma^*$, with $n<|x|\leq|z_{i,n}|$, such that $(z_{i,n},
+  x)\in(L(P_i)\symdiff R_1)$. Therefore, there are no pairs in $(L(P_i)\symdiff
+  R_1)$ with both elements of length greater than $n$. Then there are a finite
+  number of pairs in $L(P_i)\symdiff R_1$, so $R_1$ is a finite variation of
+  $L(P_i)$. Since $\mathcal{C}_1$ is closed under finite variations,
+  $R_1\in\mathcal{C}_1$. This is a contradiction with the hypothesis that
+  $R_1\notin\mathcal{C}_1$. Therefore such a $z_{i,n}$ always exists. The
+  argument that $z'_{i,n}$ always exists is similar.
+
+  Since $L(P_i)$ and $L(Q_i)$ are decidable for all $i$, and since $R_1$ and
+  $R_2$ are decidable, so are $L(P_i)\symdiff R_1$ and $L(Q_i)\symdiff
+  R_2$. For each $n$, there is a procedure which always halts and which
+  computes $z_{i,n}$ (using a sort of linear search). A similar procedure
+  computes $z'_{i,n}$. The procedure which computes the maximum of a finite set
+  of numbers and which adds one to that value always halts as well, so $r_1$
+  and $r_2$ are total computable functions.
+
+  Let $r\ge max(r_1,r_2)$ be a non-decreasing time constructible function,
+  which exists by \autoref{nondec}. Now for all $n$ and all $i\leq n$, each
+  element of the pairs $(z_{i,n},x)$ have length between $n$ and $r_1(n)$, by
+  construction. The same is true for $(z'_{i,n}, x')$ between $n$ and
+  $r_2(n)$. Notice that $(z_{i,n}, x)$ and $(z'_{i,n}, x')$ are ``witnesses''
+  that $R_1\neq L(P_i)$ and $R_2\neq L(Q_i)$ respectively. Hence for all $n$,
+  there are some witnesses between $n$ and $r(n)$ that for all $i\leq n$,
+  $R_1\neq L(P_i)$ and $R_2\neq L(Q_i)$.
+
+  Define $R=({G[r]}^2\cap R_1)\cup(\overline{G[r]}^2\cap R_2)$, so $R$ is equal
+  to pairs of $R_1$ in the ``even gaps'' of r and $R$ is equal to pairs of
+  $R_2$ in the ``odd gaps'' of $r$. It remains to show that $R$ is an
+  equivalence relation which satisfies the properties stated in the theorem.
+
+  First we show that $R$ is indeed an equivalence relation. Symmetry and
+  transitivity follow from the symmetry and transitivity of $R_1$, $R_2$,
+  ${G[r]}^2$ and ${G[r]}^2$. To show reflexivity, suppose $x\in G[r]$. Hence
+  $\pair{x}{x}\in {G[r]}^2$. Since $R_1$ is an equivalence relation,
+  $\pair{x}{x}\in R_1$. Therefore $\pair{x}{x}\in({G[r]}^2\cap R_1)$, so
+  $\pair{x}{x}\in R$. The argument for the case that $x\in\overline{G[r]}$ is
+  similar. Therefore $R$ is reflexive, symmetric and transitive.
+
+  Next we show that $R\notin\mathcal{C}_1$. The argument which proves
+  $R\notin\mathcal{C}_2$ is symmetric. Assume $R\in\mathcal{C}_1$ in order to
+  produce a contradiction. Then there exists an $i$ such that $R=L(P_i)$. Let
+  $m$ be an even integer such that $r^m(0)\geq i$. By construction, there
+  exists a pair $\pair{x}{z}$ such that $r^m(0)\leq|x|\leq|z|<r^{m+1}(0)$ and
+  $\pair{x}{z}\in(L(P_i)\symdiff R_1)$. Since $m$ is even, $\pair{x}{z}\in
+  {G[r]}^2$. Since $R$ is equal to $R_1$ where it coincides with ${G[r]}^2$,
+  then $\pair{x}{z}\in(L(P_i)\symdiff R)$. This is a contradiction with the
+  hypothesis that $R=L(P_i)$. Therefore $R\notin\mathcal{C}_1$.
+
+  Finally, we show that $R\kr R_1\kj R_2$. Since $G[r]\in\P$ by
+  \autoref{lem:gap_p}, the function defined by
+  \begin{displaymath}
+    f(x)=
+    \begin{cases}
+      x0 & \text{if}\, x\in G[r]\\
+      x1 & \text{if}\, x\notin G[r]\\
+    \end{cases}
+  \end{displaymath}
+  is a polynomial time computable function.
+
+  To show that $f$ computes the reduction from $R$ to $R_1\kj R_2$ correctly,
+  suppose first that $\pair{x}{y}\in R$, so $\pair{x}{y}$ is in either
+  $({G[r]}^2\cap R_1)$ or $\overline{G[r]}^2\cap R_2)$. In the former case,
+  both $x$ and $y$ are in $G[r]$, so $f(x)=x0$ and $f(y)=y0$, and both $x$ and
+  $y$ are in $R_1$, so $\pair{x0}{y0}=\pair{f(x)}{f(y)}\in R_1$. The argument
+  for the latter case is symmetric.
+
+  For the converse, suppose $\pair{f(x)}{f(y)}\in R_1\kj R_2$. Then $f(x)$ and
+  $f(y)$ either both end with $0$ or both end with $1$. In the case that both
+  end with $0$, then there exist some strings $w_x$ and $w_y$ such that
+  $f(x)=w_x0$, $f(y)=w_y0$ and $\pair{w_x}{w_y}\in R_1$. By construction of
+  $f$, $w_x$ must equal the input $x$ and $w_y$ must equal the input $y$, so
+  $\pair{x}{y}\in R_1$. Also by construction, $f(x)=x0$ if and only if $x\in
+  G[x]$ and $f(y)=y0$ if and only if $y\in G[x]$, so
+  $\pair{x}{y}\in{G[r]}^2$. Hence $\pair{x}{y}\in({G[r]}^2\cap R_1\subseteq
+  R$. The argument for the case that both $f(x)$ and $f(y)$ end with $1$ is
+  symmetric, and shows that $\pair{x}{y}\in(\overline{G[r]}^2\cap R_2)\subseteq
+  R$. Therefore $\pair{x}{y}\in R$ if and only if $\pair{f(x)}{f(y)}\in R_1\kj
+  R_2$, so $f$ correctly computes the reduction from $R$ to $R_1\kj R_2$.
+
+  Since we have shown that the equivalence relation $R$ satisfies the
+  properties in the statement of the theorem, this concludes the proof.
+\end{proof}
+
+\begin{proposition}
+  \mbox{} % to put the next item on a new line
+  \begin{enumerate}
+  \item \PEq is computably enumerable.
+  \item The set of equivalence relations which are $\kr$-complete for \NPEq is
+    computably enumerable.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+\end{proof}
+
+We will denote \NPEqC the set of equivalence relations which are $\kr$-complete
+for \NPEq.
+
+\begin{theorem}\label{thm:npeqc}
+  If $\PEq\neq\NPEq$ and \NPEqC is non-empty, then $\PEq\cap\NPEqC=\emptyset$.
+\end{theorem}
+\begin{proof}
+  Assume $\PEq\cap\NPEqC\neq\emptyset$. Let $R$ be the \NPEq-complete
+  equivalence relation which is also in \PEq. Then all problems can be kernel
+  reduced to $R$ in polynomial time, and $R$ can be decided in polynomial
+  time. Therefore, $\PEq=\NPEq$. This is a contradiction with the
+  hypothesis. Therefore $\PEq\cap\NPEqC=\emptyset$.
+\end{proof}
+
+\begin{theorem}
+  If $\PEq\neq\NPEq$ and \NPEqC is non-empty, then there exists an equivalence
+  relation in \NPEq which is neither in \PEq nor \NPEqC.
+\end{theorem}
+\begin{proof}
+  The hypothesis of this theorem is the same as in \autoref{thm:npeqc}, so
+  $\PEq\cap\NPEqC=\emptyset$. Let $S$ be an \NPEq-complete problem. Choose
+  $R_1=S$, $R_2=\emptyset$, $\mathcal{C}_1=\PEq$ and
+  $\mathcal{C}_2=\NPEqC$. Then by \autoref{thm:diag}, there exists an
+  equivalence relation $R$ which is in neither \NPEqC nor \PEq, but which
+  kernel reduces to $S\kj\emptyset$. Since $S\kj\emptyset$ trivially kernel
+  reduces to $S$, and since polynomial time kernel reductions compose by
+  \autoref{prop:compose}, $R\kr S$. Since \NPEq is closed under polynomial time
+  kernel reductions, $R\in\NPEq$.
 \end{proof}
 
 \bibliographystyle{amsalpha} \bibliography{references}
