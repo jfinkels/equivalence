@@ -42,6 +42,8 @@
   pdfauthor={Jeffrey Finkelstein}
 ]{hyperref} % for pdf links when rendering \ref and \cite commands
 
+\DontPrintSemicolon
+
 % Define theorem, lemma, and definition environments and corresponding styles.
 % Lemmata, corollaries, and definitions are numbered with the same counter as
 % that for theorems. We have to do some black magic to get the \autoref labels
@@ -70,6 +72,7 @@
 \newcommand{\corollaryname}{Corollary}
 \newcommand{\definitionname}{Definition}
 \newcommand{\propositionname}{Proposition}
+\newcommand{\algocflinename}{Algorithm}
 
 % custom shortcut commands
 \newcommand{\plain}[1]{\,\text{#1}\,} % plain text inside math environments
@@ -88,6 +91,7 @@
 %\newcommand{\tequiv}{\equiv^{p}_T} % is equivalent under Turing reductions
 \newcommand{\defn}[1]{\emph{#1}} % emphasize words which are being defined
 \newcommand{\pair}[2]{\langle#1,#2\rangle} % pairing function
+\newcommand{\Pair}[2]{\big\langle#1,#2\big\rangle} % pairing function
 \newcommand{\triple}[3]{\langle#1,#2,#3\rangle} % generalization of pairing fn.
 
 % create the creative commons license
@@ -111,6 +115,8 @@
 
 \maketitle
 \symbolfootnote{\license}
+
+\section{Kernel reductions}
 
 \begin{proposition}\label{prop:compose}
   If $R\kr S$ and $S\kr T$ then $R\kr T$. In other words, polynomial time
@@ -174,79 +180,127 @@
   The proof is the same in \NPEq, because $R_{eq}\in\PEq\subseteq\NPEq$.
 \end{proof}
 
-%% TODO extend this theorem to countably infinite sets
-\begin{theorem}\label{thm:repr_kr}
-  Let $R,S$ be equivalence relations on $\sigmastar$. Suppose
-  $R\in\PEq$. Suppose also that $R$ has $n$ equivalence classes and the number
-  of equivalence classes of $S$ is greater than or equal to $n$ (possibly
-  countably infinite). Let $REP(R)$ be a set of representatives of equivalence
-  classes in $R$, and $REP(S)$ be a set of representatives of equivalence
-  classes in $S$. If there exists a function $f\colon REP(R)\to REP(S)$ such
-  that $f\in\FP$ and $f$ is injective, then $R\kr S$.
+\begin{theorem}\label{thm:reduction_ce}
+  Let $R$ and $S$ be equivalence relations, and let $R$ be decidable. If the
+  sets of representatives of equivalence classes for both $R$ and $S$ are
+  countably infinite, then $R\krnt S$.
 \end{theorem}
 \begin{proof}
-  Since $R\in\PEq$, $\exists M_R$, a deterministic Turing machine running in
-  polynomial time, such that $\pair{x}{y}\in R\iff M_R(\pair{x}{y})$
-  accepts. Construct $g\in\FP$ on input $w\in\sigmastar$:\\
-  \begin{algorithm}[H]
-    \For{$r_i\in REP(R)$}{
-      \If{$M_R(\pair{w}{r_i})$ accepts}{
-        \Return{$f(r_i)$}
-      }
+  Since countably infinite sets are computably enumerable, let $r_1, r_2,
+  \ldots$ and $s_1, s_2, \ldots$ be enumerations of representatives of
+  equivalence classes for $R$ and $S$ respectively. Let $M$ be the Turing
+  machine which decides $R$. Define the function $f$ as in
+  \autoref{alg:reduction_ce}.
+  \begin{algorithm}\label{alg:reduction_ce}
+    \caption{Generic reduction for equivalence relations with computably
+    enumerable representatives of equivalence classes}
+    \KwIn{$w\in\Sigma^*$}
+    \For{$i=1$ to $\infty$}{
+      Simulate $M$ on input $\pair{w}{r_i}$\;
+      If $M$ accepts, output $s_i$ and halt\;
     }
   \end{algorithm}
-  Notice that each $w\in\sigmastar$ is in exactly one equivalence class in $R$,
-  because the equivalence classes partition $\sigmastar$, so
-  $M_R(\pair{w}{r_i})$ accepts exactly once during the loop, when
-  $\pair{w}{r_i}\in R$.
 
-  Suppose $\pair{x}{y}\in R$, so $\pair{x}{r_i}\in R$ and $\pair{y}{r_i}\in R$
-  for some $r_i\in REP(R)$. Then $g(x)$ outputs $f(r_i)$ and $g(y)$ outputs
-  $f(r_i)$. Since $\pair{f(r_i)}{f(r_i)}\in S$, then $\pair{g(x)}{g(y)}\in S$.
+  Since the equivalence classes of $R$ partition $\Sigma^*$, each string in
+  $\Sigma^*$ must relate to some representative in the enumeration, and since
+  $M$ always halts, this procedure always halts.
 
-  Suppose $\pair{x}{y}\notin R$. So $\exists r_i, r_j\in REP(R)$, with $r_i\neq
-  r_j$, such that $\pair{x}{r_i}\in R$ and $\pair{y}{r_j}\in R$. Then $g(x)$
-  outputs $f(r_i)$ and $g(y)$ outputs $f(r_j)$. Since $f$ is injective,
-  $r_i\neq r_j\implies f(r_i)\neq f(r_j)$. Since $f(r_i)$ and $f(r_j)$ are
-  distinct elements in $REP(S)$, they are representatives of two distinct
-  equivalence classes. Since every element of $S$ is in exactly one equivalence
-  class, and since $[f(r_i)]\neq[f(r_j)]$, it follows that
-  $\pair{f(r_i)}{f(r_j)}=\pair{g(x)}{g(y)}\notin S$.
-
-  Therefore $\pair{x}{y}\in R\iff \pair{g(x)}{g(y)}\in S$, so $R\kr S$.
+  Suppose $\pair{x}{y}\in R$. Then $\pair{x}{r_i}\in R$ and $\pair{y}{r_i}\in
+  R$, for some representative $r_i$. Then $f(x)=s_i$ and $f(y)=s_i$, so
+  $\pair{f(x)}{f(y)}=\pair{s_i}{s_i}\in S$. For the converse, suppose
+  $\pair{f(x)}{f(y)}\in S$. Therefore $\pair{f(x)}{s_i}\in S$ and
+  $\pair{f(y)}{s_i}\in S$ for some representative $s_i$. By construction, $f$
+  outputs $s_i$ if and only if its input relates to $r_i$ in $R$. Therefore
+  $\pair{x}{r_i}\in R$ and $\pair{y}{r_i}\in R$, and hence $\pair{x}{y}\in
+  R$. Therefore $\pair{x}{y}\in R$ if and only if $\pair{f(x)}{f(y)}\in S$.
 \end{proof}
 
-%% TODO define computably enumerable
-\begin{theorem}\label{thm:reps}
-  Let $R,S$ be equivalence relations on $\sigmastar$. Suppose
-  $R\in\PEq$. Suppose also that $R$ has $n$ equivalence classes and the number
-  of equivalence classes of $S$ is greater than or equal to $n$ (possibly
-  countably infinite). Let $REP(R)$ be a set of representatives of equivalence
-  classes in $R$, and $REP(S)$ be a set of representatives of equivalence
-  classes in $S$. If $REP(R)$ and $REP(S)$ are computably enumerable then $R\kr
-  S$.
+\begin{theorem}
+  Let $R$ and $S$ be equivalence relations, and let $R\in\PEq$. If the sets of
+  representatives of equivalence classes for both $R$ and $S$ are countably
+  infinite, then $R\kr S$.
 \end{theorem}
 \begin{proof}
-  We compute the kernel reduction using the following procedure.
-
-  Enumerate $REP(R)$ to produce $\{r_1, r_2, \ldots, r_n\}$, where each $r_i$
-  is a representative of a distinct equivalence class of $R$. Enumerate
-  $REP(S)$ to produce $\{s_1, s_2, \ldots, s_n\}$, where each $s_i$ is a
-  representative of a distinct equivalence class of $S$. Note that we only need
-  to output representatives of $n$ equivalence classes of $S$ though it may
-  have more.
-
-  Define $f\in\FP$ by $f(r_i)=s_i$, $\forall i\leq n$. We now wish to show that
-  $f$ is injective. Suppose $r_i,r_j\in R$ and $r_i\neq r_j$. Then $f(r_i)=s_i$
-  and $f(r_j)=s_j$. $r_i\neq r_j\implies i\neq j\implies s_i\neq s_j\implies
-  f(s_i)\neq f(s_j)$. Therefore $f$ is injective.
-
-  The function $f$ now satisfies the conditions in the hypothesis of
-  \autoref{thm:repr_kr}, so the result follows.
+  The proof is exactly the same as in \autoref{thm:reduction_ce}, but the
+  machine $M$ is now deterministic and polynomial time bounded. Since the loop
+  always halts but is independent of the input, it contributes only a
+  multiplicative constant to the overall running time of the procedure.
 \end{proof}
 
-Note that computing the representatives of $R$ and $S$ takes some amount of
-time \emph{independent} of the size of the input to the transducer $f$.
+
+%% %% TODO extend this theorem to countably infinite sets
+%% \begin{theorem}\label{thm:repr_kr}
+%%   Let $R,S$ be equivalence relations on $\sigmastar$. Suppose
+%%   $R\in\PEq$. Suppose also that $R$ has $n$ equivalence classes and the number
+%%   of equivalence classes of $S$ is greater than or equal to $n$ (possibly
+%%   countably infinite). Let $REP(R)$ be a set of representatives of equivalence
+%%   classes in $R$, and $REP(S)$ be a set of representatives of equivalence
+%%   classes in $S$. If there exists a function $f\colon REP(R)\to REP(S)$ such
+%%   that $f\in\FP$ and $f$ is injective, then $R\kr S$.
+%% \end{theorem}
+%% \begin{proof}
+%%   Since $R\in\PEq$, $\exists M_R$, a deterministic Turing machine running in
+%%   polynomial time, such that $\pair{x}{y}\in R\iff M_R(\pair{x}{y})$
+%%   accepts. Construct $g\in\FP$ on input $w\in\sigmastar$:\\
+%%   \begin{algorithm}[H]
+%%     \For{$r_i\in REP(R)$}{
+%%       \If{$M_R(\pair{w}{r_i})$ accepts}{
+%%         \Return{$f(r_i)$}
+%%       }
+%%     }
+%%   \end{algorithm}
+%%   Notice that each $w\in\sigmastar$ is in exactly one equivalence class in $R$,
+%%   because the equivalence classes partition $\sigmastar$, so
+%%   $M_R(\pair{w}{r_i})$ accepts exactly once during the loop, when
+%%   $\pair{w}{r_i}\in R$.
+
+%%   Suppose $\pair{x}{y}\in R$, so $\pair{x}{r_i}\in R$ and $\pair{y}{r_i}\in R$
+%%   for some $r_i\in REP(R)$. Then $g(x)$ outputs $f(r_i)$ and $g(y)$ outputs
+%%   $f(r_i)$. Since $\pair{f(r_i)}{f(r_i)}\in S$, then $\pair{g(x)}{g(y)}\in S$.
+
+%%   Suppose $\pair{x}{y}\notin R$. So $\exists r_i, r_j\in REP(R)$, with $r_i\neq
+%%   r_j$, such that $\pair{x}{r_i}\in R$ and $\pair{y}{r_j}\in R$. Then $g(x)$
+%%   outputs $f(r_i)$ and $g(y)$ outputs $f(r_j)$. Since $f$ is injective,
+%%   $r_i\neq r_j\implies f(r_i)\neq f(r_j)$. Since $f(r_i)$ and $f(r_j)$ are
+%%   distinct elements in $REP(S)$, they are representatives of two distinct
+%%   equivalence classes. Since every element of $S$ is in exactly one equivalence
+%%   class, and since $[f(r_i)]\neq[f(r_j)]$, it follows that
+%%   $\pair{f(r_i)}{f(r_j)}=\pair{g(x)}{g(y)}\notin S$.
+
+%%   Therefore $\pair{x}{y}\in R\iff \pair{g(x)}{g(y)}\in S$, so $R\kr S$.
+%% \end{proof}
+
+%% %% TODO define computably enumerable
+%% \begin{theorem}\label{thm:reps}
+%%   Let $R,S$ be equivalence relations on $\sigmastar$. Suppose
+%%   $R\in\PEq$. Suppose also that $R$ has $n$ equivalence classes and the number
+%%   of equivalence classes of $S$ is greater than or equal to $n$ (possibly
+%%   countably infinite). Let $REP(R)$ be a set of representatives of equivalence
+%%   classes in $R$, and $REP(S)$ be a set of representatives of equivalence
+%%   classes in $S$. If $REP(R)$ and $REP(S)$ are computably enumerable then $R\kr
+%%   S$.
+%% \end{theorem}
+%% \begin{proof}
+%%   We compute the kernel reduction using the following procedure.
+
+%%   Enumerate $REP(R)$ to produce $\{r_1, r_2, \ldots, r_n\}$, where each $r_i$
+%%   is a representative of a distinct equivalence class of $R$. Enumerate
+%%   $REP(S)$ to produce $\{s_1, s_2, \ldots, s_n\}$, where each $s_i$ is a
+%%   representative of a distinct equivalence class of $S$. Note that we only need
+%%   to output representatives of $n$ equivalence classes of $S$ though it may
+%%   have more.
+
+%%   Define $f\in\FP$ by $f(r_i)=s_i$, $\forall i\leq n$. We now wish to show that
+%%   $f$ is injective. Suppose $r_i,r_j\in R$ and $r_i\neq r_j$. Then $f(r_i)=s_i$
+%%   and $f(r_j)=s_j$. $r_i\neq r_j\implies i\neq j\implies s_i\neq s_j\implies
+%%   f(s_i)\neq f(s_j)$. Therefore $f$ is injective.
+
+%%   The function $f$ now satisfies the conditions in the hypothesis of
+%%   \autoref{thm:repr_kr}, so the result follows.
+%% \end{proof}
+%%
+%%Note that computing the representatives of $R$ and $S$ takes some amount of
+%%time \emph{independent} of the size of the input to the transducer $f$.
 
 \begin{lemma}\label{lem:image}
   Let $R,S$ be equivalence relations on $\sigmastar$, and let
@@ -324,7 +378,24 @@ time \emph{independent} of the size of the input to the transducer $f$.
   not injective, and therefore $A$ is not $\kri$-complete in \NPEq.
 \end{proof}
 
-\section{Analog of Ladner's theorem}
+Consider the following canonical \NP-complete set:
+\begin{displaymath}
+  K=\{\triple{w}{M}{1^k}|M\plain{accepts}w\plain{in at most}k\plain{steps}\}
+\end{displaymath}
+
+We adapt this idea to create a set which is $\kr$-complete for \NPEq.
+
+\begin{definition}
+  Let the language $R_K$ be defined as follows:
+  \begin{align*}
+    R_K=\{\Pair{\triple{x}{M}{1^k}}{\triple{y}{M}{1^k}}|&M\plain{accepts}
+    \pair{x}{y}\plain{in at most}k\plain{steps}\\
+    &\plain{and}M\plain{accepts}\pair{y}{x}\plain{in at most}k\plain{steps}\}
+  \end{align*}
+
+\end{definition}
+
+\section{Uniform diagonalization theorem for equivalence relations}
 
 \begin{definition}
   A class of languages $\mathcal{C}$ is \defn{closed under finite variations}
