@@ -383,17 +383,18 @@ Consider the following canonical \NP-complete set:
   K=\{\triple{w}{M}{1^k}|M\plain{accepts}w\plain{in at most}k\plain{steps}\}
 \end{displaymath}
 
-We adapt this idea to create a set which is $\kr$-complete for \NPEq.
+%% TODO I wish
+%% We adapt this idea to create a set which is $\kr$-complete for \NPEq.
 
-\begin{definition}
-  Let the language $R_K$ be defined as follows:
-  \begin{align*}
-    R_K=\{\Pair{\triple{x}{M}{1^k}}{\triple{y}{M}{1^k}}|&M\plain{accepts}
-    \pair{x}{y}\plain{in at most}k\plain{steps}\\
-    &\plain{and}M\plain{accepts}\pair{y}{x}\plain{in at most}k\plain{steps}\}
-  \end{align*}
+%% \begin{definition}
+%%   Let the language $R_K$ be defined as follows:
+%%   \begin{align*}
+%%     R_K=\{\Pair{\triple{x}{M}{1^k}}{\triple{y}{M}{1^k}}|&M\plain{accepts}
+%%     \pair{x}{y}\plain{in at most}k\plain{steps}\\
+%%     &\plain{and}M\plain{accepts}\pair{y}{x}\plain{in at most}k\plain{steps}\}
+%%   \end{align*}
 
-\end{definition}
+%% \end{definition}
 
 \section{Uniform diagonalization theorem for equivalence relations}
 
@@ -404,19 +405,18 @@ We adapt this idea to create a set which is $\kr$-complete for \NPEq.
 \end{definition}
 
 \begin{definition}
-  Given an alphabet $\Sigma$ with at least two different symbols, say $0$ and
-  $1$, the \defn{kernel join} of two equivalence relations $R$ and $S$ over
+  Given an alphabet $\Sigma$ with at least two different symbols (say $0$ and
+  $1$), the \defn{kernel join} of two equivalence relations $R$ and $S$ over
   $\Sigma^*$ is $R\kj S=\{\pair{x0}{y0}|\pair{x}{y}\in
   R\}\cup\{\pair{x1}{y1}|\pair{x}{y}\in S\}$.
 \end{definition}
 
 \begin{theorem}
   If $R$ and $S$ are equivalence relations on $\Sigma^*$, then $R\kj S$ is an
-  equivalence relation.
+  equivalence relation on $\Sigma^*\backslash\{\lambda\}$, where $\lambda$ is
+  the empty string.
 \end{theorem}
 \begin{proof}
-  %% TODO Are non-empty strings okay?
-
   Let $x$, $y$ and $z$ be non-empty strings in $\Sigma^*$.
   
   Since $x$ is non-empty, $x=x'0$ or $x=x'1$. Since $R$ is reflexive,
@@ -491,6 +491,10 @@ pairs of strings whose lengths are in the ``odd gaps'' of $r$.
   $\pair{x}{z}\in {G[r]}^2$. Therefore ${G[r]}^2$ is transitive.
 \end{proof}
 
+Note that ${G[r]}^2$ is not reflexive because a string $x$ may have length in
+the odd gap of $r$, so $\pair{x}{x}\notin{G[r]}^2$. Similarly for
+$\overline{G[r]}^2$.
+
 \begin{theorem}\label{thm:diag}
   Let $R_1$ and $R_2$ be decidable equivalence relations, and let
   $\mathcal{C}_1$ and $\mathcal{C}_2$ be classes of decidable equivalence
@@ -508,50 +512,51 @@ pairs of strings whose lengths are in the ``odd gaps'' of $r$.
   \item $R\kr R_1\kj R_2$
   \end{enumerate}
 \end{theorem}
-\begin{proof} %% TODO use \pair command for pairs
+\begin{proof}
   Let $P_1, P_2, \ldots$ and $Q_1, Q_2, \ldots$ be enumerations of Turing
-  machines deciding the languages in $\mathcal{C}_1$ and $\mathcal{C}_2$
-  respectively. Define the functions
+  machines deciding the equivalence relations in $\mathcal{C}_1$ and
+  $\mathcal{C}_2$ respectively. Define the functions
   \begin{eqnarray*}
     r_1(n)=\underset{i\leq n}{max}\{|z_{i,n}|\}+1 & \text{and} &
     r_2(n)=\underset{i\leq n}{max}\{|z'_{i,n}|\}+1
   \end{eqnarray*}
   where $z_{i,n}$ is the smallest word in $\Sigma^*$ such that there exists an
-  $x\in\Sigma^*$, with $n<|x|\leq|z_{i,n}|$, such that $(z_{i,n},
-  x)\in(L(P_i)\symdiff R_1)$, and $z'_{i,n}$ is the smallest word in $\Sigma^*$
-  such that there exists an $x'\in\Sigma^*$, with $n<|x'|\leq|z'_{i,n}|$, such
-  that $(z'_{i,n}, x')\in(L(Q_i)\symdiff R_2)$. Note that it also suffices to
-  find an $x$ and $x'$ such that $(x, z_{i,n})\in(L(P_i)\symdiff R_1)$ and
-  $(x', z'_{i,n})\in(L(Q_i)\symdiff R_2)$, since symmetric difference on
+  $x\in\Sigma^*$, with $n<|x|\leq|z_{i,n}|$, such that
+  $\pair{z_{i,n}}{x}\in(L(P_i)\symdiff R_1)$, and $z'_{i,n}$ is the smallest
+  word in $\Sigma^*$ such that there exists an $x'\in\Sigma^*$, with
+  $n<|x'|\leq|z'_{i,n}|$, such that $\pair{z'_{i,n}}{x'}\in(L(Q_i)\symdiff
+  R_2)$. Note that it also suffices to find an $x$ and $x'$ such that
+  $\pair{x}{z_{i,n}}\in(L(P_i)\symdiff R_1)$ and
+  $\pair{x'}{z'_{i,n}}\in(L(Q_i)\symdiff R_2)$, since symmetric difference on
   equivalence relations preserves symmetry by \autoref{prop:symdiff}.
 
   We claim that $z_{i,n}$ and $z'_{i,n}$ always exist. Assume that no such
   $z_{i,n}$ exists, so there are no words such that there exists an
-  $x\in\Sigma^*$, with $n<|x|\leq|z_{i,n}|$, such that $(z_{i,n},
-  x)\in(L(P_i)\symdiff R_1)$. Therefore, there are no pairs in $(L(P_i)\symdiff
-  R_1)$ with both elements of length greater than $n$. Then there are a finite
-  number of pairs in $L(P_i)\symdiff R_1$, so $R_1$ is a finite variation of
-  $L(P_i)$. Since $\mathcal{C}_1$ is closed under finite variations,
-  $R_1\in\mathcal{C}_1$. This is a contradiction with the hypothesis that
-  $R_1\notin\mathcal{C}_1$. Therefore such a $z_{i,n}$ always exists. The
-  argument that $z'_{i,n}$ always exists is similar.
+  $x\in\Sigma^*$, with $n<|x|\leq|z_{i,n}|$, such that
+  $\pair{z_{i,n}}{x}\in(L(P_i)\symdiff R_1)$. Therefore, there are no pairs in
+  $(L(P_i)\symdiff R_1)$ with both elements of length greater than $n$. Then
+  there are a finite number of pairs in $L(P_i)\symdiff R_1$, so $R_1$ is a
+  finite variation of $L(P_i)$. Since $\mathcal{C}_1$ is closed under finite
+  variations, $R_1\in\mathcal{C}_1$. This is a contradiction with the
+  hypothesis that $R_1\notin\mathcal{C}_1$. Therefore such a $z_{i,n}$ always
+  exists. The argument that $z'_{i,n}$ always exists is similar.
 
   Since $L(P_i)$ and $L(Q_i)$ are decidable for all $i$, and since $R_1$ and
   $R_2$ are decidable, so are $L(P_i)\symdiff R_1$ and $L(Q_i)\symdiff
   R_2$. For each $n$, there is a procedure which always halts and which
-  computes $z_{i,n}$ (using a sort of linear search). A similar procedure
+  computes $z_{i,n}$ (using a simple search procedure). A similar procedure
   computes $z'_{i,n}$. The procedure which computes the maximum of a finite set
   of numbers and which adds one to that value always halts as well, so $r_1$
   and $r_2$ are total computable functions.
 
   Let $r\ge max(r_1,r_2)$ be a non-decreasing time constructible function,
   which exists by \autoref{nondec}. Now for all $n$ and all $i\leq n$, each
-  element of the pairs $(z_{i,n},x)$ have length between $n$ and $r_1(n)$, by
-  construction. The same is true for $(z'_{i,n}, x')$ between $n$ and
-  $r_2(n)$. Notice that $(z_{i,n}, x)$ and $(z'_{i,n}, x')$ are ``witnesses''
-  that $R_1\neq L(P_i)$ and $R_2\neq L(Q_i)$ respectively. Hence for all $n$,
-  there are some witnesses between $n$ and $r(n)$ that for all $i\leq n$,
-  $R_1\neq L(P_i)$ and $R_2\neq L(Q_i)$.
+  element of the pairs $\pair{z_{i,n}}{x}$ have length between $n$ and
+  $r_1(n)$, by construction. The same is true for $\pair{z'_{i,n}}{x'}$ between
+  $n$ and $r_2(n)$. Notice that $\pair{z_{i,n}}{x}$ and $\pair{z'_{i,n}}{x'}$
+  are ``witnesses'' that $R_1\neq L(P_i)$ and $R_2\neq L(Q_i)$
+  respectively. Hence for all $n$, there are some witnesses between $n$ and
+  $r(n)$ that for all $i\leq n$, $R_1\neq L(P_i)$ and $R_2\neq L(Q_i)$.
 
   Define $R=({G[r]}^2\cap R_1)\cup(\overline{G[r]}^2\cap R_2)$, so $R$ is equal
   to pairs of $R_1$ in the ``even gaps'' of r and $R$ is equal to pairs of
@@ -589,7 +594,7 @@ pairs of strings whose lengths are in the ``odd gaps'' of $r$.
 
   To show that $f$ computes the reduction from $R$ to $R_1\kj R_2$ correctly,
   suppose first that $\pair{x}{y}\in R$, so $\pair{x}{y}$ is in either
-  $({G[r]}^2\cap R_1)$ or $\overline{G[r]}^2\cap R_2)$. In the former case,
+  $({G[r]}^2\cap R_1)$ or $(\overline{G[r]}^2\cap R_2)$. In the former case,
   both $x$ and $y$ are in $G[r]$, so $f(x)=x0$ and $f(y)=y0$, and both $x$ and
   $y$ are in $R_1$, so $\pair{x0}{y0}=\pair{f(x)}{f(y)}\in R_1$. The argument
   for the latter case is symmetric.
@@ -601,7 +606,7 @@ pairs of strings whose lengths are in the ``odd gaps'' of $r$.
   $f$, $w_x$ must equal the input $x$ and $w_y$ must equal the input $y$, so
   $\pair{x}{y}\in R_1$. Also by construction, $f(x)=x0$ if and only if $x\in
   G[x]$ and $f(y)=y0$ if and only if $y\in G[x]$, so
-  $\pair{x}{y}\in{G[r]}^2$. Hence $\pair{x}{y}\in({G[r]}^2\cap R_1\subseteq
+  $\pair{x}{y}\in{G[r]}^2$. Hence $\pair{x}{y}\in({G[r]}^2\cap R_1)\subseteq
   R$. The argument for the case that both $f(x)$ and $f(y)$ end with $1$ is
   symmetric, and shows that $\pair{x}{y}\in(\overline{G[r]}^2\cap R_2)\subseteq
   R$. Therefore $\pair{x}{y}\in R$ if and only if $\pair{f(x)}{f(y)}\in R_1\kj
@@ -614,9 +619,9 @@ pairs of strings whose lengths are in the ``odd gaps'' of $r$.
 \begin{proposition}
   \mbox{} % to put the next item on a new line
   \begin{enumerate}
-  \item \PEq is computably enumerable.
-  \item The set of equivalence relations which are $\kr$-complete for \NPEq is
-    computably enumerable.
+  \item $\PEq$ is computably enumerable.
+  \item The set of equivalence relations which are $\kr$-complete for $\NPEq$
+    is computably enumerable.
   \end{enumerate}
 \end{proposition}
 \begin{proof}
@@ -650,6 +655,11 @@ for \NPEq.
   reduces to $S$, and since polynomial time kernel reductions compose by
   \autoref{prop:compose}, $R\kr S$. Since \NPEq is closed under polynomial time
   kernel reductions, $R\in\NPEq$.
+\end{proof}
+
+\begin{theorem}
+\end{theorem}
+\begin{proof}
 \end{proof}
 
 \bibliographystyle{amsalpha} \bibliography{references}
