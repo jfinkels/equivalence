@@ -96,7 +96,7 @@
 
 % create the creative commons license
 \newcommand{\license}{\begin{tabular}[h]{r l}
-    \bysa & \parbox{275pt}{Copyright 2010 Jeffrey Finkelstein. 
+    \bysa & \parbox{275pt}{Copyright 2011 Jeffrey Finkelstein. 
       Except where otherwise noted, this work is licensed
       under http://creativecommons.org/licenses/by-sa/3.0/}
 \end{tabular}}
@@ -115,6 +115,62 @@
 
 \maketitle
 \symbolfootnote{\license}
+
+\section{Definitions}
+
+\begin{definition}
+  Let $U$ be a set. Let $R\subseteq U\times U$. Then $R$ is an
+    \defn{equivalence relation} on $U$ if and only if the following conditions
+    hold: %\renewcommand{\labelenumi}{\roman{enumi}.}
+  \begin{enumerate}
+  \item (reflexivity) $\forall x\in U$, $(x, x)\in R$
+  \item (symmetry) $\forall x,y\in U$, if $(x,y)\in R$ then $(y,x)\in
+    R$
+  \item (transitivity) $\forall x,y,z\in U$, if $(x,y)\in R$ and $(y,z)\in R$
+    then $(x,z)\in R$
+  \end{enumerate}
+  If $(x,y)\in R$, we say \defn{$x$ relates to $y$} or \defn{$x$ is equivalent
+    to $y$ under $R$}. We denote this by $x\sim_R y$ or $x\sim y$.
+\end{definition}
+
+\begin{definition}
+  Let $U$ be a set, let $R$ be an equivalence relation on $U$, let $x\in
+  U$. The \defn{equivalence class} of $x$ is $[x]_R=\{y\in U|(x,y)\in
+  R\}$. When the context is clear, we sometimes omit the subscript, and just
+  write $[x]$.
+\end{definition}
+For all equivalence relations on a set $U$, each element of $U$ is in exactly
+one equivalence class and $U=\bigcup_{x\in U}{[x]}$, so the equivalence classes
+of an equivalence relation provide a partition of $U$.
+
+\begin{definition}\label{def:peq}
+  \defn{\PEq} is the class of equivalence relations for which membership can be
+  decided by a Turing machine running in deterministic polynomial time.
+
+  \defn{\NPEq} is the class of equivalence relations for which membership can
+  be decided by a Turing machine running in non-deterministic polynomial time.
+\end{definition}
+
+\begin{definition}\label{def:kr}
+  Let $R$ and $S$ be equivalence relations on $\sigmastar$. We say $R$
+  \defn{kernel reduces to} $S$ if $\exists
+  f\colon\sigmastar\to\sigmastar:\forall x,y\in\sigmastar$, $\pair{x}{y}\in R
+  \iff \pair{f(x)}{f(y)}\in S$. We denote this by $R\krnt S$.
+  
+  We say $R$ \defn{is kernel equivalent to} $S$ if $R\krnt S$ and $S\krnt
+  R$. We denote this by $R\kequivnt S$.
+
+  If $f\in\FP$, then we say $R$ \defn{polynomial time kernel reduces to} $S$,
+  and use the notation $R\kr S$ and $R\kequiv S$.
+\end{definition}
+
+\begin{definition}\label{def:kernel_complete}
+  An equivalence relation $R$ is \defn{$\PEq$-complete} if $R\in\PEq$ and
+  $\forall S\in\PEq$, $S\kr R$.
+
+  An equivalence relation $R$ is \defn{$\NPEq$-complete} if $R\in\NPEq$ and
+  $\forall S\in\NPEq$, $S\kr R$.
+\end{definition}
 
 \section{Kernel reductions}
 
@@ -183,13 +239,12 @@
 \begin{theorem}\label{thm:reduction_ce}
   Let $R$ and $S$ be equivalence relations, and let $R$ be decidable. If the
   sets of representatives of equivalence classes for both $R$ and $S$ are
-  countably infinite, then $R\krnt S$.
+  computably enumerable, then $R\krnt S$.
 \end{theorem}
 \begin{proof}
-  Since countably infinite sets are computably enumerable, let $r_1, r_2,
-  \ldots$ and $s_1, s_2, \ldots$ be enumerations of representatives of
-  equivalence classes for $R$ and $S$ respectively. Let $M$ be the Turing
-  machine which decides $R$. Define the function $f$ as in
+  Let $r_1, r_2, \ldots$ and $s_1, s_2, \ldots$ be enumerations of
+  representatives of equivalence classes for $R$ and $S$ respectively. Let $M$
+  be the Turing machine which decides $R$. Define the function $f$ as in
   \autoref{alg:reduction_ce}.
   \begin{algorithm}\label{alg:reduction_ce}
     \caption{Generic reduction for equivalence relations with computably
@@ -627,11 +682,12 @@ $\overline{G[r]}^2$.
 \begin{proof}
 \end{proof}
 
-We will denote \NPEqC the set of equivalence relations which are $\kr$-complete
-for \NPEq.
+We will denote by $\NPEqC$ the set of equivalence relations which are
+$\kr$-complete for \NPEq.
 
 \begin{theorem}\label{thm:npeqc}
-  If $\PEq\neq\NPEq$ and \NPEqC is non-empty, then $\PEq\cap\NPEqC=\emptyset$.
+  If $\PEq\neq\NPEq$ and $\NPEqC$ is non-empty, then
+  $\PEq\cap\NPEqC=\emptyset$.
 \end{theorem}
 \begin{proof}
   Assume $\PEq\cap\NPEqC\neq\emptyset$. Let $R$ be the \NPEq-complete
@@ -642,24 +698,19 @@ for \NPEq.
 \end{proof}
 
 \begin{theorem}
-  If $\PEq\neq\NPEq$ and \NPEqC is non-empty, then there exists an equivalence
-  relation in \NPEq which is neither in \PEq nor \NPEqC.
+  If $\PEq\neq\NPEq$ and $\NPEqC$ is non-empty, then there exists an
+  equivalence relation in $\NPEq$ which is neither in $\PEq$ nor \NPEqC.
 \end{theorem}
 \begin{proof}
   The hypothesis of this theorem is the same as in \autoref{thm:npeqc}, so
   $\PEq\cap\NPEqC=\emptyset$. Let $S$ be an \NPEq-complete problem. Choose
   $R_1=S$, $R_2=\emptyset$, $\mathcal{C}_1=\PEq$ and
   $\mathcal{C}_2=\NPEqC$. Then by \autoref{thm:diag}, there exists an
-  equivalence relation $R$ which is in neither \NPEqC nor \PEq, but which
+  equivalence relation $R$ which is in neither $\NPEqC$ nor \PEq, but which
   kernel reduces to $S\kj\emptyset$. Since $S\kj\emptyset$ trivially kernel
   reduces to $S$, and since polynomial time kernel reductions compose by
-  \autoref{prop:compose}, $R\kr S$. Since \NPEq is closed under polynomial time
-  kernel reductions, $R\in\NPEq$.
-\end{proof}
-
-\begin{theorem}
-\end{theorem}
-\begin{proof}
+  \autoref{prop:compose}, $R\kr S$. Since $\NPEq$ is closed under polynomial
+  time kernel reductions, $R\in\NPEq$.
 \end{proof}
 
 \bibliographystyle{amsalpha} \bibliography{references}
