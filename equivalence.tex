@@ -33,12 +33,9 @@
 \usepackage{amsmath} % for \implies
 \usepackage{amssymb} % for \nleq
 \usepackage{complexity} % for typesetting complexity classes
-\usepackage{cclicenses} % for adding creative commons license symbols
 %\usepackage{fullpage} % for making the text take up the full page
 \usepackage[
-  backref=page, % backlinks in references
-  pdftitle={On the computational complexity of equivalence relations under
-    kernel reductions},
+  pdftitle={On the computational complexity of equivalence relations under kernel reductions},
   pdfauthor={Jeffrey Finkelstein}
 ]{hyperref} % for pdf links when rendering \ref and \cite commands
 
@@ -63,6 +60,17 @@
 \newaliascnt{definition}{theorem}
 \theoremstyle{definition} \newtheorem{definition}[definition]{Definition}
 \aliascntresetthe{definition}
+
+% for repeating theorems
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{%
+\newenvironment{rep#1}[1]{%
+ \def\rep@title{#2 \ref{##1}}%
+ \begin{rep@theorem}}%
+ {\end{rep@theorem}}}
+\makeatother
+\newreptheorem{theorem}{Theorem}
 
 % define lemma, corollary, and definition context labels for \autoref command
 % (theorem is already defined)
@@ -90,19 +98,19 @@
 \newcommand{\pair}[2]{\langle#1,#2\rangle} % pairing function
 \newcommand{\triple}[3]{\langle#1,#2,#3\rangle} % generalization of pairing fn.
 
+\newcommand{\printintermediarytheorem}{If $\PEq\neq\NPEq$ and $\NPEqC$ is non-empty, then there exists an equivalence relation in $\NPEq$ which is neither in $\PEq$ nor $\NPEqC$.}
+
 % create the creative commons license
-\newcommand{\license}{\begin{tabular}[h]{r l}
-    \bysa & \parbox{275pt}{Copyright 2010 Jeffrey Finkelstein. 
-      Except where otherwise noted, this work is licensed
-      under http://creativecommons.org/licenses/by-sa/3.0/}
-\end{tabular}}
+\newcommand{\license}{Copyright 2010, 2011 Jef{}frey Finkelstein.
+  This work is licensed under the Creative Commons Attribution-ShareAlike License.
+  To view a copy of this license, visit \mbox{\url{http://creativecommons.org/licenses/by-sa/3.0/}}}
 
 % redefine footnote so it has no reference and no number
 \long\def\symbolfootnote#1{\begingroup%
 \def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup} 
 
 % define the author, title, and date
-\author{Jeffrey Finkelstein} 
+\author{Jef{}frey Finkelstein} 
 \title{On the computational complexity of equivalence relations under kernel
   reductions}
 \date{\today} 
@@ -112,6 +120,7 @@
 \maketitle
 \symbolfootnote{\license}
 
+\section{Basic Results}
 \begin{proposition}\label{prop:compose}
   If $R\kr S$ and $S\kr T$ then $R\kr T$. In other words, polynomial time
   kernel reductions compose.
@@ -264,67 +273,59 @@ time \emph{independent} of the size of the input to the transducer $f$.
   in $\NPEq$, then $A$ is not $\kri$-complete in $\NPEq$.
 \end{theorem}
 \begin{proof}
-  Let $A=\{\pair{\pair{G_1}{k_1}}{\pair{G_2}{k_2}}| k_1=k_2$ and $(G_1\cong
-  G_2$ or $(G_1$ has a clique of size $k_1$ and $G_2$ has a clique of size
-  $k_2$ and $|V_1|=|V_2|))\}$, where $G_1=(V_1, E_1)$ and $G_2=(V_2, E_2)$. The
-  only difference between this equivalence relation and $R_{KC}$ is the
-  condition that $G_1$ and $G_2$ must have the same number of vertices.
+  Suppose $G_1=(V_1, E_1)$ and $G_2=(V_2, E_2)$ are two undirected graphs.
+  Let $A=\{\pair{\pair{G_1}{k_1}}{\pair{G_2}{k_2}}| k_1=k_2$ and $(G_1\cong G_2$ or $(G_1$ has a clique of size $k_1$ and $G_2$ has a clique of size $k_2$ and $|V_1|=|V_2|))\}$.
+  Then $A$ is $\mor$-complete in $\NP$ by a reduction from \lang{CLIQUE}.
+  
+  To describe the reduction, we first need to define a function, $C(G, k)$.
+  Let $C$ be defined as follows on all undirected graphs $G=(V, E)$ and integers $k$.
+  If $|V| < k$, then $C(G, k)$ outputs the complete graph on $k$ vertices, $K_k$.
+  If $|V|\geq k$, then $C(G, k)$ outputs the complete graph on $k$ vertices with $|V|-k$ additional disconnected vertices (so that the total number of vertices in the output graph is $|V|$).
 
-  $A$ is $\mor$-complete in $\NP$ by a reduction from $CLIQUE$ similar to the
-  one in \autoref{thm:rkc_npc}.  If $G=(V,E)$, we can compute in polynomial
-  time the reduction $f$ defined by
-  $\pair{G}{k}\mapsto\pair{\pair{G}{k}}{\pair{K^+_k}{k}}$, where $K^+_k$ is the
-  complete graph of $k$ vertices with $|V|-k$ vertices added (without any
-  connecting edges), if $|V|\geq k$. If $|V|<k$, then $K^+_k=K_k$. To show $f$
-  is a many-one reduction from $CLIQUE$, first suppose $\pair{G}{k}\in CLIQUE$,
-  so $G$ has a clique of size $k$, which implies $|V|\geq k$. Hence, $G$ has a
-  clique of size $k$, $K^+_k$ has a clique of size $k$, and $|V|$ equals the
-  number of vertices in $K^+_k$ (by construction). Therefore
-  $\pair{\pair{G}{k}}{\pair{K^+_k}{k}}\in A$. Suppose $\pair{G}{k}\notin
-  CLIQUE$, so $G$ does not have a clique of size $k$. $K^+_k$ has a clique of
-  size $k$ by definition, so the only case left to check is whether $G$ is
-  isomorphic to $K^+_k$. If they were isomorphic, then $G$ would have a clique
-  of size $k$, but this is a contradiction with the hypothesis, so
-  $\pair{\pair{G}{k}}{\pair{K^+_k}{k}}\notin A$. Therefore $CLIQUE\mor A$, and
-  hence $A$ is $\mor$-complete in $\NP$.
+  Now the reduction from \lang{CLIQUE} to $A$, call it $f$, is defined by $f(\pair{G}{k})=\pair{\pair{G}{k}}{\pair{C(G, k)}{k}}$.
+  To show $f$ is a many-one reduction from \lang{CLIQUE}, first suppose $\pair{G}{k}\in$ \lang{CLIQUE}, so $G$ has a clique of size $k$, which implies $|V|\geq k$.
+  Hence, $G$ has a clique of size $k$, $C(G, k)$ has a clique of size $k$, and $|V|$ equals the number of vertices in $C(G, k)$ (by construction).
+  Therefore $\pair{\pair{G}{k}}{\pair{C(G, k)}{k}}\in A$.
+  Suppose $\pair{G}{k}\notin$ \lang{CLIQUE}, so $G$ does not have a clique of size $k$.
+  $C(G, k)$ has a clique of size $k$ by definition, so the only case left to check is whether $G$ is isomorphic to $C(G, k)$.
+  If they were isomorphic, then $G$ would have a clique of size $k$, but this is a contradiction with the hypothesis, so $\pair{\pair{G}{k}}{\pair{C(G, k)}{k}}\notin A$.
+  Therefore \lang{CLIQUE}$\mor A$, and hence $A$ is $\mor$-complete in \NP.
 
-  Now, we will consider the equivalence classes in the equivalence relation
-  $R_{bc}$, as defined in \autoref{def:rbc}. There are an infinite number of
-  equivalence classes in $R_{bc}$; specifically, they are $[\lambda], [1],
-  [11], [111],$ etc. Each equivalence class is itself infinite as well: if
-  $w\in\sigmastar$ then $[w]$ contains $w, 0w, 00w, 000w,$ etc.
+  Now, we will consider the equivalence classes in the equivalence relation $R=\{\pair{x}{y}|x$ and $y$ have the same number of $1$s$\}$.
+  There are an infinite number of equivalence classes in $R$; specifically, they are $[\lambda]$, $[1]$, $[11]$, $[111]$, etc.
+  Each equivalence class is itself infinite as well: if $w\in\sigmastar$ then $[w]$ contains $w$, $0w$, $00w$, $000w$, etc.
 
-  % TODO is the number of n vertex graphs correct?
+  Next, we will consider the equivalence classes in $A$.
+  There are an infinite number of equivalence classes in $A$, as well (because there are an infinite number of graphs, and an infinite number of natural numbers).
+  However, in $A$ each equivalence class contains only a finite number of elements.
+  If $G=(V,E)$, then $[\pair{G}{k}]$ includes all pairs $\pair{H}{k}$, where $G$ is isomorphic to $H$, and all pairs $\pair{J}{k}$, where $G$ and $J$ have the same number of vertices and both have a clique of size $k$.
+  Since there are only a finite number of graphs on $|V|$ vertices, and any graph isomorphic to $G$ must have $|V|$ vertices, the number of graphs isomorphic to $G$ is finite.
+  Furthermore, the number of graphs with both $|V|$ vertices and a clique of size $k$ is also finite.
+  Therefore, the equivalence class $[\pair{G}{k}]$ is finite.
 
-  Next, we will consider the equivalence classes in $A$. There are an infinite
-  number of equivalence classes in $A$, as well (because there are an infinite
-  number of graphs, and an infinite number of natural numbers). However, in $A$
-  each equivalence class contains only a finite number of elements. If
-  $G=(V,E)$, then $[\pair{G}{k}]$ includes all pairs $\pair{H}{k}$, where $G$
-  is isomorphic to $H$, and all pairs $\pair{J}{k}$, where $G$ and $J$ have the
-  same number of vertices and both have a clique of size $k$. Since there are
-  only a finite number of graphs on $|V|$ vertices, and any graph isomorphic to
-  $G$ must have $|V|$ vertices, the number of graphs isomorphic to $G$ is
-  finite. Furthermore, the number of graphs with both $|V|$ vertices and a
-  clique of size $k$ is also finite. Therefore, the equivalence class
-  $[\pair{G}{k}]$ is finite.
+  Now suppose $A$ is $\kr$-complete in $\NPEq$, as specified in the hypothesis of this theorem.
+  Since $R\in\PEq\subseteq\NPEq$, then $R\kr A$, so $\exists g\in\FP$ such that $w\in\R\iff g(w)\in A$.
 
-  Now suppose $A$ is $\kr$-complete in $\NPEq$, as specified in the hypothesis
-  of this theorem. Since $R_{bc}\in\PEq\subseteq\NPEq$, then $R_{bc}\kr A$, so
-  $\exists f\in\FP$ such that $w\in\R_{bc}\iff f(w)\in A$.
-
-  Let $w\in\sigmastar$. Then $f(w)=\pair{G}{k}$ for some graph $G$ and some
-  $k\in\mathbb{N}$. By the above arguments, $[w]_{R_{bc}}$ is infinite and
-  $[f(w)]_A=[\pair{G}{k}]_A$ is finite. By \autoref{lem:image},
-  $f([w]_{R_{bc}})\subseteq [f(w)]_A$. Consider $f|_{[w]_{R_{bc}}}$, that is,
-  $f$ restricted to the domain $[w]_{R_{bc}}$. Then $f|_{[w]_{R_{bc}}}$ is a
-  mapping from an infinite set (specifically $[w]_{R_{bc}}$) to a finite set
-  (specifically $[f(w)]_A=[\pair{G}{k}]_A$). By the pigeonhole principle,
-  $f|_{[w]_{R_{bc}}}$ is not injective. Hence the unrestricted reduction $f$ is
-  not injective, and therefore $A$ is not $\kri$-complete in \NPEq.
+  Let $w\in\sigmastar$.
+  Then $g(w)=\pair{G}{k}$ for some graph $G$ and some $k\in\mathbb{N}$.
+  By the above arguments, $[w]_R$ is infinite and $[g(w)]_A=[\pair{G}{k}]_A$ is finite.
+  By \autoref{lem:image}, $g([w]_R)\subseteq [g(w)]_A$.
+  Consider $g|_{[w]_R}$, that is, $g$ restricted to the domain $[w]_R$.
+  Then $g|_{[w]_R}$ is a mapping from an infinite set (specifically $[w]_R$) to a finite set (specifically $[g(w)]_A=[\pair{G}{k}]_A$).
+  By the pigeonhole principle, $g|_{[w]_R}$ is not injective.
+  Hence the unrestricted reduction $g$ is not injective, and therefore $A$ is not $\kri$-complete in \NPEq.
 \end{proof}
 
-\section{Analog of Ladner's theorem}
+\section{Existence of intermediary problems}
+
+We will denote by $\NPEqC$ the set of equivalence relations which are $\kr$-complete for \NPEq.
+
+The main result of this section is as follows.
+\begin{reptheorem}{thm:intermediary}
+  \printintermediarytheorem
+\end{reptheorem}
+To show this, we will follow a proof of Ladner's original theorem showing that that if $\P\neq\NP$ then there exist problems which are not in $\P$ and not \NP-complete.
+The proof we follow can be found in \cite{bdg95}.
 
 \begin{definition}
   A class of languages $\mathcal{C}$ is \defn{closed under finite variations}
@@ -387,7 +388,7 @@ time \emph{independent} of the size of the input to the transducer $f$.
   \end{displaymath}
   where $r^n(m)$ denotes the $n$-fold application of $r$ to $m$:
   \begin{displaymath}
-    \overbrace{r\circ r\circ r\circ\cdots\circ r}^{n \text{times}}(m)
+    \overbrace{r\circ r\circ r\circ\cdots\circ r}^{n \plain{times}}(m)
   \end{displaymath}
   $G[r]$ is called the \defn{gap language} generated by $r$.
 \end{definition}
@@ -543,19 +544,17 @@ pairs of strings whose lengths are in the ``odd gaps'' of $r$.
 \begin{proposition}
   \mbox{} % to put the next item on a new line
   \begin{enumerate}
-  \item \PEq is computably enumerable.
-  \item The set of equivalence relations which are $\kr$-complete for \NPEq is
-    computably enumerable.
+  \item $\PEq$ is computably enumerable.
+  \item $\NPEqC$ is computably enumerable.
   \end{enumerate}
 \end{proposition}
 \begin{proof}
+  These statements are true since any subset of a computably enumerable set is computably enumerable, and these are both subsets of $\NP$.
+  Note that $\NPEqC$ may be empty.
 \end{proof}
 
-We will denote \NPEqC the set of equivalence relations which are $\kr$-complete
-for \NPEq.
-
 \begin{theorem}\label{thm:npeqc}
-  If $\PEq\neq\NPEq$ and \NPEqC is non-empty, then $\PEq\cap\NPEqC=\emptyset$.
+  If $\PEq\neq\NPEq$ and $\NPEqC$ is non-empty, then $\PEq\cap\NPEqC=\emptyset$.
 \end{theorem}
 \begin{proof}
   Assume $\PEq\cap\NPEqC\neq\emptyset$. Let $R$ be the \NPEq-complete
@@ -565,20 +564,16 @@ for \NPEq.
   hypothesis. Therefore $\PEq\cap\NPEqC=\emptyset$.
 \end{proof}
 
-\begin{theorem}
-  If $\PEq\neq\NPEq$ and \NPEqC is non-empty, then there exists an equivalence
-  relation in \NPEq which is neither in \PEq nor \NPEqC.
+\begin{theorem}\label{thm:intermediary}
+  \printintermediarytheorem
 \end{theorem}
 \begin{proof}
-  The hypothesis of this theorem is the same as in \autoref{thm:npeqc}, so
-  $\PEq\cap\NPEqC=\emptyset$. Let $S$ be an \NPEq-complete problem. Choose
-  $R_1=S$, $R_2=\emptyset$, $\mathcal{C}_1=\PEq$ and
-  $\mathcal{C}_2=\NPEqC$. Then by \autoref{thm:diag}, there exists an
-  equivalence relation $R$ which is in neither \NPEqC nor \PEq, but which
-  kernel reduces to $S\kj\emptyset$. Since $S\kj\emptyset$ trivially kernel
-  reduces to $S$, and since polynomial time kernel reductions compose by
-  \autoref{prop:compose}, $R\kr S$. Since \NPEq is closed under polynomial time
-  kernel reductions, $R\in\NPEq$.
+  The hypothesis of this theorem is the same as in \autoref{thm:npeqc}, so $\PEq\cap\NPEqC=\emptyset$.
+  Let $S$ be an \NPEq-complete problem.
+  Choose $R_1=S$, $R_2=\emptyset$, $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2=\NPEqC$.
+  Then by \autoref{thm:diag}, there exists an equivalence relation $R$ which is in neither $\NPEqC$ nor $\PEq$, but which kernel reduces to $S\kj\emptyset$.
+  Since $S\kj\emptyset$ trivially kernel reduces to $S$, and since polynomial time kernel reductions compose by \autoref{prop:compose}, $R\kr S$.
+  Since $\NPEq$ is closed under polynomial time kernel reductions, $R\in\NPEq$.
 \end{proof}
 
 \bibliographystyle{amsalpha} \bibliography{references}
