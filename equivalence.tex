@@ -39,6 +39,8 @@
   pdfauthor={Jeffrey Finkelstein}
 ]{hyperref} % for pdf links when rendering \ref and \cite commands
 
+\dontprintsemicolon
+
 % Define theorem, lemma, and definition environments and corresponding styles.
 % Lemmata, corollaries, and definitions are numbered with the same counter as
 % that for theorems. We have to do some black magic to get the \autoref labels
@@ -78,6 +80,7 @@
 \newcommand{\corollaryname}{Corollary}
 \newcommand{\definitionname}{Definition}
 \newcommand{\propositionname}{Proposition}
+\newcommand{\algocflinename}{Algorithm}
 
 % custom shortcut commands
 \newcommand{\plain}[1]{\,\text{#1}\,} % plain text inside math environments
@@ -372,8 +375,6 @@ First we need to provide some technical definitions and machinery.
   If $R$ and $S$ are equivalence relations on $\Sigma^*$, then $R\kj S$ is an equivalence relation.
 \end{theorem}
 \begin{proof}
-  %% TODO Are non-empty strings okay?
-
   Let $x$, $y$ and $z$ be non-empty strings in $\Sigma^*$.
   
   Since $x$ is non-empty, $x=x'0$ or $x=x'1$.
