@@ -809,12 +809,12 @@ representatives of equivalence classes in both equivalence relations.
   of this function is $\langle s_1, s_2, \ldots, s_m\rangle$, where
   $s_1,\ldots, s_m$ are representatives of $m$ equivalence classes in $S$.
 
-  Define $f\in\FP$ by $f(r_l)=s_l$, for all $l\leq n$. We now wish to show that
-  $f$ is injective. Suppose $r_l,r_q\in R$ and $r_l\neq r_q$. Then $f(r_l)=s_l$
-  and $f(r_q)=s_q$. Since each element in the encoding of $m$ elements of
-  $REP(S)$ which is output by $E_S$ on input $j$ is unique (as each
-  representative is in its own equivalence class), $s_l\neq s_q$, and hence
-  $f(r_l)\neq f(r_q)$. Therefore $f$ is injective.
+  Define $f\in\FP$ by $f(r_\ell)=s_\ell$, for all $\ell\leq n$. We now wish to
+  show that $f$ is injective. Suppose $r_\ell,r_q\in R$ and $r_\ell\neq
+  r_q$. Then $f(r_\ell)=s_\ell$ and $f(r_q)=s_q$. Since each element in the
+  encoding of $m$ elements of $REP(S)$ which is output by $E_S$ on input $j$ is
+  unique (as each representative is in its own equivalence class), $s_\ell\neq
+  s_q$, and hence $f(r_\ell)\neq f(r_q)$. Therefore $f$ is injective.
 
   The function $f$ now satisfies the conditions in the hypothesis of
   \autoref{thm:repr_kr}, so the result follows.
@@ -1106,15 +1106,16 @@ isomorphism problem.
   $GI\kequiv DirGI$
 \end{lemma}
 \begin{proof}
-  To show $GI\kr DirGI$, replace each undirected edge in the graph with a pair
-  of complementary directed edges.
+  To show $GI\kr DirGI$, replace each edge in the undirected graph with a pair
+  of complementary edges in a directed graph with same set of vertices.
   
-  To show $DirGI\kr GI$, replace each directed edge in the graph with a set of
-  vertices and edges that enforces an ordering between the vertices. In
-  \cite{miller77}, for example, when given vertices $x$ and $y$ with directed
-  edge $(x,y)$, the author adds the vertices $\{v_1$, $v_2$, $\ldots$, $v_7\}$
-  with undirected edges $\{\{x, v_1\}$, $\{v_1,v_4\}$, $\{v_4,y\}$,
-  $\{v_1,v_2\}$, $\{v_2,v_3\}$, $\{v_4,v_5\}$, $\{v_5,v_6\}$, $\{v_6,v_7\}\}$.
+  To show $DirGI\kr GI$, replace each edge in the directed graph with a set of
+  vertices and edges that enforces an ordering between the original pair of
+  vertices adjacent in the directed graph. In \cite{miller77}, for example,
+  when given vertices $x$ and $y$ with directed edge $(x,y)$, the author adds
+  the vertices $\{v_1$, $v_2$, $\ldots$, $v_7\}$ with undirected edges $\{\{x,
+  v_1\}$, $\{v_1,v_4\}$, $\{v_4,y\}$, $\{v_1,v_2\}$, $\{v_2,v_3\}$,
+  $\{v_4,v_5\}$, $\{v_5,v_6\}$, $\{v_6,v_7\}\}$.
 \end{proof}
 
 From \autoref{lem:gi_ke_dirgi}, we can use a kernel reduction to the directed
