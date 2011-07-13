@@ -142,10 +142,13 @@ In this paper we will abuse notation and write $\pair{x}{y}\in R$, but what we r
 The \defn{equivalence class} of $x$ with respect to an equivalence relation $R$ on $U$ is $\{y\in U|(x,y)\in R\}$. It is denoted $[x]_R$, or if the context is clear, simply $[x]$.
 Each element $x\in U$ is in exactly one equivalence class, so the equivalence classes of an equivalence relation on $U$ provide a partition of $U$.
 
+A \defn{complete invariant} for an equivalence relation $R$ on $U$ is a function $f\colon U\to T$ such that for all $x,y\in U$, $(x,y)\in R$ if and only if $f(x)=f(y)$.
+
 \defn{$\PEq$} is the class of equivalence relations for which membership can be decided by a Turing maching running in deterministic polynomial time.
 \defn{$\NPEq$} is the class of equivalence relations for which membership can be decided by a Turing maching running in non-deterministic polynomial time.
 In other words, $\PEq$ is the set of (languages induced by) equivalence relations which are in \P, and $\NPEq$ is the set of (languages induced by) equivalence relations which are in \NP.
 As usual, $\PEq\subseteq\NPEq$.
+\defn{$\Ker$} is the class of equivalence relations which have a polynomial time computable complete invariant.
 
 We now require a natural notion of reduction among equivalence relations.
 If $R$ and $S$ are equivalence relations on $\Sigma^*$, we say $R$ \defn{kernel reduces to} $S$ if $\exists f\colon\Sigma^*\to\Sigma^*$ such that $\forall x,y\in\Sigma^*$, $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
@@ -284,6 +287,17 @@ Here, a ``representative'' of an equivalence class is just any element of the eq
 \end{proof}
 
 With \autoref{thm:reps} we have reduced the problem of computing a polynomial time kernel reduction to the problem of enumerating representatives of equivalence classes (when reducing from a $\PEq$ equivalence relation at least).
+
+Now, with the fact that if the equality relation is \PEq-complete then every language in $\PEq$ has a polynomial time complete invariant (namely, the reduction to the equality relation), we can show the following collapse.
+
+\begin{corollary}
+  $\UP\subseteq\BQP$
+\end{corollary}
+\begin{proof}
+  Choose $S$ to be the equality relation in the previous theorem.
+  Then the equality relation is \PEq-complete, so $\Ker=\PEq$.
+  By Theorem 4.3 in \cite{fg11}, this implies $\UP\subseteq\BQP$.
+\end{proof}
 
 \section{Polynomial time kernel reductions in \texorpdfstring{\NPEq}{NPEq}}
 
