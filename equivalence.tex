@@ -120,6 +120,43 @@
 \maketitle
 \symbolfootnote{\license}
 
+\section{Preliminaries}
+
+If $\Sigma$ is an alphabet then $\Sigma^*$ is the set of all strings over the alphabet $\Sigma$.
+If $x$ and $y$ are elements of $\Sigma^*$, then we denote by $\pair{x}{y}$ the \defn{pairwise encoding} of $x$ and $y$, which is itself an element of $\Sigma^*$.
+As usual, a language over an alphabet $\Sigma$ is a subset of $\Sigma^*$.
+
+Given a universe $U$, $R\subseteq U\times U$ is an \defn{equivalence relation on $U$} if $R$ is
+\begin{enumerate}
+\item reflexive: for all $x\in U$, $(x,x)\in R$
+\item symmetric: for all $x,y\in U$, $(x,y)\in R$ implies $(y,x)\in R$
+\item transitive: for all $x,y,z\in U$, $(x,y)\in R$ and $(y,z)\in R$ implies $(x,z)\in R$
+\end{enumerate}
+An equivalence relation $R$ can be encoded as a language by taking the pairwise encoding of each pair in $R$.
+In this way we can study the computational complexity of classes of languages which represent equivalence relations.
+In this paper we will abuse notation and write $\pair{x}{y}\in R$, but what we really mean is $(x,y)\in R$ and $\pair{x}{y}\in L_R$, the language induced by $R$.
+
+The \defn{equivalence class} of $x$ with respect to an equivalence relation $R$ on $U$ is $\{y\in U|(x,y)\in R\}$. It is denoted $[x]_R$, or if the context is clear, simply $[x]$.
+Each element $x\in U$ is in exactly one equivalence class, so the equivalence classes of an equivalence relation on $U$ provide a partition of $U$.
+
+\defn{$\PEq$} is the class of equivalence relations for which membership can be decided by a Turing maching running in deterministic polynomial time.
+\defn{$\NPEq$} is the class of equivalence relations for which membership can be decided by a Turing maching running in non-deterministic polynomial time.
+In other words, $\PEq$ is the set of (languages induced by) equivalence relations which are in \P, and $\NPEq$ is the set of (languages induced by) equivalence relations which are in \NP.
+As usual, $\PEq\subseteq\NPEq$.
+
+We now require a natural notion of reduction among equivalence relations.
+If $R$ and $S$ are equivalence relations on $\Sigma^*$, we say $R$ \defn{kernel reduces to} $S$ if $\exists f\colon\Sigma^*\to\Sigma^*$ such that $\forall x,y\in\Sigma^*$, $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
+We denote this by $R\krnt S$.
+If $f$ is computable in polynomial time, then we say $R$ \defn{polynomial time kernel reduces to} $S$ and use the notation $R\kr S$.
+
+Notice the difference between a kernel reduction and a regular old many-one reduction: a kernel reduction maps $\pair{x}{y}\in R$ to $\pair{f(x)}{f(y)}\in S$, whereas a many-one reduction maps $\pair{x}{y}\in R$ to $f(\pair{x}{y})\in S$, for some polynomial time computable function $f$.
+Informally, a function which computes a many-one reduction has access to both $x$ and $y$ but a function which computes a kernel reduction has access to only one of $x$ and $y$ at a time.
+Note that since it is more restrictive, a kernel reduction induces a many-one reduction (namely the function $\pair{x}{y}\mapsto\pair{f(x)}{f(y)}$).
+
+As an analog to polynomial time many-one completeness in \NP, we define a similar notion of polynomial time completeness under kernel reductions in \NPEq.
+An equivalence relation $S$ is \defn{\NPEq-complete} if for all $R\in\NPEq$, $R\kr S$.
+Similarly, an equivalence relation $S$ is \defn{\PEq-complete} if for all $R\in\PEq$, $R\kr S$.
+
 \section{Basic facts about kernel reductions}
 \begin{proposition}\label{prop:compose}
   If $R\kr S$ and $S\kr T$ then $R\kr T$. In other words, polynomial time kernel reductions compose.
@@ -172,9 +209,16 @@
   The proof is the same in \NPEq, because $R_{eq}\in\PEq\subseteq\NPEq$.
 \end{proof}
 
+The following proposition is presented without proof, because its proof is nearly the same as the proof of the corresponding statement for polynomial time many-one reductions in \NP.
+
+\begin{proposition}\label{prop:closed_under_kr}
+  $\NPEq$ is closed under polynomial time kernel reductions, that is if $S\in\NPEq$ and $R\kr S$ then $R\in\NPEq$.
+\end{proposition}
+
 \section{Polynomial time kernel reductions in \texorpdfstring{\PEq}{PEq}}
 
 In the next theorem, we denote a set of representatives of equivalence classes of an equivalence relation $R$ by \defn{$REP(R)$}.
+Here, a ``representative'' of an equivalence class is just any element of the equivalence class.
 
 \begin{lemma}\label{lem:repr_kr}
   Let $R$ and $S$ be equivalence relations on $\sigmastar$, each with a countably infinite number of equivalence classes.
@@ -270,8 +314,8 @@ In the following theorem, by ``$\kri$-complete'' we mean ``complete under inject
   If $|V| < k$, then $C(G, k)$ outputs the complete graph on $k$ vertices, $K_k$.
   If $|V|\geq k$, then $C(G, k)$ outputs the complete graph on $k$ vertices with $|V|-k$ additional disconnected vertices (so that the total number of vertices in the output graph is $|V|$).
 
-  Now the reduction from \lang{CLIQUE} to $A$, call it $f$, is defined by $f(\pair{G}{k})=\pair{\pair{G}{k}}{\pair{C(G, k)}{k}}$.
-  To show $f$ is a many-one reduction from \lang{CLIQUE}, first suppose $\pair{G}{k}\in$ \lang{CLIQUE}, so $G$ has a clique of size $k$, which implies $|V|\geq k$.
+  Now we can define the reduction $f$ from \lang{CLIQUE} to $A$ by $f(\pair{G}{k})=\pair{\pair{G}{k}}{\pair{C(G, k)}{k}}$.
+  To prove the correctness of $f$, first suppose $\pair{G}{k}\in$ \lang{CLIQUE}, so $G$ has a clique of size $k$, which implies $|V|\geq k$.
   Hence, $G$ has a clique of size $k$, $C(G, k)$ has a clique of size $k$, and $|V|$ equals the number of vertices in $C(G, k)$ (by construction).
   Therefore $\pair{\pair{G}{k}}{\pair{C(G, k)}{k}}\in A$.
   Suppose $\pair{G}{k}\notin$ \lang{CLIQUE}, so $G$ does not have a clique of size $k$.
@@ -314,9 +358,10 @@ The main result of this section is as follows.
 \end{reptheorem}
 To show this, we will follow a proof of Ladner's original theorem showing that that if $\P\neq\NP$ then there exist problems which are not in $\P$ and not \NP-complete.
 The proof we follow can be found in \cite{bdg95}.
+First we need to provide some technical definitions and machinery.
 
 \begin{definition}
-  A class of languages $\mathcal{C}$ is \defn{closed under finite variations} if and only if $A\in \mathcal{C}$ and $A\symdiff B$ is finite implies $B\in \mathcal{C}$ for all $B$.
+  A class of languages $\mathcal{C}$ is \defn{closed under finite variations} if and only if $A\in \mathcal{C}$ and $A\symdiff B$ (the symmetric difference of $A$ and $B$) is finite implies $B\in \mathcal{C}$ for all $B$.
 \end{definition}
 
 \begin{definition}
@@ -396,6 +441,8 @@ Elements of ${G[r]}^2$ are pairs of strings whose lengths are in the ``even gaps
   Then $y$ and $z$ are both in an even gap of $r$, so $x$, $y$ and $z$ are all in some even gap of $r$, and hence $\pair{x}{z}\in {G[r]}^2$.
   Therefore ${G[r]}^2$ is transitive.
 \end{proof}
+
+We are now prepared to prove the main technical theorem which will allow us to construct an equivalence relation which is ``between'' two complexity classes.
 
 \begin{theorem}\label{thm:diag}
   Let $R_1$ and $R_2$ be decidable equivalence relations, and let $\mathcal{C}_1$ and $\mathcal{C}_2$ be classes of decidable equivalence relations such that:
@@ -492,6 +539,8 @@ Elements of ${G[r]}^2$ are pairs of strings whose lengths are in the ``even gaps
   Since we have shown that the equivalence relation $R$ satisfies the properties in the statement of the theorem, this concludes the proof.
 \end{proof}
 
+We would now like to show that the result of this theorem holds when $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2=\NPEqC$.
+
 \begin{proposition}
   \mbox{} % to put the next item on a new line
   \begin{enumerate}
@@ -525,7 +574,7 @@ Elements of ${G[r]}^2$ are pairs of strings whose lengths are in the ``even gaps
   Choose $R_1=S$, $R_2=\emptyset$, $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2=\NPEqC$.
   Then by \autoref{thm:diag}, there exists an equivalence relation $R$ which is in neither $\NPEqC$ nor $\PEq$, but which kernel reduces to $S\kj\emptyset$.
   Since $S\kj\emptyset$ trivially kernel reduces to $S$, and since polynomial time kernel reductions compose by \autoref{prop:compose}, $R\kr S$.
-  Since $\NPEq$ is closed under polynomial time kernel reductions, $R\in\NPEq$.
+  Since $\NPEq$ is closed under polynomial time kernel reductions by \autoref{prop:closed_under_kr}, $R\in\NPEq$.
 \end{proof}
 
 \section{Open problems}
