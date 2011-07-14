@@ -7,3 +7,4 @@ rm *.blg
 rm *.log
 rm *.pdf
 rm *.brf
+rm *.out
