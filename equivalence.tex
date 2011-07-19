@@ -148,7 +148,7 @@ A \defn{complete invariant} for an equivalence relation $R$ on $U$ is a function
 \defn{$\NPEq$} is the class of equivalence relations for which membership can be decided by a Turing maching running in non-deterministic polynomial time.
 In other words, $\PEq$ is the set of (languages induced by) equivalence relations which are in \P, and $\NPEq$ is the set of (languages induced by) equivalence relations which are in \NP.
 As usual, $\PEq\subseteq\NPEq$.
-\defn{$\Ker$} is the class of equivalence relations which have a polynomial time computable complete invariant.
+%\defn{$\Ker$} is the class of equivalence relations which have a polynomial time computable complete invariant.
 
 We now require a natural notion of reduction among equivalence relations.
 If $R$ and $S$ are equivalence relations on $\Sigma^*$, we say $R$ \defn{kernel reduces to} $S$ if $\exists f\colon\Sigma^*\to\Sigma^*$ such that $\forall x,y\in\Sigma^*$, $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
@@ -220,84 +220,6 @@ The following proposition is presented without proof, because its proof is nearl
 \begin{proposition}\label{prop:closed_under_kr}
   $\NPEq$ is closed under polynomial time kernel reductions, that is if $S\in\NPEq$ and $R\kr S$ then $R\in\NPEq$.
 \end{proposition}
-
-\section{Polynomial time kernel reductions in \texorpdfstring{\PEq}{PEq}}
-
-In the next theorem, we denote a set of representatives of equivalence classes of an equivalence relation $R$ by \defn{$REP(R)$}.
-Here, a ``representative'' of an equivalence class is just any element of the equivalence class.
-
-\begin{lemma}\label{lem:repr_kr}
-  Let $R$ and $S$ be equivalence relations on $\sigmastar$, each with a countably infinite number of equivalence classes.
-  If $R\in\PEq$ and there exists a computable injective function $f\colon REP(R)\to REP(S)$, then $R\kr S$.
-\end{lemma}
-\begin{proof}
-  Since $R\in\PEq$, $\exists M_R$, a deterministic Turing machine running in polynomial time, such that $\pair{x}{y}\in R\iff M_R(\pair{x}{y})$ accepts.
-  Construct the transducer $g$ as follows on input $w\in\sigmastar$:\\
-  \begin{algorithm}[H]
-    \For{$r_i\in REP(R)$}{
-      \If{$M_R(\pair{w}{r_i})$ accepts}{
-        \Return{$f(r_i)$}
-      }
-    }
-  \end{algorithm}
-  Notice that each $w\in\sigmastar$ is in exactly one equivalence class in $R$, because the equivalence classes partition $\sigmastar$, so $M_R(\pair{w}{r_i})$ accepts exactly once during the loop, when $\pair{w}{r_i}\in R$.
-
-  We first claim that $g$ runs in polynomial time with respect to $|w|$.
-  The loop on line 1 enumerates the representatives of equivalence classes of $R$ until the representative of $[w]_R$ is found.
-  Although termination of this loop depends on the input $w$ (since we need to find the correct representative for $[w]$), it \emph{does not depend on the length} of $w$.
-  Therefore, the running time of this loop is a constant which depends on $w$.
-  Running the machine on line 2, however, does depend on the length of $w$, but $M_R$ runs in polynomial time by hypothesis.
-  Finally, computing the image of $r_i$ in $REP(S)$ under $f$ on line 3 again does not depend on the length of $w$ (in fact, it doesn't depend on $w$ at all).
-  Hence, with respect to the length of $w$, the outer loop runs in $O(1)$ time, the check on line 2 runs in polynomial time, and the computation on line 3 runs in $O(1)$ time.
-  Therefore the transducer runs in time polynomial in the length of the input.
-
-  Now we prove the correctness of the reduction $g$.
-  Suppose $\pair{x}{y}\in R$, so $\pair{x}{r_i}\in R$ and $\pair{y}{r_i}\in R$ for some $r_i\in REP(R)$.
-  Then $g(x)$ outputs $f(r_i)$ and $g(y)$ outputs $f(r_i)$.
-  Since $\pair{f(r_i)}{f(r_i)}\in S$, then $\pair{g(x)}{g(y)}\in S$.
-
-  Suppose $\pair{x}{y}\notin R$.
-  So $\exists r_i, r_j\in REP(R)$, with $r_i\neq r_j$, such that $\pair{x}{r_i}\in R$ and $\pair{y}{r_j}\in R$.
-  Then $g(x)$ outputs $f(r_i)$ and $g(y)$ outputs $f(r_j)$.
-  Since $f$ is injective, $r_i\neq r_j\implies f(r_i)\neq f(r_j)$.
-  Since $f(r_i)$ and $f(r_j)$ are distinct elements in $REP(S)$, they are representatives of two distinct equivalence classes.
-  Since every element of $S$ is in exactly one equivalence class, and since $[f(r_i)]\neq[f(r_j)]$, it follows that $\pair{f(r_i)}{f(r_j)}=\pair{g(x)}{g(y)}\notin S$.
-
-  Therefore $\pair{x}{y}\in R\iff \pair{g(x)}{g(y)}\in S$, so $R\kr S$.
-\end{proof}
-
-\begin{theorem}\label{thm:reps}
-  Let $R$ and $S$ be equivalence relations on $\sigmastar$, each with a countably infinite number of equivalence classes.
-  If $R\in\PEq$ then $R\kr S$.
-\end{theorem}
-\begin{proof}
-  We will prove the existence of a computable injective $f\colon REP(R)\to REP(S)$ and then invoke \autoref{lem:repr_kr}.
-
-  Since $REP(R)$ and $REP(S)$ are countably infinite, they are computably enumerable.
-  Simultaneously enumerate $r_1, r_2, \ldots$ and $s_1, s_2, \ldots$, elements of $REP(R)$ and $REP(S)$ respectively.
-  This can be done by interleaving the enumeration of $REP(R)$ with the enumeration of $REP(S)$.
-
-  Define $f$ by $f(r_i)=s_i$ for all $i\in\mathbb{N}$.
-  We now wish to show that $f$ is injective.
-  Suppose $r_i,r_j\in R$ and $r_i\neq r_j$.
-  Then $f(r_i)=s_i$ and $f(r_j)=s_j$. $r_i\neq r_j\implies i\neq j\implies s_i\neq s_j\implies f(s_i)\neq f(s_j)$.
-  Therefore $f$ is injective.
-
-  The function $f$ now satisfies the conditions in the hypothesis of \autoref{lem:repr_kr}, and since we assume $R\in\PEq$, the result follows.
-\end{proof}
-
-With \autoref{thm:reps} we have reduced the problem of computing a polynomial time kernel reduction to the problem of enumerating representatives of equivalence classes (when reducing from a $\PEq$ equivalence relation at least).
-
-Now, with the fact that if the equality relation is \PEq-complete then every language in $\PEq$ has a polynomial time complete invariant (namely, the reduction to the equality relation), we can show the following collapse.
-
-\begin{corollary}
-  $\UP\subseteq\BQP$
-\end{corollary}
-\begin{proof}
-  Choose $S$ to be the equality relation in the previous theorem.
-  Then the equality relation is \PEq-complete, so $\Ker=\PEq$.
-  By Theorem 4.3 in \cite{fg11}, this implies $\UP\subseteq\BQP$.
-\end{proof}
 
 \section{Polynomial time kernel reductions in \texorpdfstring{\NPEq}{NPEq}}
 
