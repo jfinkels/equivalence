@@ -1,13 +1,30 @@
-Besides pdflatex, compile-time dependencies include:
+Compilation dependencies
+------------------------
 
-* algorithm2e.sty
-* hyperref.sty
-* complexity.sty
+Besides pdflatex, compile-time dependencies include the following LaTeX
+packages:
 
-On Ubuntu, the necessary packages are:
+* aliascnt
+* algorithm2e
+* amsthm
+* amsmath
+* amssymb
+* complexity
+* hyperref
 
+On Ubuntu, the necessary system packages which contain these LaTeX packages
+are:
+
+* texlive-base
 * texlive-latex-base
 * texlive-science
+
+To install them, run
+
+    sudo apt-get install texlive-base texlive-latex-base texlive-science
+
+Compiling
+---------
 
 To compile this article, run 
 
@@ -15,12 +32,15 @@ To compile this article, run
 
 The output is equivalence.pdf.
 
+Copyright
+---------
+
 Except where otherwise noted, both the LaTeX markup and the content of the
 article and the poster are made available under the terms of the Creative
 Commons Attribution-ShareAlike 3.0 license,
 http://creativecommons.org/licenses/by-sa/3.0/.
 
 Contact
-=======
+-------
 
 Jeffrey Finkelstein <jeffrey.finkelstein@gmail.com>
