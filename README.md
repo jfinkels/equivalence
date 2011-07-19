@@ -11,7 +11,7 @@ On Ubuntu, the necessary packages are:
 
 To compile this article, run 
 
-    compile-paper.sh
+    ./compile-paper.sh
 
 The output is equivalence.pdf.
 
