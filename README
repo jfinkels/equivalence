@@ -1,6 +1,7 @@
 Besides pdflatex, compile-time dependencies include:
 
 * algorithm2e.sty
+* hyperref.sty
 * complexity.sty
 
 On Ubuntu, the necessary packages are:
