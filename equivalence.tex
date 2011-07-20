@@ -159,7 +159,7 @@ The \defn{equivalence class} of $x$ with respect to an equivalence relation $R$ 
 Each element $x\in U$ is in exactly one equivalence class, so the equivalence classes of an equivalence relation on $U$ provide a partition of $U$.
 
 %A \defn{complete invariant} for an equivalence relation $R$ on $U$ is a function $f\colon U\to T$ such that for all $x,y\in U$, $(x,y)\in R$ if and only if $f(x)=f(y)$.
-
+%
 \defn{$\PEq$} is the class of equivalence relations for which membership can be decided by a Turing maching running in deterministic polynomial time.
 \defn{$\NPEq$} is the class of equivalence relations for which membership can be decided by a Turing maching running in non-deterministic polynomial time.
 In other words, $\PEq$ is the set of (languages induced by) equivalence relations which are in \P, and $\NPEq$ is the set of (languages induced by) equivalence relations which are in \NP.
@@ -178,6 +178,56 @@ Note that since it is more restrictive, a kernel reduction induces a many-one re
 As an analog to polynomial time many-one completeness in \NP, we define a similar notion of polynomial time completeness under kernel reductions in \NPEq.
 An equivalence relation $S$ is \defn{\NPEq-complete} if for all $R\in\NPEq$, $R\kr S$.
 Similarly, an equivalence relation $S$ is \defn{\PEq-complete} if for all $R\in\PEq$, $R\kr S$.
+
+\section{Definitions of \texorpdfstring{\NPEq}{NPEq}}
+
+In this section we examine possible alternate definitions of \NPEq.
+The main property of languages in $\NP$ is that membership in each language is verifiable in polynomial time, given a witness to the membership.
+We propose here several possible definitions of $\NPEq$ in order to determine which make sense, which are too restrictive, and which are equivalent.
+
+For the sake of brevity, in all definitions below, when we write $\exists w$, we mean $\exists w$ with length polynomially bounded with respect to the length of $x$, $y$, or the pair $\pair{x}{y}$ (depending on the requirements of the particular definition).
+
+The first two definitions are analogs of the two fundamental definitions of \NP.
+\begin{definition}\label{def:npeq1}
+  An equivalence relation $R$ is in $\NPEqOne$ if there exists a non-deterministic Turing machine, call it $N$, which halts in time polynomial in the length of the input, such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff N(\pair{x}{y})\plain{accepts}
+  \end{displaymath}
+\end{definition}
+\begin{definition}\label{def:npeq2}
+  An equivalence relation $R$ is in $\NPEqTwo$ if there exists a language $L\in\P$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w\colon \pair{\pair{x}{y}}{w}\in L
+  \end{displaymath}
+\end{definition}
+
+The next two definitions attempt to require that the witness language is itself an equivalence relation, instead of an arbitrary language in $\P$, as in \autoref{def:npeq2}.
+\begin{definition}\label{def:npeq3}
+  An equivalence relation $R$ is in $\NPEqThree$ if there exists an equivalence relation $R'\in \PEq$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w_x,w_y\colon \pair{\pair{x}{w_x}}{\pair{y}{w_y}}\in R'
+  \end{displaymath}
+\end{definition}
+\begin{definition}\label{def:npeq4}
+  An equivalence relation $R$ is in $\NPEqFour$ if there exists an equivalence relation $R'\in \PEq$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w\colon \pair{\pair{x}{w}}{\pair{y}{w}}\in R'
+  \end{displaymath}
+\end{definition}
+
+The final two definitions attempt to allow the possibility of not just a simple string which witnesses the equivalence of $x$ and $y$, but a ``witness function'' which may map $x$ and $y$, along with witness strings, to an equivalence relation in \PEq.
+\begin{definition}\label{def:npeq5}
+  An equivalence relation $R$ is in $\NPEqFive$ if there exists an equivalence relation $R'\in \PEq$ and a function $f\in\FP$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w_x,w_y\colon \pair{f(x, w_x)}{f(y, w_y)}\in R'
+  \end{displaymath}
+\end{definition}
+\begin{definition}\label{def:npeq6}
+  An equivalence relation $R$ is in $\NPEqSix$ if there exists an equivalence relation $R'\in \PEq$ and a function $f\in\FP$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w\colon \pair{f(x, w)}{f(y, w)}\in R'
+  \end{displaymath}
+\end{definition}
 
 \section{Basic facts about kernel reductions}
 
