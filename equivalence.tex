@@ -38,6 +38,7 @@
   pdftitle={On the computational complexity of equivalence relations under kernel reductions},
   pdfauthor={Jeffrey Finkelstein}
 ]{hyperref} % for pdf links when rendering \ref and \cite commands
+\usepackage[all]{xy} % for inclusion diagram
 
 \dontprintsemicolon
 
@@ -58,6 +59,10 @@
 \newaliascnt{corollary}{theorem}
 \newtheorem{corollary}[corollary]{Corollary}
 \aliascntresetthe{corollary}
+
+\newaliascnt{openproblem}{theorem}
+\theoremstyle{definition} \newtheorem{openproblem}[openproblem]{Open problem}
+\aliascntresetthe{openproblem}
 
 \newaliascnt{definition}{theorem}
 \theoremstyle{definition} \newtheorem{definition}[definition]{Definition}
@@ -81,6 +86,9 @@
 \newcommand{\definitionname}{Definition}
 \newcommand{\propositionname}{Proposition}
 \newcommand{\algocflinename}{Algorithm}
+
+% create a proof sketch environment
+\newenvironment{sketch}{\begin{proof}[Proof sketch]}{\end{proof}}
 
 % custom shortcut commands
 \newcommand{\plain}[1]{\,\text{#1}\,} % plain text inside math environments
@@ -158,8 +166,9 @@ In this paper we will abuse notation and write $\pair{x}{y}\in R$, but what we r
 The \defn{equivalence class} of $x$ with respect to an equivalence relation $R$ on $U$ is $\{y\in U|(x,y)\in R\}$. It is denoted $[x]_R$, or if the context is clear, simply $[x]$.
 Each element $x\in U$ is in exactly one equivalence class, so the equivalence classes of an equivalence relation on $U$ provide a partition of $U$.
 
-%A \defn{complete invariant} for an equivalence relation $R$ on $U$ is a function $f\colon U\to T$ such that for all $x,y\in U$, $(x,y)\in R$ if and only if $f(x)=f(y)$.
-%
+A \defn{complete invariant} for an equivalence relation $R$ on $U$ is a function $f\colon U\to T$ such that for all $x,y\in U$, $(x,y)\in R$ if and only if $f(x)=f(y)$.
+In \autoref{sec:definitions} below we will define generalizations of the complete invariant which accept as input an additional witness to the equivalence of $x$ and $y$.
+
 \defn{$\PEq$} is the class of equivalence relations for which membership can be decided by a Turing maching running in deterministic polynomial time.
 \defn{$\NPEq$} is the class of equivalence relations for which membership can be decided by a Turing maching running in non-deterministic polynomial time.
 In other words, $\PEq$ is the set of (languages induced by) equivalence relations which are in \P, and $\NPEq$ is the set of (languages induced by) equivalence relations which are in \NP.
@@ -179,7 +188,7 @@ As an analog to polynomial time many-one completeness in \NP, we define a simila
 An equivalence relation $S$ is \defn{\NPEq-complete} if for all $R\in\NPEq$, $R\kr S$.
 Similarly, an equivalence relation $S$ is \defn{\PEq-complete} if for all $R\in\PEq$, $R\kr S$.
 
-\section{Definitions of \texorpdfstring{\NPEq}{NPEq}}
+\section{Definitions of \texorpdfstring{\NPEq}{NPEq}}\label{sec:definitions}
 
 In this section we examine possible alternate definitions of \NPEq.
 The main property of languages in $\NP$ is that membership in each language is verifiable in polynomial time, given a witness to the membership.
@@ -215,7 +224,7 @@ The next two definitions attempt to require that the witness language is itself 
   \end{displaymath}
 \end{definition}
 
-The final two definitions attempt to allow the possibility of not just a simple string which witnesses the equivalence of $x$ and $y$, but a ``witness function'' which may map $x$ and $y$, along with witness strings, to an equivalence relation in \PEq.
+The next two definitions attempt to allow the possibility of not just a simple string which witnesses the equivalence of $x$ and $y$, but a ``witness function'' which may map $x$ and $y$, along with witness strings, to an equivalence relation in \PEq.
 \begin{definition}\label{def:npeq5}
   An equivalence relation $R$ is in $\NPEqFive$ if there exists an equivalence relation $R'\in \PEq$ and a function $f\in\FP$ such that
   \begin{displaymath}
@@ -228,6 +237,54 @@ The final two definitions attempt to allow the possibility of not just a simple 
     \pair{x}{y}\in R\iff \exists w\colon \pair{f(x, w)}{f(y, w)}\in R'
   \end{displaymath}
 \end{definition}
+
+The final two definitions attempt to describe equivalence relations for which there is a ``witnessed complete invariant'', which maps equivalent strings to equal strings when given access to some witness of their equivalence.
+We say that an equivalence relation $R$ on a universe $U$ has a \defn{one-witness complete invariant} if there exists a function $f\colon U\times S\to T$ such that $(x,y)\in R$ if and only if $\exists w\in S\colon f(x, w)=f(y, w)$, and we say that it has a \defn{two-witness complete invariant} if $(x, y)\in R$ if and only if $\exists w_x, w_y\in S\colon f(x, w_x)=f(y, w_y)$.
+\begin{definition}\label{def:npeq7}
+  An equivalence relation $R$ is in $\NPEqSeven$ if there exists an equivalence relation $R'\in \PEq$ which has a polynomial time computable two-witness complete invariant, that is, a function $f\in\FP$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w\colon \pair{f(x, w)}{f(y, w)}\in R'
+  \end{displaymath}
+\end{definition}
+\begin{definition}\label{def:npeq8}
+  An equivalence relation $R$ is in $\NPEqEight$ if there exists an equivalence relation $R'\in \PEq$ which has a polynomial time computable one-witness complete invariant, that is, a function $f\in\FP$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w\colon \pair{f(x, w)}{f(y, w)}\in R'
+  \end{displaymath}
+\end{definition}
+
+The following diagram shows the inclusions among each of the classes of equivalence relations defined above.
+\begin{displaymath}
+  \xymatrix{%
+    \NPEqEight \ar[r] & \NPEqSix \ar[d] \ar[r] & \NPEqFour \ar[d] & \NPEqOne \ar@{<->}[d] \\
+    \NPEqSeven \ar[r] & \NPEqFive \ar[r] & \NPEqThree \ar[r] & \NPEqTwo}
+\end{displaymath}
+The main ideas of these inclusions are presented in the following theorem (the complete proofs are tedious and so are omitted here).
+\begin{theorem}\mbox{}
+  \begin{enumerate}
+  \item $\NPEqOne=\NPEqTwo$
+  \item $\NPEqEight\subseteq\NPEqSix$ and $\NPEqSeven\subseteq\NPEqFive$
+  \item $\NPEqSix\subseteq\NPEqFour$ and $\NPEqFive\subseteq\NPEqThree$
+  \item $\NPEqSix\subseteq\NPEqFive$ and $\NPEqFour\subseteq\NPEqThree$
+  \item $\NPEqThree\subseteq\NPEqTwo$
+  \end{enumerate}
+\end{theorem}
+\begin{sketch}\mbox{}
+  \begin{enumerate}
+  \item Follows immediately from the standard definitions of \NP.
+  \item Choose the relation $R'$ in the definitions of $\NPEqSix$ and $\NPEqFive$ to be the equality relation.
+  \item Hardcode the function $f$ from the definitions of $\NPEqSix$ and $\NPEqFive$ into the relation $R'$ in the definitions of $\NPEqFour$ and $\NPEqThree$.
+  \item Choose $w_x$ and $w_y$ in $\NPEqFive$ and $\NPEqThree$ to be equal to the $w$ from $\NPEqSix$ and $\NPEqFour$.
+  \item Define $L$ to be the language $L=\{\pair{\pair{x}{y}}{w}|\pair{\pair{x}{w}}{\pair{y}{w}}\in R'\}$.\qedhere
+  \end{enumerate}
+\end{sketch}
+
+We would like to be able to show that $\NPEq_2$ (or $\NPEq_1$, though it seems more difficult) is contained in any of the other classes which have an equivalence relation as the witness language in \P, but this would require simulating an arbitrary language, which is not necessarily an equivalence relation, by some constructed equivalence relation.
+We are not guaranteed anything about the structure of the arbitrary language, and it is therefore difficult to construct an equivalence relation which represents that language.
+
+\begin{openproblem}
+  Does one of the complexity classes defined here have a complete problem under $\kr$ reductions?
+\end{openproblem}
 
 \section{Basic facts about kernel reductions}
 

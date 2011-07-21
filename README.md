@@ -11,17 +11,20 @@ packages:
 * amssymb
 * complexity
 * hyperref
+* xy
 
 On Ubuntu, the necessary system packages which contain these LaTeX packages
 are:
 
 * texlive-base
 * texlive-latex-base
+* texlive-pictures
 * texlive-science
 
 To install them, run
 
-    sudo apt-get install texlive-base texlive-latex-base texlive-science
+    sudo apt-get install texlive-base texlive-latex-base texlive-pictures \
+      texlive-science
 
 Compiling
 ---------
