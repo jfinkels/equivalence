@@ -253,12 +253,15 @@ We say that an equivalence relation $R$ on a universe $U$ has a \defn{one-witnes
   \end{displaymath}
 \end{definition}
 
-The following diagram shows the inclusions among each of the classes of equivalence relations defined above.
-\begin{displaymath}
-  \xymatrix{%
-    \NPEqEight \ar[r] & \NPEqSix \ar[d] \ar[r] & \NPEqFour \ar[d] & \NPEqOne \ar@{<->}[d] \\
-    \NPEqSeven \ar[r] & \NPEqFive \ar[r] & \NPEqThree \ar[r] & \NPEqTwo}
-\end{displaymath}
+\autoref{fig:inclusions} shows the inclusions among each of the classes of equivalence relations defined above.
+\begin{figure}
+  \caption{\label{fig:inclusions}Inclusions among possible definitions of equivalence relations verifiable in deterministic polynomial time.}
+  \begin{displaymath}
+    \xymatrix{%
+      \NPEqEight \ar[r] & \NPEqSix \ar[d] \ar[r] & \NPEqFour \ar[d] \\
+      \NPEqSeven \ar[r] & \NPEqFive \ar[r] & \NPEqThree \ar[r] & \NPEqTwo \ar@{<->}[r] & \NPEqOne }
+  \end{displaymath}
+\end{figure}
 The main ideas of these inclusions are presented in the following theorem (the complete proofs are tedious and so are omitted here).
 \begin{theorem}\mbox{}
   \begin{enumerate}
