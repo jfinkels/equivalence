@@ -56,6 +56,8 @@
 \newtheorem{corollary}[corollary]{Corollary}
 \aliascntresetthe{corollary}
 
+\newtheorem{claim}{Claim}
+
 \newaliascnt{openproblem}{theorem}
 \theoremstyle{definition} \newtheorem{openproblem}[openproblem]{Open problem}
 \aliascntresetthe{openproblem}
@@ -147,6 +149,7 @@ We denote this restricted function on a smaller domain by $f|_{S'}$.
 
 If $\Sigma$ is an alphabet then $\Sigma^*$ is the set of all strings over the alphabet $\Sigma$.
 If $x$ and $y$ are elements of $\Sigma^*$, then we denote by $\pair{x}{y}$ the \defn{pairwise encoding} of $x$ and $y$, which is itself an element of $\Sigma^*$.
+(In this paper, we will assume a pairwise encoding can be performed in polynomial time.)
 As usual, a language over an alphabet $\Sigma$ is a subset of $\Sigma^*$.
 
 Given a universe $U$, $R\subseteq U\times U$ is an \defn{equivalence relation on $U$} if $R$ is
@@ -361,60 +364,144 @@ The next lemma states that kernel reductions must preserve ``related-ness'' of p
   Therefore $f([w]_R)\subseteq [f(w)]_S$.
 \end{proof}
 
-\section{Polynomial time kernel reductions in \texorpdfstring{\NPEq}{NPEq}}
+\section{Completeness in \texorpdfstring{\NPEq}{NPEq} and \texorpdfstring{\NP}{NP}}
 
-In this section we examine the power of polynomial time kernel reductions on languages in \NPEq.
+In this section we examine the relationship between \NP-complete problems and \NPEq-complete problems.
+Below, we will denote the set of \NP-complete languages by \NPC.
 
-In the following theorem, by ``$\kri$-complete'' we mean ``complete under injective polynomial time kernel reductions''.
+We will need some further definitions as well.
+If $G=(V_1,E_1)$ and $H=(V_2, E_2)$ are two graphs, then $G$ \defn{is isomorphic to} $H$ if $\exists\phi\colon V_1\to V_2$, a bijection, such that $\forall u,v\in V_1$,
+\begin{displaymath}
+  [(u,v)\in E_1\iff (\phi(u), \phi(v))\in E_2].
+\end{displaymath}
+We denote this by $G\cong H$.
+The much-studied graph isomorphism problem (\GI), the problem of deciding whether two given graphs are isomorphic, is one of few problems in $\NP$ not known to be either in $\P$ or \NP-complete.
 
-\begin{theorem}
-  There exists an \NP-complete language $A$ such that if $A$ is $\kr$-complete
-  in $\NPEq$, then $A$ is not $\kri$-complete in $\NPEq$.
+We first show that there are problems in $\NPEq$ which are also \NP-complete (though they may not necessarily be \NPEq-complete).
+
+\begin{theorem}\label{thm:npcnpeq}
+  $\NPC\cap\NPEq\neq\emptyset$.
 \end{theorem}
 \begin{proof}
-  Suppose $G_1=(V_1, E_1)$ and $G_2=(V_2, E_2)$ are two undirected graphs.
-  Let $A=\{\pair{\pair{G_1}{k_1}}{\pair{G_2}{k_2}}| k_1=k_2$ and $(G_1\cong G_2$ or $(G_1$ has a clique of size $k_1$ and $G_2$ has a clique of size $k_2$ and $|V_1|=|V_2|))\}$.
-  Then $A$ is $\mor$-complete in $\NP$ by a reduction from \lang{CLIQUE}.
-  $A$ is obviously in $\NP$---the witness is the either the isomorphism or the cliques.
-  
-  To describe the reduction, we first need to define an auxiliary function, $C(G, k)$.
-  Let $C$ be defined as follows on all undirected graphs $G=(V, E)$ and integers $k$.
-  If $|V| < k$, then $C(G, k)$ outputs the complete graph on $k$ vertices, $K_k$.
-  If $|V|\geq k$, then $C(G, k)$ outputs the complete graph on $k$ vertices with $|V|-k$ additional disconnected vertices (so that the total number of vertices in the output graph is $|V|$).
+  Define $A$ by
+  \begin{displaymath}
+    A=\{\pair{\pair{G}{k}}{\pair{H}{k}}|G\cong H \plain{or} (G \plain{and} H \plain{both have a clique of size} k)\}.
+  \end{displaymath}
+  It is straightforward to verify that $A$ is an equivalence relation and in \NP, so it is in \NPEq.
+  It remains to show that it is \NP-hard.
 
-  Now we can define the reduction $f$ from \lang{CLIQUE} to $A$ by $f(\pair{G}{k})=\pair{\pair{G}{k}}{\pair{C(G, k)}{k}}$.
-  To prove the correctness of $f$, first suppose $\pair{G}{k}\in$ \lang{CLIQUE}, so $G$ has a clique of size $k$, which implies $|V|\geq k$.
-  Hence, $G$ has a clique of size $k$, $C(G, k)$ has a clique of size $k$, and $|V|$ equals the number of vertices in $C(G, k)$ (by construction).
-  Therefore $\pair{\pair{G}{k}}{\pair{C(G, k)}{k}}\in A$.
-  Suppose $\pair{G}{k}\notin$ \lang{CLIQUE}, so $G$ does not have a clique of size $k$.
-  $C(G, k)$ has a clique of size $k$ by definition, so the only case left to check is whether $G$ is isomorphic to $C(G, k)$.
-  If they were isomorphic, then $G$ would have a clique of size $k$, but this is a contradiction with the hypothesis, so $\pair{\pair{G}{k}}{\pair{C(G, k)}{k}}\notin A$.
-  Therefore \lang{CLIQUE}$\mor A$, and hence $A$ is $\mor$-complete in \NP.
+  The reduction is from \lang{CLIQUE} by the mapping $f$ defined by $f(\pair{G}{k})=\pair{\pair{G}{k}}{\pair{K_k}{k}}$ for all graphs $G$ and all $k\in\mathbb{N}$, where $K_k$ is the complete graph on $k$ vertices.
+  Constructing the graph $K_k$ is obviously polynomial in $|\pair{G}{k}|$.
+  Suppose $\pair{G}{k}\in \lang{CLIQUE}$, so $G$ has a clique of size $k$.
+  Then $f(\pair{G}{k})=\pair{\pair{G}{k}}{\pair{K_k}{k}}\in A$ because both $G$ and $K_k$ have a clique of size $k$.
+  Suppose $\pair{G}{k}\notin \lang{CLIQUE}$, so $G$ does not have a clique of size $k$.
+  Thus $G$ cannot be isomorphic to $K_k$.
+  Additionally, although $K_k$ certainly has a clique of size $k$, $G$ does not by hypothesis.
+  Therefore $f(\pair{G}{k})\notin A$.
+
+  We have $\pair{G}{k}\in \lang{CLIQUE} \iff f(\pair{G}{k})\in A$, so $\lang{CLIQUE}\mor A$ and hence $A$ is \NP-complete.
+\end{proof}
+
+Using this fact we can show that completeness in $\NPEq$ under $\kr$ reductions implies completeness in $\NP$ under $\mor$ reductions.
+
+\begin{corollary}
+  If an equivalence relation $R$ is \NPEq-complete then it is also \NP-complete.
+\end{corollary}
+\begin{proof}
+  Let $A$ be an \NP-complete equivalence relation in \NPEq, which exists by the previous theorem.
+  $R$ is in $\NP$ by hypothesis, and it is \NP-hard by a reduction from $A$.
+  Since $R$ is \NPEq-complete, there exists a polynomial time kernel reduction, call it $f$, from $A$ to $R$.
+  The polynomial time many-one reduction from $A$ to $R$ induced by $f$, namely $\pair{x}{y}\mapsto\pair{f(x)}{f(y)}$, proves that $R$ is \NP-complete.
+\end{proof}
+
+This corollary provides another proof of \cite[Proposition~8.1]{bcffm}.
+
+\begin{proposition}[\cite{bcffm}, Proposition~8.1]
+  If $\GI$ is \NPEq-complete then the polynomial time hierarchy collapses to the second level ($\PH=\Sigma^P_2$).
+\end{proposition}
+\begin{proof}
+  If \GI is \NPEq-complete then it is \NP-complete by the previous corollary.
+  This implies the stated collapse (see \cite{schoning87}).
+\end{proof}
+
+In the following theorem, by ``$\kri$-complete'' we mean ``complete under injective polynomial time kernel reductions'' (that is, every reduction is injective).
+Also, if $G$ is a graph then by denote its set of vertices by $V(G)$.
+
+\begin{theorem}
+  There exists an \NP-complete language $B$ such that if $B$ is $\kr$-complete
+  in $\NPEq$, then $B$ is not $\kri$-complete in $\NPEq$.
+\end{theorem}
+\begin{proof}
+  The language $B$ we is a restriction of the language $A$ from the proof of \autoref{thm:npcnpeq}.
+  Define $B$ by
+  \begin{align*}
+    B &= \{\pair{\pair{G}{k}}{\pair{H}{k}}|\pair{\pair{G}{k}}{\pair{H}{k}}\in A \plain{and} |V(G)|=|V(H)|\}
+  \end{align*}
+  As in the proof of \autoref{thm:npcnpeq}, it is again straightforward to verify that $B$ is an equivalence relation and in \NP, so it is in \NPEq.
+
+  \begin{claim}
+    $B$ is \NP-complete.
+  \end{claim}
+  \begin{proof}[Proof of Claim 1]
+    To show that it is \NP-complete, we show that $A\mor B$.
+    The transducer $f$ proceeds as follows on input $\pair{\pair{G}{k}}{\pair{H}{k}}$.
+
+    Let $d$ be the absolute value of $|V(G)|-|V(H)|$.
+    If $|V(G)|>|V(H)|$ then add $d$ disconnected vertices to $H$.
+    Otherwise if $|V(H)|>|V(G)|$ then add $d$ disconnected vertices to $G$.
+    Output the modified graphs in the appropriate encoding, $\pair{\pair{G}{k}}{\pair{H}{k}}$.
+
+    This is obviously computable in polynomial time.
+    To prove its correctness, first suppose $\pair{\pair{G}{k}}{\pair{H}{k}}\in A$.
+    If $G\cong H$ then $f$ performs the identity transformation, and the output graphs are also isomorphic (since they are the same as the input graphs).
+    If $G$ and $H$ both have a clique of size $k$ and $|V(G)|=|V(H)|$ then, again, $f$ performs the identity transformation, and the output graphs satisfy the conditions of $B$.
+    If $G$ and $H$ both have a clique of size $k$ and $|V(G)|\neq|V(H)|$ then $f$ will add some disconnected vertices to either $G$ or $H$.
+    But the modified graphs will still have the same cliques of size $k$, since $f$ adds only disconnected vertices which do not affect existing cliques.
+    Therefore $f(\pair{\pair{G}{k}}{\pair{H}{k}})\in B$.
+
+    Next suppose $f(\pair{\pair{G}{k}}{\pair{H}{k}})\in B$.
+    Let the graphs modified by $f$ be called $\hat{G}$ and $\hat{H}$.
+    If $f$ added vertices to one of the graphs, then $G$ must not be isomorphic to $H$, since they had a different number of vertices.
+    In this case, it must be true that $\hat{G}$ and $\hat{H}$ both have a clique of size $k$ and $|V(\hat{G})|=|V(\hat{H})|$.
+    Since the addition vertices are disconnected, they could not have contributed to a clique.
+    Therefore the original graphs $G$ and $H$ both have a clique of size $k$.
+    If $f$ did not add any vertices during its operation, then it performed the identity transformation on its input (by construction).
+    In that case, $G$ and $H$ either are isomorphic or they both have a clique of size $k$ and both have the same number of vertices.
+    This means that the output graphs satisfy the conditions of $A$.
+    Therefore in all cases $\pair{\pair{G}{k}}{\pair{H}{k}}\in A$.
+
+    This proves $A\mor B$ and hence $B$ is \NP-complete.
+  \end{proof}
 
   Now, we will consider the equivalence classes in the equivalence relation $R=\{\pair{x}{y}|x$ and $y$ have the same number of $1$s$\}$.
   The proof that this is an equivalence relation is straightforward.
   There are an infinite number of equivalence classes in $R$; specifically, they are $[\lambda]$, $[1]$, $[11]$, $[111]$, etc.
   Each equivalence class is itself infinite as well: if $w\in\sigmastar$ then $[w]$ contains $w$, $0w$, $00w$, $000w$, etc.
 
-  Next, we will consider the equivalence classes in $A$.
-  There are an infinite number of equivalence classes in $A$, as well (because there are an infinite number of graphs, and an infinite number of natural numbers).
-  However, in $A$ each equivalence class contains only a finite number of elements.
-  If $G=(V,E)$, then $[\pair{G}{k}]$ includes all pairs $\pair{H}{k}$, where $G$ is isomorphic to $H$, and all pairs $\pair{J}{k}$, where $G$ and $J$ have the same number of vertices and both have a clique of size $k$.
-  Since there are only a finite number of graphs on $|V|$ vertices, and any graph isomorphic to $G$ must have $|V|$ vertices, the number of graphs isomorphic to $G$ is finite.
-  Furthermore, the number of graphs with both $|V|$ vertices and a clique of size $k$ is also finite.
-  Therefore, the equivalence class $[\pair{G}{k}]$ is finite.
+  Next, we will consider the equivalence classes in $B$.
+  There are an infinite number of equivalence classes in $B$, as well (because there are an infinite number of graphs, and an infinite number of natural numbers).
+  However, in $B$ each equivalence class contains only a finite number of elements.
+  If $G$, then $[\pair{G}{k}]_B$ includes all pairs $\pair{H}{k}$, where $G$ is isomorphic to $H$, and all pairs $\pair{J}{k}$, where $G$ and $J$ have the same number of vertices and both have a clique of size $k$.
+  Since there are only a finite number of graphs on $|V(G)|$ vertices, and any graph isomorphic to $G$ must have $|V(G)|$ vertices, the number of graphs isomorphic to $G$ is finite.
+  Furthermore, the number of graphs with both $|V(G)|$ vertices and a clique of size $k$ is also finite.
+  Therefore, the equivalence class $[\pair{G}{k}]_B$ is finite.
 
-  Now suppose $A$ is $\kr$-complete in $\NPEq$, as specified in the hypothesis of this theorem.
-  Since $R\in\PEq\subseteq\NPEq$, then $R\kr A$, so $\exists g\in\FP$ such that $w\in\R\iff g(w)\in A$.
+  \begin{claim}
+    If $B$ is $\kr$-complete in $\NPEq$ then $B$ is not $\kri$-complete in \NPEq.
+  \end{claim}
+  \begin{proof}[Proof of Claim 2]
+    Since $R\in\PEq\subseteq\NPEq$, then $R\kr B$, so $\exists g\in\FP$ such that $w\in\R\iff g(w)\in B$.
 
-  Let $w\in\sigmastar$.
-  Then $g(w)=\pair{G}{k}$ for some graph $G$ and some $k\in\mathbb{N}$.
-  By the above arguments, $[w]_R$ is infinite and $[g(w)]_A=[\pair{G}{k}]_A$ is finite.
-  By \autoref{lem:image}, $g([w]_R)\subseteq [g(w)]_A$.
-  Consider $g|_{[w]_R}$, that is, $g$ restricted to the domain $[w]_R$.
-  Then $g|_{[w]_R}$ is a mapping from an infinite set (specifically $[w]_R$) to a finite set (specifically $[g(w)]_A=[\pair{G}{k}]_A$).
-  By the pigeonhole principle, $g|_{[w]_R}$ is not injective.
-  Hence the unrestricted reduction $g$ is not injective, and therefore $A$ is not $\kri$-complete in \NPEq.
+    Let $w\in\sigmastar$.
+    Then $g(w)=\pair{G}{k}$ for some graph $G$ and some $k\in\mathbb{N}$.
+    By the above arguments, $[w]_R$ is infinite and $[g(w)]_B=[\pair{G}{k}]_B$ is finite.
+    By \autoref{lem:image}, $g([w]_R)\subseteq [g(w)]_B$.
+    Consider $g|_{[w]_R}$, that is, $g$ restricted to the domain $[w]_R$.
+    Then $g|_{[w]_R}$ is a mapping from an infinite set (specifically $[w]_R$) to a finite set (specifically $[g(w)]_B=[\pair{G}{k}]_B$).
+    By the pigeonhole principle, $g|_{[w]_R}$ is not injective.
+    Hence the unrestricted reduction $g$ is not injective, and therefore $B$ is not $\kri$-complete in \NPEq.
+  \end{proof}
+  This concludes the proof of the theorem.
 \end{proof}
 
 \section{Existence of intermediary problems}
