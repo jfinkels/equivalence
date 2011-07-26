@@ -287,6 +287,9 @@ We are not guaranteed anything about the structure of the arbitrary language, an
 \begin{openproblem}
   Does one of the complexity classes defined here have a complete problem under $\kr$ reductions?
 \end{openproblem}
+\begin{openproblem}
+  Are any of these possible definitions of polynomially verifiable equivalence relations equivalent? Are any of them provably distinct?
+\end{openproblem}
 
 \section{Basic facts about kernel reductions}
 
@@ -302,46 +305,46 @@ In this section we provide some basic facts about kernel reductions.
   Therefore $R\kr T$.
 \end{proof}
 
-\begin{proposition}\label{prop:numbers}
-  Let $R$ and $S$ be equivalence relations on $\sigmastar$.
-  Suppose $R$ has $n$ equivalence classes and $S$ has $m$ equivalence classes.
-  If $n>m$ then $R\nkrnt S$ (that is, $R$ does not kernel reduce to $S$, regardless of any time bound on the function computing the reduction).
-\end{proposition}
-\begin{proof}
-  Assume with the intention of producing a contradiction that $R\krnt S$.
-  Then there exists a computable function $f$ such that $\forall x,y$, $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
+%% \begin{proposition}\label{prop:numbers}
+%%   Let $R$ and $S$ be equivalence relations on $\sigmastar$.
+%%   Suppose $R$ has $n$ equivalence classes and $S$ has $m$ equivalence classes.
+%%   If $n>m$ then $R\nkrnt S$ (that is, $R$ does not kernel reduce to $S$, regardless of any time bound on the function computing the reduction).
+%% \end{proposition}
+%% \begin{proof}
+%%   Assume with the intention of producing a contradiction that $R\krnt S$.
+%%   Then there exists a computable function $f$ such that $\forall x,y$, $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
 
-  Since $R$ has $n$ non-empty equivalence classes which form a partition of $\sigmastar$, then $\exists r_1,\ldots,r_n\in\sigmastar$ such that $R=[r_1]_R\cup\cdots\cup[r_n]_R$.
-  Since each element of $R$ is in exactly one equivalence class, $\forall i,j\leq n$, $i=j\iff\pair{r_i}{r_j}\in R\iff\pair{f(r_i)}{f(r_j)}\in S$.
-  Therefore the image of each $r_i$ is in some equivalence class in $S$.
-  Also, $\forall i,j\leq n$, $i\neq j\iff \pair{r_i}{r_j}\notin R\iff \pair{f(r_i)}{f(r_j)}\notin S$.
-  Therefore, the image of each $r_i$ does not relate to the image of any other $r_j$, for $i\neq j$, and $i,j\leq n$.
-  Therefore each of the equivalence classes $[f(r_1)]_S,\ldots,[f(r_n)]_S$ is disjoint, so $S$ has at least $n$ equivalence classes.
-  But $n>m$.
-  This is a contradiction with the hypothesis that $S$ has $m$ equivalence classes.
+%%   Since $R$ has $n$ non-empty equivalence classes which form a partition of $\sigmastar$, then $\exists r_1,\ldots,r_n\in\sigmastar$ such that $R=[r_1]_R\cup\cdots\cup[r_n]_R$.
+%%   Since each element of $R$ is in exactly one equivalence class, $\forall i,j\leq n$, $i=j\iff\pair{r_i}{r_j}\in R\iff\pair{f(r_i)}{f(r_j)}\in S$.
+%%   Therefore the image of each $r_i$ is in some equivalence class in $S$.
+%%   Also, $\forall i,j\leq n$, $i\neq j\iff \pair{r_i}{r_j}\notin R\iff \pair{f(r_i)}{f(r_j)}\notin S$.
+%%   Therefore, the image of each $r_i$ does not relate to the image of any other $r_j$, for $i\neq j$, and $i,j\leq n$.
+%%   Therefore each of the equivalence classes $[f(r_1)]_S,\ldots,[f(r_n)]_S$ is disjoint, so $S$ has at least $n$ equivalence classes.
+%%   But $n>m$.
+%%   This is a contradiction with the hypothesis that $S$ has $m$ equivalence classes.
 
-  Therefore $R\nkrnt S$.
-\end{proof}
+%%   Therefore $R\nkrnt S$.
+%% \end{proof}
 
-\begin{corollary}\label{cor:finite}
-  \mbox{}
-  \begin{enumerate}
-    \renewcommand{\labelenumi}{\roman{enumi}.}
-  \item If an equivalence relation has a finite number of equivalence classes, then it is not \PEq-complete.
-  \item If an equivalence relation has a finite number of equivalence classes, then it is not \NPEq-complete.
-  \end{enumerate}
-\end{corollary}
-\begin{proof}
-  Suppose $R$ is an equivalence relation.
-  Assume with the intention of producing a contradiction that $R$ is \PEq-complete.
-  $R_{eq}=\{\pair{x}{y}|x=y\}$ has an infinite number of equivalence classes (specifically, one for each binary string), and $R$ has a finite number of equivalence classes, by assumption.
-  By \autoref{prop:numbers}, $R\nkr R_{eq}$.
-  But since $R_{eq}\in\PEq$, then $R_{eq}\kr R$.
-  This is a contradiction.
-  Therefore $R$ is not \PEq-complete.
+%% \begin{corollary}\label{cor:finite}
+%%   \mbox{}
+%%   \begin{enumerate}
+%%     \renewcommand{\labelenumi}{\roman{enumi}.}
+%%   \item If an equivalence relation has a finite number of equivalence classes, then it is not \PEq-complete.
+%%   \item If an equivalence relation has a finite number of equivalence classes, then it is not \NPEq-complete.
+%%   \end{enumerate}
+%% \end{corollary}
+%% \begin{proof}
+%%   Suppose $R$ is an equivalence relation.
+%%   Assume with the intention of producing a contradiction that $R$ is \PEq-complete.
+%%   $R_{eq}=\{\pair{x}{y}|x=y\}$ has an infinite number of equivalence classes (specifically, one for each binary string), and $R$ has a finite number of equivalence classes, by assumption.
+%%   By \autoref{prop:numbers}, $R\nkr R_{eq}$.
+%%   But since $R_{eq}\in\PEq$, then $R_{eq}\kr R$.
+%%   This is a contradiction.
+%%   Therefore $R$ is not \PEq-complete.
 
-  The proof is the same in \NPEq, because $R_{eq}\in\PEq\subseteq\NPEq$.
-\end{proof}
+%%   The proof is the same in \NPEq, because $R_{eq}\in\PEq\subseteq\NPEq$.
+%% \end{proof}
 
 The following proposition is presented without proof, because its proof is nearly the same as the proof of the corresponding statement for polynomial time many-one reductions in \NP.
 
@@ -423,6 +426,12 @@ This corollary provides another proof of \cite[Proposition~8.1]{bcffm}.
   If \GI is \NPEq-complete then it is \NP-complete by the previous corollary.
   This implies the stated collapse (see \cite{schoning87}).
 \end{proof}
+
+We currently do not know whether $\NPEq$ has a complete problem.
+In \cite{bcffm} the authors prove that there is a complete problem if $\P=\NP$.
+\begin{openproblem}
+  Can we prove that $\NPEq$ has a complete problem unconditionally?
+\end{openproblem}
 
 In the following theorem, by ``$\kri$-complete'' we mean ``complete under injective polynomial time kernel reductions'' (that is, every reduction is injective).
 Also, if $G$ is a graph then by denote its set of vertices by $V(G)$.
@@ -734,9 +743,6 @@ We would now like to show that the result of this theorem holds when $\mathcal{C
   Since $S\kj\emptyset$ trivially kernel reduces to $S$, and since polynomial time kernel reductions compose by \autoref{prop:compose}, $R\kr S$.
   Since $\NPEq$ is closed under polynomial time kernel reductions by \autoref{prop:closed_under_kr}, $R\in\NPEq$.
 \end{proof}
-
-\section{Open problems}
-The existence of a complete problem for $\NPEq$ under $\kr$ reductions continues to elude us.
 
 \bibliographystyle{amsalpha} \bibliography{references}
 
