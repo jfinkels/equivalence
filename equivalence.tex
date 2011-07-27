@@ -32,10 +32,7 @@
 \usepackage{amsmath} % for \implies
 \usepackage{amssymb} % for \nleq
 \usepackage{complexity} % for typesetting complexity classes
-\usepackage[
-  pdftitle={On the computational complexity of equivalence relations under kernel reductions},
-  pdfauthor={Jeffrey Finkelstein}
-]{hyperref} % for pdf links when rendering \ref and \cite commands
+\usepackage[pdftitle={Reductions among equivalence problems in NP}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
 \usepackage[all]{xy} % for inclusion diagram
 
 % Define theorem, lemma, and definition environments and corresponding styles.
@@ -120,8 +117,7 @@
 
 % define the author, title, and date
 \author{Jef{}frey Finkelstein} 
-\title{On the computational complexity of equivalence relations under kernel
-  reductions}
+\title{Reductions among equivalence problems in \texorpdfstring{\NP}{NP}}
 \date{\today} 
 
 \begin{document}
@@ -131,8 +127,8 @@
 
 \section{Introduction}
 
-In this paper we examine the power of ``kernel reductions'' on languages induced by equivalence relations, specifically for which membership can be decided by either a deterministic or a non-deterministic Turing machine running in polynomial time.
-Given two equivalence relations $R$ and $S$, each of which can be expressed as a set of pairs of strings, a kernel reduction from $R$ to $S$ is a function $f$ for which $\pair{x}{y}\in R\iff\pair{f(x)}{f(y)}\in S$.
+In this paper we examine the power of ``kernel reductions'' on languages induced by equivalence relations, specifically for which membership can be decided by a non-deterministic Turing machine running in time polynomial in the length of the input.
+Given two equivalence relations $R$ and $S$, each of which can be expressed as a set of pairs of strings, a \defn{kernel reduction} from $R$ to $S$ is a function $f$ for which $\pair{x}{y}\in R\iff\pair{f(x)}{f(y)}\in S$.
 This function maps each \emph{member} of the pair in $R$ to an element of a pair in the relation $S$, instead of mapping the \emph{entire} pair to another pair.
 The full definition of ``kernel reductions'' is given by Fortnow and Grochow in \cite{fg11} (and is repeated below), though the idea has existed before then.
 In fact, all polynomial time many-one reductions to and from the graph isomorphism problem are, to the best of our knowledge, in fact kernel reductions, though they have not before been called by this name.
