@@ -5,7 +5,6 @@ Besides pdflatex, compile-time dependencies include the following LaTeX
 packages:
 
 * aliascnt
-* algorithm2e
 * amsthm
 * amsmath
 * amssymb
