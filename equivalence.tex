@@ -53,8 +53,6 @@
 \newtheorem{corollary}[corollary]{Corollary}
 \aliascntresetthe{corollary}
 
-\newtheorem{claim}{Claim}
-
 \newaliascnt{openproblem}{theorem}
 \theoremstyle{definition} \newtheorem{openproblem}[openproblem]{Open problem}
 \aliascntresetthe{openproblem}
@@ -62,6 +60,9 @@
 \newaliascnt{definition}{theorem}
 \theoremstyle{definition} \newtheorem{definition}[definition]{Definition}
 \aliascntresetthe{definition}
+
+\theoremstyle{remark} \newtheorem{remark}{Remark}
+\newtheorem{claim}{Claim}
 
 % for repeating theorems
 \makeatletter
@@ -97,6 +98,7 @@
 \newcommand{\symdiff}{\bigtriangleup} % set symmetric difference
 \newcommand{\defn}[1]{\emph{#1}} % emphasize words which are being defined
 \newcommand{\pair}[2]{\langle#1,#2\rangle} % pairing function
+\newcommand{\triple}[3]{\langle#1,#2,#3\rangle} % tripling function
 
 \newcommand{\printintermediarytheorem}{If $\PEq\neq\NPEq$ and $\NPEqC$ is non-empty, then there exists an equivalence relation in $\NPEq$ which is neither in $\PEq$ nor $\NPEqC$.}
 
@@ -133,13 +135,14 @@ It is therefore important to study the power of these reductions and how they ca
 \section{Preliminaries}
 
 The complexity classes $\P$, $\NP$, and $\FP$ (polynomial time computable functions) have the usual definitions.
+The set of words accepted by a Turing machine $M$ is denoted $L(M)$.
 
 If $f\colon S\to T$ is a well-defined function and $S'\subseteq S$, then \defn{$f$ restricted to the domain $S'$} is the function $f'\colon S'\to T$ defined by $f'(x)=f(x)$ for all $x\in S'$.
 We denote this restricted function on a smaller domain by $f|_{S'}$.
 
-If $\Sigma$ is an alphabet then $\Sigma^*$ is the set of all strings over the alphabet $\Sigma$.
+If $\Sigma$ is an alphabet then $\Sigma^*$ is the set of all strings over the alphabet $\Sigma$ and $\Sigma^{\leq n}$ is the set $\{w\in\Sigma^*||w|\leq n\}$.
 If $x$ and $y$ are elements of $\Sigma^*$, then we denote by $\pair{x}{y}$ the \defn{pairwise encoding} of $x$ and $y$, which is itself an element of $\Sigma^*$.
-(In this paper, we will assume a pairwise encoding can be performed in polynomial time.)
+In this paper, we will assume the reasonable (polynomial time computable) pairwise encoding $\pair{x}{y}=x_1x_1x_2x_2\cdots x_{|x|}x_{|x|}01y_1y_1y_2y_2\cdots y_{|y|}y_{|y|}$.
 As usual, a language over an alphabet $\Sigma$ is a subset of $\Sigma^*$.
 
 Given a universe $U$, $R\subseteq U\times U$ is an \defn{equivalence relation on $U$} if $R$ is
@@ -174,8 +177,9 @@ Informally, a function which computes a many-one reduction has access to both $x
 Note that since it is more restrictive, a kernel reduction induces a many-one reduction (namely the function $\pair{x}{y}\mapsto\pair{f(x)}{f(y)}$).
 
 As an analog to polynomial time many-one completeness in \NP, we define a similar notion of polynomial time completeness under kernel reductions in \NPEq.
-An equivalence relation $S$ is \defn{\NPEq-complete} if for all $R\in\NPEq$, $R\kr S$.
-Similarly, an equivalence relation $S$ is \defn{\PEq-complete} if for all $R\in\PEq$, $R\kr S$.
+An equivalence relation $S$ is \defn{\NPEq-hard} if for all $R\in\NPEq$, $R\kr S$.
+If $S$ is also in \NPEq, then it is \defn{\NPEq-complete}.
+Similarly, an equivalence relation $S$ is \defn{\PEq-hard} if for all $R\in\PEq$, $R\kr S$, and \defn{\PEq-complete} if it is additionally in \PEq.
 
 \section{Definitions of \texorpdfstring{\NPEq}{NPEq}}\label{sec:definitions}
 
@@ -356,6 +360,77 @@ The next lemma states that kernel reductions must preserve ``related-ness'' of p
   Then $(x, f(w))\in S$, so $x\in [f(w)]_S$.
   Therefore $f([w]_R)\subseteq [f(w)]_S$.
 \end{proof}
+
+\section{Completeness in \texorpdfstring{\coNPEq}{coNPEq}}
+
+\begin{definition}
+  Let $M$ be a Turing machine.
+  Let $r_M(a)$ be the proposition ``$M$ accepts $(a, a)$''.
+  Let $s_M(a, b)$ be the proposition ``if $M$ accepts $(a, b)$ then $M$ accepts $(b, a)$''.
+  Let $t_M(a, b, c)$ be the proposition ``if $M$ accepts $(a, b)$ and $M$ accepts $(b, c)$ then $M$ accepts $(a, c)$''.
+
+  Define $E_M(a, b, c)$ to be the proposition ``$r_M(a)$ and $s_M(a, b)$ and $t_M(a, b, c)$''.
+\end{definition}
+
+We see immediately that $L(M)$ is an equivalence relation on $\Sigma^*$ if and only if $E_M(a, b, c)$ is true for all $a,b,c\in\Sigma^*$.
+
+\begin{theorem}
+  The equivalence relation
+  \begin{align*}
+    R = {} & \{\pair{u}{v}|u=v\} \\
+    & \cup \{\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}} | \\
+    & \qquad M \plain{is a}\, \coNP \plain{machine} \\
+    & \qquad \text{and}\,\, \forall a,b,c\in\Sigma^{\leq \max(|x|,|y|)} E_M(a, b, c) \\
+    & \qquad \text{and}\, M \plain{accepts} \pair{x}{y} \plain{within} \max(t_x, t_y) \plain{steps}\}
+  \end{align*}
+  is complete for $\coNPEq$ under $\kr$ reductions.
+\end{theorem}
+\begin{proof}
+  We first show that $R\in\coNP$.
+  Checking whether $u=v$ can obviously be performed by a $\coNP$ machine.
+  We can check that $E_M(a, b, c)$ is true by universally choosing $a,b,$ and $c$ in $\Sigma^{\leq \max(|x|, |y|)}$ then simulating the action of $M$ as specified by each proposition $r_M(a)$, $s_M(a, b)$, and $t_M(a, b, c)$.
+  Since $M$ is in $\coNP$, adding more universal quantifiers does not change the complexity of running this simulation.
+  We can also check that $M$ accepts $\pair{x}{y}$ within $\max(t_x, t_y)$ steps by simulating $M$ on the input $\pair{x}{y}$ for $\max(t_x, t_y)$ steps.
+  Thus $R\in\coNP$.
+
+  Next we show that $R$ is an equivalence relation.
+  Reflexivity follows from the reflexivity of the equality relation.
+  To show symmetry, we will suppose $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R$.
+  Since $M$ accepts $\pair{x}{y}$ within $\max(t_x, t_y)$ steps, and since $L(M)$ is an equivalence relation on strings of size at most $\max(|x|, |y|)$ (which includes the strings $x$ and $y$ themselves), $M$ must also accept $\pair{y}{x}$.
+  \begin{remark}
+    But must it be within $\max(t_y, t_x)$ steps?
+    Perhaps the machine $M$ acts differently on the input $\pair{x}{y}$ than on the input $\pair{y}{x}$.
+  \end{remark}
+  For transitivity, suppose that $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R$ and also that $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{z}{1^{t_z}}}\in R$.
+  Since $M$ accepts $\pair{x}{y}$ within $\max(t_x, t_y)$ steps and $\pair{y}{z}$ within $\max(t_y, t_z)$ steps, and since $L(M)$ is an equivalence relation on strings of size at most $\max\{|x|, |y|, |z|\}$, $M$ must also accept $\pair{x}{z}$.
+  \begin{remark}
+    But must it be within $\max(t_x, t_z)$ steps?
+    The behavior of $M$ on $\pair{x}{y}$ and $\pair{y}{z}$ do not necessarily tell us anything about its behavior on $\pair{x}{z}$.
+  \end{remark}
+  Since $R$ is reflexive, symmetric, and transitive, it is an equivalence relation.
+
+  Finally we must show that every equivalence relation $S$ in $\coNPEq$ reduces to $R$ under a polynomial time kernel reduction.
+  Suppose $S\in\coNPEq$, let $M$ be the machine which decides $S$, and let $p$ be the polynomial which bounds the running time of $M$.
+  $S$ reduces to $R$ by the mapping $x\mapsto \triple{M}{x}{1^{p(|\pair{x}{x}|)}}$.
+  Call this mapping $f$.
+  This is obviously computable in polynomial time with respect to $|x|$, so it remains to show that the mapping is a correct reduction.
+
+  Suppose $\pair{x}{y}\in S$, and $\pair{f(x)}{f(y)} = \pair{\triple{M}{x}{1^{p(|\pair{x}{x}|)}}}{\triple{M}{y}{1^{p(|\pair{y}{y}|)}}}$.
+  First, since $S\in\coNPEq$, $M$ is a $\coNP$ machine.
+  Second, since $S$ is an equivalence relation, $E_M(a, b, c)$ is true for all $a,b,$ and $c$ in $\Sigma^{\leq\max(|x|, |y|)}$.
+  Third, since $M$ decides $S$, $M$ accepts $\pair{x}{y}$ within $p(|\pair{x}{y}|)$ steps, which is less than $\max(p(|\pair{x}{x}|),p(|\pair{y}{y}|))$ (the assumed encoding function has this property).
+  Thus $\pair{f(x)}{f(y)}\in R$.
+
+  Suppose $\pair{x}{y}\notin S$, and $\pair{f(x)}{f(y)}$ is as above.
+  Now the first two properties remain true even though $\pair{x}{y}\notin S$, but the third is false.
+  Assume that $M$ accepts $\pair{x}{y}$ within $\max(p(|\pair{x}{x}|), p(|\pair{y}{y}|))$ steps.
+  Since $L(M)$ is exactly the restriction of $S$ to strings of size at most $\max(|x|, |y|)$, if $M$ accepts $\pair{x}{y}$ then $\pair{x}{y}\in S$.
+  This is a contradiction, so it must be false that $M$ accepts $\pair{x}{y}$ within the specified number of steps.
+
+  We have shown that $R$ is both \coNPEq-hard and in \coNPEq, so $R$ is \coNPEq-complete.
+\end{proof}
+
+Unlike a \coNP-complete problem, this problem does not immediately induce an \NPEq-complete problem by taking the complement, since the complement may not necessarily be an equivalence relation.
 
 \section{Completeness in \texorpdfstring{\NPEq}{NPEq} and \texorpdfstring{\NP}{NP}}
 
