@@ -161,8 +161,8 @@ Each element $x\in U$ is in exactly one equivalence class, so the equivalence cl
 A \defn{complete invariant} for an equivalence relation $R$ on $U$ is a function $f\colon U\to T$ such that for all $x,y\in U$, $(x,y)\in R$ if and only if $f(x)=f(y)$.
 In \autoref{sec:definitions} we will define generalizations of the complete invariant which accept as input an additional witness to the equivalence of $x$ and $y$.
 
-\defn{$\PEq$} is the class of equivalence relations for which membership can be decided by a Turing maching running in deterministic polynomial time.
-\defn{$\NPEq$} is the class of equivalence relations for which membership can be decided by a Turing maching running in non-deterministic polynomial time.
+\defn{$\PEq$} is the class of equivalence relations for which membership can be decided by a Turing machine running in deterministic polynomial time.
+\defn{$\NPEq$} is the class of equivalence relations for which membership can be decided by a Turing machine running in non-deterministic polynomial time.
 In other words, $\PEq$ is the set of (languages induced by) equivalence relations which are in \P, and $\NPEq$ is the set of (languages induced by) equivalence relations which are in \NP.
 As usual, $\PEq\subseteq\NPEq$.
 %\defn{$\Ker$} is the class of equivalence relations which have a polynomial time computable complete invariant.
@@ -269,7 +269,7 @@ The main ideas of these inclusions are presented in the following theorem (the c
   \begin{enumerate}
   \item Follows immediately from the standard definitions of \NP.
   \item Choose the relation $R'$ in the definitions of $\NPEqSix$ and $\NPEqFive$ to be the equality relation.
-  \item Hardcode the function $f$ from the definitions of $\NPEqSix$ and $\NPEqFive$ into the relation $R'$ in the definitions of $\NPEqFour$ and $\NPEqThree$.
+  \item Hard-code the function $f$ from the definitions of $\NPEqSix$ and $\NPEqFive$ into the relation $R'$ in the definitions of $\NPEqFour$ and $\NPEqThree$.
   \item Choose $w_x$ and $w_y$ in $\NPEqFive$ and $\NPEqThree$ to be equal to the $w$ from $\NPEqSix$ and $\NPEqFour$.
   \item Define $L$ to be the language $L=\{\pair{\pair{x}{y}}{w}|\pair{\pair{x}{w}}{\pair{y}{w}}\in R'\}$.\qedhere
   \end{enumerate}
@@ -374,7 +374,7 @@ The next lemma states that kernel reductions must preserve ``related-ness'' of p
 
 We see immediately that $L(M)$ is an equivalence relation on $\Sigma^*$ if and only if $E_M(a, b, c)$ is true for all $a,b,c\in\Sigma^*$.
 
-\begin{theorem}
+\begin{theorem}\label{thm:conpeqc}
   The equivalence relation
   \begin{align*}
     R = {} & \{\pair{u}{v}|u=v\} \\
@@ -491,21 +491,22 @@ This corollary provides another proof of \cite[Proposition~8.1]{bcffm}.
   This implies the stated collapse (see \cite{schoning87}).
 \end{proof}
 
-We currently do not know whether $\NPEq$ has a complete problem.
+We currently do not know whether $\NPEq$ has a complete problem under polynomial time kernel reductions.
 In \cite{bcffm} the authors prove that there is a complete problem if $\P=\NP$.
+Of course, under this hypothesis $\NPEq=\coNPEq$, so the \coNPEq-complete problem exhibited in \autoref{thm:conpeqc} is also an \NPEq-complete problem.
 \begin{openproblem}
   Can we prove that $\NPEq$ has a complete problem unconditionally?
 \end{openproblem}
 
+We will for now consider the consequences of the assumption that there exists an \NPEq-complete problem.
 In the following theorem, by ``$\kri$-complete'' we mean ``complete under injective polynomial time kernel reductions'' (that is, every reduction is injective).
-Also, if $G$ is a graph then by denote its set of vertices by $V(G)$.
 
 \begin{theorem}
   There exists an \NP-complete language $B$ such that if $B$ is $\kr$-complete
   in $\NPEq$, then $B$ is not $\kri$-complete in $\NPEq$.
 \end{theorem}
 \begin{proof}
-  The language $B$ we is a restriction of the language $A$ from the proof of \autoref{thm:npcnpeq}.
+  The language $B$ we construct is a restriction of the language $A$ from the proof of \autoref{thm:npcnpeq}.
   Define $B$ by
   \begin{align*}
     B &= \{\pair{\pair{G}{k}}{\pair{H}{k}}|\pair{\pair{G}{k}}{\pair{H}{k}}\in A \plain{and} |V(G)|=|V(H)|\}
@@ -515,36 +516,34 @@ Also, if $G$ is a graph then by denote its set of vertices by $V(G)$.
   \begin{claim}
     $B$ is \NP-complete.
   \end{claim}
-  \begin{proof}[Proof of Claim 1]
-    To show that it is \NP-complete, we show that $A\mor B$.
-    The transducer $f$ proceeds as follows on input $\pair{\pair{G}{k}}{\pair{H}{k}}$.
+  To show that it is \NP-complete, we show that $A\mor B$.
+  The transducer $f$ proceeds as follows on input $\pair{\pair{G}{k}}{\pair{H}{k}}$.
 
-    Let $d$ be the absolute value of $|V(G)|-|V(H)|$.
-    If $|V(G)|>|V(H)|$ then add $d$ disconnected vertices to $H$.
-    Otherwise if $|V(H)|>|V(G)|$ then add $d$ disconnected vertices to $G$.
-    Output the modified graphs in the appropriate encoding, $\pair{\pair{G}{k}}{\pair{H}{k}}$.
+  Let $d$ be the absolute value of $|V(G)|-|V(H)|$.
+  If $|V(G)|>|V(H)|$ then add $d$ disconnected vertices to $H$.
+  Otherwise if $|V(H)|>|V(G)|$ then add $d$ disconnected vertices to $G$.
+  Output the modified graphs in the appropriate encoding, $\pair{\pair{G}{k}}{\pair{H}{k}}$.
 
-    This is obviously computable in polynomial time.
-    To prove its correctness, first suppose $\pair{\pair{G}{k}}{\pair{H}{k}}\in A$.
-    If $G\cong H$ then $f$ performs the identity transformation, and the output graphs are also isomorphic (since they are the same as the input graphs).
-    If $G$ and $H$ both have a clique of size $k$ and $|V(G)|=|V(H)|$ then, again, $f$ performs the identity transformation, and the output graphs satisfy the conditions of $B$.
-    If $G$ and $H$ both have a clique of size $k$ and $|V(G)|\neq|V(H)|$ then $f$ will add some disconnected vertices to either $G$ or $H$.
-    But the modified graphs will still have the same cliques of size $k$, since $f$ adds only disconnected vertices which do not affect existing cliques.
-    Therefore $f(\pair{\pair{G}{k}}{\pair{H}{k}})\in B$.
+  This is obviously computable in polynomial time.
+  To prove its correctness, first suppose $\pair{\pair{G}{k}}{\pair{H}{k}}\in A$.
+  If $G\cong H$ then $f$ performs the identity transformation, and the output graphs are also isomorphic (since they are the same as the input graphs).
+  If $G$ and $H$ both have a clique of size $k$ and $|V(G)|=|V(H)|$ then, again, $f$ performs the identity transformation, and the output graphs satisfy the conditions of $B$.
+  If $G$ and $H$ both have a clique of size $k$ and $|V(G)|\neq|V(H)|$ then $f$ will add some disconnected vertices to either $G$ or $H$.
+  But the modified graphs will still have the same cliques of size $k$, since $f$ adds only disconnected vertices which do not affect existing cliques.
+  Therefore $f(\pair{\pair{G}{k}}{\pair{H}{k}})\in B$.
 
-    Next suppose $f(\pair{\pair{G}{k}}{\pair{H}{k}})\in B$.
-    Let the graphs modified by $f$ be called $\hat{G}$ and $\hat{H}$.
-    If $f$ added vertices to one of the graphs, then $G$ must not be isomorphic to $H$, since they had a different number of vertices.
-    In this case, it must be true that $\hat{G}$ and $\hat{H}$ both have a clique of size $k$ and $|V(\hat{G})|=|V(\hat{H})|$.
-    Since the addition vertices are disconnected, they could not have contributed to a clique.
-    Therefore the original graphs $G$ and $H$ both have a clique of size $k$.
-    If $f$ did not add any vertices during its operation, then it performed the identity transformation on its input (by construction).
-    In that case, $G$ and $H$ either are isomorphic or they both have a clique of size $k$ and both have the same number of vertices.
-    This means that the output graphs satisfy the conditions of $A$.
-    Therefore in all cases $\pair{\pair{G}{k}}{\pair{H}{k}}\in A$.
+  Next suppose $f(\pair{\pair{G}{k}}{\pair{H}{k}})\in B$.
+  Let the graphs modified by $f$ be called $\hat{G}$ and $\hat{H}$.
+  If $f$ added vertices to one of the graphs, then $G$ must not be isomorphic to $H$, since they had a different number of vertices.
+  In this case, it must be true that $\hat{G}$ and $\hat{H}$ both have a clique of size $k$ and $|V(\hat{G})|=|V(\hat{H})|$.
+  Since the addition vertices are disconnected, they could not have contributed to a clique.
+  Therefore the original graphs $G$ and $H$ both have a clique of size $k$.
+  If $f$ did not add any vertices during its operation, then it performed the identity transformation on its input (by construction).
+  In that case, $G$ and $H$ either are isomorphic or they both have a clique of size $k$ and both have the same number of vertices.
+  This means that the output graphs satisfy the conditions of $A$.
+  Therefore in all cases $\pair{\pair{G}{k}}{\pair{H}{k}}\in A$.
 
-    This proves $A\mor B$ and hence $B$ is \NP-complete.
-  \end{proof}
+  This proves $A\mor B$ and hence $B$ is \NP-complete.
 
   Now, we will consider the equivalence classes in the equivalence relation $R=\{\pair{x}{y}|x$ and $y$ have the same number of $1$s$\}$.
   The proof that this is an equivalence relation is straightforward.
@@ -562,18 +561,18 @@ Also, if $G$ is a graph then by denote its set of vertices by $V(G)$.
   \begin{claim}
     If $B$ is $\kr$-complete in $\NPEq$ then $B$ is not $\kri$-complete in \NPEq.
   \end{claim}
-  \begin{proof}[Proof of Claim 2]
-    Since $R\in\PEq\subseteq\NPEq$, then $R\kr B$, so $\exists g\in\FP$ such that $w\in\R\iff g(w)\in B$.
+  Since $R\in\PEq\subseteq\NPEq$ and $B$ is \NPEq-complete, $R\kr B$.
+  By definition, there exists a polynomial time computable function $g$ such that $\pair{x}{y}\in\R\iff \pair{g(x)}{g(y)}\in B$.
 
-    Let $w\in\sigmastar$.
-    Then $g(w)=\pair{G}{k}$ for some graph $G$ and some $k\in\mathbb{N}$.
-    By the above arguments, $[w]_R$ is infinite and $[g(w)]_B=[\pair{G}{k}]_B$ is finite.
-    By \autoref{lem:image}, $g([w]_R)\subseteq [g(w)]_B$.
-    Consider $g|_{[w]_R}$, that is, $g$ restricted to the domain $[w]_R$.
-    Then $g|_{[w]_R}$ is a mapping from an infinite set (specifically $[w]_R$) to a finite set (specifically $[g(w)]_B=[\pair{G}{k}]_B$).
-    By the pigeonhole principle, $g|_{[w]_R}$ is not injective.
-    Hence the unrestricted reduction $g$ is not injective, and therefore $B$ is not $\kri$-complete in \NPEq.
-  \end{proof}
+  Let $w\in\sigmastar$.
+  Then $g(w)=\pair{G}{k}$ for some graph $G$ and some $k\in\mathbb{N}$.
+  By the above arguments, $[w]_R$ is infinite and $[g(w)]_B$ is finite.
+  By \autoref{lem:image}, $g([w]_R)\subseteq [g(w)]_B$.
+  Consider $g|_{[w]_R}$, that is, $g$ restricted to the domain $[w]_R$.
+  Then $g|_{[w]_R}$ is a mapping from the infinite set $[w]_R$ to the finite set $[g(w)]_B$.
+  By the pigeonhole principle, $g|_{[w]_R}$ is not injective.
+  Hence the unrestricted reduction $g$ is not injective, and therefore $B$ is not $\kri$-complete in \NPEq.
+
   This concludes the proof of the theorem.
 \end{proof}
 
