@@ -176,7 +176,7 @@ Notice the difference between a kernel reduction and a regular old many-one redu
 Informally, a function which computes a many-one reduction has access to both $x$ and $y$ but a function which computes a kernel reduction has access to only one of $x$ and $y$ at a time.
 Note that since it is more restrictive, a kernel reduction induces a many-one reduction (namely the function $\pair{x}{y}\mapsto\pair{f(x)}{f(y)}$).
 
-As an analog to polynomial time many-one completeness in \NP, we define a similar notion of polynomial time completeness under kernel reductions in \NPEq.
+As an analog to polynomial time many-one completeness in \NP, we define a similar notion of completeness under polynomial time kernel reductions in \NPEq.
 An equivalence relation $S$ is \defn{\NPEq-hard} if for all $R\in\NPEq$, $R\kr S$.
 If $S$ is also in \NPEq, then it is \defn{\NPEq-complete}.
 Similarly, an equivalence relation $S$ is \defn{\PEq-hard} if for all $R\in\PEq$, $R\kr S$, and \defn{\PEq-complete} if it is additionally in \PEq.
