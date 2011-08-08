@@ -502,8 +502,7 @@ We will for now consider the consequences of the assumption that there exists an
 In the following theorem, by ``$\kri$-complete'' we mean ``complete under injective polynomial time kernel reductions'' (that is, every reduction is injective).
 
 \begin{theorem}
-  There exists an \NP-complete language $B$ such that if $B$ is $\kr$-complete
-  in $\NPEq$, then $B$ is not $\kri$-complete in $\NPEq$.
+  There exists an \NP-complete language $B$ such that if $B$ is complete under $kr$ reductions in $\NPEq$, then $B$ is not complete under $\kri$ reductions in $\NPEq$.
 \end{theorem}
 \begin{proof}
   The language $B$ we construct is a restriction of the language $A$ from the proof of \autoref{thm:npcnpeq}.
@@ -559,7 +558,7 @@ In the following theorem, by ``$\kri$-complete'' we mean ``complete under inject
   Therefore, the equivalence class $[\pair{G}{k}]_B$ is finite.
 
   \begin{claim}
-    If $B$ is $\kr$-complete in $\NPEq$ then $B$ is not $\kri$-complete in \NPEq.
+    If $B$ is complete under $\kr$ reductions in $\NPEq$ then $B$ is not complete under $\kri$ in \NPEq.
   \end{claim}
   Since $R\in\PEq\subseteq\NPEq$ and $B$ is \NPEq-complete, $R\kr B$.
   By definition, there exists a polynomial time computable function $g$ such that $\pair{x}{y}\in\R\iff \pair{g(x)}{g(y)}\in B$.
