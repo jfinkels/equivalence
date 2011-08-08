@@ -438,10 +438,9 @@ In this section we examine the relationship between \NP-complete problems and \N
 Below, we will denote the set of \NP-complete languages by \NPC.
 
 We will need some further definitions as well.
-If $G=(V_1,E_1)$ and $H=(V_2, E_2)$ are two graphs, then $G$ \defn{is isomorphic to} $H$ if $\exists\phi\colon V_1\to V_2$, a bijection, such that $\forall u,v\in V_1$,
-\begin{displaymath}
-  [(u,v)\in E_1\iff (\phi(u), \phi(v))\in E_2].
-\end{displaymath}
+If $G$ is a graph, then $V(G)$ is the set of vertices in $G$ and $E(G)$ is the set of edges in $G$.
+A \defn{clique} in $G$ is a subset of $V(G)$, $V'$, such that $\forall u,v\in V'$, $(u, v)\in E(G)$.
+If $G$ and $H$ are two graphs, then $G$ \defn{is isomorphic to} $H$ if $\exists\phi\colon V(G)\to V(H)$, a bijection, such that $\forall u,v\in V(G)$, $[(u,v)\in E(G)\iff (\phi(u), \phi(v))\in E(H)]$.
 We denote this by $G\cong H$.
 The much-studied graph isomorphism problem (\GI), the problem of deciding whether two given graphs are isomorphic, is one of few problems in $\NP$ not known to be either in $\P$ or \NP-complete.
 
