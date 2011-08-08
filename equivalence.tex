@@ -389,7 +389,7 @@ We see immediately that $L(M)$ is an equivalence relation on $\Sigma^*$ if and o
   We first show that $R\in\coNP$.
   Checking whether $u=v$ can obviously be performed by a $\coNP$ machine.
   We can check that $E_M(a, b, c)$ is true by universally choosing $a,b,$ and $c$ in $\Sigma^{\leq \max(|x|, |y|)}$ then simulating the action of $M$ as specified by each proposition $r_M(a)$, $s_M(a, b)$, and $t_M(a, b, c)$.
-  Since $M$ is in $\coNP$, adding more universal quantifiers does not change the complexity of running this simulation.
+  Since $M$ is in $\coNP$, adding three more universal quantifiers does not change the complexity of running this simulation.
   We can also check that $M$ accepts $\pair{x}{y}$ within $\max(t_x, t_y)$ steps by simulating $M$ on the input $\pair{x}{y}$ for $\max(t_x, t_y)$ steps.
   Thus $R\in\coNP$.
 
