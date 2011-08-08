@@ -126,7 +126,7 @@
 In this paper we examine the power of ``kernel reductions'' on languages induced by equivalence relations, specifically for which membership can be decided by a non-deterministic Turing machine running in time polynomial in the length of the input.
 Given two equivalence relations $R$ and $S$, each of which can be expressed as a set of pairs of strings, a \defn{kernel reduction} from $R$ to $S$ is a function $f$ for which $\pair{x}{y}\in R\iff\pair{f(x)}{f(y)}\in S$.
 This function maps each \emph{member} of the pair in $R$ to an element of a pair in the relation $S$, instead of mapping the \emph{entire} pair to another pair.
-The full definition of ``kernel reductions'' is given by Fortnow and Grochow in \cite{fg11} (and is repeated below), though the idea has existed before then.
+The full definition of ``kernel reductions'' is given by Fortnow and Grochow \cite{fg11} (and is repeated below), though the idea has existed before then.
 In fact, all polynomial time many-one reductions to and from the graph isomorphism problem are, to the best of our knowledge, in fact kernel reductions, though they have not before been called by this name.
 The same seems to go for polynomial time many-one reductions to and from other equivalence problems.
 This kind of reduction is more natural than the usual many-one reduction for problems of equivalence.
