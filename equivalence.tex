@@ -32,7 +32,7 @@
 \usepackage{amsmath} % for \implies
 \usepackage{amssymb} % for \nleq
 \usepackage{complexity} % for typesetting complexity classes
-\usepackage[pdftitle={Reductions among equivalence problems in NP}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
+\usepackage[pdftitle={Reductions among equivalence problems in NP and coNP}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
 \usepackage[matrix,arrow]{xy} % for inclusion diagram
 
 % Define theorem, lemma, and definition environments and corresponding styles.
@@ -103,7 +103,7 @@
 \newcommand{\printintermediarytheorem}{If $\PEq\neq\NPEq$ and $\NPEqC$ is non-empty, then there exists an equivalence relation in $\NPEq$ which is neither in $\PEq$ nor $\NPEqC$.}
 
 % create the creative commons license
-\newcommand{\license}{Copyright 2010, 2011 Jef{}frey Finkelstein.
+\newcommand{\license}{Copyright 2010, 2011 Jef{}frey~Finkelstein.
   This work is licensed under the Creative Commons Attribution-ShareAlike License.
   To view a copy of this license, visit \mbox{\url{http://creativecommons.org/licenses/by-sa/3.0/}}}
 
@@ -112,13 +112,21 @@
 \def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup} 
 
 % define the author, title, and date
-\author{Jef{}frey Finkelstein} 
-\title{Reductions among equivalence problems in \texorpdfstring{\NP}{NP}}
+\author{Jef{}frey Finkelstein\\ Computer Science Department, Boston University}
+\title{Reductions among equivalence problems in \texorpdfstring{\NP}{NP} and \texorpdfstring{\coNP}{coNP}}
 \date{\today} 
 
 \begin{document}
 
 \maketitle
+\abstract{%
+  In this paper, we examine a recently introduced type of reduction which applies solely to problems of equivalence or isomorphism: the ``kernel reduction''.
+  Specifically, we examine reductions among languages in the complexity class consisting of all languages induced by equivalence relations for which membership can be decided by a non-deterministic polynomial time Turing machine.
+  This class is called $\NPEq$; the definitions for $\PEq$ and $\coNPEq$ are analagous.
+
+  We show that there is a complete problem under kernel reductions in \coNPEq.
+  We also show that if there is a complete problem under kernel reductions in \NPEq, then that problem is also complete under many-one reductions in \NP.
+  Finally we use a proof of Ladner's theorem to show that if $\PEq\neq\NPEq$ then there are \NPEq-intermediary problems---problems which are in \NPEq, but not complete under kernel reductions and not in $\PEq$.}
 \symbolfootnote{\license}
 
 \section{Introduction}
@@ -141,8 +149,9 @@ If $f\colon S\to T$ is a well-defined function and $S'\subseteq S$, then \defn{$
 We denote this restricted function on a smaller domain by $f|_{S'}$.
 
 If $\Sigma$ is an alphabet then $\Sigma^*$ is the set of all strings over the alphabet $\Sigma$ and $\Sigma^{\leq n}$ is the set $\{w\in\Sigma^*|\,|w|\leq n\}$.
+If $\sigma\in\Sigma$ then $\sigma^k$ is the string consisting of $k$ concatenated copies of the symbol $\sigma$.
 If $x$ and $y$ are elements of $\Sigma^*$, then we denote by $\pair{x}{y}$ the \defn{pairwise encoding} of $x$ and $y$, which is itself an element of $\Sigma^*$.
-In this paper, we will assume the reasonable (polynomial time computable) pairwise encoding $\pair{x}{y}=x_1x_1x_2x_2\cdots x_{|x|}x_{|x|}01y_1y_1y_2y_2\cdots y_{|y|}y_{|y|}$.
+In this paper, we will assume the reasonable pairwise encoding defined by $\pair{x}{y}=x_1x_1x_2x_2\cdots x_{|x|}x_{|x|}01y_1y_1y_2y_2\cdots y_{|y|}y_{|y|}$ for all $x$ and $y$ in $\Sigma^*$.
 As usual, a \defn{language} over an alphabet $\Sigma$ is a subset of $\Sigma^*$.
 
 Given a universe $U$, $R\subseteq U\times U$ is an \defn{equivalence relation on $U$} if $R$ is
@@ -356,7 +365,7 @@ The next lemma states that kernel reductions must preserve ``related-ness'' of p
   In other words, the image of an equivalence class of $R$ is a subset of an equivalence class of $S$.
 \end{lemma}
 \begin{proof}
-  Since $w\in [w]_R$, $f(w)\in f([w]_R)$.
+  Since $w\in [w]_R$, it follows that $f(w)\in f([w]_R)$.
   Let $x\in f([w]_R)$.
   Then $(x, f(w))\in S$, so $x\in [f(w)]_S$.
   Therefore $f([w]_R)\subseteq [f(w)]_S$.
@@ -403,7 +412,7 @@ We see immediately that $L(M)$ is an equivalence relation on $\Sigma^*$ if and o
     Perhaps the machine $M$ acts differently on the input $\pair{x}{y}$ than on the input $\pair{y}{x}$.
   \end{remark}
   For transitivity, suppose that $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R$ and also that $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{z}{1^{t_z}}}\in R$.
-  Since $M$ accepts $\pair{x}{y}$ within $\max(t_x, t_y)$ steps and $\pair{y}{z}$ within $\max(t_y, t_z)$ steps, and since $L(M)$ is an equivalence relation on strings of size at most $\max\{|x|, |y|, |z|\}$, $M$ must also accept $\pair{x}{z}$.
+  Since $M$ accepts $\pair{x}{y}$ in at most $\max(t_x, t_y)$ steps and $\pair{y}{z}$ in at most $\max(t_y, t_z)$ steps, and since $L(M)$ is an equivalence relation on strings of size at most $\max\{|x|, |y|, |z|\}$, $M$ must also accept $\pair{x}{z}$.
   \begin{remark}
     But must it be within $\max(t_x, t_z)$ steps?
     The behavior of $M$ on $\pair{x}{y}$ and $\pair{y}{z}$ do not necessarily tell us anything about its behavior on $\pair{x}{z}$.
@@ -412,11 +421,11 @@ We see immediately that $L(M)$ is an equivalence relation on $\Sigma^*$ if and o
 
   Finally we must show that every equivalence relation $S$ in $\coNPEq$ reduces to $R$ under a polynomial time kernel reduction.
   Suppose $S\in\coNPEq$, let $M$ be the machine which decides $S$, and let $p$ be the polynomial which bounds the running time of $M$.
-  $S$ reduces to $R$ by the mapping $x\mapsto \triple{M}{x}{1^{p(|\pair{x}{x}|)}}$.
+  We claim that $S$ reduces to $R$ by the mapping $x\mapsto \triple{M}{x}{1^{p(|\pair{x}{x}|)}}$.
   Call this mapping $f$.
   This is obviously computable in polynomial time with respect to $|x|$, so it remains to show that the mapping is a correct reduction.
 
-  Suppose $\pair{x}{y}\in S$, and $\pair{f(x)}{f(y)} = \pair{\triple{M}{x}{1^{p(|\pair{x}{x}|)}}}{\triple{M}{y}{1^{p(|\pair{y}{y}|)}}}$.
+  Suppose $\pair{x}{y}\in S$, so that $f(x) = \triple{M}{x}{1^{p(|\pair{x}{x}|)}}$ and $f(y) = \triple{M}{y}{1^{p(|\pair{y}{y}|)}}$.
   First, since $S\in\coNPEq$, $M$ is a $\coNP$ machine.
   Second, since $S$ is an equivalence relation, $E_M(a, b, c)$ is true for all $a,b,$ and $c$ in $\Sigma^{\leq\max(|x|, |y|)}$.
   Third, since $M$ decides $S$, $M$ accepts $\pair{x}{y}$ within $p(|\pair{x}{y}|)$ steps, which is less than $\max(p(|\pair{x}{x}|),p(|\pair{y}{y}|))$ (the assumed encoding function has this property).
@@ -441,6 +450,7 @@ Below, we will denote the set of \NP-complete languages by \NPC.
 We will need some further definitions as well.
 If $G$ is a graph, then $V(G)$ is the set of vertices in $G$ and $E(G)$ is the set of edges in $G$.
 A \defn{clique} in $G$ is a subset of $V(G)$, $V'$, such that $\forall u,v\in V'$, $(u, v)\in E(G)$.
+Recall that the language \lang{CLIQUE}, defined as $\{\pair{G}{k}|G \plain{has a clique of size} k\}$,  is \NP-complete.
 If $G$ and $H$ are two graphs, then $G$ \defn{is isomorphic to} $H$ if $\exists\phi\colon V(G)\to V(H)$, a bijection, such that $\forall u,v\in V(G)$, $[(u,v)\in E(G)\iff (\phi(u), \phi(v))\in E(H)]$.
 We denote this by $G\cong H$.
 The much-studied graph isomorphism problem (\GI), the problem of deciding whether two given graphs are isomorphic, is one of few problems in $\NP$ not known to be either in $\P$ or \NP-complete.
@@ -458,7 +468,7 @@ We first show that there are problems in $\NPEq$ which are also \NP-complete (th
   It is straightforward to verify that $A$ is an equivalence relation and in \NP, so it is in \NPEq.
   It remains to show that it is \NP-hard.
 
-  The reduction is from \lang{CLIQUE} by the mapping $f$ defined by $f(\pair{G}{k})=\pair{\pair{G}{k}}{\pair{K_k}{k}}$ for all graphs $G$ and all $k\in\mathbb{N}$, where $K_k$ is the complete graph on $k$ vertices.
+  The reduction is from the language \lang{CLIQUE} by the mapping $f$ defined by $f(\pair{G}{k})=\pair{\pair{G}{k}}{\pair{K_k}{k}}$ for all graphs $G$ and all $k\in\mathbb{N}$, where $K_k$ is the complete graph on $k$ vertices.
   Constructing the graph $K_k$ is obviously polynomial in $|\pair{G}{k}|$.
   Suppose $\pair{G}{k}\in \lang{CLIQUE}$, so $G$ has a clique of size $k$.
   Then $f(\pair{G}{k})=\pair{\pair{G}{k}}{\pair{K_k}{k}}\in A$ because both $G$ and $K_k$ have a clique of size $k$.
