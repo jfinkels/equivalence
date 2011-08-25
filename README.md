@@ -32,7 +32,7 @@ To compile this article, run
 
     ./compile-paper.sh
 
-The output is equivalence.pdf.
+The output is `equivalence.pdf`.
 
 Copyright
 ---------
