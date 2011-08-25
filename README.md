@@ -12,8 +12,8 @@ packages:
 * hyperref
 * xy
 
-On Ubuntu, the necessary system packages which contain these LaTeX packages
-are:
+On Ubuntu 11.04, the necessary system packages which contain these LaTeX
+packages are:
 
 * texlive-base
 * texlive-latex-base
