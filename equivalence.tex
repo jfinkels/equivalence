@@ -93,11 +93,13 @@
 \newcommand{\plain}[1]{\,\text{#1}\,} % plain text inside math environments
 \newcommand{\sigmastar}{\{0, 1\}^{*}} % the set of all binary strings
 \newcommand{\kj}{\overset{ker}{\oplus}} % kernel join
+\newcommand{\nkr}{\nleq^{P}_{ker}} % kernel-reduces
 \newcommand{\kr}{\leq^{P}_{ker}} % kernel-reduces
 \newcommand{\krnt}{\leq_{ker}} % kernel-reduces without time bound
-%\newcommand{\nkrnt}{\nleq_{ker}} % does not kernel-reduce without time bound
+\newcommand{\nkrnt}{\nleq_{ker}} % does not kernel-reduce without time bound
 \newcommand{\kri}{\leq^{P}_{ker,1\text{--}1}} % 1-1 kernel-reduces
 \newcommand{\mor}{\leq^{P}_{m}} % many-one reduces
+\newcommand{\moe}{\equiv^{P}_{m}} % many-one equivalent
 \newcommand{\symdiff}{\bigtriangleup} % set symmetric difference
 \newcommand{\defn}[1]{\emph{#1}} % emphasize words which are being defined
 \newcommand{\pair}[2]{\langle#1,#2\rangle} % pairing function
@@ -161,6 +163,10 @@ If $\sigma\in\Sigma$ then $\sigma^k$ is the string consisting of $k$ concatenate
 If $x$ and $y$ are elements of $\Sigma^*$, then we denote by $\pair{x}{y}$ the \defn{pairwise encoding} of $x$ and $y$, which is itself an element of $\Sigma^*$.
 In this paper, we will assume the reasonable pairwise encoding defined by $\pair{x}{y}=x_1x_1x_2x_2\cdots x_{|x|}x_{|x|}01y_1y_1y_2y_2\cdots y_{|y|}y_{|y|}$ for all $x$ and $y$ in $\Sigma^*$.
 As usual, a \defn{language} over an alphabet $\Sigma$ is a subset of $\Sigma^*$.
+
+If $L_1, L_2$ are languages, we say that \defn{$L_1$ polynomial time many-one reduces to $L_2$} if there exists a polynomial time computable function $f$ such that $w\in L_1$ if and only if $f(w)\in L_2$.
+We denote this by $L_1\mor L_2$.
+If $L_1\mor L_2$ and $L_2\mor L_1$, we say that $L_1$ and $L_2$ are \defn{equivalent under polynomial time many-one reductions}, and denote this by $L_1\moe L_2$.
 
 Given a universe $U$, $R\subseteq U\times U$ is an \defn{equivalence relation on $U$} if $R$ is
 \begin{enumerate}
@@ -324,7 +330,7 @@ In this section we provide some basic facts about kernel reductions.
   If $n>m$ then $R\nkrnt S$ (that is, $R$ does not kernel reduce to $S$, regardless of any time bound on the function computing the reduction).
 \end{proposition}
 \begin{proof}
-  Assume with the intention of producing a contradiction that $R\krnt S$.
+  Assume that $R\krnt S$.
   Then there exists a computable function $f$ such that $\forall x,y$, $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
 
   Since $R$ has $n$ non-empty equivalence classes which form a partition of $\sigmastar$, then $\exists r_1,\ldots,r_n\in\sigmastar$ such that $R=[r_1]_R\cup\cdots\cup[r_n]_R$.
@@ -337,6 +343,46 @@ In this section we provide some basic facts about kernel reductions.
   This is a contradiction with the hypothesis that $S$ has $m$ equivalence classes.
 
   Therefore $R\nkrnt S$.
+\end{proof}
+
+\begin{proposition}\label{prop:tworeduction}
+  Let $R$ and $S$ be equivalence relations on $\sigmastar$, with $R\in\PEq$.
+  If $S$ has at least two equivalence classes, then $R\mor S$.
+\end{proposition}
+\begin{proof}
+  Let $M$ be the deterministic polynomial time Turing machine which decides $R$.
+  Let $s_1$ and $s_2$ be representatives of two equivalence classes in $S$ (elements of different equivalence classes do not relate in $S$).
+  The many-one reduction from $R$ to $S$ proceeds as follows on input $\pair{x}{y}$: if $M$ accepts $\pair{x}{y}$, output $\pair{s_1}{s_1}$.
+  Otherwise output $\pair{s_1}{s_2}$.
+
+  Since $M$ runs in polynomial time, and since the lengths of $s_1$ and $s_2$ do not depend on the lengths of $x$ or $y$, this reduction can be computed in polynomial time.
+
+  If $\pair{x}{y}\in R$ then the reduction outputs $\pair{s_1}{s_1}$, which is in $S$.
+  If $\pair{x}{y}\notin R$, then the reduction outputs $\pair{s_1}{s_2}$, which is not in $S$.
+  Therefore this is a correct polynomial time many-one reduction from $R$ to $S$.
+\end{proof}
+
+Propositions \ref{prop:noreduction} and \ref{prop:tworeduction} provide a simple proof of \cite[Remark~5.2]{bcffm}.
+
+\begin{theorem}[\cite{bcffm}, Remark~5.2]
+  There exists an infinite sequence of equivalence relations $R_i$, each in \PEq, such that
+  \begin{displaymath}
+    \cdots\nkr R_4\nkr R_3\nkr R_2
+  \end{displaymath}
+  but
+  \begin{displaymath}
+    \cdots\moe R_4\moe R_3\moe R_2.
+  \end{displaymath}
+  In other words, polynomial time kernel reductions and polynomial time many-one reductions are different in \PEq.
+\end{theorem}
+\begin{proof}
+  Let $R_i$ be defined as $R_i=\{\pair{x}{y}|x\equiv y\pmod{i}\}$ for all $i\geq 2$.
+  Equivalence of two integers modulo $i$ can be decided in polynomial time, so $R_i\in\PEq$.
+  Also, $R_i$ has $i$ equivalence classes.
+
+  Since $i+1>i$, by \autoref{prop:noreduction}, $R_{i+1}\nkr R_i$.
+  But by \autoref{prop:tworeduction}, $R_{i+1}\moe R_i$ for all $i\geq 2$.
+  This provides the sequence of equivalence relations described in the statement of the theorem.
 \end{proof}
 
 %% \begin{corollary}\label{cor:finite}
