@@ -61,7 +61,10 @@
 \theoremstyle{definition} \newtheorem{definition}[definition]{Definition}
 \aliascntresetthe{definition}
 
-\theoremstyle{remark} \newtheorem{remark}{Remark}
+\newaliascnt{remark}{theorem}
+\theoremstyle{remark} \newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+
 \newtheorem{claim}{Claim}
 
 % for repeating theorems
@@ -129,7 +132,7 @@
   Specifically, we examine reductions among languages in the complexity class consisting of all languages induced by equivalence relations for which membership can be decided by a non-deterministic polynomial time Turing machine.
   This class is called $\NPEq$; the definitions for $\PEq$ and $\coNPEq$ are analagous.
 
-  We show that there is a complete problem under kernel reductions in \coNPEq.
+  We show that there is a complete problem under kernel reductions in \SPPEq.
   We also show that if there is a complete problem under kernel reductions in \NPEq, then that problem is also complete under many-one reductions in \NP.
   Finally we use a proof of Ladner's theorem to show that if $\PEq\neq\NPEq$ then there are \NPEq-intermediary problems---problems which are in \NPEq, but not complete under kernel reductions and not in $\PEq$.}
 \symbolfootnote{\license}
@@ -178,7 +181,7 @@ In \autoref{sec:definitions} we will define generalizations of the complete inva
 \defn{$\PEq$} is the class of equivalence relations for which membership can be decided by a Turing machine running in deterministic polynomial time.
 \defn{$\NPEq$} is the class of equivalence relations for which membership can be decided by a Turing machine running in non-deterministic polynomial time.
 In other words, $\PEq$ is the set of (languages induced by) equivalence relations which are in \P, and $\NPEq$ is the set of (languages induced by) equivalence relations which are in \NP.
-In general, the class \defn{$\mathcal{C}Eq$} is the class of languages induced by equivalence relations which are in the complexity class $\mathcal{C}$.
+In general, the class \defn{$\CEq$} is the class of languages induced by equivalence relations which are in the complexity class $\mathcal{C}$.
 As usual, $\PEq\subseteq\NPEq$.
 %\defn{$\Ker$} is the class of equivalence relations which have a polynomial time computable complete invariant.
 
@@ -315,6 +318,7 @@ In this section we provide some basic facts about kernel reductions.
   Therefore $R\kr T$.
 \end{proof}
 
+% TODO add this in to show that there exists an infinite kernel reduction anti-chain of equivalence relations which are many-one equivalent
 %% \begin{proposition}\label{prop:numbers}
 %%   Let $R$ and $S$ be equivalence relations on $\sigmastar$.
 %%   Suppose $R$ has $n$ equivalence classes and $S$ has $m$ equivalence classes.
@@ -379,78 +383,67 @@ The next lemma states that kernel reductions must preserve ``related-ness'' of p
 
 \section{Completeness in the polynomial hierarchy}
 
-%% \begin{definition}
-%%   Let $M$ be a Turing machine.
-%%   Let $r_M(a)$ be the proposition ``$M$ accepts $(a, a)$''.
-%%   Let $s_M(a, b)$ be the proposition ``if $M$ accepts $(a, b)$ then $M$ accepts $(b, a)$''.
-%%   Let $t_M(a, b, c)$ be the proposition ``if $M$ accepts $(a, b)$ and $M$ accepts $(b, c)$ then $M$ accepts $(a, c)$''.
-
-%%   Define $E_M(a, b, c)$ to be the proposition ``$r_M(a)$ and $s_M(a, b)$ and $t_M(a, b, c)$''.
-%% \end{definition}
-
-%% We see immediately that $L(M)$ is an equivalence relation on $\Sigma^*$ if and only if $E_M(a, b, c)$ is true for all $a,b,c\in\Sigma^*$.
-
 We say a Turing machine $M$ is a \defn{polynomially clocked Turing machine} if the description of $M$ includes a positive integer $k$ such that $M$ halts within time $kn^k$ on all inputs of length $n$.
 
 \begin{langdef}{EQUIV}
   \begin{instance}
-    a polynomially clocked $\SPP$ Turing machine and a positive integer $n$
+    a polynomially clocked $\SigPi$ Turing machine and a positive integer $n$
   \end{instance}
   \begin{question}
-    Is the set $\{\pair{x}{y}\subseteq{(\Sigma^{\leq n})}^2|M$ accepts $\pair{x}{y}\}$ an equivalence relation?
+    Is the set $\{\pair{x}{y}\in(\Sigma^{\leq n}\times\Sigma^{\leq n})|M$ accepts $\pair{x}{y}\}$ an equivalence relation?
   \end{question}
 \end{langdef}
 
 \begin{lemma}
-  If $\lang{EQUIV}\in\SigPi$ and $A$ is the $\SigPi$ machine which decides \lang{EQUIV}, then the language
-  % TODO replace \,\, with a single space command
+  If there exists a $\SigPi$ algorithm $A$ that decides whether $\pair{M}{n}$ is in \lang{EQUIV} within time $n^{f(|M|)}$ for some computable function $f$, then the language
   \begin{align*}
     R = {} & \{\pair{u}{v}|u=v\} \\
     & \cup \{\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}} | \\
     & \qquad M \plain{is a polynomially clocked Turing machine of type}\, \SigPi \\
-    & \qquad \text{and}\,\, A \plain{accepts} \pair{M}{|x|} \plain{within}\, t_x \plain{steps}\\
-    & \qquad \text{and}\,\, A \plain{accepts} \pair{M}{|y|} \plain{within}\, t_y \plain{steps}\\
-    & \qquad \text{and}\, M \plain{accepts} \pair{x}{y}\}
+    & \qquad \text{and}\; A \plain{accepts} \pair{M}{|x|} \plain{within}\, t_x \plain{steps}\\
+    & \qquad \text{and}\; A \plain{accepts} \pair{M}{|y|} \plain{within}\, t_y \plain{steps}\\
+    & \qquad \text{and}\; M \plain{accepts} \pair{x}{y}\}
   \end{align*}
   is complete for $\SPPEq$ under $\kr$ reductions.
 \end{lemma}
 Note that the statement ``$A$ accepts $\pair{M}{|x|}$'' is equivalent to the statement ``$M$ accepts an equivalence relation on inputs of length at most $|x|$''.
 \begin{proof}
   Testing for equality is trivially in $\SigPi$.
-  Since both $A$ and $M$ are $\SigPi$ machines, simulating $A$ two times and $M$ one time is in $\SigPi$.
+  Since the algorithm $A$ is a $\SigPi$ machine running in time $n^{f(|M|)}$, it runs in time polynomial in the length of input, so it is in $\SigPi$.
+  Since $M$ is a $\SigPi$ machine, simulating $M$ one time is in $\SigPi$.
   Hence, $R\in\SigPi$.
 
   Next we show that $R$ is an equivalence relation.
   Reflexivity follows from the reflexivity of the equality relation.
   To show symmetry, we will suppose $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R$.
-  Since $M$ accepts $\pair{x}{y}$, and since $M$ accepts an equivalence relation on inputs of size at most $\max(|x|, |y|)$ (which includes the strings $x$ and $y$ themselves), $M$ must also accept $\pair{y}{x}$.
+  Since $A$ accepts $\pair{M}{|x|}$ and $\pair{M}{|y|}$, $M$ accepts an equivalence relation on inputs of length at most $\max(|x|, |y|)$ (which includes the strings $x$ and $y$ themselves).
+  In addition, $M$ accepts $\pair{x}{y}$, so $M$ must also accept $\pair{y}{x}$ by symmetry.
   For transitivity, suppose that $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R$ and also that $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{z}{1^{t_z}}}\in R$.
-  Since $M$ accepts $\pair{x}{y}$ and $\pair{y}{z}$, and since $M$ accepts an equivalence relation on inputs of size at most $\max\{|x|, |y|, |z|\}$, $M$ must also accept $\pair{x}{z}$.
+  Since $M$ accepts $\pair{x}{y}$ and $\pair{y}{z}$, and $M$ accepts an equivalence relation on inputs of size at most $\max\{|x|, |y|, |z|\}$, $M$ must also accept $\pair{x}{z}$.
   Since $R$ is reflexive, symmetric, and transitive, it is an equivalence relation.
 
-  Finally we must show that every equivalence relation $S$ in $\SPPEq$ reduces to $R$ under a polynomial time kernel reduction.
-  Let $p$ be the polynomial which bounds the running time of $A$.
+  Finally, we must show that every equivalence relation $S$ in the class $\SPPEq$ reduces to $R$ under a polynomial time kernel reduction.
   Suppose $S\in\SPPEq$, let $M$ be the polynomially clocked oracle Turing machine which decides $S$.
-  We claim that $S$ reduces to $R$ by the mapping $x\mapsto \triple{M}{x}{1^{p(|\pair{M}{x}|)}}$.
-  Call this mapping $f$.
-  This is obviously computable in polynomial time with respect to $|x|$, so it remains to show that the mapping is a correct reduction.
+  We claim that $S$ reduces to $R$ by the mapping $x\mapsto \triple{M}{x}{1^{|x|^{f(|M|)}}}$.
+  Call this mapping $g$.
+  This is computable in polynomial time with respect to $|x|$, so it remains to show that the mapping is a correct reduction.
 
-  Suppose $\pair{x}{y}\in S$, so that $f(x) = \triple{M}{x}{1^{p(|\pair{M}{x}|)}}$ and $f(y) = \triple{M}{y}{1^{p(|\pair{M}{y}|)}}$.
+  Suppose $\pair{x}{y}\in S$, so that $g(x) = \triple{M}{x}{1^{|x|^{f(|M|)}}}$ and $g(y) = \triple{M}{y}{1^{|y|^{f(|M|)}}}$.
   First, since $S\in\SPPEq$, $M$ is a $\SigPi$ machine.
-  Second, since $S$ is an equivalence relation, $A$ will accept $\pair{M}{|x|}$ within $p(|\pair{M}{x}|)$ steps and $\pair{M}{y}$ within $p(|\pair{M}{y}|)$ steps.
-  Third, since $M$ decides $S$, $M$ accepts $\pair{x}{y}$.
-  Thus $\pair{f(x)}{f(y)}\in R$.
+  Second, since $S$ is an equivalence relation, $A$ will accept $\pair{M}{|x|}$ within $|x|^{f(|M|)}$ steps and $\pair{M}{y}$ within $|y|^{f(|M|)}$ steps.
+  Finally, since $M$ decides $S$, $M$ accepts $\pair{x}{y}$.
+  Thus $\pair{g(x)}{g(y)}\in R$.
 
-  Suppose $\pair{x}{y}\notin S$, and $\pair{f(x)}{f(y)}$ are defined as above.
-  Now the first two properties remain true even though $\pair{x}{y}\notin S$, but the third is false.
+  Suppose $\pair{x}{y}\notin S$, and $\pair{g(x)}{g(y)}$ are defined as above.
+  Now the first two properties from the previous paragraph remain true even though $\pair{x}{y}\notin S$, but the third is false.
   Assume that $M$ accepts $\pair{x}{y}$.
   Since $L(M)$ is exactly the restriction of $S$ to strings of size at most $\max(|x|, |y|)$, if $M$ accepts $\pair{x}{y}$ then $\pair{x}{y}\in S$.
   This is a contradiction, so it must be false that $M$ accepts $\pair{x}{y}$.
 
-  We have shown that $R$ is both \SPPEq-hard and in \SPPEq, so $R$ is \SPPEq-complete.
+  We have shown that $R$ is both \SPPEq-hard and a member of \SPPEq, so $R$ is \SPPEq-complete.
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{thm:completeproblem}
   $\SPPEq$ has a complete problem under polynomial time kernel reductions.
 \end{theorem}
 \begin{proof}
@@ -497,7 +490,9 @@ Note that the statement ``$A$ accepts $\pair{M}{|x|}$'' is equivalent to the sta
   This concludes the proof that $A$ is a correct $\SigPi$ algorithm for \lang{EQUIV}.
 \end{proof}
 
-%Unlike a \coNP-complete problem, this problem does not immediately induce an \NPEq-complete problem by taking the complement, since the complement may not necessarily be an equivalence relation.
+\begin{remark}
+  This proof can be extended to yield a complete problem for any complexity class of equivalence relations which meets certain behavior requirements. Suppose $\mathcal{C}$ is a reasonable complexity class and $\CEq$ is the class of (languages induced by) equivalence relations decidable in $\mathcal{C}$. If $\mathcal{C}$ is (1) closed under complement and (2) closed under universal quantification, then $\CEq$ has a complete problem by the above proof (replacing $\SigPi$ with $\mathcal{C}$).
+\end{remark}
 
 \section{Completeness in \texorpdfstring{\NPEq}{NPEq} and \texorpdfstring{\NP}{NP}}
 
