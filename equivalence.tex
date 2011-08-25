@@ -318,27 +318,26 @@ In this section we provide some basic facts about kernel reductions.
   Therefore $R\kr T$.
 \end{proof}
 
-% TODO add this in to show that there exists an infinite kernel reduction anti-chain of equivalence relations which are many-one equivalent
-%% \begin{proposition}\label{prop:numbers}
-%%   Let $R$ and $S$ be equivalence relations on $\sigmastar$.
-%%   Suppose $R$ has $n$ equivalence classes and $S$ has $m$ equivalence classes.
-%%   If $n>m$ then $R\nkrnt S$ (that is, $R$ does not kernel reduce to $S$, regardless of any time bound on the function computing the reduction).
-%% \end{proposition}
-%% \begin{proof}
-%%   Assume with the intention of producing a contradiction that $R\krnt S$.
-%%   Then there exists a computable function $f$ such that $\forall x,y$, $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
+\begin{proposition}\label{prop:noreduction}
+  Let $R$ and $S$ be equivalence relations on $\sigmastar$.
+  Suppose $R$ has $n$ equivalence classes and $S$ has $m$ equivalence classes.
+  If $n>m$ then $R\nkrnt S$ (that is, $R$ does not kernel reduce to $S$, regardless of any time bound on the function computing the reduction).
+\end{proposition}
+\begin{proof}
+  Assume with the intention of producing a contradiction that $R\krnt S$.
+  Then there exists a computable function $f$ such that $\forall x,y$, $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
 
-%%   Since $R$ has $n$ non-empty equivalence classes which form a partition of $\sigmastar$, then $\exists r_1,\ldots,r_n\in\sigmastar$ such that $R=[r_1]_R\cup\cdots\cup[r_n]_R$.
-%%   Since each element of $R$ is in exactly one equivalence class, $\forall i,j\leq n$, $i=j\iff\pair{r_i}{r_j}\in R\iff\pair{f(r_i)}{f(r_j)}\in S$.
-%%   Therefore the image of each $r_i$ is in some equivalence class in $S$.
-%%   Also, $\forall i,j\leq n$, $i\neq j\iff \pair{r_i}{r_j}\notin R\iff \pair{f(r_i)}{f(r_j)}\notin S$.
-%%   Therefore, the image of each $r_i$ does not relate to the image of any other $r_j$, for $i\neq j$, and $i,j\leq n$.
-%%   Therefore each of the equivalence classes $[f(r_1)]_S,\ldots,[f(r_n)]_S$ is disjoint, so $S$ has at least $n$ equivalence classes.
-%%   But $n>m$.
-%%   This is a contradiction with the hypothesis that $S$ has $m$ equivalence classes.
+  Since $R$ has $n$ non-empty equivalence classes which form a partition of $\sigmastar$, then $\exists r_1,\ldots,r_n\in\sigmastar$ such that $R=[r_1]_R\cup\cdots\cup[r_n]_R$.
+  Since each element of $R$ is in exactly one equivalence class, $\forall i,j\leq n$, $i=j\iff\pair{r_i}{r_j}\in R\iff\pair{f(r_i)}{f(r_j)}\in S$.
+  Therefore the image of each $r_i$ is in some equivalence class in $S$.
+  Also, $\forall i,j\leq n$, $i\neq j\iff \pair{r_i}{r_j}\notin R\iff \pair{f(r_i)}{f(r_j)}\notin S$.
+  Therefore, the image of each $r_i$ does not relate to the image of any other $r_j$, for $i\neq j$, and $i,j\leq n$.
+  Therefore each of the equivalence classes $[f(r_1)]_S,\ldots,[f(r_n)]_S$ is disjoint, so $S$ has at least $n$ equivalence classes.
+  But $n>m$.
+  This is a contradiction with the hypothesis that $S$ has $m$ equivalence classes.
 
-%%   Therefore $R\nkrnt S$.
-%% \end{proof}
+  Therefore $R\nkrnt S$.
+\end{proof}
 
 %% \begin{corollary}\label{cor:finite}
 %%   \mbox{}
