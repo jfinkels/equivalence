@@ -507,33 +507,28 @@ Note that the statement ``$A$ accepts $\pair{M}{|x|}$'' is equivalent to the sta
   \item $M$ rejects $\pair{x}{y}$ or $M$ accepts $\pair{y}{x}$
   \item $M$ rejects $\pair{x}{y}$ or $M$ rejects $\pair{y}{z}$ or $M$ accepts $\pair{x}{z}$
   \end{enumerate}
-  Since $L(M)\in\SigPi$ and $\SigPi$ is closed under complement, $\overline{L(M)}\in\SigPi$.
-  Let $M'$ be the machine which decides $\overline{L(M)}$.
-  Now our conditions can be expressed as
-  \begin{enumerate}
-  \item $M$ accepts $\pair{x}{x}$
-  \item $M'$ accepts $\pair{x}{y}$ or $M$ accepts $\pair{y}{x}$
-  \item $M'$ accepts $\pair{x}{y}$ or $M'$ accepts $\pair{y}{z}$ or $M$ accepts $\pair{x}{z}$
-  \end{enumerate}
   The algorithm proceeds as follows on input $\pair{M}{n}$:
   \begin{enumerate}
   \item Universally choose $x,y,$ and $z$ in $\Sigma^{\leq n}$.
   \item Simulate $M$ on $\pair{x}{x}$.
     If it rejects, reject.
-  \item Simulate $M'$ on $\pair{x}{y}$ and $M$ on $\pair{y}{x}$.
-    If they both reject, reject.
-  \item Simulate $M'$ on $\pair{x}{y}$, $M'$ on $\pair{y}{z}$, and $M$ on $\pair{x}{z}$.
-    If all three reject, reject.
+  \item Simulate $M$ on $\pair{x}{y}$ and $\pair{y}{x}$.
+    If it accepts the former and rejects the latter, reject.
+  \item Simulate $M$ on $\pair{x}{y}$, $\pair{y}{z}$, and $\pair{x}{z}$.
+    If it accepts the first two and rejects the third, reject.
   \item If execution reaches this point, accept.
   \end{enumerate}
 
-  This is a $\SigPi$ algorithm: since this algorithm consists of a constant number of simulations of $M$ and $M'$, which are $\SigPi$ machines, specifically $\Pi_2P$ machines, prepending a universal quantifier (for strings of size at most $n$) does not affect the complexity of the algorithm.
+  We claim this is a $\SigPi$ algorithm.
+  Since $\SigPi$ is closed under complement, deciding if $M$ rejects on an input is also in $\SigPi$.
+  Since all simulations are by $\Pi_2P$ machines, and since $\Pi_2P$ is closed under universal quantification, prepending the universal quantifier (for string of length at most $n$) does not affect the complexity of this algorithm.
+  Since this algorithm consists of a constant number of simulations of machines whose running time is bounded by a polynomial, the algorithm $A$ runs in time polynomial in the length of the input.
   It remains to show that the algorithm is correct.
 
-  If the algorithm rejects, the machine $M$ has failed on some requirement for equivalence relations on strings of length at most $n$---reflexivity if it rejects in step 2, symmetry if it rejects on step 3, or transitivity if it rejects on step 4.
+  If the algorithm rejects, the machine $M$ has failed on some requirement for equivalence relations on strings of length at most $n$---reflexivity if it rejects at step 2, symmetry if it rejects at step 3, or transitivity if it rejects at step 4.
   Therefore $\pair{M}{n}$ must not be in \lang{EQUIV}, and the algorithm has correctly rejected.
-  If the algorithm accepts, the machine $M$ has passed all the requirements for accepting an equivalence relation on strings of length at most $n$, so $\pair{M}{n}\in\lang{EQUIV}$ and the algorithm was correct as well.
-  This concludes the proof that $A$ is a correct $\SigPi$ algorithm for \lang{EQUIV}.
+  If the algorithm accepts, the machine $M$ has passed all the requirements for accepting an equivalence relation on strings of length at most $n$, so $\pair{M}{n}\in\lang{EQUIV}$ and the algorithm has correctly accepted.
+  This concludes the proof that $A$ is a correct $\SigPi$ algorithm for \lang{EQUIV} running in time $n^{f(|M|)}$.
 \end{proof}
 
 \begin{remark}
