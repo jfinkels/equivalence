@@ -523,7 +523,7 @@ Note that the statement ``$A$ accepts $\pair{M}{|x|}$'' is equivalent to the sta
 
   We claim this is a $\NPcoNP$ algorithm.
   Since $\NPcoNP$ is closed under complement, deciding if $M$ rejects on an input is also in $\NPcoNP$.
-  Since all simulations are by $\Pi_2P$ machines, and since $\Pi_2P$ is closed under universal quantification, prepending the universal quantifier (for string of length at most $n$) does not affect the complexity of this algorithm.
+  Since all simulations are by $\NPcoNP$ machines, and since $\NPcoNP$ is closed under universal quantification, prepending the universal quantifier (for string of length at most $n$) does not affect the complexity of this algorithm.
   Since this algorithm consists of a constant number of simulations of machines whose running time is bounded by a polynomial, the algorithm $A$ runs in time polynomial in the length of the input.
   It remains to show that the algorithm is correct.
 
