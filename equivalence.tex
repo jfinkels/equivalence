@@ -299,7 +299,7 @@ The main ideas of these inclusions are presented in the following theorem (the c
   \item Choose the relation $R'$ in the definitions of $\NPEqSix$ and $\NPEqFive$ to be the equality relation.
   \item Hard-code the function $f$ from the definitions of $\NPEqSix$ and $\NPEqFive$ into the relation $R'$ in the definitions of $\NPEqFour$ and $\NPEqThree$.
   \item Choose $w_x$ and $w_y$ in $\NPEqFive$ and $\NPEqThree$ to be equal to the $w$ from $\NPEqSix$ and $\NPEqFour$.
-  \item Define $L$ to be the language $L=\{\pair{\pair{x}{y}}{w}|\pair{\pair{x}{w}}{\pair{y}{w}}\in R'\}$.\qedhere
+  \item Define $L=\{\pair{\pair{x}{y}}{\pair{w_x}{w_y}}|\pair{\pair{x}{w_x}}{\pair{y}{w_y}}\in R'\}$, so the witness that $\pair{x}{y}\in L$ is the pair $\pair{w_x}{w_y}$.\qedhere
   \end{enumerate}
 \end{sketch}
 
