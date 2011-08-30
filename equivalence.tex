@@ -328,7 +328,7 @@ In this section we provide some basic facts about kernel reductions.
 \end{proof}
 
 \begin{proposition}\label{prop:noreduction}
-  Let $R$ and $S$ be equivalence relations on $\sigmastar$.
+  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
   Suppose $R$ has $n$ equivalence classes and $S$ has $m$ equivalence classes.
   If $n>m$ then $R\nkrnt S$ (that is, $R$ does not kernel reduce to $S$, regardless of any time bound on the function computing the reduction).
 \end{proposition}
@@ -336,7 +336,7 @@ In this section we provide some basic facts about kernel reductions.
   Assume that $R\krnt S$.
   Then there exists a computable function $f$ such that $\forall x,y$, $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
 
-  Since $R$ has $n$ non-empty equivalence classes which form a partition of $\sigmastar$, then $\exists r_1,\ldots,r_n\in\sigmastar$ such that $R=[r_1]_R\cup\cdots\cup[r_n]_R$.
+  Since $R$ has $n$ non-empty equivalence classes which form a partition of $\Sigma^*$, then $\exists r_1,\ldots,r_n\in\Sigma^*$ such that $R=[r_1]_R\cup\cdots\cup[r_n]_R$.
   Since each element of $R$ is in exactly one equivalence class, $\forall i,j\leq n$, $i=j\iff\pair{r_i}{r_j}\in R\iff\pair{f(r_i)}{f(r_j)}\in S$.
   Therefore the image of each $r_i$ is in some equivalence class in $S$.
   Also, $\forall i,j\leq n$, $i\neq j\iff \pair{r_i}{r_j}\notin R\iff \pair{f(r_i)}{f(r_j)}\notin S$.
@@ -349,7 +349,7 @@ In this section we provide some basic facts about kernel reductions.
 \end{proof}
 
 \begin{proposition}\label{prop:tworeduction}
-  Let $R$ and $S$ be equivalence relations on $\sigmastar$, with $R\in\PEq$.
+  Let $R$ and $S$ be equivalence relations on $\Sigma^*$, with $R\in\PEq$.
   If $S$ has at least two equivalence classes, then $R\mor S$.
 \end{proposition}
 \begin{proof}
@@ -438,7 +438,7 @@ We say a Turing machine $M$ is a \defn{polynomially clocked Turing machine} if t
     a polynomially clocked $\NPcoNP$ Turing machine and a positive integer $n$
   \end{instance}
   \begin{question}
-    Is the set $\{\pair{x}{y}\in(\Sigma^{\leq n}\times\Sigma^{\leq n})|M$ accepts $\pair{x}{y}\}$ an equivalence relation?
+    Is the set $\{\pair{x}{y}|x,y\in\Sigma^{\leq n}$ and $M$ accepts $\pair{x}{y}\}$ an equivalence relation?
   \end{question}
 \end{langdef}
 
@@ -653,7 +653,7 @@ In the following theorem, if an equivalence relation $B$ is ``complete under $\k
   Now, we will consider the equivalence classes in the equivalence relation $R=\{\pair{x}{y}|x$ and $y$ have the same number of $1$s$\}$.
   The proof that this is an equivalence relation is straightforward.
   There are an infinite number of equivalence classes in $R$; specifically, they are $[\lambda]$, $[1]$, $[11]$, $[111]$, etc.
-  Each equivalence class is itself infinite as well: if $w\in\sigmastar$ then $[w]$ contains $w$, $0w$, $00w$, $000w$, etc.
+  Each equivalence class is itself infinite as well: if $w\in\Sigma^*$ then $[w]$ contains $w$, $0w$, $00w$, $000w$, etc.
 
   Next, we will consider the equivalence classes in $B$.
   There are an infinite number of equivalence classes in $B$, as well (because there are an infinite number of graphs, and an infinite number of natural numbers).
