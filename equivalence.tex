@@ -605,10 +605,10 @@ Of course, under this hypothesis the polynomial hierarchy collapses, so the \NPc
 \end{openproblem}
 
 We will for now consider the consequences of the assumption that there exists an \NPEq-complete problem.
-In the following theorem, by ``$\kri$-complete'' we mean ``complete under injective polynomial time kernel reductions'' (that is, every reduction is injective).
+In the following theorem, if an equivalence relation $B$ is ``complete under $\kri$ reductions in $\NPEq$'' we mean that every equivalence relation in $\NPEq$ reduces to $B$ by a polynomial time computable kernel reduction which is also injective (that is, ``one-to-one'').
 
 \begin{theorem}
-  There exists an \NP-complete language $B$ such that if $B$ is complete under $kr$ reductions in $\NPEq$, then $B$ is not complete under $\kri$ reductions in $\NPEq$.
+  There exists an \NP-complete language $B$ such that if $B$ is complete under $\kr$ reductions in $\NPEq$, then $B$ is not complete under $\kri$ reductions in $\NPEq$.
 \end{theorem}
 \begin{proof}
   The language $B$ we construct is a restriction of the language $A$ from the proof of \autoref{thm:npcnpeq}.
