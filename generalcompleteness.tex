@@ -1,107 +1,119 @@
-\section{Completeness in the polynomial hierarchy}
+\section{Completeness in \texorpdfstring{\AP}{AP}}
 
-We say a Turing machine $M$ is a \defn{polynomially clocked Turing machine} if the description of $M$ includes a positive integer $k$ such that $M$ halts within time $kn^k$ on all inputs of length $n$.
+In this section we use the techniques of \cite[Theorem~8.7]{bcffm} to present a general theorem which provides a complete problem for a number of interesting complexity classes.
+We first need some definitions.
 
-\begin{langdef}{EQUIV}
-  \begin{instance}
-    a polynomially clocked $\NPcoNP$ Turing machine and a positive integer $n$
-  \end{instance}
-  \begin{question}
-    Is the set $\{\pair{x}{y}|x,y\in\Sigma^{\leq n}$ and $M$ accepts $\pair{x}{y}\}$ an equivalence relation?
-  \end{question}
-\end{langdef}
+If $\mathcal{C}$ is a complexity class (that is, a set of languages), then it is \defn{closed under complement} if $L\in\mathcal{C}$ implies $\overline{L}\in\mathcal{C}$.
+This implies that $\coC=\mathcal{C}$.
 
-\begin{lemma}
-  If there exists a $\NPcoNP$ algorithm $A$ that decides if $\pair{M}{n}$ is in \lang{EQUIV} within time $n^{f(|M|)}$ for some computable function $f$, then the language
+Suppose $\mathcal{C}\subseteq\AP$, and suppose $L\in\mathcal{C}$, so there exists a language $L'\in\P$ and a polynomial $p$ such that
+\begin{displaymath}
+  w\in L \iff \Q_1x_1\Q_2x_2\cdots \Q_kx_k\colon \langle x_1, x_2, \ldots, x_k, w\rangle\in L'
+\end{displaymath}
+where each $\Q_i\in\{\forall, \exists\}$ and each $x_i\in\Sigma^{\leq p(|w|)}$.
+$\mathcal{C}\subseteq\AP$ is \defn{closed under universal quantification} if there exists a language $L''\in\P$ and a polynomial $q$ such that
+\begin{displaymath}
+  w\in L \iff \forall x_0 \Q_1x_1\Q_2x_2\cdots \Q_kx_k\colon \langle x_0, x_1, x_2, \ldots, x_k, w \rangle\in L''.
+\end{displaymath}
+
+Now to construct a complete problem we would like to use a logical proposition which is true if and only if the language $L(M)$ of a Turing machine $M$ is an equivalence relation.
+Let $r_M(a)$ be the statement ``$M$ accepts $\pair{a}{a}$''.
+Let $s_M(a,b)$ be the statement ``if $M$ accepts $\pair{a}{b}$ then $M$ accepts $\pair{b}{a}$'', or equivalently ``$M$ rejects $\pair{a}{b}$ or $M$ accepts $\pair{b}{a}$''.
+Let $t_M(a,b,c)$ be the statement ``if $M$ accepts both $\pair{a}{b}$ and $\pair{b}{c}$ then $M$ accepts $\pair{a}{c}$'', or equivalently ``$M$ rejects $\pair{a}{b}$ or $M$ rejects $\pair{b}{c}$ or $M$ accepts $\pair{a}{c}$''.
+These are the reflexivity, symmetry, and transitivity properties necessary for an equivalence relation.
+Let $E_M(a, b, c)$ be the statement ``$r_M(a)$ and $s_M(a, b)$ and $t_M(a, b, c)$''.
+It is easy to see that $E_M(a, b, c)$ is true for all $a,b,$ and $c$ if and only if the language which $M$ accepts is an equivalence relation.
+
+\begin{theorem}\label{thm:generalcompleteness}
+  Suppose $\mathcal{C}$ is a subset of $\AP$ which meets the following conditions:
+  \begin{enumerate}
+  \item $\mathcal{C}$ is closed under complement
+  \item $\mathcal{C}$ is closed under universal quantification
+  \item the problem of deciding whether two strings are equal is in $\mathcal{C}$
+  \end{enumerate}
+  Then $\CEq$ has a complete problem under $\kr$ reductions.
+\end{theorem}
+\begin{proof}
+  Define the set $R$ by
   \begin{align*}
     R = {} & \{\pair{u}{v}|u=v\} \\
-    & \cup \{\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}} | \\
-    & \qquad M \plain{is a polynomially clocked Turing machine of type}\, \NPcoNP \\
-    & \qquad \text{and}\; A \plain{accepts} \pair{M}{|x|} \plain{within}\, t_x \plain{steps}\\
-    & \qquad \text{and}\; A \plain{accepts} \pair{M}{|y|} \plain{within}\, t_y \plain{steps}\\
-    & \qquad \text{and}\; M \plain{accepts} \pair{x}{y}\}
+    & \cup \{\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}} |
+    \text{1 through 4 below are satisfied}\}
   \end{align*}
-  is complete for $\NPcoNPEq$ under $\kr$ reductions.
-\end{lemma}
-Note that the statement ``$A$ accepts $\pair{M}{|x|}$'' is equivalent to the statement ``$M$ accepts an equivalence relation on inputs of length at most $|x|$''.
-\begin{proof}
-  Testing for equality is trivially in $\NPcoNP$.
-  Since the algorithm $A$ is a $\NPcoNP$ machine running in time $n^{f(|M|)}$, it runs in time polynomial in the length of input, so it is in $\NPcoNP$.
-  Since $M$ is a $\NPcoNP$ machine, simulating $M$ one time is in $\NPcoNP$.
-  Hence, $R\in\NPcoNP$.
+  where the conditions are
+  \begin{enumerate}
+  \item\label{itm:machine} $M$ is a polynomially clocked Turing machine of type $\mathcal{C}$
+  \item\label{itm:emx} a $\mathcal{C}$ algorithm decides whether $\forall a,b,c\in\Sigma^{\leq |x|}[E_M(a,b,c)]$ within $t_x$ steps
+  \item\label{itm:emy} a $\mathcal{C}$ algorithm decides whether $\forall a,b,c\in\Sigma^{\leq |y|}[E_M(a,b,c)]$ within $t_y$ steps
+  \item\label{itm:accepts} $M$ accepts $\pair{x}{y}$
+  \end{enumerate}
+  We claim that $R$ is $\CEq$-complete.
+
+  First we show that $R\in\mathcal{C}$.
+  Since $M$ is a polynomially clocked $\mathcal{C}$ machine by \autoref{itm:machine}, then the simulation of $M$ on $\pair{x}{y}$ in \autoref{itm:accepts} can be performed by a $\mathcal{C}$ algorithm.
+  For \autoref{itm:emx} and \autoref{itm:emy}, since $\mathcal{C}$ is closed under universal quantification and closed under complement, the universal guess and simulations of $M$ are still in $\mathcal{C}$; there is only one universal guess and a constant number of simulations.
+  Testing for equality is in $\mathcal{C}$ by hypothesis so deciding $R$ can be performed by a $\mathcal{C}$ algorithm.
 
   Next we show that $R$ is an equivalence relation.
   Reflexivity follows from the reflexivity of the equality relation.
-  To show symmetry, we will suppose $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R$.
-  Since $A$ accepts $\pair{M}{|x|}$ and $\pair{M}{|y|}$, $M$ accepts an equivalence relation on inputs of length at most $\max(|x|, |y|)$ (which includes the strings $x$ and $y$ themselves).
-  In addition, $M$ accepts $\pair{x}{y}$, so $M$ must also accept $\pair{y}{x}$ by symmetry.
-  For transitivity, suppose that $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R$ and also that $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{z}{1^{t_z}}}\in R$.
-  Since $M$ accepts $\pair{x}{y}$ and $\pair{y}{z}$, and $M$ accepts an equivalence relation on inputs of size at most $\max\{|x|, |y|, |z|\}$, $M$ must also accept $\pair{x}{z}$.
-  Since $R$ is reflexive, symmetric, and transitive, it is an equivalence relation.
+  For symmetry, suppose $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R$.
+  Since \autoref{itm:emx} and \autoref{itm:emy} are true by hypothesis, we know that symmetry on strings of length at most $\max(|x|, |y|)$ is satisfied (by the two propositions $\forall a,b\in\Sigma^{\leq |x|} [s_M(a, b)]$ and $\forall a,b\in\Sigma^{\leq |y|} [s_M(a, b)]$) and that includes the strings $x$ and $y$.
+  So since $M$ accepts $\pair{x}{y}$ it must follow that $M$ accepts $\pair{y}{x}$.
+  Furthermore, \autoref{itm:machine}, \autoref{itm:emx}, and \autoref{itm:emy} are the same up to symmetry of $x$ and $y$, so we have $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{x}{1^{t_x}}}\in R$.
+  For transitivity, suppose that both $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R$ and $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{z}{1^{t_z}}}\in R$.
+  Since transitivity is true on strings of length at most $\max(|x|, |y|, |z|)$ by the transitivity propositions in \autoref{itm:emx} and \autoref{itm:emy}, and since $M$ accepts both $\pair{x}{y}$ and $\pair{y}{z}$ by hypothesis, it must follow that $M$ accepts $\pair{x}{z}$.
+  Again the conditions in \autoref{itm:machine}, \autoref{itm:emx}, and \autoref{itm:emy} are the same.
+  We have shown that $R$ is reflexive, symmetric, and transitive, so it is an equivalence relation.
+  At this point, we have proven that $R\in\CEq$.
 
-  Finally, we must show that every equivalence relation $S$ in the class $\NPcoNPEq$ reduces to $R$ under a polynomial time kernel reduction.
-  Suppose $S\in\NPcoNPEq$, let $M$ be the polynomially clocked oracle Turing machine which decides $S$.
-  We claim that $S$ reduces to $R$ by the mapping $x\mapsto \triple{M}{x}{1^{|x|^{f(|M|)}}}$.
-  Call this mapping $g$.
-  This is computable in polynomial time with respect to $|x|$, so it remains to show that the mapping is a correct reduction.
+  Now we need to show that $R$ is $\CEq$-hard.
+  Let $S\in\CEq$.
+  Suppose $M$ is the polynomially clocked $\mathcal{C}$ machine which decides $S$, and $p$ is the polynomial which bounds the running time of $M$.
+  Then the kernel reduction from $S$ to $R$ is $x\mapsto\triple{M}{x}{1^{6p(|\pair{x}{x}|)+c}}$, where $c$ is a constant which depends on the implementation of the algorithm which decides the proposition $E_M(a, b, c)$.
+  Such an algorithm must perform six simulations of $M$, and check whether each simulation rejects or accepts.
+  The constant $c$ accounts for the control necessary for collecting and interpreting the results of each simulation.
 
-  Suppose $\pair{x}{y}\in S$, so that $g(x) = \triple{M}{x}{1^{|x|^{f(|M|)}}}$ and $g(y) = \triple{M}{y}{1^{|y|^{f(|M|)}}}$.
-  First, since $S\in\NPcoNPEq$, $M$ is a $\NPcoNP$ machine.
-  Second, since $S$ is an equivalence relation, $A$ will accept $\pair{M}{|x|}$ within $|x|^{f(|M|)}$ steps and $\pair{M}{y}$ within $|y|^{f(|M|)}$ steps.
-  Finally, since $M$ decides $S$, $M$ accepts $\pair{x}{y}$.
-  Thus $\pair{g(x)}{g(y)}\in R$.
+  Call this reduction $f$.
+  The reduction is obviously computable in time polynomial in $|x|$.
+  It remains to show that this reduction is correct.
 
-  Suppose $\pair{x}{y}\notin S$, and $\pair{g(x)}{g(y)}$ are defined as above.
-  Now the first two properties from the previous paragraph remain true even though $\pair{x}{y}\notin S$, but the third is false.
-  Assume that $M$ accepts $\pair{x}{y}$.
-  Since $L(M)$ is exactly the restriction of $S$ to strings of size at most $\max(|x|, |y|)$, if $M$ accepts $\pair{x}{y}$ then $\pair{x}{y}\in S$.
-  This is a contradiction, so it must be false that $M$ accepts $\pair{x}{y}$.
+  Suppose $\pair{x}{y}\in S$.
+  Now $f(x)=\triple{M}{x}{1^{6p(|\pair{x}{x}|)+c}}$ and $f(y)=\triple{M}{y}{1^{6p(|\pair{y}{y}|)+c}}$.
+  \autoref{itm:machine} is true by construction, and \autoref{itm:accepts} is true since $M$ is the machine which decides $S$.
+  Assume \autoref{itm:emx} is false.
+  Then $M$ does not accept an equivalence relation on strings of length at most $|x|$.
+  This is a contradiction, since $M$ decides $S$, an equivalence relation, by hypothesis.
+  Therefore \autoref{itm:emx} must be satisfied.
+  The same argument applies to \autoref{itm:emy}.
+  Hence $\pair{f(x)}{f(y)}\in R$.
 
-  We have shown that $R$ is both \NPcoNPEq-hard and a member of \NPcoNPEq, so $R$ is \NPcoNPEq-complete.
+  Suppose $\pair{f(x)}{f(y)}\in R$.
+  %, that is $\pair{\triple{M}{x}{1^{6p(|\pair{x}{x}|)+c}}}{\triple{M}{y}{1^{6p(|\pair{y}{y}|)+c}}}\in R$.
+  This means that $M$ accepts $\pair{x}{y}$, and since $M$ decides $S$ by hypothesis, it follows that $\pair{x}{y}\in S$.
+  Hence we have $\pair{x}{y}\in S\iff \pair{f(x)}{f(y)}\in R$, so $S\kr R$.
+  Therefore $R$ is $\CEq$-hard and $R\in\CEq$, so $R$ is $\CEq$-complete.
 \end{proof}
 
-\begin{theorem}\label{thm:completeproblem}
-  $\NPcoNPEq$ has a complete problem under polynomial time kernel reductions.
-\end{theorem}
-\begin{proof}
-  We provide a $\NPcoNP$ algorithm which decides \lang{EQUIV}, thereby satisfying the hypothesis of the previous lemma.
-  The algorithm will decide whether a $\NPcoNP$ machine $M$ decides an equivalence relation on $\Sigma^{\leq n}$.
-  To satisfy the conditions of an equivalence relation on $\Sigma^{\leq n}$, the following three conditions must be true for all $x,y,z\in\Sigma^{\leq n}$:
+\begin{corollary}
+  The following complexity classes have a complete problem under polynomial time kernel reductions:
   \begin{enumerate}
-  \item $M$ accepts $\pair{x}{x}$
-  \item $M$ accepts $\pair{x}{y}$ implies $M$ accepts $\pair{y}{x}$
-  \item $M$ accepts $\pair{x}{y}$ and $M$ accepts $\pair{y}{z}$ implies $M$ accepts $\pair{x}{z}$
+  \item \SKPEq, for all $k\geq 1$
+  \item \PSPACEEq
+  \item \PHEq
   \end{enumerate}
-  Expressed with disjunctions instead of implications, these conditions are
-  \begin{enumerate}
-  \item $M$ accepts $\pair{x}{x}$
-  \item $M$ rejects $\pair{x}{y}$ or $M$ accepts $\pair{y}{x}$
-  \item $M$ rejects $\pair{x}{y}$ or $M$ rejects $\pair{y}{z}$ or $M$ accepts $\pair{x}{z}$
-  \end{enumerate}
-  The algorithm proceeds as follows on input $\pair{M}{n}$:
-  \begin{enumerate}
-  \item Universally choose $x,y,$ and $z$ in $\Sigma^{\leq n}$.
-  \item Simulate $M$ on $\pair{x}{x}$.
-    If it rejects, reject.
-  \item Simulate $M$ on $\pair{x}{y}$ and $\pair{y}{x}$.
-    If it accepts the former and rejects the latter, reject.
-  \item Simulate $M$ on $\pair{x}{y}$, $\pair{y}{z}$, and $\pair{x}{z}$.
-    If it accepts the first two and rejects the third, reject.
-  \item If execution reaches this point, accept.
-  \end{enumerate}
-
-  We claim this is a $\NPcoNP$ algorithm.
-  Since $\NPcoNP$ is closed under complement, deciding if $M$ rejects on an input is also in $\NPcoNP$.
-  Since all simulations are by $\NPcoNP$ machines, and since $\NPcoNP$ is closed under universal quantification, prepending the universal quantifier (for string of length at most $n$) does not affect the complexity of this algorithm.
-  Since this algorithm consists of a constant number of simulations of machines whose running time is bounded by a polynomial, the algorithm $A$ runs in time polynomial in the length of the input.
-  It remains to show that the algorithm is correct.
-
-  If the algorithm rejects, the machine $M$ has failed on some requirement for equivalence relations on strings of length at most $n$---reflexivity if it rejects at step 2, symmetry if it rejects at step 3, or transitivity if it rejects at step 4.
-  Therefore $\pair{M}{n}$ must not be in \lang{EQUIV}, and the algorithm has correctly rejected.
-  If the algorithm accepts, the machine $M$ has passed all the requirements for accepting an equivalence relation on strings of length at most $n$, so $\pair{M}{n}\in\lang{EQUIV}$ and the algorithm has correctly accepted.
-  This concludes the proof that $A$ is a correct $\NPcoNP$ algorithm for \lang{EQUIV} running in time $n^{f(|M|)}$.
-\end{proof}
+\end{corollary}
 
 \begin{remark}
-  This proof can be extended to yield a complete problem for any complexity class of equivalence relations which meets certain behavior requirements. Suppose $\mathcal{C}$ is a reasonable complexity class and $\CEq$ is the class of (languages induced by) equivalence relations decidable in $\mathcal{C}$. If $\mathcal{C}$ is (1) closed under complement and (2) closed under universal quantification, then $\CEq$ has a complete problem by the above proof (replacing $\NPcoNP$ with $\mathcal{C}$).
+  That $\NPcoNPEq$ has a complete problem is remarkable because there is an oracle relative to which $\NPcoNP$ has a complete problem \cite{} and an oracle relative to which it does not have a complete problem \cite{}.
+  Also, if $\PH$ has a complete problem at some level, then all levels above collapse!
+  This is evidence that some languages are inherently \emph{not} expressible by an equivalence relation.
 \end{remark}
+
+\begin{openproblem}
+  Is there a more general characterization of complexity classes which have a complete problem?
+  Can we adapt this idea to produce a complete problem for $\PEq$ (which is not closed under universal quantification) or $\NPEq$ (which is closed under neither complement nor universal quantification)?
+\end{openproblem}
+
+\begin{openproblem}
+  Can this theorem be used to construct complete problems for smaller complexity classes like $\NL$ under the appropriate time-bounded reduction?
+\end{openproblem}
