@@ -39,8 +39,9 @@ Suppose $\mathcal{C}\subseteq\AP$, and suppose $L\in\mathcal{C}$, so there exist
 where each $\Q_i\in\{\forall, \exists\}$ and each $x_i\in\Sigma^{\leq p(|w|)}$.
 $\mathcal{C}\subseteq\AP$ is \defn{closed under universal quantification} if there exists a language $L''\in\P$ and a polynomial $q$ such that
 \begin{displaymath}
-  w\in L \iff \forall x_0 \Q_1x_1\Q_2x_2\cdots \Q_kx_k\colon \langle x_0, x_1, x_2, \ldots, x_k, w \rangle\in L''.
+  w\in L \iff \forall x_0 \Q_1x_1\Q_2x_2\cdots \Q_kx_k\colon \langle x_0, x_1, x_2, \ldots, x_k, w \rangle\in L''
 \end{displaymath}
+where each $\Q_i\in\{\forall, \exists\}$ and each $x_i\in\Sigma^{\leq q(|w|)}$.
 
 Now to construct a complete problem we would like to use a logical proposition which is true if and only if the language $L(M)$ of a Turing machine $M$ is an equivalence relation.
 Let $r_M(a)$ be the statement ``$M$ accepts $\pair{a}{a}$''.
