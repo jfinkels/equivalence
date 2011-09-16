@@ -37,7 +37,7 @@ Suppose $\mathcal{C}\subseteq\AP$, and suppose $L\in\mathcal{C}$, so there exist
   w\in L \iff \Q_1x_1\Q_2x_2\cdots \Q_kx_k\colon \langle x_1, x_2, \ldots, x_k, w\rangle\in L'
 \end{displaymath}
 where each $\Q_i\in\{\forall, \exists\}$ and each $x_i\in\Sigma^{\leq p(|w|)}$.
-$\mathcal{C}$ is \defn{closed under universal quantification} if there exists a language $L''\in\P$ and a polynomial $q$ such that
+$\mathcal{C}$ is \defn{closed under polynomially bounded universal quantification} if there exists a language $L''\in\P$ and a polynomial $q$ such that
 \begin{displaymath}
   w\in L \iff \forall x_0 \Q_1x_1\Q_2x_2\cdots \Q_kx_k\colon \langle x_0, x_1, x_2, \ldots, x_k, w \rangle\in L''
 \end{displaymath}
@@ -47,7 +47,7 @@ where each $\Q_i\in\{\forall, \exists\}$ and each $x_i\in\Sigma^{\leq q(|w|)}$.
   Suppose $\mathcal{C}$ is a subset of $\AP$ which meets the following conditions:
   \begin{enumerate}
   \item $\mathcal{C}$ is closed under complement
-  \item $\mathcal{C}$ is closed under universal quantification
+  \item $\mathcal{C}$ is closed under polynomially bounded universal quantification
   \item the problem of deciding whether two strings are equal is in $\mathcal{C}$
   \end{enumerate}
   Then $\CEq$ has a complete problem under $\kr$ reductions.
@@ -64,7 +64,7 @@ where each $\Q_i\in\{\forall, \exists\}$ and each $x_i\in\Sigma^{\leq q(|w|)}$.
   \end{enumerate}
   These simulations check that $L(M)$ satisfies reflexivity, symmetry, and transitivity on strings of length at most $n$.
   If $A$ accepts, then the three properties are satisfied, and if it rejects then one of the three properties is violated.
-  Since $M$ is a machine of type $\mathcal{C}$ and $\mathcal{C}$ is closed under both complement and universal quantification, the universal guesses $a,b,$ and $c$ and checking whether the six simulations of $M$ accept or reject do not increase the complexity of this algorithm beyond the class $\mathcal{C}$.
+  Since $M$ is a machine of type $\mathcal{C}$ and $\mathcal{C}$ is closed under both complement and polynomiall bounded universal quantification, the universal guesses $a,b,$ and $c$ (of length at most $n$) and checking whether the six simulations of $M$ accept or reject do not increase the complexity of this algorithm beyond the class $\mathcal{C}$.
   If $p$ is the polynomial which bounds the running time of $M$, then the running time of this algorithm is $6p(|\pair{1^n}{1^n}|)+c$, where $c$ is a constant which represents the time needed to account for the implementation of $A$ (the control of the simulations of $M$, performing logical conjunctions, etc.).
   Hence the running time of $A$ is polynomial in $n$.
 
@@ -139,9 +139,15 @@ where each $\Q_i\in\{\forall, \exists\}$ and each $x_i\in\Sigma^{\leq q(|w|)}$.
 
 \begin{openproblem}
   Is there a more general characterization of complexity classes which have a complete problem?
-  Can we adapt this idea to produce a complete problem for $\PEq$ (which is not closed under universal quantification) or $\NPEq$ (which is closed under neither complement nor universal quantification)?
+  Can we adapt this idea to produce a complete problem for $\PEq$ (which is not closed under polynomially bounded universal quantification) or $\NPEq$ (which is closed under neither complement nor polynomially bounded universal quantification)?
 \end{openproblem}
 
 \begin{openproblem}
   Can this theorem be used to construct complete problems for smaller complexity classes like $\NL$ under the appropriate time-bounded reduction?
+  Larger classes such as $\EXP$?
+\end{openproblem}
+
+\begin{openproblem}
+  To what other equivalence relations does this complete problem reduce?
+  Are there ``natural'' complete problems in complexity classes which satisfy the conditions in \autoref{thm:generalcompleteness}?
 \end{openproblem}
