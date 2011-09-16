@@ -32,16 +32,9 @@ We first need some definitions.
 If $\mathcal{C}$ is a complexity class (that is, a set of languages), then it is \defn{closed under complement} if $L\in\mathcal{C}$ implies $\overline{L}\in\mathcal{C}$.
 This implies that $\coC=\mathcal{C}$.
 
-Suppose $\mathcal{C}\subseteq\AP$, and suppose $L\in\mathcal{C}$, so there exists a language $L'\in\P$ and a polynomial $p$ such that
-\begin{displaymath}
-  w\in L \iff \Q_1x_1\Q_2x_2\cdots \Q_kx_k\colon \langle x_1, x_2, \ldots, x_k, w\rangle\in L'
-\end{displaymath}
-where each $\Q_i\in\{\forall, \exists\}$ and each $x_i\in\Sigma^{\leq p(|w|)}$.
-$\mathcal{C}$ is \defn{closed under polynomially bounded universal quantification} if there exists a language $L''\in\P$ and a polynomial $q$ such that
-\begin{displaymath}
-  w\in L \iff \forall x_0 \Q_1x_1\Q_2x_2\cdots \Q_kx_k\colon \langle x_0, x_1, x_2, \ldots, x_k, w \rangle\in L''
-\end{displaymath}
-where each $\Q_i\in\{\forall, \exists\}$ and each $x_i\in\Sigma^{\leq q(|w|)}$.
+If $\mathcal{C}$ is a complexity class then the class $\forall\mathcal{C}$ is the set of languages $A$ such that there exists a language $B\in\mathcal{C}$ and a polynomial $p$ satisfying $x\in A$ if and only if $\forall w\in\Sigma^{\leq p(|x|)} \pair{x}{w}\in B$.
+$\forall\mathcal{C}$ is called the \defn{closure of $\mathcal{C}$ under polynomial bounded universal quantification}.
+If $\forall\mathcal{C}=\mathcal{C}$ then we say $\mathcal{C}$ is \defn{closed under polynomial bounded universal quantification}.
 
 \begin{theorem}\label{thm:generalcompleteness}
   Suppose $\mathcal{C}$ is a subset of $\AP$ which meets the following conditions:
