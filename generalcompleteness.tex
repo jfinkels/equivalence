@@ -33,8 +33,9 @@ If $\mathcal{C}$ is a complexity class (that is, a set of languages), then it is
 This implies that $\coC=\mathcal{C}$.
 
 If $\mathcal{C}$ is a complexity class then the class $\forall\mathcal{C}$ is the set of languages $A$ such that there exists a language $B\in\mathcal{C}$ and a polynomial $p$ satisfying $x\in A$ if and only if $\forall w\in\Sigma^{\leq p(|x|)} \pair{x}{w}\in B$.
-$\forall\mathcal{C}$ is called the \defn{closure of $\mathcal{C}$ under polynomial bounded universal quantification}.
-If $\forall\mathcal{C}=\mathcal{C}$ then we say $\mathcal{C}$ is \defn{closed under polynomial bounded universal quantification}.
+$\forall\mathcal{C}$ is called the \defn{closure of $\mathcal{C}$ under polynomially bounded universal quantification}.
+If $\forall\mathcal{C}=\mathcal{C}$ then we say $\mathcal{C}$ is \defn{closed under polynomially bounded universal quantification}.
+Recall that for each $k\in\mathbb{N}$, $\PKP$ is closed under polynomially bounded universal quantification.
 
 \begin{theorem}\label{thm:generalcompleteness}
   Suppose $\mathcal{C}$ is a subset of $\AP$ which meets the following conditions:
@@ -47,7 +48,7 @@ If $\forall\mathcal{C}=\mathcal{C}$ then we say $\mathcal{C}$ is \defn{closed un
 \end{theorem}
 \begin{proof}
   First we will define a helper algorithm which decides whether a given machine accepts an equivalence relation on strings up to a given length.
-  Define this algorithm $A$ as follows on input $\pair{M}{n}$, where $M$ is a polynomially clocked Turing machine of type $\mathcal{C}$ and $n\in\mathbb{N}$:
+  Define the algorithm $A$ as follows on input $\pair{M}{n}$, where $M$ is a polynomially clocked Turing machine of type $\mathcal{C}$ and $n\in\mathbb{N}$:
   \begin{enumerate}
   \item universally guess $a,b,$ and $c\in\Sigma^{\leq n}$
   \item simulate $M$ on $\pair{a}{a}$; if it rejects, reject
@@ -57,7 +58,7 @@ If $\forall\mathcal{C}=\mathcal{C}$ then we say $\mathcal{C}$ is \defn{closed un
   \end{enumerate}
   These simulations check that $L(M)$ satisfies reflexivity, symmetry, and transitivity on strings of length at most $n$.
   If $A$ accepts, then the three properties are satisfied, and if it rejects then one of the three properties is violated.
-  Since $M$ is a machine of type $\mathcal{C}$ and $\mathcal{C}$ is closed under both complement and polynomiall bounded universal quantification, the universal guesses $a,b,$ and $c$ (of length at most $n$) and checking whether the six simulations of $M$ accept or reject do not increase the complexity of this algorithm beyond the class $\mathcal{C}$.
+  Since $M$ is a machine of type $\mathcal{C}$ and $\mathcal{C}$ is closed under both complement and polynomially bounded universal quantification, the universal guesses $a,b,$ and $c$ (of length at most $n$) and checking whether the six simulations of $M$ accept or reject do not increase the complexity of this algorithm beyond the class $\mathcal{C}$.
   If $p$ is the polynomial which bounds the running time of $M$, then the running time of this algorithm is $6p(|\pair{1^n}{1^n}|)+c$, where $c$ is a constant which represents the time needed to account for the implementation of $A$ (the control of the simulations of $M$, performing logical conjunctions, etc.).
   Hence the running time of $A$ is polynomial in $n$.
 
@@ -80,7 +81,7 @@ If $\forall\mathcal{C}=\mathcal{C}$ then we say $\mathcal{C}$ is \defn{closed un
   By the argument above, $A$ is a $\mathcal{C}$ algorithm.
   Since $M$ is a polynomially clocked $\mathcal{C}$ machine by \autoref{itm:machine}, then the simulation of $M$ on $\pair{x}{y}$ in \autoref{itm:accepts} can be performed by a $\mathcal{C}$ algorithm.
   Assuming without loss of generality that $|x|\geq |y|$, if $A$ accepts $\pair{M}{|x|}$ within $t_x$ steps then we know that there is a polynomial time bound on the running time of $M$.
-  Finally, testing for equality is in $\mathcal{C}$ by hypothesis so deciding $R$ can be performed by a $\mathcal{C}$ algorithm.
+  Finally, testing for equality is in $\mathcal{C}$ by hypothesis so deciding $R$ overall can be performed by a $\mathcal{C}$ algorithm.
 
   Next we show that $R$ is an equivalence relation.
   Reflexivity follows from the reflexivity of the equality relation.
@@ -97,9 +98,9 @@ If $\forall\mathcal{C}=\mathcal{C}$ then we say $\mathcal{C}$ is \defn{closed un
   Now we need to show that $R$ is $\CEq$-hard.
   Let $S\in\CEq$.
   Suppose $M$ is the polynomially clocked $\mathcal{C}$ machine which decides $S$, and $p$ is the polynomial which bounds the running time of $M$.
-  Then the kernel reduction from $S$ to $R$ is $x\mapsto\triple{M}{x}{1^{6p(|\pair{x}{x}|)+c}}$, where $p$ and $c$ are the polynomial and constant described in the first paragraph of this proof.
+  Then the kernel reduction from $S$ to $R$ is $w\mapsto\triple{M}{w}{1^{6p(|\pair{w}{w}|)+c}}$, where $p$ and $c$ are the polynomial and constant described in the first paragraph of this proof.
   Call this reduction $f$.
-  The reduction is obviously computable in time polynomial in $|x|$.
+  The reduction is obviously computable in time polynomial in $|w|$.
   It remains to show that this reduction is correct.
 
   Suppose $\pair{x}{y}\in S$.
