@@ -37,6 +37,8 @@ The output is `equivalence.pdf`.
 Copyright
 ---------
 
+Copyright 2011 Jeffrey Finkelstein
+
 Except where otherwise noted, both the LaTeX markup and the content of the
 article and the poster are made available under the terms of the Creative
 Commons Attribution-ShareAlike 3.0 license,
