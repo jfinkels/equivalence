@@ -1,3 +1,22 @@
+On polynomial time kernel reductions
+====================================
+
+In this paper we examine polynomial time kernel reductions among equivalence
+relations.
+
+Downloading
+-----------
+
+This paper can be found at https://github.com/jfinkels/equivalence. The
+slideshow presentation corresponding to this paper can be found at
+https://github.com/jfinkels/equivalence-talk.
+
+To download the paper using [Git][1], run
+
+    git clone git://github.com/jfinkels/equivalence
+
+[1]: http://git-scm.com
+
 Compilation dependencies
 ------------------------
 
