@@ -24,29 +24,70 @@
 %%    the copyright holder.
 %%    * Nothing in this license impairs or restricts the author's moral rights.
 %%%%
-\section{Completeness in \texorpdfstring{\AP}{AP}}
+\section{Conditions for complete problems under polynomial time kernel reductions}
 
-In this section we use the techniques of \cite[Theorem~8.7]{bcffm} to present a general theorem which provides a complete problem for a number of interesting complexity classes.
-We first need some definitions.
-
-If $\mathcal{C}$ is a complexity class (that is, a set of languages), then it is \defn{closed under complement} if $L\in\mathcal{C}$ implies $\overline{L}\in\mathcal{C}$.
-This implies that $\coC=\mathcal{C}$.
-
+In this section we use the techniques of \cite[Theorem~8.7]{bcffm} to present a general theorem which provides equivalence relations which are hard for a number of interesting complexity classes under polynomial time kernel reductions.
+We need one additional definition here.
 If $\mathcal{C}$ is a complexity class then the class $\forall\mathcal{C}$ is the set of languages $A$ such that there exists a language $B\in\mathcal{C}$ and a polynomial $p$ satisfying $x\in A$ if and only if $\forall w\in\Sigma^{\leq p(|x|)} \pair{x}{w}\in B$.
 $\forall\mathcal{C}$ is called the \defn{closure of $\mathcal{C}$ under polynomially bounded universal quantification}.
-If $\forall\mathcal{C}=\mathcal{C}$ then we say $\mathcal{C}$ is \defn{closed under polynomially bounded universal quantification}.
-Recall that for each $k\in\mathbb{N}$, $\PKP$ is closed under polynomially bounded universal quantification.
 
 \begin{theorem}\label{thm:generalcompleteness}
-  Suppose $\mathcal{C}$ is a subset of $\AP$ which meets the following conditions:
-  \begin{enumerate}
-  \item $\mathcal{C}$ is closed under complement
-  \item $\mathcal{C}$ is closed under polynomially bounded universal quantification
-  \item the problem of deciding whether two strings are equal is in $\mathcal{C}$
-  \end{enumerate}
-  Then $\CEq$ has a complete problem under $\kr$ reductions.
+  Let $\mathcal{C}$ be a subset of $\PSPACE$ which contains the problem of deciding whether two strings are equal.
+  Then there exists an equivalence relation in $\CRAZYEq$ which is hard for $\CEq$ under $\kr$ reductions.
 \end{theorem}
+
+Before proving this theorem, we will provide some immediate corollaries of this general result.
+
+\begin{corollary}
+  If $\mathcal{C}$ is a subset of $\PSPACE$ and $\mathcal{C}=\CRAZY$, then $\CEq$ has a complete problem under $\kr$ reductions.
+\end{corollary}
+
+
+\begin{corollary}
+  Under polynomial time kernel reductions,
+  \begin{enumerate}
+  %\item $\EXPEq$ has a complete problem
+  \item $\PSPACEEq$ has a complete problem
+  \item $\PKPOPEq$ contains a problem which is hard for $\SKPEq$, for all $k\geq 0$
+  \item $\PKPOPEq$ contains a problem which is hard for $\PKPEq$, for all $k\geq 0$
+  %\item $\coNPEq$ contains a problem which is hard for $\PEq$
+  \end{enumerate}
+\end{corollary}
+\begin{proof}\mbox{}
+  \begin{enumerate}
+  %\item $\EXP$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in exponential time).
+  \item $\PSPACE$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in polynomial space).
+  \item If $\mathcal{C}=\SKP$, then the $\kr$-hard problem is in $\forall(\SKP\cup\mathsf{co}\SKP)\mathsf{Eq}=\forall(\SKP\cup\PKP)\mathsf{Eq}=\PKPOPEq$.
+  \item Same as the previous justification, but starting with $\mathcal{C}=\PKP$.\qedhere
+%  \item Same as the previous justification, but starting with $\mathcal{C}=\P$.
+  \end{enumerate}
+\end{proof}
+
+More specifically, this means that $\coNPEq$ has a problem which is $\kr$-hard for $\PEq$.
+This also implies part 1 of \cite[Theorem~8.7]{bcffm}, which is restated here.
+
+\begin{corollary}[\cite{bcffm}, Theorem~8.7, part 1]
+  If $\NP=\coNP$ then $\NPEq$ has a complete problem under polynomial time kernel reductions.
+\end{corollary}
 \begin{proof}
+  If $\NP=\coNP$, then the polynomial hierarchy collapses, and specifically $\mathsf{\Pi_2P}=\mathsf{\Pi_1P}=\coNP=\NP$.
+  Hence $\NPEq$ has a $\kr$-hard problem for $\NPEq$.
+  Such a problem is by definition $\NPEq$-complete.
+\end{proof}
+
+We now return to the proof of \autoref{thm:generalcompleteness} by first providing some motivating ideas.
+Recall the canonical complete problem for $\NP$ (and indeed for various other complexity classes):
+\begin{displaymath}
+  K = \{\triple{M}{x}{1^t}|M\plain{accepts} x \plain{within} t \plain{steps}\}
+\end{displaymath}
+The idea of this proof is to adapt this into an equivalence relation $R_K$ consisting of pairs of triples of the form $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}$, where $M$ accepts $\pair{x}{y}$, as in the reduction from an arbitrary $\NP$ language to $K$.
+The problem we encounter here is that $R_K$ is not necessarily an equivalence relation.
+Consider, for example, transitivity, which must be satisfied for all possible pairs of the form $\triple{M}{w}{1^{t_w}}$.
+For \emph{arbitrary machines} $M$, just because $M$ accepts $\pair{x}{y}$ and $\pair{y}{z}$ does not necessarily mean that $M$ accepts $\pair{x}{z}$.
+The solution is to encode into $R_K$ the requirement that the language which $M$ accepts, $L(M)$, is itself an equivalence relation.
+The three properties required of $R_K$ then follow from the properties of $L(M)$.
+
+\begin{proof}[Proof of \autoref{thm:generalcompleteness}]
   First we will define a helper algorithm which decides whether a given machine accepts an equivalence relation on strings up to a given length.
   Define the algorithm $A$ as follows on input $\pair{M}{n}$, where $M$ is a polynomially clocked Turing machine of type $\mathcal{C}$ and $n\in\mathbb{N}$:
   \begin{enumerate}
@@ -58,7 +99,8 @@ Recall that for each $k\in\mathbb{N}$, $\PKP$ is closed under polynomially bound
   \end{enumerate}
   These simulations check that $L(M)$ satisfies reflexivity, symmetry, and transitivity on strings of length at most $n$.
   If $A$ accepts, then the three properties are satisfied, and if it rejects then one of the three properties is violated.
-  Since $M$ is a machine of type $\mathcal{C}$ and $\mathcal{C}$ is closed under both complement and polynomially bounded universal quantification, the universal guesses $a,b,$ and $c$ (of length at most $n$) and checking whether the six simulations of $M$ accept or reject do not increase the complexity of this algorithm beyond the class $\mathcal{C}$.
+  Since $M$ is a machine of type $\mathcal{C}$, checking if $M$ accepts on some input and if $M$ rejects on some input is in $\mathcal{C}\cup\mathsf{co}\mathcal{C}$.
+  The universal guesses of $a,b,$ and $c$ (of length at most $n$) and checking whether the six simulations of $M$ accept or reject, then, place $L(A)$ in the class $\CRAZY$.
   If $p$ is the polynomial which bounds the running time of $M$, then the running time of this algorithm is $6p(|\pair{1^n}{1^n}|)+c$, where $c$ is a constant which represents the time needed to account for the implementation of $A$ (the control of the simulations of $M$, performing logical conjunctions, etc.).
   Hence the running time of $A$ is polynomial in $n$.
 
@@ -75,13 +117,13 @@ Recall that for each $k\in\mathbb{N}$, $\PKP$ is closed under polynomially bound
   \item\label{itm:emy} $A$ accepts $\pair{M}{|y|}$ within $t_y$ steps
   \item\label{itm:accepts} $M$ accepts $\pair{x}{y}$
   \end{enumerate}
-  We claim that $R$ is $\CEq$-complete.
+  We claim that $R$ is in $\CRAZYEq$ and $\CEq$-hard.
 
-  First we show that $R\in\mathcal{C}$.
-  By the argument above, $A$ is a $\mathcal{C}$ algorithm.
-  Since $M$ is a polynomially clocked $\mathcal{C}$ machine by \autoref{itm:machine}, then the simulation of $M$ on $\pair{x}{y}$ in \autoref{itm:accepts} can be performed by a $\mathcal{C}$ algorithm.
-  Assuming without loss of generality that $|x|\geq |y|$, if $A$ accepts $\pair{M}{|x|}$ within $t_x$ steps then we know that there is a polynomial time bound on the running time of $M$.
-  Finally, testing for equality is in $\mathcal{C}$ by hypothesis so deciding $R$ overall can be performed by a $\mathcal{C}$ algorithm.
+  First we show that $R\in\CRAZY$.
+  By the argument above, $A$ is a $\CRAZY$ algorithm.
+  %Since $M$ is a polynomially clocked $\mathcal{C}$ machine by \autoref{itm:machine}, then the simulation of $M$ on $\pair{x}{y}$ in \autoref{itm:accepts} can be performed by a $\mathcal{C}$ algorithm.
+  Assuming without loss of generality that $|x|\geq |y|$, if $A$ accepts $\pair{M}{|x|}$ within $t_x$ steps then we know that there is a polynomial time bound on the running time of $M$ on input $\pair{x}{y}$, so simulating it is certainly in $\CRAZY$.
+  Finally, testing for equality is in $\mathcal{C}$ by hypothesis so deciding $R$ overall can be performed by a $\CRAZY$ algorithm.
 
   Next we show that $R$ is an equivalence relation.
   Reflexivity follows from the reflexivity of the equality relation.
@@ -93,7 +135,7 @@ Recall that for each $k\in\mathbb{N}$, $\PKP$ is closed under polynomially bound
   Since transitivity is true on strings of length at most $\max(|x|, |y|, |z|)$ by the transitivity propositions checked by \autoref{itm:emx} and \autoref{itm:emy}, and since $M$ accepts both $\pair{x}{y}$ and $\pair{y}{z}$ by hypothesis, it must follow that $M$ accepts $\pair{x}{z}$.
   Again the conditions in \autoref{itm:machine}, \autoref{itm:emx}, and \autoref{itm:emy} are the same.
   We have shown that $R$ is reflexive, symmetric, and transitive, so it is an equivalence relation.
-  At this point, we have proven that $R\in\CEq$.
+  At this point, we have proven that $R\in\CRAZYEq$.
 
   Now we need to show that $R$ is $\CEq$-hard.
   Let $S\in\CEq$.
@@ -115,33 +157,24 @@ Recall that for each $k\in\mathbb{N}$, $\PKP$ is closed under polynomially bound
 
   If $\pair{x}{y}\notin S$ then $M$ does not accept $\pair{x}{y}$, since otherwise $\pair{x}{y}$ would be a member of $S$.
   Hence $\pair{x}{y}\notin R$.  
-  Therefore we have shown that $R$ is $\CEq$-hard and $R\in\CEq$, so $R$ is $\CEq$-complete.
+  Therefore we have shown that $R$ is $\CEq$-hard.
 \end{proof}
 
-\begin{corollary}\label{cor:completeproblem}
-  The following complexity classes have a complete problem under polynomial time kernel reductions:
-  \begin{enumerate}
-  \item \SKPEq, for all $k\geq 1$
-  \item \PSPACEEq
-  \end{enumerate}
-\end{corollary}
-
-\begin{remark}
-  That $\NPcoNPEq$ has a complete problem is remarkable because there is an oracle relative to which $\NPcoNP$ has a complete problem (and additionally $\P\neq\NPcoNP\neq\NP$) \cite{hi} and an oracle relative to which it does not have a complete problem \cite{sipser}.
-  This is perhaps evidence that some languages are inherently \emph{not} expressible by an equivalence relation.
-\end{remark}
-
 \begin{openproblem}
-  Is there a more general characterization of complexity classes which have a complete problem?
-  Can we adapt this idea to produce a complete problem for $\PEq$ (which is not closed under polynomially bounded universal quantification) or $\NPEq$ (which is closed under neither complement nor polynomially bounded universal quantification)?
+  Is there a more general characterization of complexity classes which have a $\kr$-hard problem?
 \end{openproblem}
 
 \begin{openproblem}
-  Can this theorem be used to construct complete problems for smaller complexity classes like $\NL$ under the appropriate time-bounded reduction?
-  Larger classes such as $\EXP$?
+  Under what conditions does a complexity class have a complete problem?
+  Can we adapt this idea to create a complete problem for $\PEq$ or $\NPEq$?
 \end{openproblem}
 
 \begin{openproblem}
-  To what other equivalence relations does this complete problem reduce?
-  Are there ``natural'' complete problems in complexity classes which satisfy the conditions in \autoref{thm:generalcompleteness}?
+  Can this theorem be used to construct $\kr$-hard problems for smaller complexity classes like $\NLEq$ under the appropriate time-bounded reduction?
+  Larger classes such as $\EXPEq$?
+\end{openproblem}
+
+\begin{openproblem}
+  To what other equivalence relations does our $\kr$-hard problem reduce?
+  Are there ``natural'' $\kr$-hard problems in complexity classes which satisfy the conditions in \autoref{thm:generalcompleteness}?
 \end{openproblem}
