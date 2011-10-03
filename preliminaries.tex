@@ -42,10 +42,6 @@ The complexity classes $\P$, $\NP$, $\FP$ (polynomial time computable functions)
 The set of words accepted by a Turing machine $M$ is denoted $L(M)$.
 The \defn{complement} of a complexity class $\mathcal{C}$ is the set of complements of languages in $\mathcal{C}$, and is denoted $\coC$.
 
-An \defn{alternating Turing machine} is a non-deterministic Turing machine whose branching states can be either existential or universal.
-An existential state is accepting if \emph{any} branches are accepting, and a universal state is accepting if \emph{all} branches are accepting.
-The complexity class $\AP$ is the set of all languages which can be decided by an alternating Turing machine operating in polynomial time with respect to the length of its input.
-
 We say a Turing machine $M$ is a \defn{polynomially clocked Turing machine} if the description of $M$ includes a positive integer $k$ such that $M$ halts within time $kn^k$ on all inputs of length $n$.
 
 If $L_1, L_2$ are languages, we say that \defn{$L_1$ polynomial time many-one reduces to $L_2$} if there exists a polynomial time computable function $f$ such that $w\in L_1$ if and only if $f(w)\in L_2$.
