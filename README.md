@@ -1,11 +1,9 @@
-On polynomial time kernel reductions
-====================================
+# On polynomial time kernel reductions #
 
 In this paper we examine polynomial time kernel reductions among equivalence
 relations.
 
-Downloading
------------
+## Downloading ##
 
 This paper can be found at https://github.com/jfinkels/equivalence. The
 slideshow presentation corresponding to this paper can be found at
@@ -17,35 +15,33 @@ To download the paper using [Git][1], run
 
 [1]: http://git-scm.com
 
-Compilation dependencies
-------------------------
+## Compilation dependencies ##
 
-Besides pdflatex, compile-time dependencies include the following LaTeX
+Besides `pdflatex`, compile-time dependencies include the following LaTeX
 packages:
 
-* aliascnt
-* amsthm
-* amsmath
-* amssymb
-* complexity
-* hyperref
-* xy
+* `aliascnt`
+* `amsthm`
+* `amsmath`
+* `amssymb`
+* `complexity`
+* `hyperref`
+* `xy`
 
 On Ubuntu 11.04, the necessary system packages which contain these LaTeX
 packages are:
 
-* texlive-base
-* texlive-latex-base
-* texlive-pictures
-* texlive-science
+* `texlive-base`
+* `texlive-latex-base`
+* `texlive-pictures`
+* `texlive-science`
 
 To install them, run
 
     sudo apt-get install texlive-base texlive-latex-base texlive-pictures \
       texlive-science
 
-Compiling
----------
+## Compiling ##
 
 To compile this article, run 
 
@@ -53,17 +49,15 @@ To compile this article, run
 
 The output is `equivalence.pdf`.
 
-Copyright
----------
+## Copyright ##
 
 Copyright 2011 Jeffrey Finkelstein
 
 Except where otherwise noted, both the LaTeX markup and the content of the
-article and the poster are made available under the terms of the Creative
-Commons Attribution-ShareAlike 3.0 license,
+article poster are made available under the terms of the Creative Commons
+Attribution-ShareAlike 3.0 license,
 http://creativecommons.org/licenses/by-sa/3.0/.
 
-Contact
--------
+## Contact ##
 
 Jeffrey Finkelstein <jeffrey.finkelstein@gmail.com>
