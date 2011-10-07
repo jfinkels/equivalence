@@ -41,12 +41,12 @@ Before proving this theorem, we will provide some immediate corollaries of this 
   If $\mathcal{C}$ is a subset of $\PSPACE$ and $\mathcal{C}=\CRAZY$, then $\CEq$ has a complete problem under $\kr$ reductions.
 \end{corollary}
 
-\begin{corollary}
+\begin{corollary}\label{cor:hardproblems}
   Under polynomial time kernel reductions,
   \begin{enumerate}
   %\item $\EXPEq$ has a complete problem
   \item $\PSPACEEq$ has a complete problem
-  \item $\PKPOPEq$ contains a problem which is hard for $\SKPEq$, for all $k\geq 0$
+  \item\label{itm:hardforsigma} $\PKPOPEq$ contains a problem which is hard for $\SKPEq$, for all $k\geq 0$
   \item $\PKPOPEq$ contains a problem which is hard for $\PKPEq$, for all $k\geq 0$
   %\item $\coNPEq$ contains a problem which is hard for $\PEq$
   \end{enumerate}
@@ -62,14 +62,14 @@ Before proving this theorem, we will provide some immediate corollaries of this 
 \end{proof}
 
 More specifically, this means that $\coNPEq$ has a problem which is $\kr$-hard for $\PEq$.
-This also implies part 1 of \cite[Theorem~8.7]{bcffm}, which is restated here.
+\autoref{cor:hardproblems} also implies part 1 of \cite[Theorem~8.7]{bcffm}, which is restated here.
 
 \begin{corollary}[\cite{bcffm}, Theorem~8.7, part 1]
   If $\NP=\coNP$ then $\NPEq$ has a complete problem under polynomial time kernel reductions.
 \end{corollary}
 \begin{proof}
   If $\NP=\coNP$, then the polynomial hierarchy collapses, and specifically $\mathsf{\Pi_2P}=\mathsf{\Pi_1P}=\coNP=\NP$.
-  Hence $\NPEq$ has a $\kr$-hard problem for $\NPEq$.
+  From \autoref{itm:hardforsigma} in \autoref{cor:hardproblems} we conclude that $\NPEq$ has a $\kr$-hard problem for $\NPEq$.
   Such a problem is by definition $\NPEq$-complete.
 \end{proof}
 
