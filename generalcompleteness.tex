@@ -98,7 +98,7 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   These simulations check that $L(M)$ satisfies reflexivity, symmetry, and transitivity on strings of length at most $n$.
   If $A$ accepts, then the three properties are satisfied, and if it rejects then one of the three properties is violated.
   Since $M$ is a machine of type $\mathcal{C}$, checking if $M$ accepts on some input and if $M$ rejects on some input is in $\mathcal{C}\cup\mathsf{co}\mathcal{C}$.
-  The universal guesses of $a,b,$ and $c$ (of length at most $n$) and checking whether the six simulations of $M$ accept or reject, then, place $L(A)$ in the class $\CRAZY$.
+  The universal guesses of $a,b,$ and $c$ (of length at most $n$) followed by checks of whether the six simulations of $M$ accept or reject place $L(A)$ in the class $\CRAZY$.
   If $p$ is the polynomial which bounds the running time of $M$, then the running time of this algorithm is $6p(|\pair{1^n}{1^n}|)+c$, where $c$ is a constant which represents the time needed to account for the implementation of $A$ (the control of the simulations of $M$, performing logical conjunctions, etc.).
   Hence the running time of $A$ is polynomial in $n$.
 
