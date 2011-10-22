@@ -177,23 +177,22 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   Are there ``natural'' $\kr$-hard problems in complexity classes which satisfy the conditions in \autoref{thm:generalcompleteness}?
 \end{openproblem}
 
-This last question leads us to briefly note that equivalence of true quantified boolean formulas is a \PSPACE-complete problem.
-Perhaps it is also a \PSPACEEq-complete problem.
-\begin{proposition}
-  Define $\QBFEq$ by
-  \begin{displaymath}
-    \QBFEq = \{\pair{\phi}{\psi} | \phi \plain{and}\, \psi \plain{are true, and}\, \phi \iff \psi\},
-  \end{displaymath}
-  where $\phi$ and $\psi$ are fully quantified boolean formulae.
-  Then $\QBFEq$ is \PSPACE-complete.
-\end{proposition}
-\begin{proof}
-  Suppose $\phi$ denotes $\overline{Q}\tau$, where $\overline{Q}$ represents the sequence of quantified variables and $\tau$ is the boolean formula over those variables.
-  Then the many-one reduction from $\QBF$ is $\phi\mapsto\pair{\phi}{\exists z\colon\overline{Q}(\tau\land z)}$, where $z$ is a variable not already in $\phi$.
-  This reduction can obviously be computed in time polynomial in the length of the input, $\phi$.
-  If $\phi$ is not satisfiable, then no assignment of $z$ makes $\overline{Q}(\tau\land z)$ satisfiable, because $\tau$ will always be false.
-  Hence $\exists z\colon\overline{Q}(\tau\land z)$ must be false.
-  If $\phi$ is satisfiable, then choosing $z$ to be true makes $\overline{Q}(\tau\land z)$ true.
-  There $\phi$ is satisfiable if and only if $\exists z\colon\overline{Q}(\tau\land z)$ is satisfiable.
-  Therefore $\QBF\mor\QBFEq$, so $\QBFEq$ is \PSPACE-complete.
-\end{proof}
+%% This last question leads us to briefly note that equivalence of true quantified boolean formulas is a \PSPACE-complete problem; perhaps it is also a \PSPACEEq-complete problem.
+%% \begin{proposition}
+%%   Define $\QBFEq$ by
+%%   \begin{displaymath}
+%%     \QBFEq = \{\pair{\phi}{\psi} | \phi \iff \psi\},
+%%   \end{displaymath}
+%%   where $\phi$ and $\psi$ are fully quantified boolean formulae.
+%%   Then $\QBFEq$ is \PSPACE-complete.
+%% \end{proposition}
+%% \begin{proof}
+%%   Suppose $\phi$ denotes $\overline{Q}\tau$, where $\overline{Q}$ represents the sequence of quantified variables and $\tau$ is the boolean formula over those variables.
+%%   Then the many-one reduction from $\QBF$ is $\phi\mapsto\pair{\phi}{\exists z\colon\overline{Q}(\tau\land z)}$, where $z$ is a variable not already in $\phi$.
+%%   This reduction can obviously be computed in time polynomial in the length of the input, $\phi$.
+%%   If $\phi$ is not satisfiable, then no assignment of $z$ makes $\overline{Q}(\tau\land z)$ satisfiable, because $\tau$ will always be false.
+%%   Hence $\exists z\colon\overline{Q}(\tau\land z)$ must be false.
+%%   If $\phi$ is satisfiable, then choosing $z$ to be true makes $\overline{Q}(\tau\land z)$ true.
+%%   Thus $\phi$ is satisfiable if and only if $\exists z\colon\overline{Q}(\tau\land z)$ is satisfiable, so $\QBF\mor\QBFEq$.
+%%   Since $\QBFEq$ is clearly decidable in $\PSPACE$, we conclude that $\QBFEq$ is \PSPACE-complete.
+%% \end{proof}
