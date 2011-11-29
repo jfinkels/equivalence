@@ -54,7 +54,7 @@ The output is `equivalence.pdf`.
 Copyright 2011 Jeffrey Finkelstein
 
 Except where otherwise noted, both the LaTeX markup and the content of the
-article poster are made available under the terms of the Creative Commons
+article are made available under the terms of the Creative Commons
 Attribution-ShareAlike 3.0 license,
 http://creativecommons.org/licenses/by-sa/3.0/.
 
