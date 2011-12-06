@@ -7,3 +7,5 @@ TODO
   are finite, construct another language (polytime kernel reducible to it or
   from it) in which all equivalence classes are finite
 * examine NP disjoint pairs: http://www.cse.buffalo.edu/~selman/NPpairs.pdf
+* and canonical proof systems:
+  http://www.springerlink.com/content/e66u78n16w679417/
