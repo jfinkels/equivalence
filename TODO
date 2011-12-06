@@ -6,3 +6,4 @@ TODO
 * given an arbitrary NPEq complete language in which some equivalence classes
   are finite, construct another language (polytime kernel reducible to it or
   from it) in which all equivalence classes are finite
+* examine NP disjoint pairs: http://www.cse.buffalo.edu/~selman/NPpairs.pdf
