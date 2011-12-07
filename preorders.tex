@@ -1,0 +1,61 @@
+%%%%
+%% preorders.tex
+%%
+%% Copyright 2011 Jeffrey Finkelstein
+%%
+%% Except where otherwise noted, this work is made available under the terms of
+%% the Creative Commons Attribution-ShareAlike 3.0 license,
+%% http://creativecommons.org/licenses/by-sa/3.0/.
+%%
+%% You are free:
+%%    * to Share — to copy, distribute and transmit the work
+%%    * to Remix — to adapt the work
+%% Under the following conditions:
+%%    * Attribution — You must attribute the work in the manner specified by
+%%    the author or licensor (but not in any way that suggests that they
+%%    endorse you or your use of the work).
+%%    * Share Alike — If you alter, transform, or build upon this work, you may
+%%    distribute the resulting work only under the same, similar or a 
+%%    compatible license.
+%%    * For any reuse or distribution, you must make clear to others the 
+%%    license terms of this work. The best way to do this is with a link to the
+%%    web page http://creativecommons.org/licenses/by-sa/3.0/.
+%%    * Any of the above conditions can be waived if you get permission from
+%%    the copyright holder.
+%%    * Nothing in this license impairs or restricts the author's moral rights.
+%%%%
+\section{Preorder reductions}
+
+The definition of kernel reduction can be extended to other types of binary relations.
+In this section we examine computational problems concerning preorders.
+
+Given a universe $U$, $P\subseteq U\times U$ is a \defn{preorder on $U$} if $P$ is
+\begin{enumerate}
+\item reflexive: for all $x\in U$, $(x,x)\in P$
+\item transitive: for all $x,y,z\in U$, $(x,y)\in P$ and $(y,z)\in P$ implies $(x,z)\in P$
+\end{enumerate}
+Note that an equivalence relation is a preorder which is also symmetric.
+
+If $P$ and $Q$ are preorders on $\Sigma^*$, we say $P$ \defn{preorder reduces to} $Q$ if there exists a computable $f\colon\Sigma^*\to\Sigma^*$ such that $\forall x,y\in\Sigma^*$, $\pair{x}{y}\in P\iff \pair{f(x)}{f(y)}\in Q$.
+We denote this by $R\prnt S$.
+If $f$ is computable in polynomial time, then we say $P$ \defn{polynomial time preorder reduces to} $Q$ and use the notation $P\pr Q$.
+
+The subgraph isomorphism problem, defined below, is a preorder (and is also \NP-complete\cite{gj79}).
+\begin{langdef}{SGI}
+\begin{instance}
+  undirected graphs $G$ and $H$
+\end{instance}
+\begin{question}
+  Does $H$ contain a subgraph that is isomorphic to $G$?
+\end{question}
+\end{langdef}
+
+\begin{proposition}
+  \lang{SGI} is a preorder.
+\end{proposition}
+\begin{proof}
+  \lang{SGI} is reflexive since a graph $G$ always has a subgraph that is isomorphic to $G$ (namely itself).
+
+  For transitivity, suppose that $\pair{G}{H}\in\lang{SGI}$ and $\pair{H}{J}\in\lang{SGI}$, so $H$ has a subgraph, call it $H'$, that is isomorphic to $G$ by the function $\phi_1$ and $J$ has a subgraph, call it $J'$, that is isomorphic to $H$ by the function $\phi_2$.
+  Since $H$ has a subgraph that is isomorphic to $G$ and $H$ is isomorphic to $J'$, it follows that $J'$ has a subgraph that is isomorphic to $G$ (namely the subgraph induced by the image of $H'$ under the isomorphism $\phi_2$).
+\end{proof}
