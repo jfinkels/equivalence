@@ -3,3 +3,4 @@ TODO
 
 * intermediary.tex: change L(P_i) to A_i and L(Q_i) to B_i?
 * is it necessary to require polynomially clocked TM?
+* show that GI <_ker A (from thm:npeqcnpc), providing an upper bound in NPEq
