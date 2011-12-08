@@ -4,3 +4,11 @@ TODO
 * intermediary.tex: change L(P_i) to A_i and L(Q_i) to B_i?
 * is it necessary to require polynomially clocked TM?
 * show that GI <_ker A (from thm:npeqcnpc), providing an upper bound in NPEq
+* given an arbitrary NPEq complete language in which some equivalence classes
+  are finite, construct another language (polytime kernel reducible to it or
+  from it) in which all equivalence classes are finite
+* with the previous point: construct NP equivalence relation from arbitrary
+  graph property harder than isomorphism
+* examine NP disjoint pairs: http://www.cse.buffalo.edu/~selman/NPpairs.pdf
+* and canonical proof systems:
+  http://www.springerlink.com/content/e66u78n16w679417/
