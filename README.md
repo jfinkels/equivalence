@@ -13,6 +13,15 @@ To download the paper using [Git][1], run
 
     git clone git://github.com/jfinkels/equivalence
 
+After cloning the repository to your local machine, you can checkout a
+different branch (for example, branch `preorder`) by running
+
+    git checkout preorder
+
+You can switch back to the `master` branch by running
+
+    git checkout master
+
 [1]: http://git-scm.com
 
 ## Compilation dependencies ##
