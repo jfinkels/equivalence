@@ -220,25 +220,13 @@ We are now prepared to prove the main technical theorem which will allow us to c
 
 We would now like to show that the result of this theorem holds when $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2=\NPEqC$.
 
-\begin{proposition}
-  \mbox{} % to put the next item on a new line
-  \begin{enumerate}
-  \item $\PEq$ is computably enumerable.
-  \item $\NPEqC$ is computably enumerable.
-  \end{enumerate}
-\end{proposition}
-\begin{proof}
-  These statements are true since any subset of a computably enumerable set is computably enumerable, and these are both subsets of $\NP$.
-  Note that $\NPEqC$ may be empty.
-\end{proof}
-
 \begin{proposition}\label{prop:npeqc}
   If $\PEq\neq\NPEq$ and $\NPEqC$ is non-empty, then $\PEq\cap\NPEqC=\emptyset$.
 \end{proposition}
 \begin{proof}
   Assume $\PEq\cap\NPEqC\neq\emptyset$.
   Let $R$ be the \NPEq-complete equivalence relation which is also in \PEq.
-  Then all problems can be kernel reduced to $R$ in polynomial time, and $R$ can be decided in polynomial time.
+  Then all problems in $\NPEq$ can be kernel reduced to $R$ in polynomial time, and $R$ can be decided in polynomial time.
   Therefore, $\PEq=\NPEq$.
   This is a contradiction with the hypothesis.
   Therefore $\PEq\cap\NPEqC=\emptyset$.
@@ -251,6 +239,7 @@ We would now like to show that the result of this theorem holds when $\mathcal{C
   The hypothesis of this theorem is the same as in \autoref{prop:npeqc}, so $\PEq\cap\NPEqC=\emptyset$.
   Let $S$ be an \NPEq-complete problem.
   Choose $R_1=S$, $R_2=\emptyset$, $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2=\NPEqC$.
+  Note that since $\P$ and $\NPC$ are computably enumerable, so are $\PEq$ and $\NPEqC$.
   Then by \autoref{thm:diag}, there exists an equivalence relation $R$ which is in neither $\NPEqC$ nor $\PEq$, but which kernel reduces to $S\kj\emptyset$.
   Since $S\kj\emptyset$ trivially kernel reduces to $S$, and since polynomial time kernel reductions compose by \autoref{prop:compose}, $R\kr S$.
   Since $\NPEq$ is closed under polynomial time kernel reductions by \autoref{prop:closed_under_kr}, $R\in\NPEq$.
