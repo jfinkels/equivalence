@@ -160,7 +160,8 @@ We are now prepared to prove the main technical theorem which will allow us to c
   A similar procedure computes $z'_{i,n}$.
   The procedure which computes the maximum of a finite set of numbers and which adds one to that value always halts as well, so $r_1$ and $r_2$ are total computable functions.
 
-  Let $r\ge \max(r_1,r_2)$ be a non-decreasing time constructible function, which exists by \autoref{lem:nondec}.
+  Let $r\ge \max(r_1,r_2)$ be a non-decreasing time constructible function (the proof that such a function exists is left as an exercise to the reader).
+  % The proof can be found in Lemma 2.3 on p. 46 of [BDG95].
   Now for all $n$ and all $i\leq n$, each element of the pair $\pair{z_{i,n}}{x}$ has length between $n$ and $r_1(n)$, by construction.
   The same is true for $\pair{z'_{i,n}}{x'}$ between $n$ and $r_2(n)$.
   Notice that $\pair{z_{i,n}}{x}$ and $\pair{z'_{i,n}}{x'}$ are ``witnesses'' that $R_1\neq L(P_i)$ and $R_2\neq L(Q_i)$ respectively.
