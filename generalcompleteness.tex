@@ -56,7 +56,7 @@ Before proving this theorem, we will provide some immediate corollaries of this 
   \begin{enumerate}
   %\item $\EXP$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in exponential time).
   \item $\PSPACE$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in polynomial space).
-  \item If $\mathcal{C}=\SKP$, then the $\kr$-hard problem is in $\forall(\SKP\cup\mathsf{co}\SKP)\mathsf{Eq}=\forall(\SKP\cup\PKP)\mathsf{Eq}=\PKPOPEq$.
+  \item If $\mathcal{C}=\SKP$, then the $\kr$-hard problem is in $(\forall(\SKP\cup\mathsf{co}\SKP))\mathsf{Eq}=(\forall(\SKP\cup\PKP))\mathsf{Eq}=\PKPOPEq$.
   \item Same as the previous justification, but starting with $\mathcal{C}=\PKP$.\qedhere
 %  \item Same as the previous justification, but starting with $\mathcal{C}=\P$.
   \end{enumerate}
@@ -75,7 +75,7 @@ More specifically, this means that $\coNPEq$ has a problem which is $\kr$-hard f
 \end{proof}
 
 We now return to the proof of \autoref{thm:generalcompleteness} by first providing some motivating ideas.
-Recall the canonical complete problem for $\NP$ (and indeed for various other complexity classes):
+Recall the canonical complete problem (sometimes called the ``universal'' problem) for $\NP$ (and indeed for various other complexity classes):
 \begin{displaymath}
   K = \{\triple{M}{x}{1^t}|M\plain{accepts} x \plain{within} t \plain{steps}\}
 \end{displaymath}
@@ -85,7 +85,9 @@ Consider, for example, transitivity, which must be satisfied for all possible pa
 For \emph{arbitrary machines} $M$, just because $M$ accepts $\pair{x}{y}$ and $\pair{y}{z}$ does not necessarily mean that $M$ accepts $\pair{x}{z}$.
 The solution is to encode into $R_K$ the requirement that the language which $M$ accepts, $L(M)$, is itself an equivalence relation.
 The three properties required of $R_K$ then follow from the properties of $L(M)$.
-
+%
+%As a technical consideration for this proof, we point out languages in $\PSPACE$ may be decided by alternating Turing machines which run in polynomial time, so it is permissible to consider polynomially clocked Turing machines.
+%
 \begin{proof}[Proof of \autoref{thm:generalcompleteness}]
   First we will define a helper algorithm which decides whether a given machine accepts an equivalence relation on strings up to a given length.
   Define the algorithm $A$ as follows on input $\pair{M}{n}$, where $M$ is a polynomially clocked Turing machine of type $\mathcal{C}$ and $n\in\mathbb{N}$:
@@ -177,6 +179,18 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   To what other equivalence relations does our $\kr$-hard problem reduce?
   Are there ``natural'' $\kr$-hard problems in complexity classes which satisfy the conditions in \autoref{thm:generalcompleteness}?
 \end{openproblem}
+
+As an additional corollary, we show that the equivalence relation $R_K$ is necessarily hard given a known hard equivalence relation under $\kr$ reductions.
+
+\begin{corollary}
+  Let $\mathcal{C}_1$ be a complexity class and $\mathcal{C}_2$ be a subset of $\PSPACE$ which contains the problem of deciding whether two strings are equal.
+  If there exists an equivalence relation $S$ in $\CTEq$ which is hard for $\COEq$ under $\kr$ reductions, then there is an equivalence relation in $\CRAZIEREq$ which is hard for $\COEq$ under $\kr$ reductions.
+\end{corollary}
+\begin{proof}
+  $S\kr R_K$ by the reduction described in the proof of \autoref{thm:generalcompleteness}.
+  A similar analysis shows that $R_K\in\CRAZIEREq$.
+  Since $S$ is hard for $\COEq$ and polynomial time kernel reductions compose by \autoref{prop:compose}, $R_K$ is also hard for $\COEq$.
+\end{proof}
 
 %% This last question leads us to briefly note that equivalence of true quantified boolean formulas is a \PSPACE-complete problem; perhaps it is also a \PSPACEEq-complete problem.
 %% \begin{proposition}
