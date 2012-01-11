@@ -25,6 +25,7 @@
 %%    * Nothing in this license impairs or restricts the author's moral rights.
 %%%%
 \section{Completeness in \texorpdfstring{\NPEq}{NPEq} and \texorpdfstring{\NP}{NP}}
+\label{sec:npeqcompleteness}
 
 In this section we examine the relationship between \NP-complete problems and \NPEq-complete problems.
 Below, we will denote the set of \NP-complete languages by \NPC.
@@ -143,7 +144,7 @@ In the following theorem, if an equivalence relation $B$ is ``complete under $\k
   Next, we will consider the equivalence classes in $B$.
   There are an infinite number of equivalence classes in $B$, as well (because there are an infinite number of graphs, and an infinite number of natural numbers).
   However, in $B$ each equivalence class contains only a finite number of elements.
-  If $G$, then $[\pair{G}{k}]_B$ includes all pairs $\pair{H}{k}$, where $G$ is isomorphic to $H$, and all pairs $\pair{J}{k}$, where $G$ and $J$ have the same number of vertices and both have a clique of size $k$.
+  If $G$ is a graph, then $[\pair{G}{k}]_B$ includes all pairs $\pair{H}{k}$, where $G$ is isomorphic to $H$, and all pairs $\pair{J}{k}$, where $G$ and $J$ have the same number of vertices and both have a clique of size $k$.
   Since there are only a finite number of graphs on $|V(G)|$ vertices, and any graph isomorphic to $G$ must have $|V(G)|$ vertices, the number of graphs isomorphic to $G$ is finite.
   Furthermore, the number of graphs with both $|V(G)|$ vertices and a clique of size $k$ is also finite.
   Therefore, the equivalence class $[\pair{G}{k}]_B$ is finite.
