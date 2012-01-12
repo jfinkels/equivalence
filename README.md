@@ -52,6 +52,16 @@ To install them, run
     sudo apt-get install texlive-base texlive-latex-base texlive-pictures \
       texlive-science
 
+If for some reason you wish to compile the document as a Postscript file
+instead of a PDF file, you must (on Ubuntu 11.10) install the following
+additional system packages:
+
+* `texlive-fonts-recommended`
+
+To install them, run
+
+    sudo apt-get install texlive-fonts-recommended
+
 ## Compiling ##
 
 To compile this article, run 
