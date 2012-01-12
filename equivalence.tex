@@ -1,7 +1,7 @@
 %%%%
 %% equivalence.tex
 %%
-%% Copyright 2010, 2011 Jeffrey Finkelstein
+%% Copyright 2010, 2011, 2012 Jeffrey Finkelstein
 %%
 %% Except where otherwise noted, this work is made available under the terms of
 %% the Creative Commons Attribution-ShareAlike 3.0 license,
@@ -24,22 +24,16 @@
 %%    the copyright holder.
 %%    * Nothing in this license impairs or restricts the author's moral rights.
 %%%%
-\documentclass{article}
+\documentclass[draft]{article}
 
 % package imports
 \usepackage{aliascnt} % for correct autoref labeling of non-theorems
-\usepackage[noend, noline, linesnumbered, boxed]{algorithm2e}
 \usepackage{amsthm} % for theorems, definitions, lemmas, and styles
-\usepackage{amsmath} % for \implies
-\usepackage{amssymb} % for \nleq
+\usepackage{amsmath} % for \implies and \text
+\usepackage{amssymb} % for \nleq and \mathbb
 \usepackage{complexity} % for typesetting complexity classes
-%\usepackage{fullpage} % for making the text take up the full page
-\usepackage[
-  pdftitle={On the computational complexity of equivalence relations under kernel reductions},
-  pdfauthor={Jeffrey Finkelstein}
-]{hyperref} % for pdf links when rendering \ref and \cite commands
-
-\dontprintsemicolon
+\usepackage[pdftitle={Polynomial time kernel reductions}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
+\usepackage[matrix,arrow]{xy} % for inclusion diagram
 
 % Define theorem, lemma, and definition environments and corresponding styles.
 % Lemmata, corollaries, and definitions are numbered with the same counter as
@@ -59,9 +53,19 @@
 \newtheorem{corollary}[corollary]{Corollary}
 \aliascntresetthe{corollary}
 
+\newaliascnt{openproblem}{theorem}
+\theoremstyle{definition} \newtheorem{openproblem}[openproblem]{Open problem}
+\aliascntresetthe{openproblem}
+
 \newaliascnt{definition}{theorem}
 \theoremstyle{definition} \newtheorem{definition}[definition]{Definition}
 \aliascntresetthe{definition}
+
+\newaliascnt{remark}{theorem}
+\theoremstyle{remark} \newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+
+\newtheorem{claim}{Claim}
 
 % for repeating theorems
 \makeatletter
@@ -80,507 +84,74 @@
 \newcommand{\corollaryname}{Corollary}
 \newcommand{\definitionname}{Definition}
 \newcommand{\propositionname}{Proposition}
-\newcommand{\algocflinename}{Algorithm}
+\newcommand{\remarkname}{Remark}
+\newcommand{\openproblemname}{Open problem}
+
+% create a proof sketch environment
+\newenvironment{sketch}{\begin{proof}[Proof sketch]}{\end{proof}}
 
 % custom shortcut commands
+\newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}} % formatting emails
 \newcommand{\plain}[1]{\,\text{#1}\,} % plain text inside math environments
 \newcommand{\sigmastar}{\{0, 1\}^{*}} % the set of all binary strings
 \newcommand{\kj}{\overset{ker}{\oplus}} % kernel join
+\newcommand{\nkr}{\nleq^{P}_{ker}} % kernel-reduces
 \newcommand{\kr}{\leq^{P}_{ker}} % kernel-reduces
-\newcommand{\nkr}{\nleq^{P}_{ker}} % does not kernel-reduce
+\newcommand{\pot}{\leq^{P}_{pot}} % potentially reduces
+\newcommand{\npot}{\nleq^{P}_{pot}} % does not potentially reduce
 \newcommand{\krnt}{\leq_{ker}} % kernel-reduces without time bound
 \newcommand{\nkrnt}{\nleq_{ker}} % does not kernel-reduce without time bound
-\newcommand{\kequiv}{\equiv^{P}_{ker}} % is equivalent under kernel reductions
-\newcommand{\kequivnt}{\equiv_{ker}} % is equivalent without time bound
 \newcommand{\kri}{\leq^{P}_{ker,1\text{--}1}} % 1-1 kernel-reduces
 \newcommand{\mor}{\leq^{P}_{m}} % many-one reduces
-\newcommand{\moequiv}{\equiv^{P}_m} % is equivalent under many-one reductions
+\newcommand{\moe}{\equiv^{P}_{m}} % many-one equivalent
 \newcommand{\symdiff}{\bigtriangleup} % set symmetric difference
-%\newcommand{\tequiv}{\equiv^{p}_T} % is equivalent under Turing reductions
 \newcommand{\defn}[1]{\emph{#1}} % emphasize words which are being defined
 \newcommand{\pair}[2]{\langle#1,#2\rangle} % pairing function
-\newcommand{\triple}[3]{\langle#1,#2,#3\rangle} % generalization of pairing fn.
+\newcommand{\triple}[3]{\langle#1,#2,#3\rangle} % tripling function
+\newcommand{\Q}{\textsf{Q}} % to represent an unknown quantifier
+\newcommand{\QBF}{\lang{QBF}} % the language QBF
+\newcommand{\QBFEq}{\lang{QBFEq}} % the language of equivalent QBFs
 
-\newcommand{\printintermediarytheorem}{If $\PEq\neq\NPEq$ and $\NPEqC$ is non-empty, then there exists an equivalence relation in $\NPEq$ which is neither in $\PEq$ nor $\NPEqC$.}
+% for defining new languages
+\newenvironment{langdef}[1]{\begin{definition}{\lang{#1}}}{\end{definition}}
+\newenvironment{instance}{\\Instance:}{}
+\newenvironment{question}{\\Question:}{}
+
+% for theorems which appear more than once
+\newcommand{\printintermediarytheorem}{If $\PEq\neq\NPEq$ and $\NPEqC$ is non-empty, then there exists an equivalence relation in $\NPEq$ which is in neither $\PEq$ nor $\NPEqC$.}
+\newcommand{\printcompletenesstheorem}{Let $\mathcal{C}$ be a subset of $\PSPACE$ which contains the problem of deciding whether two strings are equal.
+Then there exists an equivalence relation in $\CRAZYEq$ which is hard for $\CEq$ under $\kr$ reductions.}
 
 % create the creative commons license
-\newcommand{\license}{Copyright 2010, 2011 Jef{}frey Finkelstein.
+\newcommand{\license}{Copyright 2012 Jef{}frey~Finkelstein.
   This work is licensed under the Creative Commons Attribution-ShareAlike License.
-  To view a copy of this license, visit \mbox{\url{http://creativecommons.org/licenses/by-sa/3.0/}}}
+  To view a copy of this license, visit \mbox{\url{http://creativecommons.org/licenses/by-sa/3.0/}}.}
 
 % redefine footnote so it has no reference and no number
 \long\def\symbolfootnote#1{\begingroup%
 \def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup} 
 
 % define the author, title, and date
-\author{Jef{}frey Finkelstein} 
-\title{On the computational complexity of equivalence relations under kernel
-  reductions}
+\author{Jef{}frey Finkelstein\\ Computer Science Department, Boston University
+  \and Benjamin Hescot{}t\\ Computer Science Department, Tufts University}
+\title{Polynomial time kernel reductions}
 \date{\today} 
 
 \begin{document}
-
 \maketitle
+\input{abstract}
 \symbolfootnote{\license}
-
-\section{Preliminaries}
-
-If $\Sigma$ is an alphabet then $\Sigma^*$ is the set of all strings over the alphabet $\Sigma$.
-If $x$ and $y$ are elements of $\Sigma^*$, then we denote by $\pair{x}{y}$ the \defn{pairwise encoding} of $x$ and $y$, which is itself an element of $\Sigma^*$.
-As usual, a language over an alphabet $\Sigma$ is a subset of $\Sigma^*$.
-
-Given a universe $U$, $R\subseteq U\times U$ is an \defn{equivalence relation on $U$} if $R$ is
-\begin{enumerate}
-\item reflexive: for all $x\in U$, $(x,x)\in R$
-\item symmetric: for all $x,y\in U$, $(x,y)\in R$ implies $(y,x)\in R$
-\item transitive: for all $x,y,z\in U$, $(x,y)\in R$ and $(y,z)\in R$ implies $(x,z)\in R$
-\end{enumerate}
-An equivalence relation $R$ can be encoded as a language by taking the pairwise encoding of each pair in $R$.
-In this way we can study the computational complexity of classes of languages which represent equivalence relations.
-In this paper we will abuse notation and write $\pair{x}{y}\in R$, but what we really mean is $(x,y)\in R$ and $\pair{x}{y}\in L_R$, the language induced by $R$.
-
-The \defn{equivalence class} of $x$ with respect to an equivalence relation $R$ on $U$ is $\{y\in U|(x,y)\in R\}$. It is denoted $[x]_R$, or if the context is clear, simply $[x]$.
-Each element $x\in U$ is in exactly one equivalence class, so the equivalence classes of an equivalence relation on $U$ provide a partition of $U$.
-
-\defn{$\PEq$} is the class of equivalence relations for which membership can be decided by a Turing maching running in deterministic polynomial time.
-\defn{$\NPEq$} is the class of equivalence relations for which membership can be decided by a Turing maching running in non-deterministic polynomial time.
-In other words, $\PEq$ is the set of (languages induced by) equivalence relations which are in \P, and $\NPEq$ is the set of (languages induced by) equivalence relations which are in \NP.
-As usual, $\PEq\subseteq\NPEq$.
-
-We now require a natural notion of reduction among equivalence relations.
-If $R$ and $S$ are equivalence relations on $\Sigma^*$, we say $R$ \defn{kernel reduces to} $S$ if $\exists f\colon\Sigma^*\to\Sigma^*$ such that $\forall x,y\in\Sigma^*$, $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
-We denote this by $R\krnt S$.
-If $f$ is computable in polynomial time, then we say $R$ \defn{polynomial time kernel reduces to} $S$ and use the notation $R\kr S$.
-
-Notice the difference between a kernel reduction and a regular old many-one reduction: a kernel reduction maps $\pair{x}{y}\in R$ to $\pair{f(x)}{f(y)}\in S$, whereas a many-one reduction maps $\pair{x}{y}\in R$ to $f(\pair{x}{y})\in S$, for some polynomial time computable function $f$.
-Informally, a function which computes a many-one reduction has access to both $x$ and $y$ but a function which computes a kernel reduction has access to only one of $x$ and $y$ at a time.
-Note that since it is more restrictive, a kernel reduction induces a many-one reduction (namely the function $\pair{x}{y}\mapsto\pair{f(x)}{f(y)}$).
-
-As an analog to polynomial time many-one completeness in \NP, we define a similar notion of polynomial time completeness under kernel reductions in \NPEq.
-An equivalence relation $S$ is \defn{\NPEq-complete} if for all $R\in\NPEq$, $R\kr S$.
-Similarly, an equivalence relation $S$ is \defn{\PEq-complete} if for all $R\in\PEq$, $R\kr S$.
-
-\section{Basic facts about kernel reductions}
-\begin{proposition}\label{prop:compose}
-  If $R\kr S$ and $S\kr T$ then $R\kr T$. In other words, polynomial time kernel reductions compose.
-\end{proposition}
-\begin{proof}
-  Let $f$ and $g$ be the polynomial time kernel reductions from $R$ to $S$ and from $S$ to $T$, respectively.
-  Then $g\circ f$ computes a polynomial time kernel reduction from $R$ to $T$.
-  It is polynomial time computable because polynomial time computable functions compose, and $\pair{x}{y}\in R$ if and only if $\pair{f(x)}{f(y)}\in S$ if and only if $\pair{g(f(x))}{g(f(y))}\in T$.
-  Therefore $R\kr T$.
-\end{proof}
-
-\begin{theorem}\label{thm:numbers}
-  Let $R$ and $S$ be equivalence relations on $\sigmastar$.
-  Suppose $R$ has $n$ equivalence classes and $S$ has $m$ equivalence classes.
-  If $n>m$ then $R\nkrnt S$ (that is, $R$ does not kernel reduce to $S$, regardless of any time bound on the function computing the reduction).
-\end{theorem}
-\begin{proof}
-  Assume with the intention of producing a contradiction that $R\krnt S$.
-  Then there exists a computable function $f$ such that $\forall x,y$, $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
-
-  Since $R$ has $n$ non-empty equivalence classes which form a partition of $\sigmastar$, then $\exists r_1,\ldots,r_n\in\sigmastar$ such that $R=[r_1]_R\cup\cdots\cup[r_n]_R$.
-  Since each element of $R$ is in exactly one equivalence class, $\forall i,j\leq n$, $i=j\iff\pair{r_i}{r_j}\in R\iff\pair{f(r_i)}{f(r_j)}\in S$.
-  Therefore the image of each $r_i$ is in some equivalence class in $S$.
-  Also, $\forall i,j\leq n$, $i\neq j\iff \pair{r_i}{r_j}\notin R\iff \pair{f(r_i)}{f(r_j)}\notin S$.
-  Therefore, the image of each $r_i$ does not relate to the image of any other $r_j$, for $i\neq j$, and $i,j\leq n$.
-  Therefore each of the equivalence classes $[f(r_1)]_S,\ldots,[f(r_n)]_S$ is disjoint, so $S$ has at least $n$ equivalence classes.
-  But $n>m$.
-  This is a contradiction with the hypothesis that $S$ has $m$ equivalence classes.
-
-  Therefore $R\nkrnt S$.
-\end{proof}
-
-\begin{corollary}\label{cor:finite}
-  \mbox{}
-  \begin{enumerate}
-    \renewcommand{\labelenumi}{\roman{enumi}.}
-  \item If an equivalence relation has a finite number of equivalence classes, then it is not \PEq-complete.
-  \item If an equivalence relation has a finite number of equivalence classes, then it is not \NPEq-complete.
-  \end{enumerate}
-\end{corollary}
-\begin{proof}
-  Suppose $R$ is an equivalence relation.
-  Assume with the intention of producing a contradiction that $R$ is \PEq-complete.
-  $R_{eq}=\{\pair{x}{y}|x=y\}$ has an infinite number of equivalence classes (specifically, one for each binary string), and $R$ has a finite number of equivalence classes, by assumption.
-  By \autoref{thm:numbers}, $R\nkr R_{eq}$.
-  But since $R_{eq}\in\PEq$, then $R_{eq}\kr R$.
-  This is a contradiction.
-  Therefore $R$ is not \PEq-complete.
-
-  The proof is the same in \NPEq, because $R_{eq}\in\PEq\subseteq\NPEq$.
-\end{proof}
-
-The following proposition is presented without proof, because its proof is nearly the same as the proof of the corresponding statement for polynomial time many-one reductions in \NP.
-
-\begin{proposition}\label{prop:closed_under_kr}
-  $\NPEq$ is closed under polynomial time kernel reductions, that is if $S\in\NPEq$ and $R\kr S$ then $R\in\NPEq$.
-\end{proposition}
-
-\section{Polynomial time kernel reductions in \texorpdfstring{\PEq}{PEq}}
-
-In the next theorem, we denote a set of representatives of equivalence classes of an equivalence relation $R$ by \defn{$REP(R)$}.
-Here, a ``representative'' of an equivalence class is just any element of the equivalence class.
-
-\begin{lemma}\label{lem:repr_kr}
-  Let $R$ and $S$ be equivalence relations on $\sigmastar$, each with a countably infinite number of equivalence classes.
-  If $R\in\PEq$ and there exists a computable injective function $f\colon REP(R)\to REP(S)$, then $R\kr S$.
-\end{lemma}
-\begin{proof}
-  Since $R\in\PEq$, $\exists M_R$, a deterministic Turing machine running in polynomial time, such that $\pair{x}{y}\in R\iff M_R(\pair{x}{y})$ accepts.
-  Construct the transducer $g$ as follows on input $w\in\sigmastar$:\\
-  \begin{algorithm}[H]
-    \For{$r_i\in REP(R)$}{
-      \If{$M_R(\pair{w}{r_i})$ accepts}{
-        \Return{$f(r_i)$}
-      }
-    }
-  \end{algorithm}
-  Notice that each $w\in\sigmastar$ is in exactly one equivalence class in $R$, because the equivalence classes partition $\sigmastar$, so $M_R(\pair{w}{r_i})$ accepts exactly once during the loop, when $\pair{w}{r_i}\in R$.
-
-  We first claim that $g$ runs in polynomial time with respect to $|w|$.
-  The loop on line 1 enumerates the representatives of equivalence classes of $R$ until the representative of $[w]_R$ is found.
-  Although termination of this loop depends on the input $w$ (since we need to find the correct representative for $[w]$), it \emph{does not depend on the length} of $w$.
-  Therefore, the running time of this loop is a constant which depends on $w$.
-  Running the machine on line 2, however, does depend on the length of $w$, but $M_R$ runs in polynomial time by hypothesis.
-  Finally, computing the image of $r_i$ in $REP(S)$ under $f$ on line 3 again does not depend on the length of $w$ (in fact, it doesn't depend on $w$ at all).
-  Hence, with respect to the length of $w$, the outer loop runs in $O(1)$ time, the check on line 2 runs in polynomial time, and the computation on line 3 runs in $O(1)$ time.
-  Therefore the transducer runs in time polynomial in the length of the input.
-
-  Now we prove the correctness of the reduction $g$.
-  Suppose $\pair{x}{y}\in R$, so $\pair{x}{r_i}\in R$ and $\pair{y}{r_i}\in R$ for some $r_i\in REP(R)$.
-  Then $g(x)$ outputs $f(r_i)$ and $g(y)$ outputs $f(r_i)$.
-  Since $\pair{f(r_i)}{f(r_i)}\in S$, then $\pair{g(x)}{g(y)}\in S$.
-
-  Suppose $\pair{x}{y}\notin R$.
-  So $\exists r_i, r_j\in REP(R)$, with $r_i\neq r_j$, such that $\pair{x}{r_i}\in R$ and $\pair{y}{r_j}\in R$.
-  Then $g(x)$ outputs $f(r_i)$ and $g(y)$ outputs $f(r_j)$.
-  Since $f$ is injective, $r_i\neq r_j\implies f(r_i)\neq f(r_j)$.
-  Since $f(r_i)$ and $f(r_j)$ are distinct elements in $REP(S)$, they are representatives of two distinct equivalence classes.
-  Since every element of $S$ is in exactly one equivalence class, and since $[f(r_i)]\neq[f(r_j)]$, it follows that $\pair{f(r_i)}{f(r_j)}=\pair{g(x)}{g(y)}\notin S$.
-
-  Therefore $\pair{x}{y}\in R\iff \pair{g(x)}{g(y)}\in S$, so $R\kr S$.
-\end{proof}
-
-\begin{theorem}\label{thm:reps}
-  Let $R$ and $S$ be equivalence relations on $\sigmastar$, each with a countably infinite number of equivalence classes.
-  If $R\in\PEq$ then $R\kr S$.
-\end{theorem}
-\begin{proof}
-  We will prove the existence of a computable injective $f\colon REP(R)\to REP(S)$ and then invoke \autoref{lem:repr_kr}.
-
-  Since $REP(R)$ and $REP(S)$ are countably infinite, they are computably enumerable.
-  Simultaneously enumerate $r_1, r_2, \ldots$ and $s_1, s_2, \ldots$, elements of $REP(R)$ and $REP(S)$ respectively.
-  This can be done by interleaving the enumeration of $REP(R)$ with the enumeration of $REP(S)$.
-
-  Define $f$ by $f(r_i)=s_i$ for all $i\in\mathbb{N}$.
-  We now wish to show that $f$ is injective.
-  Suppose $r_i,r_j\in R$ and $r_i\neq r_j$.
-  Then $f(r_i)=s_i$ and $f(r_j)=s_j$. $r_i\neq r_j\implies i\neq j\implies s_i\neq s_j\implies f(s_i)\neq f(s_j)$.
-  Therefore $f$ is injective.
-
-  The function $f$ now satisfies the conditions in the hypothesis of \autoref{lem:repr_kr}, and since we assume $R\in\PEq$, the result follows.
-\end{proof}
-
-With \autoref{thm:reps} we have reduced the problem of computing a polynomial time kernel reduction to the problem of enumerating representatives of equivalence classes (when reducing from a $\PEq$ equivalence relation at least).
-
-\section{Polynomial time kernel reductions in \texorpdfstring{\NPEq}{NPEq}}
-
-\begin{lemma}\label{lem:image}
-  Let $R,S$ be equivalence relations on $\sigmastar$, and let $w\in\sigmastar$.
-  Suppose $R\kr S$, by some $f\in\FP$.
-  Then $f([w]_R)\subseteq [f(w)]_S$.
-  In other words, the image of an equivalence class of $R$ is a subset of an equivalence class of $S$.
-\end{lemma}
-\begin{proof}
-  Since $w\in [w]_R$, $f(w)\in f([w]_R)$.
-  Let $x\in f([w]_R)$.
-  Then $(x, f(w))\in S$, so $x\in [f(w)]_S$.
-  Therefore $f([w]_R)\subseteq [f(w)]_S$.
-\end{proof}
-
-In the following theorem, by ``$\kri$-complete'' we mean ``complete under injective polynomial time kernel reductions''.
-
-\begin{theorem}
-  There exists an \NP-complete language $A$ such that if $A$ is $\kr$-complete
-  in $\NPEq$, then $A$ is not $\kri$-complete in $\NPEq$.
-\end{theorem}
-\begin{proof}
-  Suppose $G_1=(V_1, E_1)$ and $G_2=(V_2, E_2)$ are two undirected graphs.
-  Let $A=\{\pair{\pair{G_1}{k_1}}{\pair{G_2}{k_2}}| k_1=k_2$ and $(G_1\cong G_2$ or $(G_1$ has a clique of size $k_1$ and $G_2$ has a clique of size $k_2$ and $|V_1|=|V_2|))\}$.
-  Then $A$ is $\mor$-complete in $\NP$ by a reduction from \lang{CLIQUE}.
-  $A$ is obviously in $\NP$---the witness is the either the isomorphism or the cliques.
-  
-  To describe the reduction, we first need to define an auxiliary function, $C(G, k)$.
-  Let $C$ be defined as follows on all undirected graphs $G=(V, E)$ and integers $k$.
-  If $|V| < k$, then $C(G, k)$ outputs the complete graph on $k$ vertices, $K_k$.
-  If $|V|\geq k$, then $C(G, k)$ outputs the complete graph on $k$ vertices with $|V|-k$ additional disconnected vertices (so that the total number of vertices in the output graph is $|V|$).
-
-  Now we can define the reduction $f$ from \lang{CLIQUE} to $A$ by $f(\pair{G}{k})=\pair{\pair{G}{k}}{\pair{C(G, k)}{k}}$.
-  To prove the correctness of $f$, first suppose $\pair{G}{k}\in$ \lang{CLIQUE}, so $G$ has a clique of size $k$, which implies $|V|\geq k$.
-  Hence, $G$ has a clique of size $k$, $C(G, k)$ has a clique of size $k$, and $|V|$ equals the number of vertices in $C(G, k)$ (by construction).
-  Therefore $\pair{\pair{G}{k}}{\pair{C(G, k)}{k}}\in A$.
-  Suppose $\pair{G}{k}\notin$ \lang{CLIQUE}, so $G$ does not have a clique of size $k$.
-  $C(G, k)$ has a clique of size $k$ by definition, so the only case left to check is whether $G$ is isomorphic to $C(G, k)$.
-  If they were isomorphic, then $G$ would have a clique of size $k$, but this is a contradiction with the hypothesis, so $\pair{\pair{G}{k}}{\pair{C(G, k)}{k}}\notin A$.
-  Therefore \lang{CLIQUE}$\mor A$, and hence $A$ is $\mor$-complete in \NP.
-
-  Now, we will consider the equivalence classes in the equivalence relation $R=\{\pair{x}{y}|x$ and $y$ have the same number of $1$s$\}$.
-  There are an infinite number of equivalence classes in $R$; specifically, they are $[\lambda]$, $[1]$, $[11]$, $[111]$, etc.
-  Each equivalence class is itself infinite as well: if $w\in\sigmastar$ then $[w]$ contains $w$, $0w$, $00w$, $000w$, etc.
-
-  Next, we will consider the equivalence classes in $A$.
-  There are an infinite number of equivalence classes in $A$, as well (because there are an infinite number of graphs, and an infinite number of natural numbers).
-  However, in $A$ each equivalence class contains only a finite number of elements.
-  If $G=(V,E)$, then $[\pair{G}{k}]$ includes all pairs $\pair{H}{k}$, where $G$ is isomorphic to $H$, and all pairs $\pair{J}{k}$, where $G$ and $J$ have the same number of vertices and both have a clique of size $k$.
-  Since there are only a finite number of graphs on $|V|$ vertices, and any graph isomorphic to $G$ must have $|V|$ vertices, the number of graphs isomorphic to $G$ is finite.
-  Furthermore, the number of graphs with both $|V|$ vertices and a clique of size $k$ is also finite.
-  Therefore, the equivalence class $[\pair{G}{k}]$ is finite.
-
-  Now suppose $A$ is $\kr$-complete in $\NPEq$, as specified in the hypothesis of this theorem.
-  Since $R\in\PEq\subseteq\NPEq$, then $R\kr A$, so $\exists g\in\FP$ such that $w\in\R\iff g(w)\in A$.
-
-  Let $w\in\sigmastar$.
-  Then $g(w)=\pair{G}{k}$ for some graph $G$ and some $k\in\mathbb{N}$.
-  By the above arguments, $[w]_R$ is infinite and $[g(w)]_A=[\pair{G}{k}]_A$ is finite.
-  By \autoref{lem:image}, $g([w]_R)\subseteq [g(w)]_A$.
-  Consider $g|_{[w]_R}$, that is, $g$ restricted to the domain $[w]_R$.
-  Then $g|_{[w]_R}$ is a mapping from an infinite set (specifically $[w]_R$) to a finite set (specifically $[g(w)]_A=[\pair{G}{k}]_A$).
-  By the pigeonhole principle, $g|_{[w]_R}$ is not injective.
-  Hence the unrestricted reduction $g$ is not injective, and therefore $A$ is not $\kri$-complete in \NPEq.
-\end{proof}
-
-\section{Existence of intermediary problems}
-
-We will denote by $\NPEqC$ the set of equivalence relations which are $\kr$-complete for \NPEq.
-
-The main result of this section is as follows.
-\begin{reptheorem}{thm:intermediary}
-  \printintermediarytheorem
-\end{reptheorem}
-To show this, we will follow a proof of Ladner's original theorem showing that that if $\P\neq\NP$ then there exist problems which are not in $\P$ and not \NP-complete.
-The proof we follow can be found in \cite{bdg95}.
-First we need to provide some technical definitions and machinery.
-
-\begin{definition}
-  A class of languages $\mathcal{C}$ is \defn{closed under finite variations} if and only if $A\in \mathcal{C}$ and $A\symdiff B$ (the symmetric difference of $A$ and $B$) is finite implies $B\in \mathcal{C}$ for all $B$.
-\end{definition}
-
-\begin{definition}
-  Given an alphabet $\Sigma$ with at least two different symbols, say $0$ and $1$, the \defn{kernel join} of two equivalence relations $R$ and $S$ over $\Sigma^*$ is $R\kj S=\{\pair{x0}{y0}|\pair{x}{y}\in R\}\cup\{\pair{x1}{y1}|\pair{x}{y}\in S\}$.
-\end{definition}
-
-\begin{theorem}
-  If $R$ and $S$ are equivalence relations on $\Sigma^*$, then $R\kj S$ is an equivalence relation.
-\end{theorem}
-\begin{proof}
-  Let $x$, $y$ and $z$ be non-empty strings in $\Sigma^*$.
-  
-  Since $x$ is non-empty, $x=x'0$ or $x=x'1$.
-  Since $R$ is reflexive, $\pair{x'}{x'}\in R$.
-  Hence $\pair{x}{x}\in R\kj S$.
-  Therefore $R\kj S$ is reflexive.
-  
-  Suppose $\pair{x}{y}\in R\kj S$.
-  Then either $x=x'0$, $y=y'0$ and $\pair{x'}{y'}\in R$ or $x=x'1$, $y=y'1$ and $\pair{x'}{y'}\in S$.
-  In either case, symmetry follows from the symmetry of $R$ or $S$.
-
-  Suppose $\pair{x}{y}$ and $\pair{y}{z}$ are both in $R\kj S$.
-  In the case that $x=x'0$, $y=y'0$ and $\pair{x'}{y'}\in R$, and that $z=z'0$ and $\pair{y'}{z'}\in R$, then by the transitivity of $R$, $\pair{x'}{z'}\in R$, so $\pair{x}{z}\in R\kj S$.
-  The argument is similar in the case that $x=x'1$, $y=y'1$ and $z=z'1$.
-  It is a contradiction for the other two cases to exist, since $y$ cannot be equal to both $y'0$ and $y'1$.
-
-  Since $R\kj S$ is reflexive, symmetric and transitive, $R\kj S$ is an equivalence relation.
-\end{proof}
-
-\begin{proposition}\label{prop:symdiff}
-  Symmetric difference of equivalence relations preserves symmetry.
-\end{proposition}
-\begin{proof}
-  Let $R$ and $S$ be equivalence relations.
-  Let $(x,y)\in(R\symdiff S)$.
-  In the case that $(x,y)\in R$ and $(x,y)\notin S$, then $(y,x)\in R$.
-  If $(y,x)$ were in $S$, then $(x,y)$ would also be in $S$, by symmetry, but this is a contradiction.
-  Hence $(y,x)\in R$ and $(y,x)\notin S$.
-  The argument for the other case is symmetric.
-  Therefore $(x,y)\in(R\symdiff S)\implies (y,x)\in(R\symdiff S)$.
-\end{proof}
-
-\begin{definition}
-  Let $r\colon\mathbb{N}\to\mathbb{N}$ be a computable function such that $r(m)>m$ for all $m$.
-  Define the set $G[r]$ as
-  \begin{displaymath}
-    G[r]=\{x\in\Sigma^*|r^n(0)\leq|x|<r^{n+1}(0) \plain{for some even} n\}
-  \end{displaymath}
-  where $r^n(m)$ denotes the $n$-fold application of $r$ to $m$:
-  \begin{displaymath}
-    \overbrace{r\circ r\circ r\circ\cdots\circ r}^{n \plain{times}}(m)
-  \end{displaymath}
-  $G[r]$ is called the \defn{gap language} generated by $r$.
-\end{definition}
-
-\begin{lemma}\label{lem:gap_p}
-  If $r$ is time constructible, then $G[r]\in\P$.
-\end{lemma}
-\begin{proof}
-\end{proof}
-
-We will denote the Cartesian product $G[r]\times G[r]$ by the slightly more succinct ${G[r]}^2$, and $\overline{G[r]}\times\overline{G[r]}$ by $\overline{G[r]}^2$.
-Elements of ${G[r]}^2$ are pairs of strings whose lengths are in the ``even gaps'' of $r$, while elements of $\overline{G[r]}^2$ are pairs of strings whose lengths are in the ``odd gaps'' of $r$.
-
-\begin{lemma}
-  ${G[r]}^2$ and $\overline{G[r]}^2$ are \defn{partial equivalence relations} (that is, they are symmetric and transitive).
-\end{lemma}
-\begin{proof}
-  We will prove the theorem for ${G[r]}^2$; a symmetric argument proves the theorem for $\overline{G[r]}^2$.
-
-  Let $x,y\in\Sigma^*$.
-  Suppose $\pair{x}{y}\in {G[r]}^2$, so the lengths of $x$ and $y$ are both in an even gap of $r$.
-  Then $\pair{y}{x}\in{G[r]}^2$, so ${G[r]}^2$ is symmetric.
-  Now let $z\in\Sigma^*$ and suppose also that $\pair{y}{z}\in {G[r]}^2$.
-  Then $y$ and $z$ are both in an even gap of $r$, so $x$, $y$ and $z$ are all in some even gap of $r$, and hence $\pair{x}{z}\in {G[r]}^2$.
-  Therefore ${G[r]}^2$ is transitive.
-\end{proof}
-
-We are now prepared to prove the main technical theorem which will allow us to construct an equivalence relation which is ``between'' two complexity classes.
-
-\begin{theorem}\label{thm:diag}
-  Let $R_1$ and $R_2$ be decidable equivalence relations, and let $\mathcal{C}_1$ and $\mathcal{C}_2$ be classes of decidable equivalence relations such that:
-  \begin{enumerate}
-  \item $R_1\notin\mathcal{C}_1$
-  \item $R_2\notin\mathcal{C}_2$
-  \item $\mathcal{C}_1$ and $\mathcal{C}_2$ are computably enumerable
-  \item $\mathcal{C}_1$ and $\mathcal{C}_2$ are closed under finite variations
-  \end{enumerate}
-  Then there exists a decidable equivalence relation $R$ such that:
-  \begin{enumerate}
-  \item $R\notin \mathcal{C}_1$
-  \item $R\notin \mathcal{C}_2$
-  \item $R\kr R_1\kj R_2$
-  \end{enumerate}
-\end{theorem}
-\begin{proof} %% TODO use \pair command for pairs
-  Let $P_1, P_2, \ldots$ and $Q_1, Q_2, \ldots$ be enumerations of Turing machines deciding the languages in $\mathcal{C}_1$ and $\mathcal{C}_2$ respectively.
-  Define the functions
-  \begin{eqnarray*}
-    r_1(n)=\underset{i\leq n}{max}\{|z_{i,n}|\}+1 & \text{and} &
-    r_2(n)=\underset{i\leq n}{max}\{|z'_{i,n}|\}+1
-  \end{eqnarray*}
-  where $z_{i,n}$ is the smallest word in $\Sigma^*$ such that there exists an $x\in\Sigma^*$, with $n<|x|\leq|z_{i,n}|$, such that $(z_{i,n}, x)\in(L(P_i)\symdiff R_1)$, and $z'_{i,n}$ is the smallest word in $\Sigma^*$ such that there exists an $x'\in\Sigma^*$, with $n<|x'|\leq|z'_{i,n}|$, such that $(z'_{i,n}, x')\in(L(Q_i)\symdiff R_2)$.
-  Note that it also suffices to find an $x$ and $x'$ such that $(x, z_{i,n})\in(L(P_i)\symdiff R_1)$ and $(x', z'_{i,n})\in(L(Q_i)\symdiff R_2)$, since symmetric difference on equivalence relations preserves symmetry by \autoref{prop:symdiff}.
-
-  We claim that $z_{i,n}$ and $z'_{i,n}$ always exist.
-  Assume that no such $z_{i,n}$ exists, so there are no words such that there exists an $x\in\Sigma^*$, with $n<|x|\leq|z_{i,n}|$, such that $(z_{i,n}, x)\in(L(P_i)\symdiff R_1)$.
-  Therefore, there are no pairs in $(L(P_i)\symdiff R_1)$ with both elements of length greater than $n$.
-  Then there are a finite number of pairs in $L(P_i)\symdiff R_1$, so $R_1$ is a finite variation of $L(P_i)$.
-  Since $\mathcal{C}_1$ is closed under finite variations, $R_1\in\mathcal{C}_1$.
-  This is a contradiction with the hypothesis that $R_1\notin\mathcal{C}_1$.
-  Therefore such a $z_{i,n}$ always exists.
-  The argument that $z'_{i,n}$ always exists is similar.
-
-  Since $L(P_i)$ and $L(Q_i)$ are decidable for all $i$, and since $R_1$ and $R_2$ are decidable, so are $L(P_i)\symdiff R_1$ and $L(Q_i)\symdiff R_2$.
-  For each $n$, there is a procedure which always halts and which computes $z_{i,n}$ (using a sort of linear search).
-  A similar procedure computes $z'_{i,n}$.
-  The procedure which computes the maximum of a finite set of numbers and which adds one to that value always halts as well, so $r_1$ and $r_2$ are total computable functions.
-
-  Let $r\ge max(r_1,r_2)$ be a non-decreasing time constructible function, which exists by \autoref{nondec}.
-  Now for all $n$ and all $i\leq n$, each element of the pairs $(z_{i,n},x)$ have length between $n$ and $r_1(n)$, by construction.
-  The same is true for $(z'_{i,n}, x')$ between $n$ and $r_2(n)$.
-  Notice that $(z_{i,n}, x)$ and $(z'_{i,n}, x')$ are ``witnesses'' that $R_1\neq L(P_i)$ and $R_2\neq L(Q_i)$ respectively.
-  Hence for all $n$, there are some witnesses between $n$ and $r(n)$ that for all $i\leq n$, $R_1\neq L(P_i)$ and $R_2\neq L(Q_i)$.
-
-  Define $R=({G[r]}^2\cap R_1)\cup(\overline{G[r]}^2\cap R_2)$, so $R$ is equal to pairs of $R_1$ in the ``even gaps'' of r and $R$ is equal to pairs of $R_2$ in the ``odd gaps'' of $r$.
-  It remains to show that $R$ is an equivalence relation which satisfies the properties stated in the theorem.
-
-  First we show that $R$ is indeed an equivalence relation.
-  Symmetry and transitivity follow from the symmetry and transitivity of $R_1$, $R_2$, ${G[r]}^2$ and ${G[r]}^2$.
-  To show reflexivity, suppose $x\in G[r]$.
-  Hence $\pair{x}{x}\in {G[r]}^2$.
-  Since $R_1$ is an equivalence relation, $\pair{x}{x}\in R_1$.
-  Therefore $\pair{x}{x}\in({G[r]}^2\cap R_1)$, so $\pair{x}{x}\in R$.
-  The argument for the case that $x\in\overline{G[r]}$ is similar.
-  Therefore $R$ is reflexive, symmetric and transitive.
-
-  Next we show that $R\notin\mathcal{C}_1$.
-  The argument which proves $R\notin\mathcal{C}_2$ is symmetric.
-  Assume $R\in\mathcal{C}_1$ in order to produce a contradiction.
-  Then there exists an $i$ such that $R=L(P_i)$.
-  Let $m$ be an even integer such that $r^m(0)\geq i$.
-  By construction, there exists a pair $\pair{x}{z}$ such that $r^m(0)\leq|x|\leq|z|<r^{m+1}(0)$ and $\pair{x}{z}\in(L(P_i)\symdiff R_1)$.
-  Since $m$ is even, $\pair{x}{z}\in {G[r]}^2$.
-  Since $R$ is equal to $R_1$ where it coincides with ${G[r]}^2$, then $\pair{x}{z}\in(L(P_i)\symdiff R)$.
-  This is a contradiction with the hypothesis that $R=L(P_i)$.
-  Therefore $R\notin\mathcal{C}_1$.
-
-  Finally, we show that $R\kr R_1\kj R_2$.
-  Since $G[r]\in\P$ by \autoref{lem:gap_p}, the function defined by
-  \begin{displaymath}
-    f(x)=
-    \begin{cases}
-      x0 & \text{if}\, x\in G[r]\\
-      x1 & \text{if}\, x\notin G[r]\\
-    \end{cases}
-  \end{displaymath}
-  is a polynomial time computable function.
-  
-  To show that $f$ computes the reduction from $R$ to $R_1\kj R_2$ correctly, suppose first that $\pair{x}{y}\in R$, so $\pair{x}{y}$ is in either $({G[r]}^2\cap R_1)$ or $\overline{G[r]}^2\cap R_2)$.
-  In the former case, both $x$ and $y$ are in $G[r]$, so $f(x)=x0$ and $f(y)=y0$, and both $x$ and $y$ are in $R_1$, so $\pair{x0}{y0}=\pair{f(x)}{f(y)}\in R_1$.
-  The argument for the latter case is symmetric.
-
-  For the converse, suppose $\pair{f(x)}{f(y)}\in R_1\kj R_2$.
-  Then $f(x)$ and $f(y)$ either both end with $0$ or both end with $1$.
-  In the case that both end with $0$, then there exist some strings $w_x$ and $w_y$ such that $f(x)=w_x0$, $f(y)=w_y0$ and $\pair{w_x}{w_y}\in R_1$.
-  By construction of $f$, $w_x$ must equal the input $x$ and $w_y$ must equal the input $y$, so $\pair{x}{y}\in R_1$.
-  Also by construction, $f(x)=x0$ if and only if $x\in G[x]$ and $f(y)=y0$ if and only if $y\in G[x]$, so $\pair{x}{y}\in{G[r]}^2$.
-  Hence $\pair{x}{y}\in({G[r]}^2\cap R_1\subseteq R$.
-  The argument for the case that both $f(x)$ and $f(y)$ end with $1$ is symmetric, and shows that $\pair{x}{y}\in(\overline{G[r]}^2\cap R_2)\subseteq R$.
-  Therefore $\pair{x}{y}\in R$ if and only if $\pair{f(x)}{f(y)}\in R_1\kj R_2$, so $f$ correctly computes the reduction from $R$ to $R_1\kj R_2$.
-
-  Since we have shown that the equivalence relation $R$ satisfies the properties in the statement of the theorem, this concludes the proof.
-\end{proof}
-
-We would now like to show that the result of this theorem holds when $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2=\NPEqC$.
-
-\begin{proposition}
-  \mbox{} % to put the next item on a new line
-  \begin{enumerate}
-  \item $\PEq$ is computably enumerable.
-  \item $\NPEqC$ is computably enumerable.
-  \end{enumerate}
-\end{proposition}
-\begin{proof}
-  These statements are true since any subset of a computably enumerable set is computably enumerable, and these are both subsets of $\NP$.
-  Note that $\NPEqC$ may be empty.
-\end{proof}
-
-\begin{theorem}\label{thm:npeqc}
-  If $\PEq\neq\NPEq$ and $\NPEqC$ is non-empty, then $\PEq\cap\NPEqC=\emptyset$.
-\end{theorem}
-\begin{proof}
-  Assume $\PEq\cap\NPEqC\neq\emptyset$.
-  Let $R$ be the \NPEq-complete equivalence relation which is also in \PEq.
-  Then all problems can be kernel reduced to $R$ in polynomial time, and $R$ can be decided in polynomial time.
-  Therefore, $\PEq=\NPEq$.
-  This is a contradiction with the hypothesis.
-  Therefore $\PEq\cap\NPEqC=\emptyset$.
-\end{proof}
-
-\begin{theorem}\label{thm:intermediary}
-  \printintermediarytheorem
-\end{theorem}
-\begin{proof}
-  The hypothesis of this theorem is the same as in \autoref{thm:npeqc}, so $\PEq\cap\NPEqC=\emptyset$.
-  Let $S$ be an \NPEq-complete problem.
-  Choose $R_1=S$, $R_2=\emptyset$, $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2=\NPEqC$.
-  Then by \autoref{thm:diag}, there exists an equivalence relation $R$ which is in neither $\NPEqC$ nor $\PEq$, but which kernel reduces to $S\kj\emptyset$.
-  Since $S\kj\emptyset$ trivially kernel reduces to $S$, and since polynomial time kernel reductions compose by \autoref{prop:compose}, $R\kr S$.
-  Since $\NPEq$ is closed under polynomial time kernel reductions by \autoref{prop:closed_under_kr}, $R\in\NPEq$.
-\end{proof}
-
-\section{Open problems}
-The existence of a complete problem for $\NPEq$ under $\kr$ reductions continues to elude us.
-
-\bibliographystyle{amsalpha} \bibliography{references}
-
+\symbolfootnote{The \LaTeX\, source for this paper can be viewed on the web or downloaded at \mbox{\url{http://github.com/jfinkels/equivalence}}.}
+\input{introduction}
+\input{preliminaries}
+\input{definitions}
+\input{basicfacts}
+\input{generalcompleteness}
+\input{npeqcompleteness}
+\input{intermediary}
+\input{openproblems}
+\input{acknowledgments}
+\input{about}
+\bibliographystyle{plain}
+\bibliography{references}
 \end{document}

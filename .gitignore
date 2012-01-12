@@ -8,12 +8,14 @@
 *.bbl
 *.blg
 *.brf
-*.dvi
 *.nav
 *.out
-*.pdf
 *.snm
 *.toc
+
+*.dvi
+*.ps
+*.pdf
 
 logo.png
 references/

@@ -1,10 +1,35 @@
-In this paper we analyze the notion of kernel reductions among equivalence
-problems, as defined in Fortnow and Grochow. We first examine what kernel
-reductions look like, practically, among feasible equivalence problems. We next
-provide some evidence that the restriction of a polynomial time kernel
-reduction is not on the time complexity of the reduction, but on the number of
-equivalence classes in the equivalence relations being reduced. We then examine
-the graph isomorphism problem and problems equivalent to it under polynomial
-time many-one reductions, and find that of these problems the ones which are
-equivalence problems are in fact equivalent to the graph isomorphism problem
-under polynomial time kernel reductions.
+%%%%
+%% abstract.tex
+%%
+%% Copyright 2011, 2012 Jeffrey Finkelstein
+%%
+%% Except where otherwise noted, this work is made available under the terms of
+%% the Creative Commons Attribution-ShareAlike 3.0 license,
+%% http://creativecommons.org/licenses/by-sa/3.0/.
+%%
+%% You are free:
+%%    * to Share — to copy, distribute and transmit the work
+%%    * to Remix — to adapt the work
+%% Under the following conditions:
+%%    * Attribution — You must attribute the work in the manner specified by
+%%    the author or licensor (but not in any way that suggests that they
+%%    endorse you or your use of the work).
+%%    * Share Alike — If you alter, transform, or build upon this work, you may
+%%    distribute the resulting work only under the same, similar or a 
+%%    compatible license.
+%%    * For any reuse or distribution, you must make clear to others the 
+%%    license terms of this work. The best way to do this is with a link to the
+%%    web page http://creativecommons.org/licenses/by-sa/3.0/.
+%%    * Any of the above conditions can be waived if you get permission from
+%%    the copyright holder.
+%%    * Nothing in this license impairs or restricts the author's moral rights.
+%%%%
+\abstract{%
+  In this paper, we examine a recently introduced type of effective reduction which applies solely to problems of equivalence or isomorphism: the ``kernel reduction''.
+  Specifically, we examine reductions among languages in the complexity class consisting of all languages induced by equivalence relations for which membership can be decided by a non-deterministic polynomial time Turing machine.
+  This class is called $\NPEq$; the definitions for $\PEq$ and $\coNPEq$ are analagous.
+
+  We prove a general theorem which provides a problem which is hard under polynomial time kernel reductions for several classes of equivalence relations, including $\SKPEq$ and $\PSPACEEq$.
+  In fact, such a problem is complete for $\PSPACEEq$ under polynomial time kernel reductions.
+  We also show that if there is a complete problem under kernel reductions in \NPEq, then that problem is also complete under many-one reductions in \NP.
+  Finally we use a proof of Ladner's theorem to show that if $\PEq\neq\NPEq$ and there are problems in $\NPEq$ which are complete under polynomial time kernel reductions then there are \NPEq-intermediary problems---problems which are in \NPEq, but not complete under kernel reductions and not in $\PEq$.}
