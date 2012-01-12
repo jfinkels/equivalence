@@ -105,9 +105,9 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   If $p$ is the polynomial which bounds the running time of $M$, then the running time of this algorithm is $6p(|\pair{1^n}{1^n}|)+c$, where $c$ is a constant which represents the time needed to account for the implementation of $A$ (the control of the simulations of $M$, performing logical conjunctions, etc.).
   Hence the running time of $A$ is polynomial in $n$.
 
-  Now we can define the set $R$ by
+  Now we can define the set $R_K$ by
   \begin{align*}
-    R = {} & \{\pair{u}{v}|u=v\} \\
+    R_K = {} & \{\pair{u}{v}|u=v\} \\
     & \cup \{\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}} |
     \text{1 through 4 below are satisfied}\}
   \end{align*}
@@ -118,30 +118,30 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   \item\label{itm:emy} $A$ accepts $\pair{M}{|y|}$ within $t_y$ steps
   \item\label{itm:accepts} $M$ accepts $\pair{x}{y}$
   \end{enumerate}
-  We claim that $R$ is in $\CRAZYEq$ and $\CEq$-hard.
+  We claim that $R_K$ is in $\CRAZYEq$ and $\CEq$-hard.
 
-  First we show that $R\in\CRAZY$.
+  First we show that $R_K\in\CRAZY$.
   By the argument above, $A$ is a $\CRAZY$ algorithm.
   %Since $M$ is a polynomially clocked $\mathcal{C}$ machine by \autoref{itm:machine}, then the simulation of $M$ on $\pair{x}{y}$ in \autoref{itm:accepts} can be performed by a $\mathcal{C}$ algorithm.
   Assuming without loss of generality that $|x|\geq |y|$, if $A$ accepts $\pair{M}{|x|}$ within $t_x$ steps then we know that there is a polynomial time bound on the running time of $M$ on input $\pair{x}{y}$, so simulating it is certainly in $\CRAZY$.
-  Finally, testing for equality is in $\mathcal{C}$ by hypothesis so deciding $R$ overall can be performed by a $\CRAZY$ algorithm.
+  Finally, testing for equality is in $\mathcal{C}$ by hypothesis so deciding $R_K$ overall can be performed by a $\CRAZY$ algorithm.
 
-  Next we show that $R$ is an equivalence relation.
+  Next we show that $R_K$ is an equivalence relation.
   Reflexivity follows from the reflexivity of the equality relation.
-  For symmetry, suppose $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R$.
+  For symmetry, suppose $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R_K$.
   Since \autoref{itm:emx} and \autoref{itm:emy} are true by hypothesis, we know that symmetry on strings of length at most $\max(|x|, |y|)$ in $L(M)$ is satisfied, and that includes the strings $x$ and $y$.
   So since $M$ accepts $\pair{x}{y}$ it must follow that $M$ accepts $\pair{y}{x}$.
-  Furthermore, \autoref{itm:machine}, \autoref{itm:emx}, and \autoref{itm:emy} are the same up to symmetry of $x$ and $y$, so we have $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{x}{1^{t_x}}}\in R$.
-  For transitivity, suppose that both $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R$ and $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{z}{1^{t_z}}}\in R$.
+  Furthermore, \autoref{itm:machine}, \autoref{itm:emx}, and \autoref{itm:emy} are the same up to symmetry of $x$ and $y$, so we have $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{x}{1^{t_x}}}\in R_K$.
+  For transitivity, suppose that both $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R_K$ and $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{z}{1^{t_z}}}\in R_K$.
   Since transitivity is true on strings of length at most $\max(|x|, |y|, |z|)$ by the transitivity propositions checked by \autoref{itm:emx} and \autoref{itm:emy}, and since $M$ accepts both $\pair{x}{y}$ and $\pair{y}{z}$ by hypothesis, it must follow that $M$ accepts $\pair{x}{z}$.
   Again the conditions in \autoref{itm:machine}, \autoref{itm:emx}, and \autoref{itm:emy} are the same.
-  We have shown that $R$ is reflexive, symmetric, and transitive, so it is an equivalence relation.
-  At this point, we have proven that $R\in\CRAZYEq$.
+  We have shown that $R_K$ is reflexive, symmetric, and transitive, so it is an equivalence relation.
+  At this point, we have proven that $R_K\in\CRAZYEq$.
 
-  Now we need to show that $R$ is $\CEq$-hard.
+  Now we need to show that $R_K$ is $\CEq$-hard.
   Let $S\in\CEq$.
   Suppose $M$ is the polynomially clocked $\mathcal{C}$ machine which decides $S$, and $p$ is the polynomial which bounds the running time of $M$.
-  Then the kernel reduction from $S$ to $R$ is $w\mapsto\triple{M}{w}{1^{6p(|\pair{w}{w}|)+c}}$, where $p$ and $c$ are the polynomial and constant described in the first paragraph of this proof.
+  Then the kernel reduction from $S$ to $R_K$ is $w\mapsto\triple{M}{w}{1^{6p(|\pair{w}{w}|)+c}}$, where $p$ and $c$ are the polynomial and constant described in the first paragraph of this proof.
   Call this reduction $f$.
   The reduction is obviously computable in time polynomial in $|w|$.
   It remains to show that this reduction is correct.
@@ -154,11 +154,11 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   This is a contradiction, since $M$ decides $S$, an equivalence relation, by hypothesis.
   Therefore \autoref{itm:emx} must be satisfied.
   The same argument applies to \autoref{itm:emy}.
-  Hence $\pair{f(x)}{f(y)}\in R$.
+  Hence $\pair{f(x)}{f(y)}\in R_K$.
 
   If $\pair{x}{y}\notin S$ then $M$ does not accept $\pair{x}{y}$, since otherwise $\pair{x}{y}$ would be a member of $S$.
-  Hence $\pair{x}{y}\notin R$.  
-  Therefore we have shown that $R$ is $\CEq$-hard.
+  Hence $\pair{x}{y}\notin R_K$.
+  Therefore we have shown that $R_K$ is $\CEq$-hard.
 \end{proof}
 
 \begin{openproblem}
