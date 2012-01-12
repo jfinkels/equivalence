@@ -194,7 +194,7 @@ As an additional corollary, we show that the equivalence relation $R_K$ is neces
 
 Finally, the following theorem is inspired by Mahaney's theorem, which states that there are no sparse \NP-complete languages unless $\P=\NP$.
 Our result concerns not the sparseness of strings in a language, but the sparseness of equivalence classes in an equivalence relation.
-This complements the work on ``potential reducibility'' found in section 6 in \cite{bcffm}.
+This complements the work on ``potential reducibility'' found in section 6 of \cite{bcffm}.
 
 \begin{definition}
   Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
@@ -217,7 +217,9 @@ Intuitively, it states that an equivalence relation with many closely packed equ
   If $R$ is kernel dense and $S$ is kernel sparse, then $R\npot S$ and in particular $R\nkr S$.
 \end{proposition}
 \begin{proof}
-  Assume with the intention of producing a contradiction that $R\pot S$.
+  That $R\npot S$ implies $R\nkr S$ was already stated in the text following the definition of potential reducibility, so it suffices to show that $R\npot S$.
+
+  Assume that $R\pot S$ with the intention of producing a contradiction.
   Let $p$ be the polynomial such that the number of equivalence classes in $R$ containing strings of length at most $n$ is at most the number of equivalence classes in $S$ of length at most $p(n)$ (this is the definition of potential reducibility).
   Let $q$ be the polynomial such that for all $n$ the number of equivalence classes in $S$ containing a string of length at most $n$ is at most $q(n)$ (this is the definition of kernel sparse).
   For each natural number $n$, the number of equivalence classes in $S$ containing a string of length at most $n$ is at most $q(0) + q(1) + \cdots + q(n)$, which is itself bounded above by $nq(n)$ (since $q$ is non-decreasing).
