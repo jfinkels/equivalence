@@ -21,3 +21,10 @@ TODO
 * also: maybe if there is a NPEq complete problem, then NP=coNP?
 * Mahaney type theorem: if there are "equivalence"-sparse (i.e. in number of
    equivalence classes) NPEq-complete problems, then P = NP.
+* an equivalence relation can be considered as a graph consisting of the union
+   of disjoint cliques (the equivalence classes)---does this help us lower the
+   complexity of anything? (for example, deciding if a set is an eq. rel. is
+   equivalent to determinining if each connected component is a clique [but
+   there could be exponentially many connected components], or using the
+   complement of clique, independent set, to do something with the complement
+   of an equivalence relation)
