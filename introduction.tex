@@ -35,10 +35,17 @@ The same seems to go for polynomial time many-one reductions to and from other e
 This kind of reduction is more natural than the usual many-one reduction for problems of equivalence.
 It is therefore important to study the power of these reductions and how they can help further classify currently known and newly discovered complexity classes.
 
+We would briefly like to point out that \cite{bcffm} provides a thorough treatment of the kernel reduction (from the viewpoint of a logician), there called a ``strong isomorphism reduction'', and this work extends and clarifies several of the results from that paper (from the viewpoint of a complexity theorist).
+We have attempted to provide plentiful explicit references to specific theorems in that work where appropriate and we encourage the reader to examine the original theorems and proofs.
+
 In \autoref{sec:preliminaries} we provide the definitions necessary for the study of polynomial time kernel reductions and effectively computable equivalence problems.
 In \autoref{sec:definitions} we provide some possible definitions for $\NPEq$, the class of equivalence problems for which membership can be decided in nondeterministic polynomial time.
+
+In the next three sections we see a common thread among some of the results.
+The results show that the number of equivalence classes in an equivalence relation is important in determining if reductions to and from it are possible.
 In \autoref{sec:basicfacts} we examine some basic facts about polynomial time kernel reductions which are useful for developing an understanding about the power of these reductions with respect to polynomial time many-one reductions.
 In \autoref{sec:generalcompleteness} we provide general sufficient conditions under which a complexity class consisting of equivalence relations contains a problem which is hard under polynomial time kernel reductions.
 In \autoref{sec:npeqcompleteness} we explore the relationship between completeness in $\NP$ under polynomial time many-one reductions and completeness in $\NPEq$ under polynomial time kernel reductions.
+
 In \autoref{sec:intermediary} we adapt a proof by Sch\"{o}ning's ``uniform diagonalization theorem'' to the setting of equivalence relations and polynomial time kernel reductions in order to prove results about intermediary problems.
-In \autoref{sec:openproblems} we provide a few open problems, although some open problems are posed throughout this work.
+In \autoref{sec:openproblems} we provide a few open problems, although many open problems are posed throughout this work.

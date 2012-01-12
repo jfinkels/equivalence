@@ -48,10 +48,11 @@ Define $A(\Pi)$ by
   A(\Pi) = \{\pair{G}{H} | G\cong H \plain{or} (\Pi(G) \plain{and} \Pi(H))\}.
 \end{displaymath}
 By checking the three required properties of an equivalence relation, we find the following.
+(The proof of this proposition is straightforward and is left as an exercise for the reader.)
 \begin{proposition}
   For all graph properties $\Pi$, $A(\Pi)$ is an equivalence relation.
 \end{proposition}
-We use this to show that there are \NP-complete equivalence relations.
+We use this fact to show that there are \NP-complete equivalence relations.
 \begin{proposition}\label{prop:APi}
   If $\Pi$ is an \NP-complete property, then $A(\Pi)$ is an \NP-complete equivalence relation.
 \end{proposition}
@@ -127,22 +128,23 @@ These observations lead us to the following theorem.
 Note that in the following theorem, if an equivalence relation $B$ is ``complete under $\kri$ reductions in $\NPEq$'' we mean that every equivalence relation in $\NPEq$ reduces to $B$ by a polynomial time computable kernel reduction which is also injective (that is, ``one-to-one'').
 
 \begin{theorem}
-  Let $\Pi$ be a non-null, uniform, \NP-complete property.
+  % If \Pi is additionally an \NP-complete property, then A^=(\Pi) would be an NP-complete equivalence relation.
+  Let $\Pi$ be a non-null, uniform graph property.
   If $A^=(\Pi)$ is complete in $\NPEq$ under $\kr$ reductions, then it is not complete under $\kri$ reductions.
 \end{theorem}
 \begin{proof}
   For the sake of brevity, in this proof we will refer to $A^=(\Pi)$ by the shorter $A$.
 
   $R$ is obviously in $\PEq$, so it is in $\NPEq$.
-  Since $B$ is \NPEq-complete, $R\kr A$.
-  Thus there exists a polynomial time computable function $g$ such that $\pair{x}{y}\in\R$ if and only if $\pair{g(x)}{g(y)}\in A$.
+  Since $A$ is \NPEq-complete, $R\kr A$.
+  Thus there exists a polynomial time computable function $f$ such that $\pair{x}{y}\in\R$ if and only if $\pair{f(x)}{f(y)}\in A$.
 
   Let $w\in\sigmastar$.
-  Then $g(w)=G$ for some graph $G$.
-  By the above arguments, $[w]_R$ is infinite and $[g(w)]_A$ is finite.
-  By \autoref{lem:image}, $g([w]_R)\subseteq [g(w)]_A$.
-  Consider $g|_{[w]_R}$, that is, $g$ restricted to the domain $[w]_R$.
-  Then $g|_{[w]_R}$ is a mapping from the infinite set $[w]_R$ to the finite set $[g(w)]_A$.
-  By the pigeonhole principle, $g|_{[w]_R}$ is not injective.
-  Hence the unrestricted reduction $g$ is not injective, and therefore $A$ is not $\kri$-complete in \NPEq.
+  Then $f(w)=G$ for some graph $G$.
+  By the above arguments, $[w]_R$ is infinite and $[f(w)]_A$ is finite.
+  By \autoref{lem:image}, $f([w]_R)\subseteq [f(w)]_A$.
+  Consider $f|_{[w]_R}$, that is, $f$ restricted to the domain $[w]_R$.
+  Then $f|_{[w]_R}$ is a mapping from the infinite set $[w]_R$ to the finite set $[f(w)]_A$.
+  By the pigeonhole principle, $f|_{[w]_R}$ is not injective.
+  Hence the unrestricted reduction $f$ is not injective, and therefore $A$ is not $\kri$-complete in \NPEq.
 \end{proof}
