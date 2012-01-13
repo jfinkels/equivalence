@@ -1,7 +1,7 @@
 %%%%
 %% npeqcompleteness.tex
 %%
-%% Copyright 2011 Jeffrey Finkelstein
+%% Copyright 2011, 2012 Jeffrey Finkelstein
 %%
 %% Except where otherwise noted, this work is made available under the terms of
 %% the Creative Commons Attribution-ShareAlike 3.0 license,
@@ -40,7 +40,7 @@ Call $\Pi$ the \defn{null property} if it is false for all graphs.
 We say that $\Pi$ is a \defn{uniform property} if for all $n\in\mathbb{N}$ there exists a graph $G$ with $n$ vertices such that $\Pi(G)$ is true.
 Let $L_\Pi$ be the language on graphs $G$ defined by $\{G\,|\,\Pi(G)$ is true$\}$.
 Say that $\Pi$ is an \defn{\NP-complete property} if $L_\Pi$ is \NP-complete.
-We claim without proof that $\Pi$ is an \NP-complete property only if it is not a null property.
+It is easy to see that if $\Pi$ is either a uniform property or an \NP-complete property, then it is not a null property.
 
 We first show that there are problems in $\NPEq$ which are also \NP-complete (though they may not necessarily be \NPEq-complete).
 Define $A(\Pi)$ by
@@ -69,6 +69,7 @@ We use this fact to show that there are \NP-complete equivalence relations.
   We conclude that $L_\Pi\mor A(\Pi)$, and so it is an \NP-complete equivalence relation.
 \end{proof}
 
+We know that \NP-complete graph properties exist (Hamoltinicity, partitionability into triangles, etc.), so it follows that there exist equivalence relations which are \NP-complete.
 Using this fact we can show that completeness in $\NPEq$ under $\kr$ reductions implies completeness in $\NP$ under $\mor$ reductions.
 
 \begin{corollary}
@@ -81,7 +82,15 @@ Using this fact we can show that completeness in $\NPEq$ under $\kr$ reductions 
   Since $R$ is in $\NP$ by hypothesis, it is therefore \NP-complete.
 \end{proof}
 
-This corollary provides a clearer proof of \cite[Proposition~8.1]{bcffm}.
+This corollary provides not only a proof that $\PEq=\NPEq$ implies $\P=\NP$, but also a clearer proof of \cite[Proposition~8.1]{bcffm}.
+
+\begin{corollary}
+  If $\PEq=\NPEq$ then $\P=\NP$.
+\end{corollary}
+\begin{proof}
+  If $\PEq=\NPEq$, then some \NP-complete equivalence relation is in $\P$.
+  Since polynomial time many-one reductions compose, this implies a polynomial time algorithm for any problem in $\NP$, so $\P=\NP$.
+\end{proof}
 
 \begin{proposition}[\cite{bcffm}, Proposition~8.1]
   If $\GI$ is \NPEq-complete then the polynomial time hierarchy collapses to the second level ($\PH=\STP$).
@@ -100,11 +109,12 @@ We will for now consider the consequences of the assumption that there exists an
 
 Define $A^=(\Pi)$ by
 \begin{displaymath}
-  A^=(\Pi) = \{\pair{G}{H} | \pair{G}{H}\in A(\Pi) \plain{and} |V(G)|=|V(H)|)\}.
+  A^=(\Pi) = \{\pair{G}{H} | \pair{G}{H}\in A(\Pi) \plain{and} |V(G)|=|V(H)|)\}
 \end{displaymath}
+for all graph properties $\Pi$.
 
 \begin{proposition}\label{prop:APieq}
-  If $\Pi$ is a non-null, uniform, \NP-complete property, then $A^=(\Pi)$ is an \NP-complete equivalence relation.
+  If $\Pi$ is a uniform \NP-complete property, then $A^=(\Pi)$ is an \NP-complete equivalence relation.
 \end{proposition}
 \begin{proof}
   The proof is the same as the proof of \autoref{prop:APi}, but the reduction enforces that the graph $H$ is a graph with $|V(G)|$ vertices for which $\Pi(H)$ is true, which exists because $\Pi$ is a uniform property by hypothesis.
@@ -129,7 +139,7 @@ Note that in the following theorem, if an equivalence relation $B$ is ``complete
 
 \begin{theorem}
   % If \Pi is additionally an \NP-complete property, then A^=(\Pi) would be an NP-complete equivalence relation.
-  Let $\Pi$ be a non-null, uniform graph property.
+  Let $\Pi$ be a uniform graph property.
   If $A^=(\Pi)$ is complete in $\NPEq$ under $\kr$ reductions, then it is not complete under $\kri$ reductions.
 \end{theorem}
 \begin{proof}
@@ -141,7 +151,7 @@ Note that in the following theorem, if an equivalence relation $B$ is ``complete
 
   Let $w\in\sigmastar$.
   Then $f(w)=G$ for some graph $G$.
-  By the above arguments, $[w]_R$ is infinite and $[f(w)]_A$ is finite.
+  By the arguments in the text preceding this theorem, $[w]_R$ is infinite and $[f(w)]_A$ is finite.
   By \autoref{lem:image}, $f([w]_R)\subseteq [f(w)]_A$.
   Consider $f|_{[w]_R}$, that is, $f$ restricted to the domain $[w]_R$.
   Then $f|_{[w]_R}$ is a mapping from the infinite set $[w]_R$ to the finite set $[f(w)]_A$.
