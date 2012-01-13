@@ -15,9 +15,9 @@
 *.toc
 *.xml
 
-*.dvi
-*.ps
-*.pdf
+equivalence.dvi
+equivalence.ps
+equivalence.pdf
 
 logo.png
 references/
