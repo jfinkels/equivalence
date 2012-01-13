@@ -33,6 +33,7 @@ packages:
 * `textcomp`
 * `thmtools`
 * `thm-restate`
+* `oberdiek` (which is actually a collection of LaTeX packages)
 * `xy`
 
 To install these on Ubuntu 11.04 through 14.04, run
@@ -40,30 +41,30 @@ To install these on Ubuntu 11.04 through 14.04, run
     sudo apt-get install texlive-base texlive-latex-base texlive-pictures \
       texlive-science
 
-To compile the poster which corresponds to the article, compile-time
-dependencies include the following LaTeX packages:
+The [Theory of Computing][2] LaTeX package is required, but a version of this
+package is included in this package in the directory `toctex`. The `toctex`
+package was downloaded from the [Theory of Computing website][2] and the
+`tocbase.cls` file was modified as described in the next section.
 
-* `amsmath`
-* `amsthm`
-* `complexity`
-* `type1cm`
-* `tkz-graph`
-* `xy`
+If for some reason you wish to compile the document as a Postscript file (using
+the `pslatex` command) instead of a PDF file, you must (on Ubuntu 11.10)
+install the following additional system package:
 
-On Ubuntu 11.04 and 11.10, the necessary system packages which contain these
-LaTeX packages (other than `tkz-graph`, see below) are:
+[2]: http://theoryofcomputing.org
+[3]: http://ctan.org/pkg/oberdiek
 
-* `texlive-latex-base`
-* `texlive-latex-extra`
-* `texlive-science`
+## Modifications to the `tocbase.cls` file ##
 
-To install them, run
+The following modifications were made to the `tocbase.cls` file from the
+original downloaded from the Theory of Computing website.
 
-    sudo apt-get install texlive-latex-base texlive-latex-extra texlive-science
-
-`tkz-graph` must be downloaded manually and placed in the `poster/` directory
-(or somewhere else where LaTeX can find it). It can be downloaded from
-http://www.ctan.org/tex-archive/macros/latex/contrib/tkz/tkz-graph.
+* Added `\RequirePackage{aliascnt}`.
+* Used `aliascnt` to alias counters for propositions, definitions, etc. so that
+  the `\autoref` command correctly names references to these environments
+  (otherwise, the automatically generated names will all be "Theorem", since
+  all theorem-like environments use the per-section theorem counter).
+* Removed `\newcommand{\C}{{\mathbb C}}`, because the `\C` command is already
+  defined in the `complexity` package.
 
 ## Compiling ##
 
@@ -74,13 +75,6 @@ To compile this article, run
     pdflatex equivalence
 
 The output is `equivalence.pdf`.
-
-To compile the poster corresponding to the article, run
-
-    cd poster
-    ./compile-poster.sh
-
-The output is `poster/poster.pdf`
 
 ## Copyright ##
 

@@ -5,7 +5,7 @@
 %% This LaTeX markup document is made available under the terms of the Creative
 %% Commons Attribution-ShareAlike 4.0 International License,
 %% https://creativecommons.org/licenses/by-sa/4.0/.
-\documentclass{article}
+\documentclass{toc}
 
 %% This must come before hyperref.
 \usepackage{amsthm}
@@ -20,7 +20,7 @@
 \usepackage[utf8]{inputenc}
 %% This is strongly recommended by biblatex.
 \usepackage{csquotes}
-\usepackage[backend=biber]{biblatex}
+\usepackage[backend=biber, style=tocplain]{biblatex}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{complexity}
@@ -50,6 +50,17 @@
 \declaretheorem[numberlike=theorem, style=definition, name=Open problem]{openproblem}
 \declaretheorem[numberlike=theorem, style=definition]{example}
 \declaretheorem[numberlike=theorem, style=definition]{remark}
+
+% running title, in case the title is very long
+\runningtitle{Polynomial time kernel reductions}
+% plain text title, in case the title has LaTeX commands
+\tocpdftitle{Polynomial time kernel reductions}
+
+% author names
+\runningauthor{Jeffrey Finkelstein and Ben Hescott}
+\copyrightauthor{Jeffrey Finkelstein and Ben Hescott}
+% author names in plain text
+\tocpdfauthor{Jeffrey Finkelstein and Ben Hescott}
 
 % create a proof sketch environment
 \newenvironment{sketch}{\begin{proof}[Proof sketch]}{\end{proof}}
@@ -95,8 +106,16 @@
 
 \maketitle
 
-\input{abstract}
-
+\begin{frontmatter}
+  \title{Polynomial time kernel reductions}
+  %\date{\today}
+  \author[jeffrey]{Jeffrey Finkelstein}
+  \author[ben]{Ben Hescott}
+  \input{abstract}
+  \tocacm{F.1.3}
+  \tocams{03D15, 68Q15, 68Q17}
+  \tockeywords{equivalence relations, polynomial time reductions, kernel reductions, kernel completeness}
+\end{frontmatter}
 \symbolfootnote{%
   Copyright 2010, 2011, 2012, 2014 Jeffrey~Finkelstein \email{jeffreyf@bu.edu}.
 
@@ -117,4 +136,5 @@
 
 \printbibliography
 
+\input{aboutauthors}
 \end{document}
