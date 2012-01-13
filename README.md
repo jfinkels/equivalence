@@ -3,6 +3,8 @@
 In this paper we examine polynomial time kernel reductions among equivalence
 relations.
 
+This file was last updated on 11 January 2012.
+
 ## Downloading ##
 
 This paper can be found at https://github.com/jfinkels/equivalence. The
@@ -37,8 +39,8 @@ packages:
 * `hyperref`
 * `xy`
 
-On Ubuntu 11.04, the necessary system packages which contain these LaTeX
-packages are:
+On Ubuntu 11.04 and 11.10, the necessary system packages which contain these
+LaTeX packages are:
 
 * `texlive-base`
 * `texlive-latex-base`
@@ -50,6 +52,16 @@ To install them, run
     sudo apt-get install texlive-base texlive-latex-base texlive-pictures \
       texlive-science
 
+If for some reason you wish to compile the document as a Postscript file
+instead of a PDF file, you must (on Ubuntu 11.10) install the following
+additional system packages:
+
+* `texlive-fonts-recommended`
+
+To install them, run
+
+    sudo apt-get install texlive-fonts-recommended
+
 ## Compiling ##
 
 To compile this article, run 
@@ -60,7 +72,7 @@ The output is `equivalence.pdf`.
 
 ## Copyright ##
 
-Copyright 2011 Jeffrey Finkelstein
+Copyright 2011, 2012 Jeffrey Finkelstein
 
 Except where otherwise noted, both the LaTeX markup and the content of the
 article are made available under the terms of the Creative Commons

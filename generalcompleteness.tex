@@ -1,7 +1,7 @@
 %%%%
 %% generalcompleteness.tex
 %%
-%% Copyright 2011 Jeffrey Finkelstein
+%% Copyright 2011, 2012 Jeffrey Finkelstein
 %%
 %% Except where otherwise noted, this work is made available under the terms of
 %% the Creative Commons Attribution-ShareAlike 3.0 license,
@@ -56,7 +56,7 @@ Before proving this theorem, we will provide some immediate corollaries of this 
   \begin{enumerate}
   %\item $\EXP$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in exponential time).
   \item $\PSPACE$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in polynomial space).
-  \item If $\mathcal{C}=\SKP$, then the $\kr$-hard problem is in $\forall(\SKP\cup\mathsf{co}\SKP)\mathsf{Eq}=\forall(\SKP\cup\PKP)\mathsf{Eq}=\PKPOPEq$.
+  \item If $\mathcal{C}=\SKP$, then the $\kr$-hard problem is in $(\forall(\SKP\cup\mathsf{co}\SKP))\mathsf{Eq}=(\forall(\SKP\cup\PKP))\mathsf{Eq}=\PKPOPEq$.
   \item Same as the previous justification, but starting with $\mathcal{C}=\PKP$.\qedhere
 %  \item Same as the previous justification, but starting with $\mathcal{C}=\P$.
   \end{enumerate}
@@ -75,7 +75,7 @@ More specifically, this means that $\coNPEq$ has a problem which is $\kr$-hard f
 \end{proof}
 
 We now return to the proof of \autoref{thm:generalcompleteness} by first providing some motivating ideas.
-Recall the canonical complete problem for $\NP$ (and indeed for various other complexity classes):
+Recall the canonical complete problem (sometimes called the ``universal'' problem) for $\NP$ (and indeed for various other complexity classes):
 \begin{displaymath}
   K = \{\triple{M}{x}{1^t}|M\plain{accepts} x \plain{within} t \plain{steps}\}
 \end{displaymath}
@@ -85,7 +85,9 @@ Consider, for example, transitivity, which must be satisfied for all possible pa
 For \emph{arbitrary machines} $M$, just because $M$ accepts $\pair{x}{y}$ and $\pair{y}{z}$ does not necessarily mean that $M$ accepts $\pair{x}{z}$.
 The solution is to encode into $R_K$ the requirement that the language which $M$ accepts, $L(M)$, is itself an equivalence relation.
 The three properties required of $R_K$ then follow from the properties of $L(M)$.
-
+%
+%As a technical consideration for this proof, we point out languages in $\PSPACE$ may be decided by alternating Turing machines which run in polynomial time, so it is permissible to consider polynomially clocked Turing machines.
+%
 \begin{proof}[Proof of \autoref{thm:generalcompleteness}]
   First we will define a helper algorithm which decides whether a given machine accepts an equivalence relation on strings up to a given length.
   Define the algorithm $A$ as follows on input $\pair{M}{n}$, where $M$ is a polynomially clocked Turing machine of type $\mathcal{C}$ and $n\in\mathbb{N}$:
@@ -103,9 +105,9 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   If $p$ is the polynomial which bounds the running time of $M$, then the running time of this algorithm is $6p(|\pair{1^n}{1^n}|)+c$, where $c$ is a constant which represents the time needed to account for the implementation of $A$ (the control of the simulations of $M$, performing logical conjunctions, etc.).
   Hence the running time of $A$ is polynomial in $n$.
 
-  Now we can define the set $R$ by
+  Now we can define the set $R_K$ by
   \begin{align*}
-    R = {} & \{\pair{u}{v}|u=v\} \\
+    R_K = {} & \{\pair{u}{v}|u=v\} \\
     & \cup \{\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}} |
     \text{1 through 4 below are satisfied}\}
   \end{align*}
@@ -116,30 +118,30 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   \item\label{itm:emy} $A$ accepts $\pair{M}{|y|}$ within $t_y$ steps
   \item\label{itm:accepts} $M$ accepts $\pair{x}{y}$
   \end{enumerate}
-  We claim that $R$ is in $\CRAZYEq$ and $\CEq$-hard.
+  We claim that $R_K$ is in $\CRAZYEq$ and $\CEq$-hard.
 
-  First we show that $R\in\CRAZY$.
+  First we show that $R_K\in\CRAZY$.
   By the argument above, $A$ is a $\CRAZY$ algorithm.
   %Since $M$ is a polynomially clocked $\mathcal{C}$ machine by \autoref{itm:machine}, then the simulation of $M$ on $\pair{x}{y}$ in \autoref{itm:accepts} can be performed by a $\mathcal{C}$ algorithm.
   Assuming without loss of generality that $|x|\geq |y|$, if $A$ accepts $\pair{M}{|x|}$ within $t_x$ steps then we know that there is a polynomial time bound on the running time of $M$ on input $\pair{x}{y}$, so simulating it is certainly in $\CRAZY$.
-  Finally, testing for equality is in $\mathcal{C}$ by hypothesis so deciding $R$ overall can be performed by a $\CRAZY$ algorithm.
+  Finally, testing for equality is in $\mathcal{C}$ by hypothesis so deciding $R_K$ overall can be performed by a $\CRAZY$ algorithm.
 
-  Next we show that $R$ is an equivalence relation.
+  Next we show that $R_K$ is an equivalence relation.
   Reflexivity follows from the reflexivity of the equality relation.
-  For symmetry, suppose $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R$.
+  For symmetry, suppose $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R_K$.
   Since \autoref{itm:emx} and \autoref{itm:emy} are true by hypothesis, we know that symmetry on strings of length at most $\max(|x|, |y|)$ in $L(M)$ is satisfied, and that includes the strings $x$ and $y$.
   So since $M$ accepts $\pair{x}{y}$ it must follow that $M$ accepts $\pair{y}{x}$.
-  Furthermore, \autoref{itm:machine}, \autoref{itm:emx}, and \autoref{itm:emy} are the same up to symmetry of $x$ and $y$, so we have $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{x}{1^{t_x}}}\in R$.
-  For transitivity, suppose that both $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R$ and $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{z}{1^{t_z}}}\in R$.
+  Furthermore, \autoref{itm:machine}, \autoref{itm:emx}, and \autoref{itm:emy} are the same up to symmetry of $x$ and $y$, so we have $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{x}{1^{t_x}}}\in R_K$.
+  For transitivity, suppose that both $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R_K$ and $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{z}{1^{t_z}}}\in R_K$.
   Since transitivity is true on strings of length at most $\max(|x|, |y|, |z|)$ by the transitivity propositions checked by \autoref{itm:emx} and \autoref{itm:emy}, and since $M$ accepts both $\pair{x}{y}$ and $\pair{y}{z}$ by hypothesis, it must follow that $M$ accepts $\pair{x}{z}$.
   Again the conditions in \autoref{itm:machine}, \autoref{itm:emx}, and \autoref{itm:emy} are the same.
-  We have shown that $R$ is reflexive, symmetric, and transitive, so it is an equivalence relation.
-  At this point, we have proven that $R\in\CRAZYEq$.
+  We have shown that $R_K$ is reflexive, symmetric, and transitive, so it is an equivalence relation.
+  At this point, we have proven that $R_K\in\CRAZYEq$.
 
-  Now we need to show that $R$ is $\CEq$-hard.
+  Now we need to show that $R_K$ is $\CEq$-hard.
   Let $S\in\CEq$.
   Suppose $M$ is the polynomially clocked $\mathcal{C}$ machine which decides $S$, and $p$ is the polynomial which bounds the running time of $M$.
-  Then the kernel reduction from $S$ to $R$ is $w\mapsto\triple{M}{w}{1^{6p(|\pair{w}{w}|)+c}}$, where $p$ and $c$ are the polynomial and constant described in the first paragraph of this proof.
+  Then the kernel reduction from $S$ to $R_K$ is $w\mapsto\triple{M}{w}{1^{6p(|\pair{w}{w}|)+c}}$, where $p$ and $c$ are the polynomial and constant described in the first paragraph of this proof.
   Call this reduction $f$.
   The reduction is obviously computable in time polynomial in $|w|$.
   It remains to show that this reduction is correct.
@@ -152,11 +154,11 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   This is a contradiction, since $M$ decides $S$, an equivalence relation, by hypothesis.
   Therefore \autoref{itm:emx} must be satisfied.
   The same argument applies to \autoref{itm:emy}.
-  Hence $\pair{f(x)}{f(y)}\in R$.
+  Hence $\pair{f(x)}{f(y)}\in R_K$.
 
   If $\pair{x}{y}\notin S$ then $M$ does not accept $\pair{x}{y}$, since otherwise $\pair{x}{y}$ would be a member of $S$.
-  Hence $\pair{x}{y}\notin R$.  
-  Therefore we have shown that $R$ is $\CEq$-hard.
+  Hence $\pair{x}{y}\notin R_K$.
+  Therefore we have shown that $R_K$ is $\CEq$-hard.
 \end{proof}
 
 \begin{openproblem}
@@ -177,6 +179,75 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   To what other equivalence relations does our $\kr$-hard problem reduce?
   Are there ``natural'' $\kr$-hard problems in complexity classes which satisfy the conditions in \autoref{thm:generalcompleteness}?
 \end{openproblem}
+
+As an additional corollary, we show that the equivalence relation $R_K$ is necessarily hard given a known hard equivalence relation under $\kr$ reductions.
+
+\begin{corollary}
+  Let $\mathcal{C}_1$ be a complexity class and $\mathcal{C}_2$ be a subset of $\PSPACE$ which contains the problem of deciding whether two strings are equal.
+  If there exists an equivalence relation $S$ in $\CTEq$ which is hard for $\COEq$ under $\kr$ reductions, then there is an equivalence relation in $\CRAZIEREq$ which is hard for $\COEq$ under $\kr$ reductions.
+\end{corollary}
+\begin{proof}
+  $S\kr R_K$ by the reduction described in the proof of \autoref{thm:generalcompleteness}.
+  A similar analysis shows that $R_K\in\CRAZIEREq$.
+  Since $S$ is hard for $\COEq$ and polynomial time kernel reductions compose by \autoref{prop:compose}, $R_K$ is also hard for $\COEq$.
+\end{proof}
+
+Finally, the following theorem is inspired by Mahaney's theorem, which states that there are no sparse \NP-complete languages unless $\P=\NP$.
+Our result concerns not the sparseness of strings in a language, but the sparseness of equivalence classes in an equivalence relation.
+This complements the work on ``potential reducibility'', defined in section 5 of \cite{bcffm}.
+
+\begin{definition}[\cite{bcffm}, Definition~7.2]
+  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
+  We say $R$ is \defn{potentially reducible} to $S$, denoted $R\pot S$, if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, the number of equivalence classes in $R$ containing a string of length at most $n$ is at most the number of equivalence classes in $S$ containing a string of length at most $p(n)$.
+\end{definition}
+
+It follows from the definitions that for any equivalence relations $R$ and $S$, $R\kr S\implies R\pot S$, and hence $R\npot S \implies R\nkr S$ (this is stated and proven explicitly in \cite[Lemma~5.5]{bcffm}).
+As an analog to traditional sparse languages, we provide a definition of ``kernel sparsity'', and show its application to determining potential reducibility and hence kernel reducibility.
+
+\begin{definition}
+  An equivalence relation $R$ on $\Sigma^*$ is \defn{kernel sparse} if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, the number of equivalence classes containing a string of length at most $n$ is at most $p(n)$.
+  An equivalence relation is \defn{kernel dense} if it is not sparse, that is, if for all polynomials $p$ there exists an $n\in\mathbb{N}$ such that the number of equivalence classes containing a string of length at most $n$ is greater than $p(n)$.
+\end{definition}
+
+These definitions allow us to provide the following very natural proposition.
+Intuitively, it states that an equivalence relation with many closely packed equivalence classes cannot reduce (under polynomially bounded notions of reduction) to an equivalence relation with few but widely spaced equivalence classes.
+
+\begin{theorem}\label{prop:density}
+  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
+  If $R$ is kernel dense and $S$ is kernel sparse, then $R\npot S$ and in particular $R\nkr S$.
+\end{theorem}
+\begin{proof}
+  That $R\npot S$ implies $R\nkr S$ was already stated in the text following the definition of potential reducibility, so it suffices to show that $R\npot S$.
+
+  Assume that $R\pot S$ with the intention of producing a contradiction.
+  Let $p$ be the polynomial such that the number of equivalence classes in $R$ containing strings of length at most $n$ is at most the number of equivalence classes in $S$ of length at most $p(n)$ (this is the definition of potential reducibility).
+  Let $q$ be the polynomial such that for all $n$ the number of equivalence classes in $S$ containing a string of length at most $n$ is at most $q(n)$ (this is the definition of kernel sparse).
+  For each natural number $n$, the number of equivalence classes in $S$ containing a string of length at most $n$ is at most $q(0) + q(1) + \cdots + q(n)$, which is itself bounded above by $nq(n)$ (since $q$ is non-decreasing).
+  It follows that the number of equivalence classes in $S$ containing a string of length at most $p(n)$ is bounded above by $p(n)q(p(n))$, which is a polynomial in $n$.
+  (This is an overestimate, but we can be generous here and still produce a contradiction.)
+  Call this polynomial $r$.
+
+  Let $n_0$ be the natural number such that the number of equivalence classes in $R$ containing a string of length at most $n_0$ is greater than $r(n_0)$.
+  Let $C$ be that number of equivalence classes, so $C>r(n_0)$.
+  So there are $C$ equivalence classes in $R$ containing strings of length at most $n_0$ (there may be more if there are distinct equivalence classes at smaller lengths) and $r(n_0)$ equivalence classes in $S$ containing strings of length at most $p(n_0)$.
+  Specifically there are more equivalence classes in $R$ for strings up to length $n_0$ than there are in $S$ for strings up to length $p(n)$.
+  From this we infer that $R$ cannot potentially reduce to $S$, because the number of equivalence classes in $R$ for strings up to length $n_0$ is too great compared to the number of equivalence classes in $S$ for strings up to length $p(n_0)$.
+  This is a contradiction with the assumption that $R\pot S$.
+  We have shown this for arbitrary polynomials (which came from the definitions of potential reducibility and kernel sparsity), so we can conclude that the result holds for all equivalence relations $R$ and $S$ which are kernel dense and kernel sparse, respectively.
+\end{proof}
+
+This places a strong restriction on equivalence relations which are hard (or complete) under polynomial time kernel reductions: they cannot be kernel sparse.
+
+\begin{corollary}
+  Let $\CEq$ be a complexity class of equivalence relations containing the equality relation, $R_{eq}=\{\pair{x}{u}|x=y\}$.
+  If an equivalence relation $R$ is $\CEq$-hard then it is not kernel sparse.
+\end{corollary}
+\begin{proof}
+  $R_{eq}$ is kernel dense, since it contains $2^n$ equivalence classes at each length $n$---one for each distinct string.
+  If $R$ were kernel sparse then $R_{eq}\npot R$ by \autoref{prop:density}.
+  This would imply $R_{eq}\nkr R$, which is a contradiction with the hypothesis that all equivalence relations in $\CEq$ (including $R_{eq}$) polynomial time kernel reduce to $R$.
+  Therefore $R$ is not kernel sparse.
+\end{proof}
 
 %% This last question leads us to briefly note that equivalence of true quantified boolean formulas is a \PSPACE-complete problem; perhaps it is also a \PSPACEEq-complete problem.
 %% \begin{proposition}
