@@ -85,11 +85,13 @@ Using this fact we can show that completeness in $\NPEq$ under $\kr$ reductions 
 This corollary provides not only a proof that $\PEq=\NPEq$ implies $\P=\NP$, but also a clearer proof of \cite[Proposition~8.1]{bcffm}.
 
 \begin{corollary}
-  If $\PEq=\NPEq$ then $\P=\NP$.
+  $\PEq=\NPEq$ if and only if $\P=\NP$.
 \end{corollary}
 \begin{proof}
-  If $\PEq=\NPEq$, then some \NP-complete equivalence relation is in $\P$.
+  For the forward direction, if $\PEq=\NPEq$, then some \NP-complete equivalence relation is in $\P$.
   Since polynomial time many-one reductions compose, this implies a polynomial time algorithm for any problem in $\NP$, so $\P=\NP$.
+
+  The reverse direction is obvious.
 \end{proof}
 
 \begin{proposition}[\cite{bcffm}, Proposition~8.1]
