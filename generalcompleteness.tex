@@ -77,7 +77,7 @@ More specifically, this means that $\coNPEq$ has a problem which is $\kr$-hard f
 We now return to the proof of \autoref{thm:generalcompleteness} by first providing some motivating ideas.
 Recall the canonical complete problem (sometimes called the ``universal'' problem) for $\NP$ (and indeed for various other complexity classes):
 \begin{displaymath}
-  K = \{\triple{M}{x}{1^t}|M\plain{accepts} x \plain{within} t \plain{steps}\}
+  K = \lb\triple{M}{x}{1^t} \st M\plain{accepts} x \plain{within} t \textnormal{ steps}\rb
 \end{displaymath}
 The idea of this proof is to adapt this into an equivalence relation $R_K$ consisting of pairs of triples of the form $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}$, where $M$ accepts $\pair{x}{y}$, as in the reduction from an arbitrary $\NP$ language to $K$.
 The problem we encounter here is that $R_K$ is not necessarily an equivalence relation.
@@ -107,9 +107,8 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
 
   Now we can define the set $R_K$ by
   \begin{align*}
-    R_K = {} & \{\pair{u}{v}|u=v\} \\
-    & \cup \{\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}} |
-    \text{1 through 4 below are satisfied}\}
+    R_K = {} & \lb\pair{u}{v} \st u=v\rb \\
+    & \cup \lb\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}} \st \textnormal{1 through 4 below are satisfied}\rb
   \end{align*}
   where the conditions are
   \begin{enumerate}
@@ -239,7 +238,7 @@ Intuitively, it states that an equivalence relation with many closely packed equ
 This places a strong restriction on equivalence relations which are hard (or complete) under polynomial time kernel reductions: they cannot be kernel sparse.
 
 \begin{corollary}
-  Let $\CEq$ be a complexity class of equivalence relations containing the equality relation, $R_{eq}=\{\pair{x}{y}|x=y\}$.
+  Let $\CEq$ be a complexity class of equivalence relations containing the equality relation, $R_{eq}=\lb\pair{x}{y} \st x=y\rb$.
   If an equivalence relation $R$ is $\CEq$-hard then it is not kernel sparse.
 \end{corollary}
 \begin{proof}

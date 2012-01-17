@@ -38,14 +38,14 @@ The much-studied graph isomorphism problem (\GI), the problem of deciding whethe
 Let $\Pi$ be an arbitrary graph property (which holds for all isomorphic graphs if it holds for any one of them).
 Call $\Pi$ the \defn{null property} if it is false for all graphs.
 We say that $\Pi$ is a \defn{uniform property} if for all $n\in\mathbb{N}$ there exists a graph $G$ with $n$ vertices such that $\Pi(G)$ is true.
-Let $L_\Pi$ be the language on graphs $G$ defined by $\{G\,|\,\Pi(G)$ is true$\}$.
+Let $L_\Pi$ be the language on graphs $G$ defined by $\lb G\st\Pi(G)\textnormal{ is true}\rb$.
 Say that $\Pi$ is an \defn{\NP-complete property} if $L_\Pi$ is \NP-complete.
 It is easy to see that if $\Pi$ is either a uniform property or an \NP-complete property, then it is not a null property.
 
 We first show that there are problems in $\NPEq$ which are also \NP-complete (though they may not necessarily be \NPEq-complete).
 Define $A(\Pi)$ by
 \begin{displaymath}
-  A(\Pi) = \{\pair{G}{H} | G\cong H \plain{or} (\Pi(G) \plain{and} \Pi(H))\}.
+  A(\Pi) = \lb \pair{G}{H}\st G\cong H \plain{or} (\Pi(G) \plain{and} \Pi(H))\rb.
 \end{displaymath}
 By checking the three required properties of an equivalence relation, we find the following.
 (The proof of this proposition is straightforward and is left as an exercise for the reader.)
@@ -111,7 +111,7 @@ We will for now consider the consequences of the assumption that there exists an
 
 Define $A^=(\Pi)$ by
 \begin{displaymath}
-  A^=(\Pi) = \{\pair{G}{H} | \pair{G}{H}\in A(\Pi) \plain{and} |V(G)|=|V(H)|)\}
+  A^=(\Pi) = \lb \pair{G}{H} \st \pair{G}{H}\in A(\Pi) \plain{and} |V(G)|=|V(H)|)\rb
 \end{displaymath}
 for all graph properties $\Pi$.
 
@@ -131,7 +131,7 @@ The number of graphs on $|V(G)|$ vertices is finite, so $[G]$ is finite.
 
 As a contrast, consider the equivalence relation
 \begin{displaymath}
-  R=\{\pair{x}{y}|x\plain{and}y\plain{have the same number of}1\textnormal{s}\}.
+  R=\lb\pair{x}{y} \st x\plain{and}y\plain{have the same number of}1\textnormal{s}\rb.
 \end{displaymath}
 $R$ has an infinite number of equivalence classes: $[1]$, $[11]$, $[111]$, etc.
 Each equivalence class is itself infinite as well: if $w\in\Sigma^*$ then $[w]$ contains $w$, $0w$, $00w$, etc.

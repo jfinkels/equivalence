@@ -30,7 +30,7 @@
 If $f\colon S\to T$ is a well-defined function and $S'\subseteq S$, then \defn{$f$ restricted to the domain $S'$} is the function $f'\colon S'\to T$ defined by $f'(x)=f(x)$ for all $x\in S'$.
 We denote this restricted function on a smaller domain by $f|_{S'}$.
 
-If $\Sigma$ is an alphabet then $\Sigma^*$ is the set of all strings over the alphabet $\Sigma$ and $\Sigma^{\leq n}$ is the set $\{w\in\Sigma^*|\,|w|\leq n\}$.
+If $\Sigma$ is an alphabet then $\Sigma^*$ is the set of all strings over the alphabet $\Sigma$ and $\Sigma^{\leq n}$ is the set $\lb w\in\Sigma^* \st |w|\leq n \rb$.
 Usually $\Sigma$ is the binary alphabet $\{0, 1\}$.
 The empty string will be denoted by $\lambda$.
 If $\sigma\in\Sigma$ then $\sigma^k$ is the string consisting of $k$ concatenated copies of the symbol $\sigma$.
@@ -59,7 +59,7 @@ An equivalence relation $R$ can be encoded as a language by taking the pairwise 
 In this way we can study the computational complexity of classes of languages which represent equivalence relations.
 In this paper we will abuse notation and write $\pair{x}{y}\in R$ for an equivalence relation $R$ on $\Sigma^*$, but what we really mean is $(x,y)\in R$ and $\pair{x}{y}\in L_R$, the language on the alphabet $\Sigma$ induced by $R$.
 
-The \defn{equivalence class} of $x$ with respect to an equivalence relation $R$ on $U$ is $\{y\in U|(x,y)\in R\}$. It is denoted $[x]_R$, or if the context is clear, simply $[x]$.
+The \defn{equivalence class} of $x$ with respect to an equivalence relation $R$ on $U$ is $\lb y\in U \st (x,y)\in R \rb$. It is denoted $[x]_R$, or if the context is clear, simply $[x]$.
 Each element $x\in U$ is in exactly one equivalence class, so the equivalence classes of an equivalence relation on $U$ provide a partition of $U$.
 
 A \defn{complete invariant} for an equivalence relation $R$ on $U$ is a function $f\colon U\to T$ such that for all $x,y\in U$, $(x,y)\in R$ if and only if $f(x)=f(y)$.
