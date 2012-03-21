@@ -73,7 +73,7 @@ dependencies include the following LaTeX packages:
 * `xy`
 
 On Ubuntu 11.04 and 11.10, the necessary system packages which contain these
-LaTeX packages are:
+LaTeX packages (other than `tkz-graph`, see below) are:
 
 * `texlive-latex-base`
 * `texlive-latex-extra`
@@ -82,6 +82,10 @@ LaTeX packages are:
 To install them, run
 
     sudo apt-get install texlive-latex-base texlive-latex-extra texlive-science
+
+`tkz-graph` must be downloaded manually and placed in the `poster/` directory
+(or somewhere else where LaTeX can find it). It can be downloaded from
+http://www.ctan.org/tex-archive/macros/latex/contrib/tkz/tkz-graph.
 
 ## Compiling ##
 
