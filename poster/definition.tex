@@ -1,0 +1,23 @@
+{\setlength{\parindent}{0cm}\textbf{\large A study of the power of polynomial time kernel reductions among problems of equivalence.}}
+
+\vspace{0.5cm}
+
+\begin{definition}
+  If $R$ and $S$ are equivalence relations, $R$ \emph{polynomial time kernel reduces to} $S$ if there exists a polynomial time computable function $f$ such that for all $x$ and $y$,
+  \begin{displaymath}
+    (x, y)\in R \iff (f(x), f(y))\in S.
+  \end{displaymath}
+\end{definition}
+
+\vspace{0.5cm}
+
+\begin{definition}\mbox{}
+  \begin{itemize}
+    \renewcommand{\labelitemi}{$\cdot$}
+  \item $\PEq$: equivalence problems in $\P$
+  \item $\NPEq$: equivalence problems in $\NP$
+  \item $\SKPEq$: equivalence problems in $\SKP$
+  \item $\PKPEq$: equivalence problems in $\PKP$
+  \item $\PSPACEEq$: equivalence problems in $\PSPACE$
+  \end{itemize}
+\end{definition}

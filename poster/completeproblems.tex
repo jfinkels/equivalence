@@ -1,0 +1,19 @@
+\newcommand{\indentitem}{\setlength\itemindent{1cm}}
+\begin{theorem}
+  Under polynomial time kernel reductions,
+  \begin{enumerate}
+  {\indentitem \item $\PSPACEEq$ has a complete problem}
+  {\indentitem \item $\PKPOPEq$ contains a problem which is hard for $\SKPEq$, for all $k\geq 0$}
+  {\indentitem \item $\PKPOPEq$ contains a problem which is hard for $\PKPEq$, for all $k\geq 0$}
+  \end{enumerate}
+\end{theorem}
+
+\begin{proofidea}
+  Turn the canonical complete problem for $\NP$,
+  \begin{displaymath}
+    K = \left\{(M, x, 1^t)\,\middle|\,M\text{ accepts } x \text{ within } t \text{ steps}\right\},
+  \end{displaymath}
+  into an equivalence relation, $R_K$, which relies on the hardness of $K$.
+  Use a helper algorithm to enforce that the language of the machine $M$ is an equivalence relation (for strings up to a certain length).
+  This helper algorithm bumps up the hardness of the problem to the next level of the polynomial time hierarchy.
+\end{proofidea}

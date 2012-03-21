@@ -1,0 +1,112 @@
+{\LARGE
+\begin{figure}
+  \caption{\textnormal{Polynomial time many-one reduction $f$ from $\textsf{GI}$ to $\textsf{DirGI}$.}}
+  \begin{displaymath}
+    \xymatrix{
+      \begin{tikzpicture}[rotate=-45, scale=2]
+        \GraphInit[vstyle=Normal]
+        \SetGraphUnit{3}
+        \SetVertexNoLabel
+        \Vertices{square}{a,b,c,d}
+        \Edges(c,a,b,c,d)
+      \end{tikzpicture}
+      & \cong & 
+      \begin{tikzpicture}[rotate=-45, scale=2]
+        \GraphInit[vstyle=Normal]
+        \SetGraphUnit{3}
+        \SetVertexNoLabel
+        \Vertices{square}{a,b,c,d}
+        \Edges(d,b,a,d,c)
+      \end{tikzpicture}
+      \\
+      & \ar[dd]_f & \\
+      & & \\
+      & & \\
+      \begin{tikzpicture}[rotate=-45, scale=2]
+        \GraphInit[vstyle=Normal]
+        \SetGraphUnit{3}
+        \SetVertexNoLabel
+        \Vertices{square}{a,b,c,d}
+        \Edge[style={->,bend left=10}](c)(a)
+        \Edge[style={<-,bend right=10}](c)(a)
+        \Edge[style={->,bend left=10}](a)(b)
+        \Edge[style={<-,bend right=10}](a)(b)
+        \Edge[style={->,bend left=10}](b)(c)
+        \Edge[style={<-,bend right=10}](b)(c)
+        \Edge[style={->,bend left=10}](c)(d)
+        \Edge[style={<-,bend right=10}](c)(d)
+      \end{tikzpicture}
+      & \cong &
+      \begin{tikzpicture}[rotate=-45, scale=2]
+        \GraphInit[vstyle=Normal]
+        \SetGraphUnit{3}
+        \SetVertexNoLabel
+        \Vertices{square}{a,b,c,d}
+        \Edge[style={->,bend left=10}](d)(b)
+        \Edge[style={<-,bend right=10}](d)(b)
+        \Edge[style={->,bend left=10}](b)(a)
+        \Edge[style={<-,bend right=10}](b)(a)
+        \Edge[style={->,bend left=10}](a)(d)
+        \Edge[style={<-,bend right=10}](a)(d)
+        \Edge[style={->,bend left=10}](d)(c)
+        \Edge[style={<-,bend right=10}](d)(c)
+      \end{tikzpicture}
+  }
+  \end{displaymath}
+\end{figure}
+
+\begin{figure}
+  \caption{\textnormal{Polynomial time kernel reduction $g$ from $\textsf{GI}$ to $\textsf{DirGI}$.}}
+  \begin{displaymath}
+    \xymatrix{
+      \begin{tikzpicture}[rotate=-45, scale=2]
+        \GraphInit[vstyle=Normal]
+        \SetGraphUnit{3}
+        \SetVertexNoLabel
+        \Vertices{square}{a,b,c,d}
+        \Edges(c,a,b,c,d)
+      \end{tikzpicture}
+      \ar[ddd]_g & \cong & 
+      \begin{tikzpicture}[rotate=-45, scale=2]
+        \GraphInit[vstyle=Normal]
+        \SetGraphUnit{3}
+        \SetVertexNoLabel
+        \Vertices{square}{a,b,c,d}
+        \Edges(d,b,a,d,c)
+      \end{tikzpicture}
+      \ar[ddd]_g \\
+      & & \\
+      & & \\
+      \begin{tikzpicture}[rotate=-45, scale=2]
+        \GraphInit[vstyle=Normal]
+        \SetGraphUnit{3}
+        \SetVertexNoLabel
+        \Vertices{square}{a,b,c,d}
+        \Edge[style={->,bend left=10}](c)(a)
+        \Edge[style={<-,bend right=10}](c)(a)
+        \Edge[style={->,bend left=10}](a)(b)
+        \Edge[style={<-,bend right=10}](a)(b)
+        \Edge[style={->,bend left=10}](b)(c)
+        \Edge[style={<-,bend right=10}](b)(c)
+        \Edge[style={->,bend left=10}](c)(d)
+        \Edge[style={<-,bend right=10}](c)(d)
+      \end{tikzpicture}
+      & \cong &
+      \begin{tikzpicture}[rotate=-45, scale=2]
+        \GraphInit[vstyle=Normal]
+        \SetGraphUnit{3}
+        \SetVertexNoLabel
+        \Vertices{square}{a,b,c,d}
+        \Edge[style={->,bend left=10}](d)(b)
+        \Edge[style={<-,bend right=10}](d)(b)
+        \Edge[style={->,bend left=10}](b)(a)
+        \Edge[style={<-,bend right=10}](b)(a)
+        \Edge[style={->,bend left=10}](a)(d)
+        \Edge[style={<-,bend right=10}](a)(d)
+        \Edge[style={->,bend left=10}](d)(c)
+        \Edge[style={<-,bend right=10}](d)(c)
+      \end{tikzpicture}
+  }
+  \end{displaymath}
+\end{figure}
+}
