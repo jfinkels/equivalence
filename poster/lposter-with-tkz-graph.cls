@@ -130,7 +130,16 @@
 }
 
 
-\fancyfoot[R]{\textcolor{black}{Copyright~\@year~Jef{}frey~Finkelstein}}%
+\fancyfoot[R]{%
+  \textcolor{black}{%
+    Copyright~\@year~Jef{}frey~Finkelstein
+    $\cdot$
+    CC-BY-SA 3.0
+    $\cdot$
+    \texttt{https://github.com/jfinkels/equivalence}
+  }
+}
+%
 %?? College Department of \@department.
 %\@author}}
 \fancyfoot[L]{\textcolor{black}{%
