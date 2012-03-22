@@ -98,7 +98,7 @@ The output is `equivalence.pdf`.
 To compile the poster corresponding to the article, run
 
     cd poster
-    pdflatex poster.tex
+    ./compile-poster.sh
 
 The output is `poster/poster.pdf`
 
