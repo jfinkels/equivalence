@@ -26,3 +26,8 @@ TODO
    there could be exponentially many connected components], or using the
    complement of clique, independent set, to do something with the complement
    of an equivalence relation)
+* Can Theorem 6.8 be generalized to work with kernel-hard problems for general
+   complexity classes in the polynomial hierarchy?
+* Use github issues instead of this TODO file.
+* check that the number of equivalence classes of the PSPACEEq complete problem
+   is not sparse
