@@ -1,3 +1,19 @@
+% creates a slightly larger arrow head; see
+% http://tex.stackexchange.com/questions/49009/how-can-i-increase-arrow-head-size-in-tkz-graph
+\pgfarrowsdeclare{biggertip}{biggertip}{%
+  \setlength{\arrowsize}{3pt}
+  \addtolength{\arrowsize}{.5\pgflinewidth}
+  \pgfarrowsrightextend{0}
+  \pgfarrowsleftextend{-5\arrowsize}
+}{%
+  \setlength{\arrowsize}{3pt}
+  \addtolength{\arrowsize}{.5\pgflinewidth}
+  \pgfpathmoveto{\pgfpoint{-5\arrowsize}{3\arrowsize}}
+  \pgfpathlineto{\pgfpointorigin}
+  \pgfpathlineto{\pgfpoint{-5\arrowsize}{-3\arrowsize}}
+  \pgfusepathqstroke
+}
+
 {\LARGE
 \begin{figure}
   \caption{\textnormal{Polynomial time many-one reduction $f$ from $\textsf{GI}$ to $\textsf{DirGI}$.}}
@@ -27,14 +43,11 @@
         \SetGraphUnit{3}
         \SetVertexNoLabel
         \Vertices{square}{a,b,c,d}
-        \Edge[style={->,bend left=10}](c)(a)
-        \Edge[style={<-,bend right=10}](c)(a)
-        \Edge[style={->,bend left=10}](a)(b)
-        \Edge[style={<-,bend right=10}](a)(b)
-        \Edge[style={->,bend left=10}](b)(c)
-        \Edge[style={<-,bend right=10}](b)(c)
-        \Edge[style={->,bend left=10}](c)(d)
-        \Edge[style={<-,bend right=10}](c)(d)
+        \SetUpEdge[style={->,>=biggertip, bend left=10}]
+        \Edges(a, b, a)
+        \Edges(a, c, a)
+        \Edges(b, c, b)
+        \Edges(c, d, c)
       \end{tikzpicture}
       & \cong &
       \begin{tikzpicture}[rotate=-45, scale=2]
@@ -42,14 +55,11 @@
         \SetGraphUnit{3}
         \SetVertexNoLabel
         \Vertices{square}{a,b,c,d}
-        \Edge[style={->,bend left=10}](d)(b)
-        \Edge[style={<-,bend right=10}](d)(b)
-        \Edge[style={->,bend left=10}](b)(a)
-        \Edge[style={<-,bend right=10}](b)(a)
-        \Edge[style={->,bend left=10}](a)(d)
-        \Edge[style={<-,bend right=10}](a)(d)
-        \Edge[style={->,bend left=10}](d)(c)
-        \Edge[style={<-,bend right=10}](d)(c)
+        \SetUpEdge[style={->,>=biggertip, bend left=10}]
+        \Edges(a, b, a)
+        \Edges(a, d, a)
+        \Edges(b, d, b)
+        \Edges(c, d, c)
       \end{tikzpicture}
   }
   \end{displaymath}
@@ -82,14 +92,11 @@
         \SetGraphUnit{3}
         \SetVertexNoLabel
         \Vertices{square}{a,b,c,d}
-        \Edge[style={->,bend left=10}](c)(a)
-        \Edge[style={<-,bend right=10}](c)(a)
-        \Edge[style={->,bend left=10}](a)(b)
-        \Edge[style={<-,bend right=10}](a)(b)
-        \Edge[style={->,bend left=10}](b)(c)
-        \Edge[style={<-,bend right=10}](b)(c)
-        \Edge[style={->,bend left=10}](c)(d)
-        \Edge[style={<-,bend right=10}](c)(d)
+        \SetUpEdge[style={->,>=biggertip, bend left=10}]
+        \Edges(a, b, a)
+        \Edges(a, c, a)
+        \Edges(b, c, b)
+        \Edges(c, d, c)
       \end{tikzpicture}
       & \cong &
       \begin{tikzpicture}[rotate=-45, scale=2]
@@ -97,14 +104,11 @@
         \SetGraphUnit{3}
         \SetVertexNoLabel
         \Vertices{square}{a,b,c,d}
-        \Edge[style={->,bend left=10}](d)(b)
-        \Edge[style={<-,bend right=10}](d)(b)
-        \Edge[style={->,bend left=10}](b)(a)
-        \Edge[style={<-,bend right=10}](b)(a)
-        \Edge[style={->,bend left=10}](a)(d)
-        \Edge[style={<-,bend right=10}](a)(d)
-        \Edge[style={->,bend left=10}](d)(c)
-        \Edge[style={<-,bend right=10}](d)(c)
+        \SetUpEdge[style={->,>=biggertip, bend left=10}]
+        \Edges(a, b, a)
+        \Edges(a, d, a)
+        \Edges(b, d, b)
+        \Edges(c, d, c)
       \end{tikzpicture}
   }
   \end{displaymath}
