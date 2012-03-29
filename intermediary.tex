@@ -43,7 +43,7 @@ First we need to provide some technical definitions and machinery.
 \end{definition}
 
 \begin{definition}
-  Given an alphabet $\Sigma$ with at least two different symbols, say $0$ and $1$, the \defn{kernel join} of two equivalence relations $R$ and $S$ over $\Sigma^*$ is $R\kj S=\{\pair{x0}{y0}|\pair{x}{y}\in R\}\cup\{\pair{x1}{y1}|\pair{x}{y}\in S\}$.
+  Given an alphabet $\Sigma$ with at least two different symbols, say $0$ and $1$, the \defn{kernel join} of two equivalence relations $R$ and $S$ over $\Sigma^*$ is $R\kj S=\lb\pair{x0}{y0}\st\pair{x}{y}\in R\rb\cup\lb\pair{x1}{y1}\st\pair{x}{y}\in S\rb$.
 \end{definition}
 
 \begin{lemma}\label{lem:join}
@@ -86,7 +86,7 @@ First we need to provide some technical definitions and machinery.
   Let $r\colon\mathbb{N}\to\mathbb{N}$ be a computable function such that $r(m)>m$ for all $m$.
   Define the set $G[r]$ as
   \begin{displaymath}
-    G[r]=\{x\in\Sigma^*|r^n(0)\leq|x|<r^{n+1}(0) \plain{for some even} n\}
+    G[r]=\lb x\in\Sigma^* \st r^n(0)\leq|x|<r^{n+1}(0) \plain{for some even} n\rb
   \end{displaymath}
   where $r^n(m)$ denotes the $n$-fold application of $r$ to $m$:
   \begin{displaymath}

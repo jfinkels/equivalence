@@ -94,7 +94,7 @@ Propositions \ref{prop:noreduction} and \ref{prop:tworeduction} provide a simple
   In other words, polynomial time kernel reductions and polynomial time many-one reductions are different in \PEq.
 \end{theorem}
 \begin{proof}
-  Let $R_i$ be defined as $R_i=\{\pair{x}{y}|x\equiv y\pmod{i}\}$ for all $i\geq 2$.
+  Let $R_i$ be defined as $R_i=\lb\pair{x}{y} \st x\equiv y\pmod{i}\rb$ for all $i\geq 2$.
   Equivalence of two integers modulo $i$ can be decided in polynomial time, so $R_i\in\PEq$.
   Also, $R_i$ has $i$ equivalence classes.
 
