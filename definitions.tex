@@ -95,18 +95,27 @@ We say that an equivalence relation $R$ on a universe $U$ has a \defn{one-witnes
   \caption{\label{fig:inclusions}Inclusions among possible definitions of equivalence relations verifiable in deterministic polynomial time.}
   \begin{displaymath}
     \xymatrix{%
-      \NPEqSeven \ar[r] & \NPEqFive \ar@{<->}[r] & \NPEqThree \ar[r] & \NPEqTwo \ar@{<->}[r] & \NPEqOne \\
+      \NPEqSeven \ar[r] & \NPEqFive \ar@{<->}[r] & \NPEqThree \ar@{<->}[r] & \NPEqTwo \ar@{<->}[r] & \NPEqOne \\
       \NPEqEight \ar[u] \ar[r] & \NPEqSix \ar[u] \ar@{<->}[r] & \NPEqFour \ar[u]}
   \end{displaymath}
 \end{figure}
+\begin{figure}
+  \caption{\label{fig:inclusionscollapsed}The inclusions from \autoref{fig:inclusions} with equalities collapsed.}
+  \begin{displaymath}
+    \xymatrix{%
+      \NPEqSeven \ar[r] & \NPEqFive \\
+      \NPEqEight \ar[u] \ar[r] & \NPEqSix \ar[u]
+    }
+  \end{displaymath}
+\end{figure}
 The main ideas of these inclusions are presented in the following theorem (the complete proofs are tedious and so are omitted here).
-\begin{theorem}\mbox{}
+\begin{theorem}\label{thm:definitions}\mbox{}
   \begin{enumerate}
   \item $\NPEqOne=\NPEqTwo$
   \item $\NPEqEight\subseteq\NPEqSix$ and $\NPEqSeven\subseteq\NPEqFive$
   \item $\NPEqSix=\NPEqFour$ and $\NPEqFive=\NPEqThree$
   \item $\NPEqEight\subseteq\NPEqSeven$, $\NPEqSix\subseteq\NPEqFive$, and $\NPEqFour\subseteq\NPEqThree$
-  \item $\NPEqThree\subseteq\NPEqTwo$
+  \item $\NPEqThree=\NPEqTwo$
   \end{enumerate}
 \end{theorem}
 \begin{sketch}\mbox{}
@@ -115,14 +124,25 @@ The main ideas of these inclusions are presented in the following theorem (the c
   \item Choose the relation $R'$ in the definitions of $\NPEqSix$ and $\NPEqFive$ to be the equality relation.
   \item
     For the forward direction, hard-code the function $f$ from the definitions of $\NPEqSix$ and $\NPEqFive$ into the relation $R'$ in the definitions of $\NPEqFour$ and $\NPEqThree$.
-    For the reverse direction, keep the relation $R'$ and choose the identity function.
+    For the reverse direction, keep the relation $R'$ and choose the identity function to be $f$ in the definitions of $\NPEqSix$ and $\NPEqFive$.
   \item Choose $w_x$ and $w_y$ in $\NPEqSeven$, $\NPEqFive$, and $\NPEqThree$ to be equal to the $w$ from $\NPEqEight$, $\NPEqSix$, and $\NPEqFour$.
-  \item Define $L=\lb\pair{\pair{x}{y}}{\pair{w_x}{w_y}}\st\pair{\pair{x}{w_x}}{\pair{y}{w_y}}\in R'\rb$, so the witness that $\pair{x}{y}\in L$ is the pair $\pair{w_x}{w_y}$.\qedhere
+  \item
+    For the forward direction, define $L$ by
+    \begin{displaymath}
+      L=\lb\pair{\pair{x}{y}}{\pair{w_x}{w_y}}\st\pair{\pair{x}{w_x}}{\pair{y}{w_y}}\in R'\rb,
+    \end{displaymath}
+    so the witness that $\pair{x}{y}\in L$ is the pair $\pair{w_x}{w_y}$.
+    For the reverse direction, define $R'$ by
+    \begin{align*}
+      R'= \{ & \pair{\triple{x}{y}{w_x}}{\triple{x}{y}{w_y}} \,|\, w_x = w_y \text{ or} \\
+      & \, \exists b\in\{0, 1\} \,\exists w\in\{0, 1\}^*\colon \\
+      & \, w_x = w \circ b, w_y = w\circ \bar{b},\plain{and} \pair{\pair{x}{y}}{w}\in L \}
+    \end{align*}
+    and choose $w_x=w\circ 0$ and $w_y=w\circ 1$.
   \end{enumerate}
 \end{sketch}
 
-We would like to be able to show that $\NPEq_2$ (or $\NPEq_1$, though it seems more difficult) is contained in any of the other classes which have an equivalence relation as the witness language in \P, but this would require simulating an arbitrary language, which is not necessarily an equivalence relation, by some constructed equivalence relation.
-We are not guaranteed anything about the structure of the arbitrary language, and it is therefore difficult to construct an equivalence relation which represents that language.
+\autoref{fig:inclusionscollapsed} shows the inclusions among these classes with the equalities from \autoref{thm:definitions} collapsed.
 
 \begin{openproblem}
   Does one of the complexity classes defined here have a complete problem under $\kr$ reductions?
