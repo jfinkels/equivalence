@@ -52,7 +52,7 @@ Let $\IsoK=\lb\pair{X}{Y}\st X\cong Y\rb$.
 \begin{example}
   Consider the set of structures $\mathcal{G}$, the set of all finite undirected graphs.
   All isomorphic graphs have the same number of vertices.
-  In this case, $\IsoK=\GI$, the well-studied graph isomorphism problem.
+  In this case, $\IsoG=\GI$, the well-studied graph isomorphism problem.
 \end{example}
 
 Let $\Pi$ be some property (that is, a boolean proposition) for which $X\cong Y$ implies $\Pi(X)=\Pi(Y)$ (that is, they are either both true or both false).
@@ -74,7 +74,7 @@ Define $A(\Pi)$ by
 By checking the three required properties of an equivalence relation, we find the following.
 (The proof of this proposition is straightforward and is left as an exercise for the reader.)
 \begin{proposition}
-  For all properties $\Pi$, $A(\Pi)$ is an equivalence relation.
+  For all properties $\Pi$ on elements of $\mathcal{K}$, $A(\Pi)$ is an equivalence relation on $\mathcal{K}$.
 \end{proposition}
 We use this fact to show that there are $\mathcal{C}$-complete equivalence relations.
 \begin{proposition}\label{prop:APi}
@@ -83,7 +83,8 @@ We use this fact to show that there are $\mathcal{C}$-complete equivalence relat
 \end{proposition}
 \begin{proof}
   The previous proposition shows that $A(\Pi)$ is an equivalence relation, so it remains to show that it is $\mathcal{C}$-complete.
-  %% TODO Why is this statement true?
+  %% TODO Why is this statement true? We need to require that C is closed under
+  %% conjunction.
   $A(\Pi)$ is in $\mathcal{C}$ because $X\cong Y$, $\Pi(X)$, and $\Pi(Y)$ can all be checked by a $\mathcal{C}$ algorithm.
 
   Let $Y$ be a graph for which $\Pi(Y)$ is true, which exists because $\Pi$ is not a null property.
@@ -147,7 +148,7 @@ We will for now consider the consequences of the assumption that there exists a 
 
 Define $A^=(\Pi)$ by
 \begin{displaymath}
-  A^=(\Pi) = \lb \pair{X}{T} \st \pair{X}{Y}\in A(\Pi) \plain{and} |X|=|Y|\rb
+  A^=(\Pi) = \lb \pair{X}{Y} \st \pair{X}{Y}\in A(\Pi) \plain{and} |X|=|Y|\rb
 \end{displaymath}
 for all properties $\Pi$.
 (Note that the requirement that $|X|=|Y|$ only changes the ``$\Pi(X)$ and $\Pi(Y)$ are both true'' part of the definition of $A(\Pi)$, since $X\cong Y$ implies $|X|=|Y|$ by our initial assumptions.)
