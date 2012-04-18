@@ -24,6 +24,11 @@
 %%    the copyright holder.
 %%    * Nothing in this license impairs or restricts the author's moral rights.
 %%%%
+\newcommand{\pr}{\leq^{P}_{pre}} % preorder-reduces
+\newcommand{\prnt}{\leq_{pre}} % preorder-reduces without time bound
+\newcommand{\algr}{\leq^{P}_{alg}} % algebraically-reduces
+\newcommand{\algrnt}{\leq_{alg}} % algebraically-reduces without time bound
+
 \section{Preorder reductions}
 
 The definition of kernel reduction can be extended to other types of binary relations.
@@ -62,5 +67,15 @@ The subgraph isomorphism problem, defined below, is a preorder (and is also \NP-
   Since $H$ has a subgraph that is isomorphic to $G$ and $H$ is isomorphic to $J'$, it follows that $J'$ has a subgraph that is isomorphic to $G$ (namely the subgraph induced by the image of $H'$ under the isomorphism $\phi_2$).
 \end{proof}
 
-We know that $\GI\mor\lang{SGI}$, since $\GI\in\NP$ and $\lang{SGI}$ is \NP-complete, but is it also true that $\GI\pr\lang{SGI}$?
+We know that $\GI\mor\lang{SGI}$, since $\GI\in\NP$ and $\lang{SGI}$ is \NP-complete; a simple reduction is $(G, H)\mapsto(G, H')$, where $H'$ is $\bot$ if $|V(G)|\neq|V(H)|$ and $H$ otherwise.
+But is it also true that $\GI\pr\lang{SGI}$?
+Note that the stated reduction will not suffice since it requires ``knowledge'' of both $|V(G)|$ \emph{and} $|V(H)|$ (essentially enforcing the symmetry requirement in the image of the reduction).
+
 Is there another natural example of a preorder reduction, would such a reduction (being inherently asymmetric) require information about both elements of the pair?
+
+We can also provide a general definition for reductions among binary relations:
+\begin{definition}
+  Given a universe $U$ and two binary relations $R,S\subseteq U\times U$, we say \defn{$R$ algebraically reduces to $S$} if there exists a computable function $f\colon U\to U$ such that $(x,y)\in R \iff (f(x), f(y)\in S$.
+  We denote this by $R\algrnt S$.
+  If $f$ is computable in polynomial time, then we say $R$ \defn{polynomial time algebraically reduces to} $S$ and use the notation $R\algr S$.
+\end{definition}
