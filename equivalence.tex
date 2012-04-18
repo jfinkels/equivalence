@@ -61,6 +61,10 @@
 \theoremstyle{definition} \newtheorem{definition}[definition]{Definition}
 \aliascntresetthe{definition}
 
+\newaliascnt{example}{theorem}
+\theoremstyle{definition} \newtheorem{example}[example]{Example}
+\aliascntresetthe{example}
+
 \newaliascnt{remark}{theorem}
 \theoremstyle{remark} \newtheorem{remark}[remark]{Remark}
 \aliascntresetthe{remark}
@@ -92,7 +96,7 @@
 
 % custom shortcut commands
 \newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}} % formatting emails
-\newcommand{\plain}[1]{\,\text{#1}\,} % plain text inside math environments
+\newcommand{\plain}[1]{\text{ #1 }} % plain text inside math environments
 \newcommand{\sigmastar}{\{0, 1\}^{*}} % the set of all binary strings
 \newcommand{\kj}{\overset{ker}{\oplus}} % kernel join
 \newcommand{\nkr}{\nleq^{P}_{ker}} % kernel-reduces
@@ -106,6 +110,9 @@
 \newcommand{\moe}{\equiv^{P}_{m}} % many-one equivalent
 \newcommand{\pr}{\leq^{P}_{pre}} % preorder-reduces
 \newcommand{\prnt}{\leq_{pre}} % preorder-reduces without time bound
+\newcommand{\lb}{\left\{} % left curly brace for set notation
+\newcommand{\rb}{\right\}} % right curly brace for set notation
+\newcommand{\st}{\,\middle|\,} % ``such that'' pipe, for use in set definitions
 \newcommand{\symdiff}{\bigtriangleup} % set symmetric difference
 \newcommand{\defn}[1]{\emph{#1}} % emphasize words which are being defined
 \newcommand{\pair}[2]{\langle#1,#2\rangle} % pairing function

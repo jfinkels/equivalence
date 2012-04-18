@@ -115,7 +115,7 @@ The main ideas of these inclusions are presented in the following theorem (the c
   \item Choose the relation $R'$ in the definitions of $\NPEqSix$ and $\NPEqFive$ to be the equality relation.
   \item Hard-code the function $f$ from the definitions of $\NPEqSix$ and $\NPEqFive$ into the relation $R'$ in the definitions of $\NPEqFour$ and $\NPEqThree$.
   \item Choose $w_x$ and $w_y$ in $\NPEqSeven$, $\NPEqFive$, and $\NPEqThree$ to be equal to the $w$ from $\NPEqEight$, $\NPEqSix$, and $\NPEqFour$.
-  \item Define $L=\{\pair{\pair{x}{y}}{\pair{w_x}{w_y}}|\pair{\pair{x}{w_x}}{\pair{y}{w_y}}\in R'\}$, so the witness that $\pair{x}{y}\in L$ is the pair $\pair{w_x}{w_y}$.\qedhere
+  \item Define $L=\lb\pair{\pair{x}{y}}{\pair{w_x}{w_y}}\st\pair{\pair{x}{w_x}}{\pair{y}{w_y}}\in R'\rb$, so the witness that $\pair{x}{y}\in L$ is the pair $\pair{w_x}{w_y}$.\qedhere
   \end{enumerate}
 \end{sketch}
 
