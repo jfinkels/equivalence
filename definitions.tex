@@ -95,8 +95,8 @@ We say that an equivalence relation $R$ on a universe $U$ has a \defn{one-witnes
   \caption{\label{fig:inclusions}Inclusions among possible definitions of equivalence relations verifiable in deterministic polynomial time.}
   \begin{displaymath}
     \xymatrix{%
-      \NPEqSeven \ar[r] & \NPEqFive \ar[r] & \NPEqThree \ar[r] & \NPEqTwo \ar@{<->}[r] & \NPEqOne \\
-      \NPEqEight \ar[u] \ar[r] & \NPEqSix \ar[u] \ar[r] & \NPEqFour \ar[u]}
+      \NPEqSeven \ar[r] & \NPEqFive \ar@{<->}[r] & \NPEqThree \ar[r] & \NPEqTwo \ar@{<->}[r] & \NPEqOne \\
+      \NPEqEight \ar[u] \ar[r] & \NPEqSix \ar[u] \ar@{<->}[r] & \NPEqFour \ar[u]}
   \end{displaymath}
 \end{figure}
 The main ideas of these inclusions are presented in the following theorem (the complete proofs are tedious and so are omitted here).
@@ -104,7 +104,7 @@ The main ideas of these inclusions are presented in the following theorem (the c
   \begin{enumerate}
   \item $\NPEqOne=\NPEqTwo$
   \item $\NPEqEight\subseteq\NPEqSix$ and $\NPEqSeven\subseteq\NPEqFive$
-  \item $\NPEqSix\subseteq\NPEqFour$ and $\NPEqFive\subseteq\NPEqThree$
+  \item $\NPEqSix=\NPEqFour$ and $\NPEqFive=\NPEqThree$
   \item $\NPEqEight\subseteq\NPEqSeven$, $\NPEqSix\subseteq\NPEqFive$, and $\NPEqFour\subseteq\NPEqThree$
   \item $\NPEqThree\subseteq\NPEqTwo$
   \end{enumerate}
@@ -113,7 +113,9 @@ The main ideas of these inclusions are presented in the following theorem (the c
   \begin{enumerate}
   \item Follows immediately from the standard definitions of \NP.
   \item Choose the relation $R'$ in the definitions of $\NPEqSix$ and $\NPEqFive$ to be the equality relation.
-  \item Hard-code the function $f$ from the definitions of $\NPEqSix$ and $\NPEqFive$ into the relation $R'$ in the definitions of $\NPEqFour$ and $\NPEqThree$.
+  \item
+    For the forward direction, hard-code the function $f$ from the definitions of $\NPEqSix$ and $\NPEqFive$ into the relation $R'$ in the definitions of $\NPEqFour$ and $\NPEqThree$.
+    For the reverse direction, keep the relation $R'$ and choose the identity function.
   \item Choose $w_x$ and $w_y$ in $\NPEqSeven$, $\NPEqFive$, and $\NPEqThree$ to be equal to the $w$ from $\NPEqEight$, $\NPEqSix$, and $\NPEqFour$.
   \item Define $L=\lb\pair{\pair{x}{y}}{\pair{w_x}{w_y}}\st\pair{\pair{x}{w_x}}{\pair{y}{w_y}}\in R'\rb$, so the witness that $\pair{x}{y}\in L$ is the pair $\pair{w_x}{w_y}$.\qedhere
   \end{enumerate}
