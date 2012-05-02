@@ -7,8 +7,6 @@ TODO
 * given an arbitrary NPEq complete language in which some equivalence classes
   are finite, construct another language (polytime kernel reducible to it or
   from it) in which all equivalence classes are finite
-* with the previous point: construct NP equivalence relation from arbitrary
-  graph property harder than isomorphism
 * examine NP disjoint pairs: http://www.cse.buffalo.edu/~selman/NPpairs.pdf
 * and canonical proof systems:
   http://www.springerlink.com/content/e66u78n16w679417/
@@ -19,8 +17,6 @@ TODO
    relativization and the existence of complete sets" Theorem on page II.
 * easier perhaps: if L is CEq-complete then C = coC?
 * also: maybe if there is a NPEq complete problem, then NP=coNP?
-* Mahaney type theorem: if there are "equivalence"-sparse (i.e. in number of
-   equivalence classes) NPEq-complete problems, then P = NP.
 * an equivalence relation can be considered as a graph consisting of the union
    of disjoint cliques (the equivalence classes)---does this help us lower the
    complexity of anything? (for example, deciding if a set is an eq. rel. is
@@ -28,3 +24,9 @@ TODO
    there could be exponentially many connected components], or using the
    complement of clique, independent set, to do something with the complement
    of an equivalence relation)
+* Use github issues instead of this TODO file.
+* check that the number of equivalence classes of the PSPACEEq complete problem
+   is not sparse
+* show that a Sigma_k-complete problem implies a Sigma_k+1-complete problem
+* Do arbitrary \mathcal{C}-complete graph properties exist? What is a graph
+  property which is in \Sigma_2?
