@@ -196,16 +196,25 @@ Our result concerns not the sparseness of strings in a language, but the sparsen
 This complements the work on ``potential reducibility'', defined in section 5 of \cite{bcffm}.
 
 \begin{definition}[\cite{bcffm}, Definition~7.2]
-  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
-  We say $R$ is \defn{potentially reducible} to $S$, denoted $R\pot S$, if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, the number of equivalence classes in $R$ containing a string of length at most $n$ is at most the number of equivalence classes in $S$ containing a string of length at most $p(n)$.
+  \mbox{}
+  \begin{enumerate}
+  \item If $R$ is an equivalence relation on $\Sigma^*$, then define $\#R(n)$ to be $\left|\{[x]_R | x \in \Sigma^{\leq n}\}\right|$, or in other words, $\#R(n)$ is the number of equivalence classes in $R$ for strings of length at most $n$.
+  \item
+    Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
+    $R$ is \defn{potentially reducible} to $S$, denoted $R\pot S$, if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, $\#R(n)\leq \#S(p(n))$.
+  \end{enumerate}
 \end{definition}
 
 It follows from the definitions that for any equivalence relations $R$ and $S$, $R\kr S\implies R\pot S$, and hence $R\npot S \implies R\nkr S$ (this is stated and proven explicitly in \cite[Lemma~5.5]{bcffm}).
 As an analog to traditional sparse languages, we provide a definition of ``kernel sparsity'', and show its application to determining potential reducibility and hence kernel reducibility.
 
 \begin{definition}
-  An equivalence relation $R$ on $\Sigma^*$ is \defn{kernel sparse} if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, the number of equivalence classes containing a string of length at most $n$ is at most $p(n)$.
-  An equivalence relation is \defn{kernel dense} if it is not sparse, that is, if for all polynomials $p$ there exists an $n\in\mathbb{N}$ such that the number of equivalence classes containing a string of length at most $n$ is greater than $p(n)$.
+  An equivalence relation $R$ on $\Sigma^*$ is \defn{kernel sparse} if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, $\#R(n)\leq p(n)$.
+  In other words, the number of equivalence classes in $R$ for strings of length at most $n$ is bounded above by a polynomial in $n$.
+
+  An equivalence relation is \defn{kernel dense} if it is not kernel sparse.
+  Formally, if for all polynomials $p$ there exists an $n\in\mathbb{N}$ such that $\#R(n)>p(n)$.
+  In other words, the number of equivalence classes in $R$ for strings of length at most $n$ is greater than any polynomial in $n$.
 \end{definition}
 
 These definitions allow us to provide the following very natural proposition.
@@ -219,18 +228,19 @@ Intuitively, it states that an equivalence relation with many closely packed equ
   That $R\npot S$ implies $R\nkr S$ was already stated in the text following the definition of potential reducibility, so it suffices to show that $R\npot S$.
 
   Assume that $R\pot S$ with the intention of producing a contradiction.
-  Let $p$ be the polynomial such that the number of equivalence classes in $R$ containing strings of length at most $n$ is at most the number of equivalence classes in $S$ of length at most $p(n)$ (this is the definition of potential reducibility).
-  Let $q$ be the polynomial such that for all $n$ the number of equivalence classes in $S$ containing a string of length at most $n$ is at most $q(n)$ (this is the definition of kernel sparse).
-  For each natural number $n$, the number of equivalence classes in $S$ containing a string of length at most $n$ is at most $q(0) + q(1) + \cdots + q(n)$, which is itself bounded above by $nq(n)$ (since $q$ is non-decreasing).
-  It follows that the number of equivalence classes in $S$ containing a string of length at most $p(n)$ is bounded above by $p(n)q(p(n))$, which is a polynomial in $n$.
+  Let $p$ be the polynomial such that $\#R(n)\leq \#S(p(n))$ (this is the definition of potential reducibility).
+  Let $q$ be the polynomial such that for all $n$, $\#S(n)< q(n)$ (this is the definition of kernel sparse).
+  %% TODO is this true?
+  Assume without loss of generality that $q$ is non-decreasing (we can do this because for each polynomial $a$ there exists a non-decreasing polynomial $b$ such that $a(n)\leq b(n)$ for all $n$).
+  For each natural number $n$, we have $\#S(n) \leq q(0) + q(1) + \cdots + q(n) \leq n \cdot q(n)$ (since $q$ is non-decreasing).
+  Replacing $n$ with $p(n)$ in the above inequality, it follows that $\#S(p(n)) \leq p(n) \cdot q(p(n))$, which is a polynomial in $n$.
   (This is an overestimate, but we can be generous here and still produce a contradiction.)
-  Call this polynomial $r$.
+  Let $r(n)=p(n)\cdot q(p(n))$.
 
-  Let $n_0$ be the natural number such that the number of equivalence classes in $R$ containing a string of length at most $n_0$ is greater than $r(n_0)$.
-  Let $C$ be that number of equivalence classes, so $C>r(n_0)$.
-  So there are $C$ equivalence classes in $R$ containing strings of length at most $n_0$ (there may be more if there are distinct equivalence classes at smaller lengths) and $r(n_0)$ equivalence classes in $S$ containing strings of length at most $p(n_0)$.
-  Specifically there are more equivalence classes in $R$ for strings up to length $n_0$ than there are in $S$ for strings up to length $p(n_0)$.
-  From this we infer that $R$ cannot potentially reduce to $S$, because the number of equivalence classes in $R$ for strings up to length $n_0$ is too great compared to the number of equivalence classes in $S$ for strings up to length $p(n_0)$.
+  Let $n_0$ be the natural number such that $\#R(n_0) > r(n_0)$, by the definition of kernel sparse.
+  Since $\#S(p(n_0)) \leq r(n_0)$, we have $\#R(n_0) > \#S(p(n_0))$.
+  In other words, there are more equivalence classes in $R$ for strings up to length $n_0$ than there are in $S$ for strings up to length $p(n_0)$.
+  By the pigeonhole principle, we conclude that $R$ cannot potentially reduce to $S$, because the number of equivalence classes in $R$ for strings up to length $n_0$ is too great compared to the number of equivalence classes in $S$ for strings up to length $p(n_0)$.
   This is a contradiction with the assumption that $R\pot S$.
   We have shown this for arbitrary polynomials (which came from the definitions of potential reducibility and kernel sparsity), so we can conclude that the result holds for all equivalence relations $R$ and $S$ which are kernel dense and kernel sparse, respectively.
 \end{proof}
@@ -239,10 +249,10 @@ This places a strong restriction on equivalence relations which are hard (or com
 
 \begin{corollary}
   Let $\CEq$ be a complexity class of equivalence relations containing the equality relation, $R_{eq}=\lb\pair{x}{y} \st x=y\rb$.
-  If an equivalence relation $R$ is $\CEq$-hard then it is not kernel sparse.
+  If an equivalence relation $R$ is $\CEq$-hard then it is not kernel sparse (that is, it is kernel dense).
 \end{corollary}
 \begin{proof}
-  $R_{eq}$ is kernel dense, since it contains $2^n$ equivalence classes at each length $n$---one for each distinct string.
+  $R_{eq}$ is kernel dense since it contains $2^n$ equivalence classes at each length $n$---one for each distinct string.
   If $R$ were kernel sparse then $R_{eq}\npot R$ by \autoref{prop:density}.
   This would imply $R_{eq}\nkr R$, which is a contradiction with the hypothesis that all equivalence relations in $\CEq$ (including $R_{eq}$) polynomial time kernel reduce to $R$.
   Therefore $R$ is not kernel sparse.
