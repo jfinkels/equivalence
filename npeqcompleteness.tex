@@ -42,7 +42,6 @@ In this section we examine the relationship between $\mathcal{C}$-complete probl
 %% Say that $\Pi$ is a \defn{$\mathcal{C}$-complete property} if $L_\Pi$ is $\mathcal{C}$-complete under $\mor$ reductions in some complexity class $\mathcal{C}$.
 %% It is easy to see that if $\Pi$ is either a uniform property or a $\mathcal{C}$-complete property, then it is not a null property.
 
-% TODO Need the real formal definitions here...
 Suppose (for the rest of this section) that $\mathcal{K}$ is some set of structures in which
 \begin{enumerate}
 \item each structure $X$ has a size, denoted $|X|$, and
@@ -167,8 +166,7 @@ Note that the number of equivalence classes of $A^=(\Pi)$ is infinite, since the
 However, each of those equivalence classes is itself finite.
 As justification, consider the equivalence class of an arbitrary structure $X$ in $A^=(\Pi)$, $[X]$.
 $[X]$ includes exactly all the structures $Y$ which are isomorphic to $X$ plus (at most) all structures $Z$ for which $\Pi(Z)$ is true and $|X|=|Z|$ (if $\Pi(X)$ is true at all).
-%% TODO This is not true for arbitrary equivalence relations: see R below.
-In either case, the structures $Y$ and $Z$ have the same size as $X$.
+In either case, the structures $Y$ and $Z$ have the same size as $X$ (since our notion of isomorphism implies that $Y$ and $Z$ have equal sizes).
 The number of structures of size $|X|$ is finite, so $[X]$ is finite.
 
 As a contrast, consider the equivalence relation
