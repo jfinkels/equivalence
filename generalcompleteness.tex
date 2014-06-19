@@ -29,8 +29,9 @@ Before proving this theorem, we will provide some immediate corollaries of this 
   \begin{enumerate}
   %\item $\EXPEq$ has a complete problem
   \item $\PSPACEEq$ has a complete problem
-  \item\label{itm:hardforsigma} $\PKPOPEq$ contains a problem which is hard for $\SKPEq$, for all $k\geq 0$
-  \item $\PKPOPEq$ contains a problem which is hard for $\PKPEq$, for all $k\geq 0$
+  \item $\PKPEq$ contains a problem that is hard for $\DKPEq$, for all $k \geq 1$
+  %\item\label{itm:hardforsigma} $\PKPOPEq$ contains a problem which is hard for $\SKPEq$, for all $k\geq 0$
+  %\item $\PKPOPEq$ contains a problem which is hard for $\PKPEq$, for all $k\geq 0$
   %\item $\coNPEq$ contains a problem which is hard for $\PEq$
   \end{enumerate}
 \end{corollary}
@@ -38,21 +39,26 @@ Before proving this theorem, we will provide some immediate corollaries of this 
   \begin{enumerate}
   %\item $\EXP$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in exponential time).
   \item $\PSPACE$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in polynomial space).
-  \item If $\mathcal{C}=\SKP$, then the $\kr$-hard problem is in $(\forall(\SKP\cup\mathsf{co}\SKP))\mathsf{Eq}=(\forall(\SKP\cup\PKP))\mathsf{Eq}=\PKPOPEq$.
-  \item Same as the previous justification, but starting with $\mathcal{C}=\PKP$.\qedhere
+  \item
+    First, $(\forall(\DKP \cup \mathsf{co}\DKP))\mathsf{Eq} = (\forall \DKP)\mathsf{Eq}$, since $\DKP$ is closed under complement.  % \autocite[Proposition~8.4 (a)]{bdg95}
+    Next, $(\forall \DKP)\mathsf{Eq} = \PKPEq$, since $\forall \DKP = \PKP$.  % \autocite[Proposition~8.3 (g)]{bdg95}
+    Now if $\mathcal{C} = \DKP$, then $\PKP$ has a problem that is hard for $\DKP$ under $\kr$ reductions.
+    \qedhere
+  %\item If $\mathcal{C}=\SKP$, then the $\kr$-hard problem is in $(\forall(\SKP\cup\mathsf{co}\SKP))\mathsf{Eq}=(\forall(\SKP\cup\PKP))\mathsf{Eq}=\PKPOPEq$.
+  %\item Same as the previous justification, but starting with $\mathcal{C}=\PKP$.\qedhere
 %  \item Same as the previous justification, but starting with $\mathcal{C}=\P$.
   \end{enumerate}
 \end{proof}
 
-More specifically, this means that $\coNPEq$ has a problem which is $\kr$-hard for $\PEq$.
-\autoref{cor:hardproblems} also implies part 1 of \autocite[Theorem~8.7]{bcffm}, which is restated here.
+More specifically, this means that $\coNPEq$ (which equals $\POPEq$) has a problem which is $\kr$-hard for $\PEq$ (which equals $\DOPEq$).
+This leads to \autocite[Theorem~8.7, part~1]{bcffm}, which is restated here.
 
 \begin{corollary}[{\autocite[Theorem~8.7, part~1]{bcffm}}]
-  If $\NP=\coNP$ then $\NPEq$ has a complete problem under polynomial time kernel reductions.
+  If $\NP = \coNP$ then $\NPEq$ has a complete problem under polynomial time kernel reductions.
 \end{corollary}
 \begin{proof}
-  If $\NP=\coNP$, then the polynomial hierarchy collapses, and specifically $\mathsf{\Pi_2P}=\mathsf{\Pi_1P}=\coNP=\NP$.
-  From \autoref{itm:hardforsigma} in \autoref{cor:hardproblems} we conclude that $\NPEq$ has a $\kr$-hard problem for $\NPEq$.
+  If $\NP = \coNP$, then the polynomial hierarchy collapses to $\POP$, and specifically $\PTP = \DOP = \POP = \coNP = \NP$.
+  From \autoref{cor:hardproblems} we conclude that $\NPEq$ has a $\kr$-hard problem for $\NPEq$.
   Such a problem is by definition $\NPEq$-complete.
 \end{proof}
 
