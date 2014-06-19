@@ -61,28 +61,28 @@ The following proposition was first stated as a fact in \autocite{fg11}; the pro
   Therefore this is a correct polynomial time many-one reduction from $R$ to $S$.
 \end{proof}
 
-Propositions \ref{prop:noreduction} and \ref{prop:tworeduction} provide a simple proof of \autocite[Remark~5.2]{bcffm}.
+%% Propositions \ref{prop:noreduction} and \ref{prop:tworeduction} provide a simple proof of \autocite[Remark~5.2]{bcffm}.
 
-\begin{theorem}[{\autocite[Remark~5.2]{bcffm}}]
-  There exists an infinite sequence of equivalence relations $R_i$, each in \PEq, such that
-  \begin{displaymath}
-    \cdots\nkr R_4\nkr R_3\nkr R_2
-  \end{displaymath}
-  but
-  \begin{displaymath}
-    \cdots\moe R_4\moe R_3\moe R_2.
-  \end{displaymath}
-  In other words, polynomial time kernel reductions and polynomial time many-one reductions are different in \PEq.
-\end{theorem}
-\begin{proof}
-  Let $R_i$ be defined as $R_i=\lb\pair{x}{y} \st x\equiv y\pmod{i}\rb$ for all $i\geq 2$.
-  Equivalence of two integers modulo $i$ can be decided in polynomial time, so $R_i\in\PEq$.
-  Also, $R_i$ has $i$ equivalence classes.
+%% \begin{theorem}[{\autocite[Remark~5.2]{bcffm}}]
+%%   There exists an infinite sequence of equivalence relations $R_i$, each in \PEq, such that
+%%   \begin{displaymath}
+%%     \cdots\nkr R_4\nkr R_3\nkr R_2
+%%   \end{displaymath}
+%%   but
+%%   \begin{displaymath}
+%%     \cdots\moe R_4\moe R_3\moe R_2.
+%%   \end{displaymath}
+%%   In other words, polynomial time kernel reductions and polynomial time many-one reductions are different in \PEq.
+%% \end{theorem}
+%% \begin{proof}
+%%   Let $R_i$ be defined as $R_i=\lb\pair{x}{y} \st x\equiv y\pmod{i}\rb$ for all $i\geq 2$.
+%%   Equivalence of two integers modulo $i$ can be decided in polynomial time, so $R_i\in\PEq$.
+%%   Also, $R_i$ has $i$ equivalence classes.
 
-  Since $i+1>i$, by \autoref{prop:noreduction}, $R_{i+1}\nkr R_i$.
-  But by \autoref{prop:tworeduction}, $R_{i+1}\moe R_i$ for all $i\geq 2$.
-  This provides the sequence of equivalence relations described in the statement of the theorem.
-\end{proof}
+%%   Since $i+1>i$, by \autoref{prop:noreduction}, $R_{i+1}\nkr R_i$.
+%%   But by \autoref{prop:tworeduction}, $R_{i+1}\moe R_i$ for all $i\geq 2$.
+%%   This provides the sequence of equivalence relations described in the statement of the theorem.
+%% \end{proof}
 
 %% \begin{corollary}\label{cor:finite}
 %%   \mbox{}
