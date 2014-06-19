@@ -6,12 +6,14 @@
 *.aux
 *.log
 *.bbl
+*.bcf
 *.blg
 *.brf
 *.nav
 *.out
 *.snm
 *.toc
+*.xml
 
 *.dvi
 *.ps

@@ -1,39 +1,21 @@
-%%%%
-%% generalcompleteness.tex
+%% generalcompleteness.tex - completeness under kernel reductions
 %%
-%% Copyright 2011, 2012 Jeffrey Finkelstein
+%% Copyright 2010, 2011, 2012, 2014 Jeffrey Finkelstein.
 %%
-%% Except where otherwise noted, this work is made available under the terms of
-%% the Creative Commons Attribution-ShareAlike 3.0 license,
-%% http://creativecommons.org/licenses/by-sa/3.0/.
-%%
-%% You are free:
-%%    * to Share — to copy, distribute and transmit the work
-%%    * to Remix — to adapt the work
-%% Under the following conditions:
-%%    * Attribution — You must attribute the work in the manner specified by
-%%    the author or licensor (but not in any way that suggests that they
-%%    endorse you or your use of the work).
-%%    * Share Alike — If you alter, transform, or build upon this work, you may
-%%    distribute the resulting work only under the same, similar or a 
-%%    compatible license.
-%%    * For any reuse or distribution, you must make clear to others the 
-%%    license terms of this work. The best way to do this is with a link to the
-%%    web page http://creativecommons.org/licenses/by-sa/3.0/.
-%%    * Any of the above conditions can be waived if you get permission from
-%%    the copyright holder.
-%%    * Nothing in this license impairs or restricts the author's moral rights.
-%%%%
+%% This LaTeX markup document is made available under the terms of the Creative
+%% Commons Attribution-ShareAlike 4.0 International License,
+%% https://creativecommons.org/licenses/by-sa/4.0/.
 \section{Conditions for complete problems under polynomial time kernel reductions}
 \label{sec:generalcompleteness}
 
-In this section we use the techniques of \cite[Theorem~8.7]{bcffm} to present a general theorem which provides equivalence relations which are hard for a number of interesting complexity classes under polynomial time kernel reductions.
+In this section we use the techniques of \autocite[Theorem~8.7]{bcffm} to present a general theorem which provides equivalence relations which are hard for a number of interesting complexity classes under polynomial time kernel reductions.
 We need one additional definition here.
 If $\mathcal{C}$ is a complexity class then the class $\forall\mathcal{C}$ is the set of languages $A$ such that there exists a language $B\in\mathcal{C}$ and a polynomial $p$ satisfying $x\in A$ if and only if $\forall w\in\Sigma^{\leq p(|x|)} \pair{x}{w}\in B$.
 $\forall\mathcal{C}$ is called the \defn{closure of $\mathcal{C}$ under polynomially bounded universal quantification}.
 
 \begin{theorem}\label{thm:generalcompleteness}
-  \printcompletenesstheorem
+  Let $\mathcal{C}$ be a subset of $\PSPACE$ which contains the problem of deciding whether two strings are equal.
+  Then there exists an equivalence relation in $\CRAZYEq$ which is hard for $\CEq$ under $\kr$ reductions.
 \end{theorem}
 
 Before proving this theorem, we will provide some immediate corollaries of this general result.
@@ -63,9 +45,9 @@ Before proving this theorem, we will provide some immediate corollaries of this 
 \end{proof}
 
 More specifically, this means that $\coNPEq$ has a problem which is $\kr$-hard for $\PEq$.
-\autoref{cor:hardproblems} also implies part 1 of \cite[Theorem~8.7]{bcffm}, which is restated here.
+\autoref{cor:hardproblems} also implies part 1 of \autocite[Theorem~8.7]{bcffm}, which is restated here.
 
-\begin{corollary}[\cite{bcffm}, Theorem~8.7, part 1]
+\begin{corollary}[{\autocite[Theorem~8.7, part~1]{bcffm}}]
   If $\NP=\coNP$ then $\NPEq$ has a complete problem under polynomial time kernel reductions.
 \end{corollary}
 \begin{proof}
@@ -102,7 +84,7 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   If $A$ accepts, then the three properties are satisfied, and if it rejects then one of the three properties is violated.
   Since $M$ is a machine of type $\mathcal{C}$, checking if $M$ accepts on some input and if $M$ rejects on some input is in $\mathcal{C}\cup\mathsf{co}\mathcal{C}$.
   The universal guesses of $a,b,$ and $c$ (of length at most $n$) followed by checks of whether the six simulations of $M$ accept or reject place $L(A)$ in the class $\CRAZY$.
-  If $p$ is the polynomial which bounds the running time of $M$, then the running time of this algorithm is $6p(|\pair{1^n}{1^n}|)+c$, where $c$ is a constant which represents the time needed to account for the implementation of $A$ (the control of the simulations of $M$, performing logical conjunctions, etc.).
+  If $p$ is the polynomial which bounds the running time of $M$, then the running time of this algorithm is $6p\left(\left|\pair{1^n}{1^n}\right|\right)+c$, where $c$ is a constant which represents the time needed to account for the implementation of $A$ (the control of the simulations of $M$, performing logical conjunctions, etc.).
   Hence the running time of $A$ is polynomial in $n$.
 
   Now we can define the set $R_K$ by
@@ -193,9 +175,9 @@ As an additional corollary, we show that the equivalence relation $R_K$ is neces
 
 Finally, the following theorem is inspired by Mahaney's theorem, which states that there are no sparse \NP-complete languages unless $\P=\NP$.
 Our result concerns not the sparseness of strings in a language, but the sparseness of equivalence classes in an equivalence relation.
-This complements the work on ``potential reducibility'', defined in section 5 of \cite{bcffm}.
+This complements the work on ``potential reducibility'', defined in section 5 of \autocite{bcffm}.
 
-\begin{definition}[\cite{bcffm}, Definition~7.2]
+\begin{definition}[{\autocite[Definition~7.2]{bcffm}}]
   \mbox{}
   \begin{enumerate}
   \item If $R$ is an equivalence relation on $\Sigma^*$, then define $\#R(n)$ to be $\left|\{[x]_R | x \in \Sigma^{\leq n}\}\right|$, or in other words, $\#R(n)$ is the number of equivalence classes in $R$ for strings of length at most $n$.
@@ -205,7 +187,7 @@ This complements the work on ``potential reducibility'', defined in section 5 of
   \end{enumerate}
 \end{definition}
 
-It follows from the definitions that for any equivalence relations $R$ and $S$, $R\kr S\implies R\pot S$, and hence $R\npot S \implies R\nkr S$ (this is stated and proven explicitly in \cite[Lemma~5.5]{bcffm}).
+It follows from the definitions that for any equivalence relations $R$ and $S$, $R\kr S\implies R\pot S$, and hence $R\npot S \implies R\nkr S$ (this is stated and proven explicitly in \autocite[Lemma~5.5]{bcffm}).
 As an analog to traditional sparse languages, we provide a definition of ``kernel sparsity'', and show its application to determining potential reducibility and hence kernel reducibility.
 
 \begin{definition}

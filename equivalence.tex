@@ -1,101 +1,51 @@
-%%%%
-%% equivalence.tex
+%% equivalence.tex - Polynomial-time kernel reductions
 %%
-%% Copyright 2010, 2011, 2012 Jeffrey Finkelstein
+%% Copyright 2010, 2011, 2012, 2014 Jeffrey Finkelstein.
 %%
-%% Except where otherwise noted, this work is made available under the terms of
-%% the Creative Commons Attribution-ShareAlike 3.0 license,
-%% http://creativecommons.org/licenses/by-sa/3.0/.
-%%
-%% You are free:
-%%    * to Share — to copy, distribute and transmit the work
-%%    * to Remix — to adapt the work
-%% Under the following conditions:
-%%    * Attribution — You must attribute the work in the manner specified by
-%%    the author or licensor (but not in any way that suggests that they
-%%    endorse you or your use of the work).
-%%    * Share Alike — If you alter, transform, or build upon this work, you may
-%%    distribute the resulting work only under the same, similar or a 
-%%    compatible license.
-%%    * For any reuse or distribution, you must make clear to others the 
-%%    license terms of this work. The best way to do this is with a link to the
-%%    web page http://creativecommons.org/licenses/by-sa/3.0/.
-%%    * Any of the above conditions can be waived if you get permission from
-%%    the copyright holder.
-%%    * Nothing in this license impairs or restricts the author's moral rights.
-%%%%
-\documentclass[draft]{article}
+%% This LaTeX markup document is made available under the terms of the Creative
+%% Commons Attribution-ShareAlike 4.0 International License,
+%% https://creativecommons.org/licenses/by-sa/4.0/.
+\documentclass{article}
 
-% package imports
-\usepackage{aliascnt} % for correct autoref labeling of non-theorems
-\usepackage{amsthm} % for theorems, definitions, lemmas, and styles
-\usepackage{amsmath} % for \implies and \text
-\usepackage{amssymb} % for \nleq and \mathbb
-\usepackage{complexity} % for typesetting complexity classes
-\usepackage[pdftitle={Polynomial time kernel reductions}, pdfauthor={Jeffrey Finkelstein}]{hyperref}
+%% This must come before hyperref.
+\usepackage{amsthm}
+%% These must come before hyperref.
+\usepackage{thmtools}
+\usepackage{thm-restate}
+%% This must come before complexity.
+\usepackage{hyperref}
+%% This is strongly recommended by biblatex.
+\usepackage[english]{babel}
+%% This is strongly recommended by biblatex.
+\usepackage{csquotes}
+\usepackage[backend=biber]{biblatex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{complexity}
+\usepackage{hyperref}
 \usepackage[matrix,arrow]{xy} % for inclusion diagram
+\usepackage{textcomp} % for \textlangle, \textrangle
 
-% Define theorem, lemma, and definition environments and corresponding styles.
-% Lemmata, corollaries, and definitions are numbered with the same counter as
-% that for theorems. We have to do some black magic to get the \autoref labels
-% to work correctly.
-\newtheorem{theorem}{Theorem}[section]
+\hypersetup{pdftitle={Polynomial time kernel reductions}, pdfauthor={Jeffrey Finkelstein}}
 
-\newaliascnt{lemma}{theorem}
-\newtheorem{lemma}[lemma]{Lemma}
-\aliascntresetthe{lemma}
+\addbibresource{references.bib}
 
-\newaliascnt{proposition}{theorem}
-\newtheorem{proposition}[proposition]{Proposition}
-\aliascntresetthe{proposition}
-
-\newaliascnt{corollary}{theorem}
-\newtheorem{corollary}[corollary]{Corollary}
-\aliascntresetthe{corollary}
-
-\newaliascnt{openproblem}{theorem}
-\theoremstyle{definition} \newtheorem{openproblem}[openproblem]{Open problem}
-\aliascntresetthe{openproblem}
-
-\newaliascnt{definition}{theorem}
-\theoremstyle{definition} \newtheorem{definition}[definition]{Definition}
-\aliascntresetthe{definition}
-
-\newaliascnt{example}{theorem}
-\theoremstyle{definition} \newtheorem{example}[example]{Example}
-\aliascntresetthe{example}
-
-\newaliascnt{remark}{theorem}
-\theoremstyle{remark} \newtheorem{remark}[remark]{Remark}
-\aliascntresetthe{remark}
-
-\newtheorem{claim}{Claim}
-
-% for repeating theorems
-\makeatletter
-\newtheorem*{rep@theorem}{\rep@title}
-\newcommand{\newreptheorem}[2]{%
-\newenvironment{rep#1}[1]{%
- \def\rep@title{#2 \ref{##1}}%
- \begin{rep@theorem}}%
- {\end{rep@theorem}}}
-\makeatother
-\newreptheorem{theorem}{Theorem}
-
-% define lemma, corollary, and definition context labels for \autoref command
-% (theorem is already defined)
-\newcommand{\lemmaname}{Lemma}
-\newcommand{\corollaryname}{Corollary}
-\newcommand{\definitionname}{Definition}
-\newcommand{\propositionname}{Proposition}
-\newcommand{\remarkname}{Remark}
-\newcommand{\openproblemname}{Open problem}
+\declaretheorem[numberwithin=section]{theorem}
+\declaretheorem[numberlike=theorem]{claim}
+\declaretheorem[numberlike=theorem]{lemma}
+\declaretheorem[numberlike=theorem]{proposition}
+\declaretheorem[numberlike=theorem]{corollary}
+\declaretheorem[numberlike=theorem, style=definition]{definition}
+\declaretheorem[numberlike=theorem, style=definition]{openproblem}
+\declaretheorem[numberlike=theorem, style=definition]{example}
+\declaretheorem[numberlike=theorem, style=definition]{remark}
 
 % create a proof sketch environment
 \newenvironment{sketch}{\begin{proof}[Proof sketch]}{\end{proof}}
 
 % custom shortcut commands
-\newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}} % formatting emails
+%\newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}} % formatting emails
+\newcommand{\email}[1]{\textlangle\href{mailto:#1}{\nolinkurl{#1}}\textrangle}
 \newcommand{\plain}[1]{\text{ #1 }} % plain text inside math environments
 \newcommand{\sigmastar}{\{0, 1\}^{*}} % the set of all binary strings
 \newcommand{\kj}{\overset{ker}{\oplus}} % kernel join
@@ -124,31 +74,30 @@
 \newenvironment{instance}{\\Instance:}{}
 \newenvironment{question}{\\Question:}{}
 
-% for theorems which appear more than once
-\newcommand{\printintermediarytheorem}{If $\PEq\neq\NPEq$ and $\NPEqC$ is non-empty, then there exists an equivalence relation in $\NPEq$ which is in neither $\PEq$ nor $\NPEqC$.}
-\newcommand{\printcompletenesstheorem}{Let $\mathcal{C}$ be a subset of $\PSPACE$ which contains the problem of deciding whether two strings are equal.
-Then there exists an equivalence relation in $\CRAZYEq$ which is hard for $\CEq$ under $\kr$ reductions.}
-
-% create the creative commons license
-\newcommand{\license}{Copyright 2012 Jef{}frey~Finkelstein.
-  This work is licensed under the Creative Commons Attribution-ShareAlike License.
-  To view a copy of this license, visit \mbox{\url{http://creativecommons.org/licenses/by-sa/3.0/}}.}
-
 % redefine footnote so it has no reference and no number
 \long\def\symbolfootnote#1{\begingroup%
 \def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup} 
 
 % define the author, title, and date
-\author{Jef{}frey Finkelstein\\ Computer Science Department, Boston University
-  \and Benjamin Hescot{}t\\ Computer Science Department, Tufts University}
+\author{Jeffrey~Finkelstein\\ Computer Science Department, Boston University
+  \and Benjamin~Hescott\\ Computer Science Department, Tufts University}
 \title{Polynomial time kernel reductions}
-\date{\today} 
 
 \begin{document}
+
 \maketitle
+
 \input{abstract}
-\symbolfootnote{\license}
-\symbolfootnote{The \LaTeX\, source for this paper can be viewed on the web or downloaded at \mbox{\url{http://github.com/jfinkels/equivalence}}.}
+
+\symbolfootnote{%
+  Copyright 2010, 2011, 2012, 2014 Jeffrey~Finkelstein \email{jeffreyf@bu.edu}.
+
+  This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.
+  To view a copy of this license, visit the website \mbox{\url{https://creativecommons.org/licenses/by-sa/4.0/}}.
+  The \LaTeX{} markup that generated this document can be downloaded from \mbox{\url{https://github.com/jfinkels/equivalence}}.
+  The markup is distributed under the same license.
+}
+
 \input{introduction}
 \input{preliminaries}
 \input{definitions}
@@ -158,7 +107,7 @@ Then there exists an equivalence relation in $\CRAZYEq$ which is hard for $\CEq$
 \input{intermediary}
 \input{openproblems}
 \input{acknowledgments}
-\input{about}
-\bibliographystyle{plain}
-\bibliography{references}
+
+\printbibliography
+
 \end{document}

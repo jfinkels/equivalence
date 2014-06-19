@@ -1,41 +1,22 @@
-%%%%
-%% introduction.tex
+%% introduction.tex - introduction and motivation for the work
 %%
-%% Copyright 2011, 2012 Jeffrey Finkelstein
+%% Copyright 2010, 2011, 2012, 2014 Jeffrey Finkelstein.
 %%
-%% Except where otherwise noted, this work is made available under the terms of
-%% the Creative Commons Attribution-ShareAlike 3.0 license,
-%% http://creativecommons.org/licenses/by-sa/3.0/.
-%%
-%% You are free:
-%%    * to Share — to copy, distribute and transmit the work
-%%    * to Remix — to adapt the work
-%% Under the following conditions:
-%%    * Attribution — You must attribute the work in the manner specified by
-%%    the author or licensor (but not in any way that suggests that they
-%%    endorse you or your use of the work).
-%%    * Share Alike — If you alter, transform, or build upon this work, you may
-%%    distribute the resulting work only under the same, similar or a 
-%%    compatible license.
-%%    * For any reuse or distribution, you must make clear to others the 
-%%    license terms of this work. The best way to do this is with a link to the
-%%    web page http://creativecommons.org/licenses/by-sa/3.0/.
-%%    * Any of the above conditions can be waived if you get permission from
-%%    the copyright holder.
-%%    * Nothing in this license impairs or restricts the author's moral rights.
-%%%%
+%% This LaTeX markup document is made available under the terms of the Creative
+%% Commons Attribution-ShareAlike 4.0 International License,
+%% https://creativecommons.org/licenses/by-sa/4.0/.
 \section{Introduction}
 
 In this paper we examine the power of ``kernel reductions'' on languages induced by equivalence relations, specifically for which membership can be decided by a non-deterministic Turing machine running in time polynomial in the length of the input.
 Given two equivalence relations $R$ and $S$, each of which can be expressed as a set of pairs of strings, a \defn{kernel reduction} from $R$ to $S$ is a function $f$ for which $\pair{x}{y}\in R\iff\pair{f(x)}{f(y)}\in S$.
 This function maps each \emph{member} of the pair in $R$ to an element of a pair in the relation $S$, instead of mapping the \emph{entire} pair to another pair.
-The full definition of ``kernel reduction'' is given by Fortnow and Grochow \cite{fg11} (and is repeated below), though the idea has existed before then.
+The full definition of ``kernel reduction'' is given by Fortnow and Grochow \autocite{fg11} (and is repeated below), though the idea has existed before then.
 In fact, all polynomial time many-one reductions to and from the graph isomorphism problem are, to the best of our knowledge, in fact kernel reductions, though they have not before been called by this name.
 The same seems to go for polynomial time many-one reductions to and from other equivalence problems.
 This kind of reduction is more natural than the usual many-one reduction for problems of equivalence.
 It is therefore important to study the power of these reductions and how they can help further classify currently known and newly discovered complexity classes.
 
-We would briefly like to point out that \cite{bcffm} provides a thorough treatment of the kernel reduction (from the viewpoint of a logician), there called a ``strong isomorphism reduction'', and this work extends and clarifies several of the results from that paper (from the viewpoint of a complexity theorist).
+We would briefly like to point out that \autocite{bcffm} provides a thorough treatment of the kernel reduction (from the viewpoint of a logician), there called a ``strong isomorphism reduction'', and this work extends and clarifies several of the results from that paper (from the viewpoint of a complexity theorist).
 We have attempted to provide plentiful explicit references to specific theorems in that work where appropriate and we encourage the reader to examine the original theorems and proofs.
 
 In \autoref{sec:preliminaries} we provide the definitions necessary for the study of polynomial time kernel reductions and effectively computable equivalence problems.

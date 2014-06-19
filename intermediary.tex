@@ -1,40 +1,21 @@
-%%%%
-%% intermediary.tex
+%% intermediary.tex - NP-intermediary equivalence relations
 %%
-%% Copyright 2011, 2012 Jeffrey Finkelstein
+%% Copyright 2010, 2011, 2012, 2014 Jeffrey Finkelstein.
 %%
-%% Except where otherwise noted, this work is made available under the terms of
-%% the Creative Commons Attribution-ShareAlike 3.0 license,
-%% http://creativecommons.org/licenses/by-sa/3.0/.
-%%
-%% You are free:
-%%    * to Share — to copy, distribute and transmit the work
-%%    * to Remix — to adapt the work
-%% Under the following conditions:
-%%    * Attribution — You must attribute the work in the manner specified by
-%%    the author or licensor (but not in any way that suggests that they
-%%    endorse you or your use of the work).
-%%    * Share Alike — If you alter, transform, or build upon this work, you may
-%%    distribute the resulting work only under the same, similar or a 
-%%    compatible license.
-%%    * For any reuse or distribution, you must make clear to others the 
-%%    license terms of this work. The best way to do this is with a link to the
-%%    web page http://creativecommons.org/licenses/by-sa/3.0/.
-%%    * Any of the above conditions can be waived if you get permission from
-%%    the copyright holder.
-%%    * Nothing in this license impairs or restricts the author's moral rights.
-%%%%
+%% This LaTeX markup document is made available under the terms of the Creative
+%% Commons Attribution-ShareAlike 4.0 International License,
+%% https://creativecommons.org/licenses/by-sa/4.0/.
 \section{Existence of intermediary problems}
 \label{sec:intermediary}
 
 We will denote by $\NPEqC$ the set of equivalence relations which are $\kr$-complete for \NPEq.
 
 The main result of this section is as follows.
-\begin{reptheorem}{thm:intermediary}
-  \printintermediarytheorem
-\end{reptheorem}
-To show this, we will adapt a proof of Ladner's original theorem\cite{ladner} showing that if $\P\neq\NP$ then there exist problems in $\NP$ which are neither in $\P$ nor \NP-complete.
-The proof we follow can be found in \cite{bdg95}, which is an adaptation of Sch\"{o}ning's proof of the ``uniform diagonalization theorem''\cite{schoning}, which is itself a generalization of Ladner's original method.
+\begin{restatable*}{theorem}{intermediary}\label{thm:intermediary}
+  If $\PEq \neq \NPEq$ and $\NPEqC$ is non-empty, then there exists an equivalence relation in $\NPEq$ which is in neither $\PEq$ nor $\NPEqC$.
+\end{restatable*}
+To show this, we will adapt a proof of Ladner's original theorem \autocite{ladner} showing that if $\P\neq\NP$ then there exist problems in $\NP$ which are neither in $\P$ nor \NP-complete.
+The proof we follow can be found in \autocite{bdg95}, which is an adaptation of Sch\"{o}ning's proof of the ``uniform diagonalization theorem'' \autocite{schoning}, which is itself a generalization of Ladner's original method.
 
 First we need to provide some technical definitions and machinery.
 
@@ -233,9 +214,7 @@ We would now like to show that the result of this theorem holds when $\mathcal{C
   Therefore $\PEq\cap\NPEqC=\emptyset$.
 \end{proof}
 
-\begin{theorem}\label{thm:intermediary}
-  \printintermediarytheorem
-\end{theorem}
+\intermediary
 \begin{proof}
   The hypothesis of this theorem is the same as in \autoref{prop:npeqc}, so $\PEq\cap\NPEqC=\emptyset$.
   Let $S$ be an \NPEq-complete problem.
@@ -246,7 +225,7 @@ We would now like to show that the result of this theorem holds when $\mathcal{C
   Since $\NPEq$ is closed under polynomial time kernel reductions by \autoref{prop:closed_under_kr}, $R\in\NPEq$.
 \end{proof}
 
-This also introduces a host of similar corollaries showing the existence of intermediary problems for other classes of equivalence relations which have $\kr$-complete problems; for more examples, see the original paper by Sch\"{o}ning \cite{schoning}.
+This also introduces a host of similar corollaries showing the existence of intermediary problems for other classes of equivalence relations which have $\kr$-complete problems; for more examples, see the original paper by Sch\"{o}ning \autocite{schoning}.
 In particular, we can make the following stronger statement using \autoref{cor:hardproblems}.
 (Note that $\PHEq$ is the class of equivalence relations in $\PH$, the polynomial hierarchy.)
 \begin{corollary}
