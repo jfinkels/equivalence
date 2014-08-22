@@ -208,7 +208,7 @@ As an analog to traditional sparse languages, we provide a definition of ``kerne
 These definitions allow us to provide the following very natural proposition.
 Intuitively, it states that an equivalence relation with many closely packed equivalence classes cannot reduce (under polynomially bounded notions of reduction) to an equivalence relation with few but widely spaced equivalence classes.
 
-\begin{theorem}\label{prop:density}
+\begin{theorem}\label{thm:density}
   Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
   If $R$ is kernel dense and $S$ is kernel sparse, then $R\npot S$ and in particular $R\nkr S$.
 \end{theorem}
@@ -241,7 +241,7 @@ This places a strong restriction on equivalence relations which are hard (or com
 \end{corollary}
 \begin{proof}
   $R_{eq}$ is kernel dense since it contains $2^n$ equivalence classes at each length $n$---one for each distinct string.
-  If $R$ were kernel sparse then $R_{eq}\npot R$ by \autoref{prop:density}.
+  If $R$ were kernel sparse then $R_{eq}\npot R$ by \autoref{thm:density}.
   This would imply $R_{eq}\nkr R$, which is a contradiction with the hypothesis that all equivalence relations in $\CEq$ (including $R_{eq}$) polynomial time kernel reduce to $R$.
   Therefore $R$ is not kernel sparse.
 \end{proof}
@@ -265,3 +265,25 @@ This places a strong restriction on equivalence relations which are hard (or com
 %%   Thus $\phi$ is satisfiable if and only if $\exists z\colon\overline{Q}(\tau\land z)$ is satisfiable, so $\QBF\mor\QBFEq$.
 %%   Since $\QBFEq$ is clearly decidable in $\PSPACE$, we conclude that $\QBFEq$ is \PSPACE-complete.
 %% \end{proof}
+
+The idea behind \autoref{thm:density} leads to a proof that polynomial time many-one reductions are more powerful than polynomial time \emph{length-preserving} kernel reductions, where a function $f$ is length-preserving if $|f(x)| \geq |x|$.
+
+\begin{theorem}
+  There are equivalence relations $R$ and $S$ such that $R \mor S$ but there is no polynomial time length-preserving kernel reduction from $R$ to $S$.
+  Furthermore, $R$ and $S$ are in complexity class ???.
+\end{theorem}
+\begin{proof}
+  Let $f_0, f_1, \dotsc$ be an enumeration of all polynomial time computable functions.
+  Assume without loss of generality (TODO state why???) that for all natural numbers $i$, function $f_i$ runs in time $p_i(n)$, where $p_i(n) = i n^i$ for all natural numbers $n$.
+  We will define the equivalence relations $R$ and $S$ by their equivalence classes, and we will define the equivalence classes inductively.
+  For each positive integer $i$, let $n_i = 2^{n_{i - 1}} + 1$ and let $n_0 = 0$.
+  Let the $i$th equivalence class of $R$ be the set of all strings $s$ satisfying the inequality $n_i \leq |s| < n_{i + 1}$.
+  The first equivalence class in $S$ is the set of all strings of length at most $p(n_1)$
+  %Let the $i$th equivalence class of $S$ be the set of all strings $t$ satisfying the inequality $p_i(n_i) \leq |t| < p_i(n_{i + 1})$ (technically, the $0$th equivalence class must be the set of all $t$ such that $0 \leq |t| < p(n_1)$).
+  %\textbf{TODO: There's a range of lengths that are not covered in $S$: from the end of $p_i(n_{i + 1})$ to the beginning of $p_{i + 1}(n_{i + 1})$.}
+
+  There is a many-one reduction from $R$ to $S$.
+  The reduction $m$ operates as follows.
+  %On input $\pair{x}{y}$, first decide if $x$ and $y$ are in the same equivalence class in $R$.
+  %If they are not, output $\pair{x_{\text{small}}}{y_{\text{large}}}$, where $x_{\text{small}}$ is a string of length less than $n_i$,
+\end{proof}
