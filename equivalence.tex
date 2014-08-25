@@ -25,6 +25,13 @@
 \usepackage{hyperref}
 \usepackage[matrix,arrow]{xy} % for inclusion diagram
 \usepackage{textcomp} % for \textlangle, \textrangle
+%% This is required by draftwatermark.
+\usepackage{type1cm}
+\usepackage[firstpage]{draftwatermark}
+
+\SetWatermarkLightness{0.9}
+\SetWatermarkText{Work-in-progress}
+\SetWatermarkFontSize{4cm}
 
 \hypersetup{pdftitle={Polynomial time kernel reductions}, pdfauthor={Jeffrey Finkelstein}}
 
