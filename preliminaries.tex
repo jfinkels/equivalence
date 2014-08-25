@@ -40,8 +40,10 @@ An equivalence relation $R$ can be encoded as a language by taking the pairwise 
 In this way we can study the computational complexity of classes of languages which represent equivalence relations.
 In this paper we will abuse notation and write $\pair{x}{y}\in R$ for an equivalence relation $R$ on $\Sigma^*$, but what we really mean is $(x,y)\in R$ and $\pair{x}{y}\in L_R$, the language on the alphabet $\Sigma$ induced by $R$.
 
-The \defn{equivalence class} of $x$ with respect to an equivalence relation $R$ on $U$ is $\lb y\in U \st (x,y)\in R \rb$. It is denoted $[x]_R$, or if the context is clear, simply $[x]$.
+The \defn{equivalence class} of $x$ with respect to an equivalence relation $R$ on $U$ is $\lb y\in U \st (x,y)\in R \rb$.
+It is denoted $[x]_R$, or if the context is clear, simply $[x]$.
 Each element $x\in U$ is in exactly one equivalence class, so the equivalence classes of an equivalence relation on $U$ provide a partition of $U$.
+Conversely, a partition of $U$ induces an equivalence relation on $U$ in which a pair of elements is in the relation if they are in the same block of the partition.
 
 A \defn{complete invariant} for an equivalence relation $R$ on $U$ is a function $f\colon U\to T$ such that for all $x,y\in U$, $(x,y)\in R$ if and only if $f(x)=f(y)$.
 In \autoref{sec:definitions} we will define generalizations of the complete invariant which accept as input an additional witness to the equivalence of $x$ and $y$.

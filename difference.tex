@@ -1,0 +1,160 @@
+%% difference.tex - Many-one and kernel reductions differ
+%%
+%% Copyright 2014 Jeffrey Finkelstein.
+%%
+%% This LaTeX markup document is made available under the terms of the Creative
+%% Commons Attribution-ShareAlike 4.0 International License,
+%% https://creativecommons.org/licenses/by-sa/4.0/.
+\section{Limitations of kernel reductions}
+As seen in \autoref{prop:noreduction}, for equivalence relations $R$ and $S$ with a finite number of equivalence classes, a kernel reduction from $R$ to $S$ can only exist if the number of equivalence classes in $R$ is at most the number of equivalence classes in $S$.
+However, most equivalence relations ``in the wild'' have an infinite number of equivalence classes.
+We will show that an imbalance in the number of equivalence classes prevents a kernel reduction in this case as well.
+
+First we show that an equivalence relation dense in equivalence classes cannot be reduced to one sparse in equivalence classes.
+We emphasize that our result does not concern the sparseness of strings in a language, but the sparseness of equivalence classes in an equivalence relation.
+This complements the work on ``potential reducibility'' defined in \autocite[Section~5]{bcffm}.
+
+\begin{definition}[{\autocite[Section~5]{bcffm}}]%Definition~7.2]{bcffm}}]
+  If $R$ is an equivalence relation on $\Sigma^*$, then define $\#R(n)$ to be $\left|\{[x]_R | x \in \Sigma^{\leq n}\}\right|$, or in other words, $\#R(n)$ is the number of equivalence classes in $R$ for strings of length at most $n$.
+\end{definition}
+
+\begin{example}
+  With this notation, \autoref{prop:noreduction} can be rephrased as follows.
+  If $\max\limits_{n \in \mathbb{N}} \#R(n) > \max\limits_{n \in \mathbb{N}} \#S(n)$, then $R \nkrnt S$.
+\end{example}
+
+\begin{definition}[{\autocite[Definition~7.2]{bcffm}}]
+  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
+  $R$ is \defn{potentially reducible} to $S$, denoted $R\pot S$, if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, $\#R(n)\leq \#S(p(n))$.
+\end{definition}
+
+It follows from the definitions that for any equivalence relations $R$ and $S$, $R\kr S\implies R\pot S$, and hence $R\npot S \implies R\nkr S$ (this is stated and proven explicitly in \autocite[Lemma~5.5]{bcffm}).
+As an analog to traditional sparse languages, we provide a definition of ``kernel sparsity'', and show its application to determining potential reducibility and hence kernel reducibility.
+
+\begin{definition}
+  An equivalence relation $R$ on $\Sigma^*$ is \defn{kernel sparse} if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, $\#R(n)\leq p(n)$.
+  In other words, the number of equivalence classes in $R$ for strings of length at most $n$ is bounded above by a polynomial in $n$.
+
+  An equivalence relation is \defn{kernel dense} if it is not kernel sparse.
+  Formally, if for all polynomials $p$ there exists an $n\in\mathbb{N}$ such that $\#R(n)>p(n)$.
+  In other words, the number of equivalence classes in $R$ for strings of length at most $n$ is greater than any polynomial in $n$.
+\end{definition}
+
+These definitions allow us to provide the following very natural proposition.
+Intuitively, it states that an equivalence relation with many closely packed equivalence classes cannot reduce (under polynomially bounded notions of reduction) to an equivalence relation with few but widely spaced equivalence classes.
+
+\begin{theorem}\label{thm:density}
+  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
+  If $R$ is kernel dense and $S$ is kernel sparse, then $R\npot S$ and in particular $R\nkr S$.
+\end{theorem}
+\begin{proof}
+  That $R\npot S$ implies $R\nkr S$ was already stated in the text following the definition of potential reducibility, so it suffices to show that $R\npot S$.
+
+  Assume that $R\pot S$ with the intention of producing a contradiction.
+  Let $p$ be the polynomial such that $\#R(n)\leq \#S(p(n))$ (this is the definition of potential reducibility).
+  Let $q$ be the polynomial such that for all $n$, $\#S(n)< q(n)$ (this is the definition of kernel sparse).
+  %% TODO is this true?
+  Assume without loss of generality that $q$ is non-decreasing (we can do this because for each polynomial $a$ there exists a non-decreasing polynomial $b$ such that $a(n)\leq b(n)$ for all $n$).
+  For each natural number $n$, we have $\#S(n) \leq q(0) + q(1) + \cdots + q(n) \leq n \cdot q(n)$ (since $q$ is non-decreasing).
+  Replacing $n$ with $p(n)$ in the above inequality, it follows that $\#S(p(n)) \leq p(n) \cdot q(p(n))$, which is a polynomial in $n$.
+  (This is an overestimate, but we can be generous here and still produce a contradiction.)
+  Let $r(n)=p(n)\cdot q(p(n))$.
+
+  Let $n_0$ be the natural number such that $\#R(n_0) > r(n_0)$, by the definition of kernel sparse.
+  Since $\#S(p(n_0)) \leq r(n_0)$, we have $\#R(n_0) > \#S(p(n_0))$.
+  In other words, there are more equivalence classes in $R$ for strings up to length $n_0$ than there are in $S$ for strings up to length $p(n_0)$.
+  By the pigeonhole principle, we conclude that $R$ cannot potentially reduce to $S$, because the number of equivalence classes in $R$ for strings up to length $n_0$ is too great compared to the number of equivalence classes in $S$ for strings up to length $p(n_0)$.
+  This is a contradiction with the assumption that $R\pot S$.
+  We have shown this for arbitrary polynomials (which came from the definitions of potential reducibility and kernel sparsity), so we can conclude that the result holds for all equivalence relations $R$ and $S$ which are kernel dense and kernel sparse, respectively.
+\end{proof}
+
+This places a strong restriction on equivalence relations which are hard (or complete) under polynomial time kernel reductions: they cannot be kernel sparse.
+
+\begin{corollary}
+  Let $\CEq$ be a complexity class of equivalence relations containing the equality relation $R_{eq}$.
+  If an equivalence relation $R$ is $\CEq$-hard then it is not kernel sparse (that is, it is kernel dense).
+\end{corollary}
+\begin{proof}
+  $R_{eq}$ is kernel dense since it contains $2^n$ equivalence classes at each length $n$---one for each distinct string.
+  If $R$ were kernel sparse then $R_{eq}\npot R$ by \autoref{thm:density}.
+  This would imply $R_{eq}\nkr R$, which is a contradiction with the hypothesis that all equivalence relations in $\CEq$ (including $R_{eq}$) polynomial time kernel reduce to $R$.
+  Therefore $R$ is not kernel sparse.
+\end{proof}
+
+Polynomial time many-one reductions are more powerful than polynomial time kernel reductions, because the former are not subject to restrictions on numbers of equivalence classes as in \autoref{prop:noreduction} and \autoref{thm:density}.
+The idea behind \autoref{thm:density} leads to a proof that polynomial time many-one reductions are more powerful than polynomial time kernel reductions.
+
+\begin{construction}\label{con:rands}
+  Let $f_0, f_1, \dotsc$ be an enumeration of all polynomial time computable functions.
+  Assume without loss of generality \todo{state why} that for all natural numbers $i$, function $f_i$ runs in time $p_i(n)$, where $p_i(n) = i n^i$ for all natural numbers $n$.
+
+  For each natural number $n$, let $R_n$ be the set of all strings of length $n$ and let $S_n$ be the set of all strings $t$ satisfying the inequality $p_n(n) + 1 \leq |t| \leq p_{n + 1}(n + 1)$ (except $S_0$, which must also include all strings of length smaller than $p_0(0) + 1$).
+
+  Define sets $R$ and $S$ as
+  \begin{equation*}
+    R = \bigcup_{n \in \mathbb{N}} R_n \times R_n \text{ and } S = \bigcup_{n \in \mathbb{N}} S_n \times S_n.
+  \end{equation*}
+\end{construction}
+
+\begin{lemma}
+  $R$ and $S$ are equivalence relations.
+\end{lemma}
+\begin{proof}
+  $R$ and $S$ are equivalence relations if $\{R_n\}_{n \in \mathbb{N}}$ and $\{S_n\}_{n \in \mathbb{N}}$ are valid partitions of $\Sigma^*$, so it suffices to show that each set in the collection is nonempty, the union of each collection includes all of $\Sigma^*$, and each collection is pairwise disjoint.
+
+  The set $R_n$ includes at least one string of length $n$ (with equality when $n = 0$), so each $R_n$ is nonempty.
+  Any string of length $n$ is in $R_n$, so $\Sigma^* \subseteq \cup_n R_n$.
+  If $m$ and $n$ are distinct natural numbers, no string can have both length $m$ and length $n$, so $R_m \cap R_n = \emptyset$.
+  Hence $\{R_n\}_n$ is a valid partition.
+
+  We need to show $p_n(i) + 1 \leq p_{n + 1}(n + 1)$, in order to prove that there is at least one string (of length $p_n(n) + 1$) in $S_n$.
+  \begin{align*}
+    p_n(n) + 1 &= n (n^n) + 1 \\
+    &\leq n (n^n) + n^n && \text{(since } 1 \leq n^n \text{ for each } n \text{)} \\
+    &= (n + 1) n^n \\
+    &\leq (n + 1) (n + 1)^{n + 1} \\
+    &= p_{n + 1}(n + 1).
+  \end{align*}
+  Thus there is at least one string in $S_n$.
+  Next, for any string $x$, there exists an $n$ such that $p_n(n) + 1 \leq |x| \leq p_{n + 1}(n + 1)$, so every string in $\Sigma^*$ is in some $S_n$.
+  \todo{I don't know how to explain this further.}
+  Finally, suppose $m$ and $n$ are distinct natural numbers and assume without loss of generality that $m < n$, or in other words, that $m + 1 \leq n$.
+  Then $p_{m + 1}(m + 1) \leq p_n(n) < p_n(n) + 1$, so no string of length at most $p_{m + 1}(m + 1)$ can also have length at least $p_n(n) + 1$.
+  Hence, $S_m$ and $S_n$ are disjoint.
+  Thus, $\{S_n\}_n$ is a valid partition.
+
+  Since both collections are valid partitions, the relations $R$ and $S$ are both equivalence relations.
+\end{proof}
+
+\begin{theorem}
+  There are equivalence relations $R$ and $S$ such that $R \mor S$ but $R \nkr S$.
+  Furthermore, $R$ and $S$ are in complexity class ???.
+\end{theorem}
+\begin{proof}
+  Let $R$ and $S$ be the equivalence relations in \autoref{con:rands}.
+  The following function is a polynomial time many-one reduction from $R$ to $S$.
+  On input $\pair{x}{y}$, if $|x| = |y|$, output $\pair{a}{a}$, otherwise output $\pair{a}{b}$, where $a$ is a string in $S_0$ and $b$ is a string in $S_1$ (for example, $a$ is of length at most $p_1(1)$ and $b$ is of length at least $p_1(1) + 1$).
+  Computing and comparing the lengths of $x$ and $y$ can be done in linear time and writing the output requires only a constant number of steps, since the lengths of $a$ and $b$ are independent of the lengths of $x$ and $y$.
+  Thus this function is computable in linear time, and hence in polynomial time.
+  If $\pair{x}{y} \in R$, then the function outputs $\pair{a}{a}$, which is in $S$ since $S$ is reflexive.
+  If $\pair{x}{y} \notin R$, then the function outputs $\pair{a}{b}$, which is not in $S$ since $a$ and $b$ are in different equivalence classes of $S$.
+  Therefore there is a correct polynomial time many-one reduction from $R$ to $S$.
+
+  Now assume with the intention of producing a contradiction that there is a polynomial time kernel reduction from $R$ to $S$.
+  Since $f_0, f_1, \dotsc$ is an enumeration of all polynomial time computable functions, the reduction from $R$ to $S$ is $f_n$, with running time $p_n(n)$, for some natural number $n$.
+  Assume for now that $n > 0$.
+  Consider a string $x$ of length $n$ (for example, $x = 1^n$); $x$ is in equivalence class $R_n$.
+  Since the running time of $f_n$ is $p_n$, the length of $f_n(x)$ is at most $p_n(n)$, which is strictly less than $p_n(n) + 1$.
+  The image of any string of length $n$ has length at most $p_n(n)$, which is strictly less than $p_n(n) + 1$.
+  By the construction of $R$ and $S$, we have $\#R(n) = n + 1$ and $\#S(p_n(n)) = n$.
+  By the pigeonhole principle, there must be two strings $x$ and $y$ of length at most $n$ in different equivalence classes of $R$ whose image under $f_n$ is in the same equivalence class of $S$.
+  Since $\pair{x}{y} \notin R$ if and only if $\pair{f(x)}{f(y)} \notin S$, this is a contradiction.
+
+  There is still the possibility that $n = 0$, and the above argument doesn't apply because $\#R(0) = 1$ and $\#S(p_0(0)) = 1$, since we required $S_0$ to include all strings of length less than $p_0(0) + 1$.
+  In order to get the necessary contradiction, we need only consider strings of length $1$.
+  Since the running time of $f_0$ is $p_0$, the image of a string of length $1$ has length at most $p_0(1)$.
+  Since $p_0(1) \leq p_1(1)$, we have $\#R(1) = 2$ and $\#S(p_0(1)) \leq \#S(p_1(1)) = 1$.
+  \todo{This reasoning applies above also, if we look at the number of equivalence classes for strings of length at most $n + 1$, but I thought it was clearer to use $p_n(n)$ instead of using $p_n(n + 1)$. Should we use this reasoning above?}
+  Again, the pigeonhole principle shows that this is a contradiction, and thus no function $f_n$ can be a kernel reduction from $R$ to $S$, for any natural number $n$.
+  Therefore $R \nkr S$.
+\end{proof}

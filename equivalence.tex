@@ -35,6 +35,7 @@
 \declaretheorem[numberlike=theorem]{lemma}
 \declaretheorem[numberlike=theorem]{proposition}
 \declaretheorem[numberlike=theorem]{corollary}
+\declaretheorem[numberlike=theorem, style=definition]{construction}
 \declaretheorem[numberlike=theorem, style=definition]{definition}
 \declaretheorem[numberlike=theorem, style=definition, name=Open problem]{openproblem}
 \declaretheorem[numberlike=theorem, style=definition]{example}
@@ -68,6 +69,7 @@
 %% \newcommand{\Q}{\textsf{Q}} % to represent an unknown quantifier
 %% \newcommand{\QBF}{\lang{QBF}} % the language QBF
 %% \newcommand{\QBFEq}{\lang{QBFEq}} % the language of equivalent QBFs
+\newcommand{\todo}[1]{\textbf{TODO #1}}
 
 % redefine footnote so it has no reference and no number
 \long\def\symbolfootnote#1{\begingroup%
@@ -97,6 +99,7 @@
 \input{definitions}
 \input{basicfacts}
 \input{generalcompleteness}
+\input{difference}
 \input{npeqcompleteness}
 \input{intermediary}
 \input{openproblems}

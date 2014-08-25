@@ -179,73 +179,6 @@ As an additional corollary, we show that the equivalence relation $R_K$ is neces
   Since $S$ is hard for $\COEq$ and polynomial time kernel reductions compose by \autoref{prop:compose}, $R_K$ is also hard for $\COEq$.
 \end{proof}
 
-Finally, the following theorem is inspired by Mahaney's theorem, which states that there are no sparse \NP-complete languages unless $\P=\NP$.
-Our result concerns not the sparseness of strings in a language, but the sparseness of equivalence classes in an equivalence relation.
-This complements the work on ``potential reducibility'', defined in section 5 of \autocite{bcffm}.
-
-\begin{definition}[{\autocite[Definition~7.2]{bcffm}}]
-  \mbox{}
-  \begin{enumerate}
-  \item If $R$ is an equivalence relation on $\Sigma^*$, then define $\#R(n)$ to be $\left|\{[x]_R | x \in \Sigma^{\leq n}\}\right|$, or in other words, $\#R(n)$ is the number of equivalence classes in $R$ for strings of length at most $n$.
-  \item
-    Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
-    $R$ is \defn{potentially reducible} to $S$, denoted $R\pot S$, if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, $\#R(n)\leq \#S(p(n))$.
-  \end{enumerate}
-\end{definition}
-
-It follows from the definitions that for any equivalence relations $R$ and $S$, $R\kr S\implies R\pot S$, and hence $R\npot S \implies R\nkr S$ (this is stated and proven explicitly in \autocite[Lemma~5.5]{bcffm}).
-As an analog to traditional sparse languages, we provide a definition of ``kernel sparsity'', and show its application to determining potential reducibility and hence kernel reducibility.
-
-\begin{definition}
-  An equivalence relation $R$ on $\Sigma^*$ is \defn{kernel sparse} if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, $\#R(n)\leq p(n)$.
-  In other words, the number of equivalence classes in $R$ for strings of length at most $n$ is bounded above by a polynomial in $n$.
-
-  An equivalence relation is \defn{kernel dense} if it is not kernel sparse.
-  Formally, if for all polynomials $p$ there exists an $n\in\mathbb{N}$ such that $\#R(n)>p(n)$.
-  In other words, the number of equivalence classes in $R$ for strings of length at most $n$ is greater than any polynomial in $n$.
-\end{definition}
-
-These definitions allow us to provide the following very natural proposition.
-Intuitively, it states that an equivalence relation with many closely packed equivalence classes cannot reduce (under polynomially bounded notions of reduction) to an equivalence relation with few but widely spaced equivalence classes.
-
-\begin{theorem}\label{thm:density}
-  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
-  If $R$ is kernel dense and $S$ is kernel sparse, then $R\npot S$ and in particular $R\nkr S$.
-\end{theorem}
-\begin{proof}
-  That $R\npot S$ implies $R\nkr S$ was already stated in the text following the definition of potential reducibility, so it suffices to show that $R\npot S$.
-
-  Assume that $R\pot S$ with the intention of producing a contradiction.
-  Let $p$ be the polynomial such that $\#R(n)\leq \#S(p(n))$ (this is the definition of potential reducibility).
-  Let $q$ be the polynomial such that for all $n$, $\#S(n)< q(n)$ (this is the definition of kernel sparse).
-  %% TODO is this true?
-  Assume without loss of generality that $q$ is non-decreasing (we can do this because for each polynomial $a$ there exists a non-decreasing polynomial $b$ such that $a(n)\leq b(n)$ for all $n$).
-  For each natural number $n$, we have $\#S(n) \leq q(0) + q(1) + \cdots + q(n) \leq n \cdot q(n)$ (since $q$ is non-decreasing).
-  Replacing $n$ with $p(n)$ in the above inequality, it follows that $\#S(p(n)) \leq p(n) \cdot q(p(n))$, which is a polynomial in $n$.
-  (This is an overestimate, but we can be generous here and still produce a contradiction.)
-  Let $r(n)=p(n)\cdot q(p(n))$.
-
-  Let $n_0$ be the natural number such that $\#R(n_0) > r(n_0)$, by the definition of kernel sparse.
-  Since $\#S(p(n_0)) \leq r(n_0)$, we have $\#R(n_0) > \#S(p(n_0))$.
-  In other words, there are more equivalence classes in $R$ for strings up to length $n_0$ than there are in $S$ for strings up to length $p(n_0)$.
-  By the pigeonhole principle, we conclude that $R$ cannot potentially reduce to $S$, because the number of equivalence classes in $R$ for strings up to length $n_0$ is too great compared to the number of equivalence classes in $S$ for strings up to length $p(n_0)$.
-  This is a contradiction with the assumption that $R\pot S$.
-  We have shown this for arbitrary polynomials (which came from the definitions of potential reducibility and kernel sparsity), so we can conclude that the result holds for all equivalence relations $R$ and $S$ which are kernel dense and kernel sparse, respectively.
-\end{proof}
-
-This places a strong restriction on equivalence relations which are hard (or complete) under polynomial time kernel reductions: they cannot be kernel sparse.
-
-\begin{corollary}
-  Let $\CEq$ be a complexity class of equivalence relations containing the equality relation, $R_{eq}=\lb\pair{x}{y} \st x=y\rb$.
-  If an equivalence relation $R$ is $\CEq$-hard then it is not kernel sparse (that is, it is kernel dense).
-\end{corollary}
-\begin{proof}
-  $R_{eq}$ is kernel dense since it contains $2^n$ equivalence classes at each length $n$---one for each distinct string.
-  If $R$ were kernel sparse then $R_{eq}\npot R$ by \autoref{thm:density}.
-  This would imply $R_{eq}\nkr R$, which is a contradiction with the hypothesis that all equivalence relations in $\CEq$ (including $R_{eq}$) polynomial time kernel reduce to $R$.
-  Therefore $R$ is not kernel sparse.
-\end{proof}
-
 %% This last question leads us to briefly note that equivalence of true quantified boolean formulas is a \PSPACE-complete problem; perhaps it is also a \PSPACEEq-complete problem.
 %% \begin{proposition}
 %%   Define $\QBFEq$ by
@@ -265,25 +198,3 @@ This places a strong restriction on equivalence relations which are hard (or com
 %%   Thus $\phi$ is satisfiable if and only if $\exists z\colon\overline{Q}(\tau\land z)$ is satisfiable, so $\QBF\mor\QBFEq$.
 %%   Since $\QBFEq$ is clearly decidable in $\PSPACE$, we conclude that $\QBFEq$ is \PSPACE-complete.
 %% \end{proof}
-
-The idea behind \autoref{thm:density} leads to a proof that polynomial time many-one reductions are more powerful than polynomial time \emph{length-preserving} kernel reductions, where a function $f$ is length-preserving if $|f(x)| \geq |x|$.
-
-\begin{theorem}
-  There are equivalence relations $R$ and $S$ such that $R \mor S$ but there is no polynomial time length-preserving kernel reduction from $R$ to $S$.
-  Furthermore, $R$ and $S$ are in complexity class ???.
-\end{theorem}
-\begin{proof}
-  Let $f_0, f_1, \dotsc$ be an enumeration of all polynomial time computable functions.
-  Assume without loss of generality (TODO state why???) that for all natural numbers $i$, function $f_i$ runs in time $p_i(n)$, where $p_i(n) = i n^i$ for all natural numbers $n$.
-  We will define the equivalence relations $R$ and $S$ by their equivalence classes, and we will define the equivalence classes inductively.
-  For each positive integer $i$, let $n_i = 2^{n_{i - 1}} + 1$ and let $n_0 = 0$.
-  Let the $i$th equivalence class of $R$ be the set of all strings $s$ satisfying the inequality $n_i \leq |s| < n_{i + 1}$.
-  The first equivalence class in $S$ is the set of all strings of length at most $p(n_1)$
-  %Let the $i$th equivalence class of $S$ be the set of all strings $t$ satisfying the inequality $p_i(n_i) \leq |t| < p_i(n_{i + 1})$ (technically, the $0$th equivalence class must be the set of all $t$ such that $0 \leq |t| < p(n_1)$).
-  %\textbf{TODO: There's a range of lengths that are not covered in $S$: from the end of $p_i(n_{i + 1})$ to the beginning of $p_{i + 1}(n_{i + 1})$.}
-
-  There is a many-one reduction from $R$ to $S$.
-  The reduction $m$ operates as follows.
-  %On input $\pair{x}{y}$, first decide if $x$ and $y$ are in the same equivalence class in $R$.
-  %If they are not, output $\pair{x_{\text{small}}}{y_{\text{large}}}$, where $x_{\text{small}}$ is a string of length less than $n_i$,
-\end{proof}

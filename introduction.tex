@@ -7,6 +7,8 @@
 %% https://creativecommons.org/licenses/by-sa/4.0/.
 \section{Introduction}
 
+\todo{Add citations to all the recent work on uncomputable equivalence relations.}
+
 In this paper we examine the power of ``kernel reductions'' on languages induced by equivalence relations, specifically for which membership can be decided by a non-deterministic Turing machine running in time polynomial in the length of the input.
 Given two equivalence relations $R$ and $S$, each of which can be expressed as a set of pairs of strings, a \defn{kernel reduction} from $R$ to $S$ is a function $f$ for which $\pair{x}{y}\in R\iff\pair{f(x)}{f(y)}\in S$.
 This function maps each \emph{member} of the pair in $R$ to an element of a pair in the relation $S$, instead of mapping the \emph{entire} pair to another pair.
