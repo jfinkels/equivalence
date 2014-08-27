@@ -79,9 +79,9 @@ Before proving that, we require the following lemma showing that kernel reductio
 
 As seen in \autoref{prop:noreduction}, for equivalence relations $R$ and $S$ with a finite number of equivalence classes, a kernel reduction from $R$ to $S$ can only exist if the number of equivalence classes in $R$ is at most the number of equivalence classes in $S$.
 However, most ``interesting'' equivalence relations have an infinite number of equivalence classes.
-In \autoref[Section~4]{fg11}, the authors ask if there are such equivalence relations ``of the same densities [that is, density of equivalence classes] on which kernel reduction and [many-one] reduction differ''.
-\autoref[Theorem~5.1]{bcffm} (see also \autoref[Remark~5.2]{bcffm}) answers this question affirmatively, providing an infinite antichain of equivalence relations that are equivalent under polynomial time many-one reductions but otherwise incomparable under polynomial time ``strong isomorphism reductions'' (proven in \autoref[Section~7]{bcffm} to be equivalent to polynomial time kernel reductions).
-We will provide a simple proof of a special case of \autoref[Theorem~5.1]{bcffm}, showing that an imbalance in the density of equivalence classes prevents a kernel reduction.
+In \autocite[Section~4]{fg11}, the authors ask if there are such equivalence relations ``of the same densities [that is, density of equivalence classes] on which kernel reduction and [many-one] reduction differ''.
+\autocite[Theorem~5.1]{bcffm} (see also \autocite[Remark~5.2]{bcffm}) answers this question affirmatively, providing an infinite antichain of equivalence relations that are equivalent under polynomial time many-one reductions but otherwise incomparable under polynomial time ``strong isomorphism reductions'' (proven in \autocite[Section~7]{bcffm} to be equivalent to polynomial time kernel reductions).
+We will provide a simple proof of a special case of \autocite[Theorem~5.1]{bcffm}, showing that an imbalance in the density of equivalence classes prevents a kernel reduction.
 This proof is valuable because it requires only knowledge of basic computational complexity theory and not knowledge of Boolean algebras, descriptive set theory, or other mathematical logic.
 
 First we show that an equivalence relation dense in equivalence classes cannot be reduced to one sparse in equivalence classes.
@@ -107,6 +107,7 @@ As an analog to traditional sparse languages, we provide a definition of ``kerne
 
 These definitions allow us to provide the following very natural proposition.
 Intuitively, it states that an equivalence relation with many closely packed equivalence classes cannot reduce (under polynomially bounded notions of reduction) to an equivalence relation with few but widely spaced equivalence classes.
+This is essentially a special case of \autocite[Lemma~2.3]{gz14}.
 
 \begin{theorem}\label{thm:density}
   Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
@@ -190,7 +191,7 @@ The idea behind \autoref{thm:density} leads to a construction of equivalence rel
   Since both collections are valid partitions, the relations $R$ and $S$ are both equivalence relations.
 \end{proof}
 
-Again, this is a special case of \autoref[Theorem~5.1]{bcffm}, but has a much simpler proof and sufficiently demonstrates that polynomial time kernel reductions and polynomial time many-one reductions are different.
+Again, this is a special case of \autocite[Theorem~5.1]{bcffm}, but has a much simpler proof and sufficiently demonstrates that polynomial time kernel reductions and polynomial time many-one reductions are different.
 
 \begin{theorem}
   There are equivalence relations $R$ and $S$ such that $R \mor S$ but $R \nkr S$.
