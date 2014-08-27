@@ -18,7 +18,8 @@ We adopt and extend the notation $\#R$, from \autocite{bcffm}, to denote the num
 \end{definition}
 
 As first stated in \autocite{fg11}, if the number of equivalence classes in $R$ is greater than the number of equivalence classes in $S$, then no kernel reduction can exist (regardless of any time or space bounds on the function computing the reduction).
-However, a many-one reduction can overcome this restriction.
+For completeness, we prove this basic fact in \autoref{prop:noreduction} below.
+However, a many-one reduction can overcome this restriction by having access to both strings in the pair.
 Before proving that, we require the following lemma showing that kernel reductions must preserve ``related-ness'' of pairs of elements by mapping equivalence classes in $R$ to equivalence classes in $S$.
 
 \begin{lemma}\label{lem:image}
@@ -78,7 +79,10 @@ Before proving that, we require the following lemma showing that kernel reductio
 
 As seen in \autoref{prop:noreduction}, for equivalence relations $R$ and $S$ with a finite number of equivalence classes, a kernel reduction from $R$ to $S$ can only exist if the number of equivalence classes in $R$ is at most the number of equivalence classes in $S$.
 However, most ``interesting'' equivalence relations have an infinite number of equivalence classes.
-We will show that an imbalance in the number of equivalence classes prevents a kernel reduction in this case as well.
+In \autoref[Section~4]{fg11}, the authors ask if there are such equivalence relations ``of the same densities [that is, density of equivalence classes] on which kernel reduction and [many-one] reduction differ''.
+\autoref[Theorem~5.1]{bcffm} (see also \autoref[Remark~5.2]{bcffm}) answers this question affirmatively, providing an infinite antichain of equivalence relations that are equivalent under polynomial time many-one reductions but otherwise incomparable under polynomial time ``strong isomorphism reductions'' (proven in \autoref[Section~7]{bcffm} to be equivalent to polynomial time kernel reductions).
+We will provide a simple proof of a special case of \autoref[Theorem~5.1]{bcffm}, showing that an imbalance in the density of equivalence classes prevents a kernel reduction.
+This proof is valuable because it requires only knowledge of basic computational complexity theory and not knowledge of Boolean algebras, descriptive set theory, or other mathematical logic.
 
 First we show that an equivalence relation dense in equivalence classes cannot be reduced to one sparse in equivalence classes.
 We emphasize that our result does not concern the sparseness of strings in a language, but the sparseness of equivalence classes in an equivalence relation.
@@ -142,7 +146,7 @@ This places a strong restriction on equivalence relations which are hard (or com
 \end{proof}
 
 Polynomial time many-one reductions are more powerful than polynomial time kernel reductions, because the former are not subject to restrictions on numbers of equivalence classes as in \autoref{prop:noreduction} and \autoref{thm:density}.
-The idea behind \autoref{thm:density} leads to a proof that polynomial time many-one reductions are more powerful than polynomial time kernel reductions.
+The idea behind \autoref{thm:density} leads to a construction of equivalence relations $R$ and $S$ between which there is a polynomial time many-one reduction but no polynomial time kernel reduction.
 
 \begin{construction}\label{con:rands}
   Let $f_0, f_1, \dotsc$ be an enumeration of all polynomial time computable functions.
@@ -186,10 +190,19 @@ The idea behind \autoref{thm:density} leads to a proof that polynomial time many
   Since both collections are valid partitions, the relations $R$ and $S$ are both equivalence relations.
 \end{proof}
 
+Again, this is a special case of \autoref[Theorem~5.1]{bcffm}, but has a much simpler proof and sufficiently demonstrates that polynomial time kernel reductions and polynomial time many-one reductions are different.
+
 \begin{theorem}
   There are equivalence relations $R$ and $S$ such that $R \mor S$ but $R \nkr S$.
   Furthermore, $R$ and $S$ are in complexity class ???.
 \end{theorem}
+
+One may attempt to apply \autoref{thm:density} to prove this theorem.
+However, both $R$ and $S$ are kernel sparse.
+The key idea is that $S$ is more kernel sparse than $R$.
+
+Though it is not explicitly stated here, this theorem can be generalized to kernel reductions with other (non-polynomial) time bounds in a straightforward manner.
+
 \begin{proof}
   Let $R$ and $S$ be the equivalence relations in \autoref{con:rands}.
   The following function is a polynomial time many-one reduction from $R$ to $S$.
