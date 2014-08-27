@@ -5,23 +5,84 @@
 %% This LaTeX markup document is made available under the terms of the Creative
 %% Commons Attribution-ShareAlike 4.0 International License,
 %% https://creativecommons.org/licenses/by-sa/4.0/.
-\section{Limitations of kernel reductions}
+\section{Limitations of kernel reductions}\label{sec:limitations}
+
+\todo{Write a new introductory paragraph here.}
+
+We adopt and extend the notation $\#R$, from \autocite{bcffm}, to denote the number of equivalence classes in an equivalence relation $R$.
+
+\begin{definition}[{\autocite[Section~5]{bcffm}}]%Definition~7.2]{bcffm}}]
+  Suppose $R$ is an equivalence relation on $\Sigma^*$.
+  Let $\#R(n) = \left|\left\{[x]_R \, \middle| \, x \in \Sigma^{\leq n}\right\}\right|$, or in other words, $\#R(n)$ is the number of equivalence classes in $R$ for strings of length at most $n$.
+  Let $\#R = \max\limits_{n \in \mathbb{N}} \#R(n)$ if the maximum exists, or in other words, $\#R$ is the number of equivalence classes in $R$.
+\end{definition}
+
+As first stated in \autocite{fg11}, if the number of equivalence classes in $R$ is greater than the number of equivalence classes in $S$, then no kernel reduction can exist (regardless of any time or space bounds on the function computing the reduction).
+However, a many-one reduction can overcome this restriction.
+Before proving that, we require the following lemma showing that kernel reductions must preserve ``related-ness'' of pairs of elements by mapping equivalence classes in $R$ to equivalence classes in $S$.
+
+\begin{lemma}\label{lem:image}
+  Suppose $R$ and $S$ are equivalence relations on $\Sigma^*$.
+  Suppose $R \krnt S$ and $f$ is the function computing the kernel reduction.
+  Let $\hat{f}$ denote the function defined by $\hat{f}([x]_R) = [f(x)]_S$, for all equivalence classes $[x]_R$ in $R$.
+  Then the following are true.
+  \begin{itemize}
+  \item $\hat{f}$ is injective.
+  \item $f([w]_R) \subseteq \hat{f}([w]_R)$ for any $w \in \Sigma^*$.
+  \end{itemize}
+\end{lemma}
+\begin{proof}
+  First, we prove that $\hat{f}$ is injective.
+  Let $[x]_R$ and $[y]_R$ be distinct equivalence classes in $R$.
+  Suppose $\hat{f}([x]_R) = \hat{f}([y]_R)$, so $[f(x)]_S = [f(y)]_S$.
+  In other words, $\pair{f(x)}{f(y)} \in S$.
+  By definition of the kernel reduction $f$, this implies $\pair{x}{y} \in R$.
+  Therefore $[x]_R = [y]_R$.
+
+  Next, we prove that $f([w]_R) \subseteq \hat{f}([w]_R)$.
+  Since $w \in [w]_R$, it follows that $f(w) \in f([w]_R)$.
+  Let $x \in f([w]_R)$.
+  Then $\pair{x}{f(w)} \in S$, so $x \in [f(w)]_S$.
+  Therefore $f([w]_R) \subseteq [f(w)]_S = \hat{f}([w]_R)$.
+\end{proof}
+
+\begin{proposition}\label{prop:noreduction}
+  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
+  If $\#R > \#S$, then $R \nkrnt S$.
+
+  Furthermore, suppose $\#R = n$ and $\#S = m$, and suppose $m \geq 2$.
+  Let $r_1, \dotsc, r_n$ and $s_1, \dotsc, s_m$ denote representatives of the equivalence classes in $R$ and $S$, respectively.
+  If the problem of deciding whether $x \in [r_i]_R$ for any $x \in \Sigma^*$ is recognizable, then $R \mornt S$.
+\end{proposition}
+\begin{proof}
+  Assume that $R \krnt S$.
+  By \autoref{lem:image}, the function mapping equivalence classes in $R$ to equivalence classes in $S$ induced by the kernel reduction is injective.
+  However, this violates the pigeonhole principle.
+  Therefore no kernel reduction exists from $R$ to $S$.
+
+  On the other hand, there is a many-one reduction from $R$ to $S$.
+  First, suppose $S$ has $m$ equivalence classes and let $s_1, \dotsc, s_m$ be representatives of each equivalence class in $S$.
+  On input $\pair{x}{y}$, for each $i \in \{1, \dotsc, n\}$ in parallel, determine if $x \in [r_i]_R$ and $y \in [r_i]_R$ (also in parallel).
+  If $x$ and $y$ are both in $[r_i]_R$ for some $i$, output $\pair{s_i}{s_i}$, otherwise output $\pair{s_1}{s_2}$.
+
+  Since each string must be in exactly one of the equivalence classes of $R$, this function must halt when searching for the equivalence class for the strings $x$ and $y$.
+  If $\pair{x}{y} \in R$, then they are in the same equivalence class of $R$ and hence the function will output $\pair{s_i}{s_i}$, which is in $S$ by the reflexivity of $S$.
+  If $\pair{x}{y} \notin R$, then they are in different equivalence classes and hence the function will output $\pair{s_1}{s_2}$, which is not in $S$ because $[s_1]_S \neq [s_2]_S$ by hypothesis.
+  Therefore this function is a computable many-one reduction from $R$ to $S$.
+\end{proof}
+
+\begin{example}
+  Let $R = \mathbb{Z} / 3 \mathbb{Z}$ and $S = \mathbb{Z} / 2 \mathbb{Z}$.
+  Then $R \mornt S$ but $R \nkrnt S$.
+\end{example}
+
 As seen in \autoref{prop:noreduction}, for equivalence relations $R$ and $S$ with a finite number of equivalence classes, a kernel reduction from $R$ to $S$ can only exist if the number of equivalence classes in $R$ is at most the number of equivalence classes in $S$.
-However, most equivalence relations ``in the wild'' have an infinite number of equivalence classes.
+However, most ``interesting'' equivalence relations have an infinite number of equivalence classes.
 We will show that an imbalance in the number of equivalence classes prevents a kernel reduction in this case as well.
 
 First we show that an equivalence relation dense in equivalence classes cannot be reduced to one sparse in equivalence classes.
 We emphasize that our result does not concern the sparseness of strings in a language, but the sparseness of equivalence classes in an equivalence relation.
 This complements the work on ``potential reducibility'' defined in \autocite[Section~5]{bcffm}.
-
-\begin{definition}[{\autocite[Section~5]{bcffm}}]%Definition~7.2]{bcffm}}]
-  If $R$ is an equivalence relation on $\Sigma^*$, then define $\#R(n)$ to be $\left|\{[x]_R | x \in \Sigma^{\leq n}\}\right|$, or in other words, $\#R(n)$ is the number of equivalence classes in $R$ for strings of length at most $n$.
-\end{definition}
-
-\begin{example}
-  With this notation, \autoref{prop:noreduction} can be rephrased as follows.
-  If $\max\limits_{n \in \mathbb{N}} \#R(n) > \max\limits_{n \in \mathbb{N}} \#S(n)$, then $R \nkrnt S$.
-\end{example}
 
 \begin{definition}[{\autocite[Definition~7.2]{bcffm}}]
   Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
@@ -45,10 +106,10 @@ Intuitively, it states that an equivalence relation with many closely packed equ
 
 \begin{theorem}\label{thm:density}
   Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
-  If $R$ is kernel dense and $S$ is kernel sparse, then $R\npot S$ and in particular $R\nkr S$.
+  If $R$ is kernel dense and $S$ is kernel sparse, then $R\nkr S$.
 \end{theorem}
 \begin{proof}
-  That $R\npot S$ implies $R\nkr S$ was already stated in the text following the definition of potential reducibility, so it suffices to show that $R\npot S$.
+  That $R\npot S$ implies $R\nkr S$ was already stated in the text preceding this theorem, so it suffices to show that $R\npot S$.
 
   Assume that $R\pot S$ with the intention of producing a contradiction.
   Let $p$ be the polynomial such that $\#R(n)\leq \#S(p(n))$ (this is the definition of potential reducibility).
@@ -72,13 +133,12 @@ This places a strong restriction on equivalence relations which are hard (or com
 
 \begin{corollary}
   Let $\CEq$ be a complexity class of equivalence relations containing the equality relation $R_{eq}$.
-  If an equivalence relation $R$ is $\CEq$-hard then it is not kernel sparse (that is, it is kernel dense).
+  If an equivalence relation $R$ is kernel sparse, then it is not $\CEq$-hard.
 \end{corollary}
 \begin{proof}
-  $R_{eq}$ is kernel dense since it contains $2^n$ equivalence classes at each length $n$---one for each distinct string.
-  If $R$ were kernel sparse then $R_{eq}\npot R$ by \autoref{thm:density}.
-  This would imply $R_{eq}\nkr R$, which is a contradiction with the hypothesis that all equivalence relations in $\CEq$ (including $R_{eq}$) polynomial time kernel reduce to $R$.
-  Therefore $R$ is not kernel sparse.
+  $R_{eq}$ is kernel dense since it contains $2^n$ equivalence classes at each length $n$, one for each distinct string.
+  Since $R$ is kernel sparse, then $R_{eq} \nkr R$ by \autoref{thm:density}.
+  Since $R_{eq} \in \CEq$, the equivalence relation $R$ cannot be $\CEq$-hard.
 \end{proof}
 
 Polynomial time many-one reductions are more powerful than polynomial time kernel reductions, because the former are not subject to restrictions on numbers of equivalence classes as in \autoref{prop:noreduction} and \autoref{thm:density}.
