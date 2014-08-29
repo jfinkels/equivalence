@@ -205,7 +205,7 @@ This idea was presented, independently, in \autocite[Lemma~2.3]{gz14}.
 
 Though it is not explicitly stated here, this theorem can be generalized to kernel reductions with other (non-polynomial) time bounds in a straightforward manner.
 
-\begin{proof}
+\begin{proof}[Proof of \autoref{thm:different}]
   Let $R$ and $S$ be the equivalence relations in \autoref{con:rands}.
   The following function is a polynomial time many-one reduction from $R$ to $S$.
   On input $\pair{x}{y}$, if $|x| = |y|$, output $\pair{a}{a}$, otherwise output $\pair{a}{b}$, where $a$ is a string in $S_0$ and $b$ is a string in $S_1$ (for example, $a$ is of length at most $p_1(1)$ and $b$ is of length at least $p_1(1) + 1$).
