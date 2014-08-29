@@ -193,7 +193,7 @@ The idea behind \autoref{thm:density} leads to a construction of equivalence rel
 
 Again, this is a special case of \autocite[Theorem~5.1]{bcffm}, but has a much simpler proof and sufficiently demonstrates that polynomial time kernel reductions and polynomial time many-one reductions are different.
 
-\begin{theorem}
+\begin{theorem}\label{thm:different}
   There are equivalence relations $R$ and $S$ such that $R \mor S$ but $R \nkr S$.
   Furthermore, $R$ and $S$ are in complexity class ???.
 \end{theorem}
@@ -201,6 +201,7 @@ Again, this is a special case of \autocite[Theorem~5.1]{bcffm}, but has a much s
 One may attempt to apply \autoref{thm:density} to prove this theorem.
 However, both $R$ and $S$ are kernel sparse.
 The key idea is that $S$ is more kernel sparse than $R$.
+This idea was presented, independently, in \autocite[Lemma~2.3]{gz14}.
 
 Though it is not explicitly stated here, this theorem can be generalized to kernel reductions with other (non-polynomial) time bounds in a straightforward manner.
 
