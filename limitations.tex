@@ -150,29 +150,29 @@ Polynomial time many-one reductions are more powerful than polynomial time kerne
 The idea behind \autoref{thm:density} leads to a construction of equivalence relations $R$ and $S$ between which there is a polynomial time many-one reduction but no polynomial time kernel reduction.
 
 \begin{construction}\label{con:rands}
-  Let $f_0, f_1, \dotsc$ be an enumeration of all polynomial time computable functions.
-  Assume without loss of generality \todo{state why} that for all natural numbers $i$, function $f_i$ runs in time $p_i(n)$, where $p_i(n) = i n^i$ for all natural numbers $n$.
+  Let $f_1, f_2, \dotsc$ be an enumeration of all polynomial time computable functions.
+  Assume without loss of generality \todo{state why} that for all positive integers $i$, function $f_i$ runs in time $p_i(n)$, where $p_i(n) = i n^i$ for all positive integers $n$.
 
-  For each natural number $n$, let $R_n$ be the set of all strings of length $n$ and let $S_n$ be the set of all strings $t$ satisfying the inequality $p_n(n) + 1 \leq |t| \leq p_{n + 1}(n + 1)$ (except $S_0$, which must also include all strings of length smaller than $p_0(0) + 1$).
+  For each positive integer $n$, let $R_n$ be the set of all strings of length $n$ and let $S_n$ be the set of all strings $t$ satisfying the inequality $p_n(n) + 1 \leq |t| \leq p_{n + 1}(n + 1)$ (except $S_1$, which must also include all strings of length $1$).
 
   Define sets $R$ and $S$ as
   \begin{equation*}
-    R = \bigcup_{n \in \mathbb{N}} R_n \times R_n \text{ and } S = \bigcup_{n \in \mathbb{N}} S_n \times S_n.
+    R = \bigcup_{n \in \mathbb{Z}^+} R_n \times R_n \text{ and } S = \bigcup_{n \in \mathbb{Z}^+} S_n \times S_n.
   \end{equation*}
 \end{construction}
 
 \begin{lemma}
-  $R$ and $S$ are equivalence relations.
+  $R$ and $S$ are equivalence relations on $\Sigma^* \setminus \{\lambda\}$.
 \end{lemma}
 \begin{proof}
-  $R$ and $S$ are equivalence relations if $\{R_n\}_{n \in \mathbb{N}}$ and $\{S_n\}_{n \in \mathbb{N}}$ are valid partitions of $\Sigma^*$, so it suffices to show that each set in the collection is nonempty, the union of each collection includes all of $\Sigma^*$, and each collection is pairwise disjoint.
+  $R$ and $S$ are equivalence relations if $\{R_n\}_{n \in \mathbb{Z}^+}$ and $\{S_n\}_{n \in \mathbb{Z}^+}$ are valid partitions of $\Sigma^* \setminus \{\lambda\}$, so it suffices to show that each set in the collection is nonempty, the union of each collection includes all nonempty strings in $\Sigma^*$, and each collection is pairwise disjoint.
 
-  The set $R_n$ includes at least one string of length $n$ (with equality when $n = 0$), so each $R_n$ is nonempty.
-  Any string of length $n$ is in $R_n$, so $\Sigma^* \subseteq \cup_n R_n$.
-  If $m$ and $n$ are distinct natural numbers, no string can have both length $m$ and length $n$, so $R_m \cap R_n = \emptyset$.
+  The set $R_n$ includes at least one string of length $n$, so each $R_n$ is nonempty.
+  Any string of length $n$ is in $R_n$, so $\Sigma^* \setminus \{\lambda\} \subseteq \cup_n R_n$.
+  If $m$ and $n$ are distinct positive integers, no string can have both length $m$ and length $n$, so $R_m \cap R_n = \emptyset$.
   Hence $\{R_n\}_n$ is a valid partition.
 
-  We need to show $p_n(i) + 1 \leq p_{n + 1}(n + 1)$, in order to prove that there is at least one string (of length $p_n(n) + 1$) in $S_n$.
+  We need to show $p_n(i) + 1 \leq p_{n + 1}(n + 1)$ in order to prove that there is at least one string (of length $p_n(n) + 1$) in $S_n$.
   \begin{align*}
     p_n(n) + 1 &= n (n^n) + 1 \\
     &\leq n (n^n) + n^n && \text{(since } 1 \leq n^n \text{ for each } n \text{)} \\
@@ -181,9 +181,9 @@ The idea behind \autoref{thm:density} leads to a construction of equivalence rel
     &= p_{n + 1}(n + 1).
   \end{align*}
   Thus there is at least one string in $S_n$.
-  Next, for any string $x$, there exists an $n$ such that $p_n(n) + 1 \leq |x| \leq p_{n + 1}(n + 1)$, so every string in $\Sigma^*$ is in some $S_n$.
+  Next, for any string $x$, there exists an $n$ such that $p_n(n) + 1 \leq |x| \leq p_{n + 1}(n + 1)$, so every nonempty string in $\Sigma^*$ is in some $S_n$.
   \todo{I don't know how to explain this further.}
-  Finally, suppose $m$ and $n$ are distinct natural numbers and assume without loss of generality that $m < n$, or in other words, that $m + 1 \leq n$.
+  Finally, suppose $m$ and $n$ are distinct positive integers and assume without loss of generality that $m < n$, or in other words, that $m + 1 \leq n$.
   Then $p_{m + 1}(m + 1) \leq p_n(n) < p_n(n) + 1$, so no string of length at most $p_{m + 1}(m + 1)$ can also have length at least $p_n(n) + 1$.
   Hence, $S_m$ and $S_n$ are disjoint.
   Thus, $\{S_n\}_n$ is a valid partition.
@@ -194,7 +194,7 @@ The idea behind \autoref{thm:density} leads to a construction of equivalence rel
 Again, this is a special case of \autocite[Theorem~5.1]{bcffm}, but has a much simpler proof and sufficiently demonstrates that polynomial time kernel reductions and polynomial time many-one reductions are different.
 
 \begin{theorem}\label{thm:different}
-  There are equivalence relations $R$ and $S$ such that $R \mor S$ but $R \nkr S$.
+  There are equivalence relations $R$ and $S$ on $\Sigma^*$ such that $R \mor S$ but $R \nkr S$.
   Furthermore, $R$ and $S$ are in complexity class ???.
 \end{theorem}
 
@@ -208,7 +208,7 @@ Though it is not explicitly stated here, this theorem can be generalized to kern
 \begin{proof}[Proof of \autoref{thm:different}]
   Let $R$ and $S$ be the equivalence relations in \autoref{con:rands}.
   The following function is a polynomial time many-one reduction from $R$ to $S$.
-  On input $\pair{x}{y}$, if $|x| = |y|$, output $\pair{a}{a}$, otherwise output $\pair{a}{b}$, where $a$ is a string in $S_0$ and $b$ is a string in $S_1$ (for example, $a$ is of length at most $p_1(1)$ and $b$ is of length at least $p_1(1) + 1$).
+  On input $\pair{x}{y}$, if $|x| = |y|$, output $\pair{a}{a}$, otherwise output $\pair{a}{b}$, where $a$ is a string in $S_1$ and $b$ is a string in $S_2$.
   Computing and comparing the lengths of $x$ and $y$ can be done in linear time and writing the output requires only a constant number of steps, since the lengths of $a$ and $b$ are independent of the lengths of $x$ and $y$.
   Thus this function is computable in linear time, and hence in polynomial time.
   If $\pair{x}{y} \in R$, then the function outputs $\pair{a}{a}$, which is in $S$ since $S$ is reflexive.
@@ -216,20 +216,32 @@ Though it is not explicitly stated here, this theorem can be generalized to kern
   Therefore there is a correct polynomial time many-one reduction from $R$ to $S$.
 
   Now assume with the intention of producing a contradiction that there is a polynomial time kernel reduction from $R$ to $S$.
-  Since $f_0, f_1, \dotsc$ is an enumeration of all polynomial time computable functions, the reduction from $R$ to $S$ is $f_n$, with running time $p_n(n)$, for some natural number $n$.
-  Assume for now that $n > 0$.
+  Since $f_0, f_1, \dotsc$ is an enumeration of all polynomial time computable functions, the reduction from $R$ to $S$ is $f_n$, with running time $p_n(n)$, for some positive integer $n$.
   Consider a string $x$ of length $n$ (for example, $x = 1^n$); $x$ is in equivalence class $R_n$.
   Since the running time of $f_n$ is $p_n$, the length of $f_n(x)$ is at most $p_n(n)$, which is strictly less than $p_n(n) + 1$.
   The image of any string of length $n$ has length at most $p_n(n)$, which is strictly less than $p_n(n) + 1$.
   By the construction of $R$ and $S$, we have $\#R(n) = n + 1$ and $\#S(p_n(n)) = n$.
   By the pigeonhole principle, there must be two strings $x$ and $y$ of length at most $n$ in different equivalence classes of $R$ whose image under $f_n$ is in the same equivalence class of $S$.
   Since $\pair{x}{y} \notin R$ if and only if $\pair{f(x)}{f(y)} \notin S$, this is a contradiction.
-
-  There is still the possibility that $n = 0$, and the above argument doesn't apply because $\#R(0) = 1$ and $\#S(p_0(0)) = 1$, since we required $S_0$ to include all strings of length less than $p_0(0) + 1$.
-  In order to get the necessary contradiction, we need only consider strings of length $1$.
-  Since the running time of $f_0$ is $p_0$, the image of a string of length $1$ has length at most $p_0(1)$.
-  Since $p_0(1) \leq p_1(1)$, we have $\#R(1) = 2$ and $\#S(p_0(1)) \leq \#S(p_1(1)) = 1$.
-  \todo{This reasoning applies above also, if we look at the number of equivalence classes for strings of length at most $n + 1$, but I thought it was clearer to use $p_n(n)$ instead of using $p_n(n + 1)$. Should we use this reasoning above?}
-  Again, the pigeonhole principle shows that this is a contradiction, and thus no function $f_n$ can be a kernel reduction from $R$ to $S$, for any natural number $n$.
   Therefore $R \nkr S$.
+
+  %% There is still the possibility that $n = 0$, and the above argument doesn't apply because $\#R(0) = 1$ and $\#S(p_0(0)) = 1$, since we required $S_0$ to include all strings of length less than $p_0(0) + 1$.
+  %% In order to get the necessary contradiction, we need only consider strings of length $1$.
+  %% Since the running time of $f_0$ is $p_0$, the image of a string of length $1$ has length at most $p_0(1)$.
+  %% Since $p_0(1) \leq p_1(1)$, we have $\#R(1) = 2$ and $\#S(p_0(1)) \leq \#S(p_1(1)) = 1$.
+  %% \todo{This reasoning applies above also, if we look at the number of equivalence classes for strings of length at most $n + 1$, but I thought it was clearer to use $p_n(n)$ instead of using $p_n(n + 1)$. Should we use this reasoning above?}
+  %% Again, the pigeonhole principle shows that this is a contradiction, and thus no function $f_n$ can be a kernel reduction from $R$ to $S$, for any natural number $n$.
+  %% Therefore $R \nkr S$.
+
+  The theorem is true for equivalence relations on $\Sigma^* \setminus \{\lambda\}$, now we need to consider the empty string.
+  Let $R' = R \cup \{(\lambda, \lambda)\}$ and $S' = S \cup \{(\lambda, \lambda)\}$.
+  The only difference in the above argument is that
+  \begin{equation*}
+    \#R'(n) = \#R(n) + 1 = n + 2
+  \end{equation*}
+  and
+  \begin{equation*}
+    \#S'(p_n(n)) = \#S(p_n(n)) + 1 = n + 1.
+  \end{equation*}
+  The inequality $\#R'(n) > \#S'(p_n(n))$ still holds, so we have produced the same contradiction.
 \end{proof}
