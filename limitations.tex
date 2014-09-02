@@ -207,7 +207,81 @@ Again, this is a special case of \autocite[Theorem~5.1]{bcffm}, but has a much s
   Furthermore, $R$ and $S$ are in complexity class ???.
 \end{theorem}
 
-\todo{Needs a picture!}
+\begin{figure}
+  \caption{\label{fig:sparse}For a fixed kernel reduction $f_n$ running in time $p_n$, the image of a string of length $n + 1$ can only be a string of length at most $p_n(n + 1)$.
+    The number of equivalence classes in $R$ for strings of length $n + 1$ is greater than the number of equivalence classes in $S$ for strings of length $p_n(n + 1)$ for each polynomial $p_n$.}
+  \begin{center}
+    \begin{tikzpicture}[yscale=0.5]
+      \begin{scope}[shift={(0, 5)}]
+        \node at (0, 1) {$R$};
+
+        %% Rectangles for equivalence classes of $R$.
+        \draw (2, 0)
+        %% TODO should be a way to use [current node is local] option here...
+        ++(0, 1) node[anchor=east] {$\dotsb$} ++(0, -1)
+        rectangle ++(1, 2)
+        ++(0.2, -2)
+        rectangle ++(1, 2)
+        ++(0.2, -2)
+        rectangle ++(1, 2)
+        ++(0, -1)
+        node[anchor=west] {$\dotsb$}
+        ;
+
+        %% Labels for each equivalence class of $R$.
+        \path
+        (2.5, 1) node {$R_n$}
+        ++(1.2, 0) node {$R_{n + 1}$}
+        ++(1.2, 0) node {$R_{n + 2}$}
+        ;
+      \end{scope}
+
+      %% Arrow from top to bottom showing image under $f_n$.
+      \begin{scope}[shift={(0, 1)}]
+        \draw
+        (4.5, 1) node[shape=circle, fill=black, inner sep=1pt] (source) {}
+        ++(-0.8, 3.2) node[shape=circle, fill=black, inner sep=1pt] (target) {};
+        \path[<-, >=stealth] (source) edge node[anchor=south west] {$f_n$} (target);
+      \end{scope}
+
+      \begin{scope}[shift={(0, 1)}]
+        \node at (0, 1) {$S$};
+
+        %% Rectangles for equivalence classes of $S$.
+        \draw (2, 0)
+        %% TODO should be a way to use [current node is local] option here...
+        ++(0, 1) node[anchor=east] {$\dotsb$} ++(0, -1)
+        rectangle ++(3, 2)
+        ++(0.2, -2)
+        rectangle ++(4, 2)
+        ++(0, -1)
+        node[anchor=west] {$\dotsb$}
+        ;
+
+        %% Labels for each equivalence class of $S$.
+        \path
+        (3.5, 1) node {$S_n$}
+        ++(3.8, 0) node {$S_{n + 1}$}
+        ;
+      \end{scope}
+
+      %% Labels underneath each $S_i$ showing length bounds.
+      \begin{scope}
+        \draw[shorten >=1pt]
+        (2, 0) node[anchor=north] (pn) {$p_n(n) + 1$}
+        -- ++(0, 1);
+        \draw[thick, color=gray] (4.5, 3.5)
+        -- ++(0, -5)
+        node[anchor=north, color=black] (pnplus1) {$p_n(n + 1)$}
+        ;
+        \draw[shorten >=1pt]
+        (5.2, 0) node[anchor=north west, color=black] (pnplus1nplus1) {$p_{n + 1}(n + 1)$}
+        -- ++(-0.2, 1);
+        ;
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+\end{figure}
 
 The main idea behind this theorem is that no matter which polynomial time function we consider as a possible kernel reduction, the number of equivalence classes in $R$ is greater than the number of equivalence classes in $S$, for sufficiently large strings.
 \autoref{thm:density} doesn't apply in this setting because both $R$ and $S$ are kernel sparse.
