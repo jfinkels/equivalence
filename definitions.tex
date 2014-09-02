@@ -112,8 +112,29 @@ The main ideas of these inclusions are presented in the following theorem (the c
   \item
     For the forward direction, hard-code the function $f$ from the definitions of $\NPEqSix$ and $\NPEqFive$ into the relation $R'$ in the definitions of $\NPEqFour$ and $\NPEqThree$.
     For the reverse direction, keep the relation $R'$ and choose the identity function to be $f$ in the definitions of $\NPEqSix$ and $\NPEqFive$.
+    \qedhere
   \end{enumerate}
 \end{sketch}
+
+In \autocite{fg11}, the authors define the class $\Ker$ as the set of all equivalence relations $R$ that have a polynomial time computable \emph{complete invariant} (that is, a function $f \in \FP$ such that $(x, y) \in R$ if and only if $f(x) = f(y)$).
+Our one-witness and two-witness complete invariants are special cases of the general complete invariant.
+They provide evidence that $\Ker$ and $\PEq$ are different by showing that equality of the two classes implies some unlikely collapses in ``higher'' complexity classes.
+Our intuition is that $\NPEq_8$ is different from $\NPEq_6$ (and similarly that $\NPEq_7$ is different from $\NPEq_5$), since the former requires equality while the latter requires only equivalence, in a very broad sense.
+If this intuition is correct, then we can provide further evidence that $\Ker$ and $\PEq$ are different.
+
+\begin{theorem}
+  If $\Ker = \PEq$, then $\NPEq_8 = \NPEq_6 = \NPEq_4$ and $\NPEq_7 = \NPEq_5 = \NPEq_3$.
+\end{theorem}
+\begin{proof}
+  Since $\NPEq_8 \subseteq \NPEq_6 = \NPEq_4$ and $\NPEq_7 \subseteq \NPEq_5 = \NPEq_3$ unconditionally, it suffices to show $\NPEq_4 \subseteq \NPEq_8$ and $\NPEq_3 \subseteq \NPEq_7$.
+
+  First, suppose $R \in \NPEq_3$, so there is an $R' \in \PEq$ such that $\pair{x}{y} \in R$ if and only if there are $w_x$ and $w_y$ such that $\pair{\pair{x}{w_x}}{\pair{y}{w_y}} \in R'$.
+  Since $\Ker = \PEq$, there is a function $f \in \FP$ such that $\pair{\pair{x}{w_x}}{\pair{y}{w_y}} \in R'$ if and only if $f(x, w_x) = f(y, w_y)$.
+  Thus there is a function $f$ such that $\pair{x}{y} \in R$ if and only if there are $w_x$ and $w_y$ such that $f(x, w_x) = f(y, w_y)$.
+  Therefore $R \in \NPEq_7$.
+
+  The proof that $\NPEq_4 \subseteq \NPEq_8$ is similar; the only exception is that there is a single witness $w$ instead of two witnesses $w_x$ and $w_y$.
+\end{proof}
 
 \begin{openproblem}
   Does one of the complexity classes defined here have a complete problem under $\kr$ reductions?
