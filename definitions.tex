@@ -74,42 +74,44 @@ We say that an equivalence relation $R$ on a universe $U$ has a \defn{one-witnes
 \autoref{fig:inclusions} shows the inclusions among each of the classes of equivalence relations defined above.
 \begin{figure}
   \caption{\label{fig:inclusions}Inclusions among possible definitions of equivalence relations verifiable in deterministic polynomial time.}
-  \begin{displaymath}
-    \xymatrix{%
-      \NPEqSeven \ar[r] & \NPEqFive \ar@{<->}[r] & \NPEqThree \ar[r] & \NPEqTwo \ar@{<->}[r] & \NPEqOne \\
-      \NPEqEight \ar[u] \ar[r] & \NPEqSix \ar[u] \ar@{<->}[r] & \NPEqFour \ar[u]}
-  \end{displaymath}
+  \begin{center}
+    \begin{tikzpicture}[->]
+      \node at (0, 0) (8) {$\NPEq_8$};
+      \node at (-1, 1) (7) {$\NPEq_7$};
+      \node at (1, 1) (6) {$\NPEq_6$};
+      \node at (3, 1) (4) {$\NPEq_4$};
+      \node at (0, 2) (5) {$\NPEq_5$};
+      \node at (2, 2) (3) {$\NPEq_3$};
+      \node at (0, 3) (2) {$\NPEq_2$};
+      \node at (2, 3) (1) {$\NPEq_1$};
+      \draw (8) to (7);
+      \draw (8) to (6);
+      \draw[<->] (6) to (4);
+      \draw (7) to (5);
+      \draw (6) to (5);
+      \draw[<->] (5) to (3);
+      \draw (5) to (2);
+      \draw[<->] (2) to (1);
+    \end{tikzpicture}
+  \end{center}
 \end{figure}
 The main ideas of these inclusions are presented in the following theorem (the complete proofs are tedious and so are omitted here).
 \begin{theorem}\label{thm:definitions}\mbox{}
   \begin{enumerate}
-  \item $\NPEqOne=\NPEqTwo$
-  \item $\NPEqEight\subseteq\NPEqSix$ and $\NPEqSeven\subseteq\NPEqFive$
-  \item $\NPEqSix=\NPEqFour$ and $\NPEqFive=\NPEqThree$
-  \item $\NPEqEight\subseteq\NPEqSeven$, $\NPEqSix\subseteq\NPEqFive$, and $\NPEqFour\subseteq\NPEqThree$
-  \item $\NPEqThree\subseteq\NPEqTwo$
+  \item $\NPEqOne = \NPEqTwo$
+  \item $\NPEqEight \subseteq \NPEqSix$ and $\NPEqSeven \subseteq \NPEqFive$
+  \item $\NPEqEight \subseteq \NPEqSeven$ and $\NPEqSix \subseteq \NPEqFive$
+  \item $\NPEqSix = \NPEqFour$ and $\NPEqFive = \NPEqThree$
   \end{enumerate}
 \end{theorem}
 \begin{sketch}\mbox{}
   \begin{enumerate}
   \item Follows immediately from the standard definitions of \NP.
   \item Choose the relation $R'$ in the definitions of $\NPEqSix$ and $\NPEqFive$ to be the equality relation.
+  \item Choose $w_x$ and $w_y$ in $\NPEqSeven$ and $\NPEqFive$ to be equal to the $w$ from $\NPEqEight$ and $\NPEqSix$.
   \item
     For the forward direction, hard-code the function $f$ from the definitions of $\NPEqSix$ and $\NPEqFive$ into the relation $R'$ in the definitions of $\NPEqFour$ and $\NPEqThree$.
     For the reverse direction, keep the relation $R'$ and choose the identity function to be $f$ in the definitions of $\NPEqSix$ and $\NPEqFive$.
-  \item Choose $w_x$ and $w_y$ in $\NPEqSeven$, $\NPEqFive$, and $\NPEqThree$ to be equal to the $w$ from $\NPEqEight$, $\NPEqSix$, and $\NPEqFour$.
-  \item Define $L=\lb\pair{\pair{x}{y}}{\pair{w_x}{w_y}}\st\pair{\pair{x}{w_x}}{\pair{y}{w_y}}\in R'\rb$, so the witness that $\pair{x}{y}\in L$ is the pair $\pair{w_x}{w_y}$.
-    %% TODO This doesn't work, because we could have $(x, y, w)\notin L$ but
-    %% still have some w_x, w_y such that $((x, y, w_x), (x, y, w_y))\in R'$,
-    %% namely, w_x=w_y, which relies on reflexivity.
-    %%
-    %% For the reverse direction, define $R'$ by
-    %% \begin{align*}
-    %%   R'= \{ & \pair{\triple{x}{y}{w_x}}{\triple{x}{y}{w_y}} \,|\, w_x = w_y \text{ or} \\
-    %%   & \, \exists b\in\{0, 1\} \,\exists w\in\{0, 1\}^*\colon \\
-    %%   & \, w_x = w \circ b, w_y = w\circ \bar{b},\plain{and} \pair{\pair{x}{y}}{w}\in L \}
-    %% \end{align*}
-    %% and choose $w_x=w\circ 0$ and $w_y=w\circ 1$.
   \end{enumerate}
 \end{sketch}
 
