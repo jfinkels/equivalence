@@ -27,6 +27,7 @@ packages:
 * `amssymb`
 * `babel`
 * `biblatex`
+* `ccicons` (required by `toctex`; see below)
 * `complexity`
 * `csquotes`
 * `hyperref`
