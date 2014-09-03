@@ -80,16 +80,16 @@ We use this fact to show that there are $\mathcal{C}$-complete equivalence relat
 
 We know that $\NP$ contains \GI, and that \NP-complete graph properties exist (Hamoltinicity, 3-colorability, etc.), so it follows that there exist equivalence relations which are \NP-complete.
 
-\begin{corollary}
-  If $\Pi$ is an \NP-complete property, then $A(\Pi)$ is an \NP-complete equivalence relation.
+\begin{corollary}\label{cor:npcompleteeqrel}
+  If $\Pi$ is an \NP-complete property on graphs, then $A(\Pi)$ is an \NP-complete equivalence relation.
 \end{corollary}
 
 We can now show that completeness in $\CEq$ under $\kr$ reductions implies completeness in $\mathcal{C}$ under $\mor$ reductions.
 
-\begin{corollary}\label{cor:ceqimpliesc}
+\begin{proposition}\label{prop:ceqimpliesc}
   Let $\mathcal{C}$ be a complexity class such that $\IsoK\in\mathcal{C}$.
-  If there exists a $\mathcal{C}$-complete property and an equivalence relation $R$ is \CEq-complete then $R$ is also $\mathcal{C}$-complete.
-\end{corollary}
+  If there exists a $\mathcal{C}$-complete property on $\mathcal{K}$ and an equivalence relation $R$ is \CEq-complete then $R$ is also $\mathcal{C}$-complete.
+\end{proposition}
 \begin{proof}
   Let $\Pi$ be the $\mathcal{C}$-complete property.
   Let $A$ be a $\mathcal{C}$-complete equivalence relation in $\mathcal{C}$, which exists by \autoref{prop:APi}.
@@ -98,25 +98,51 @@ We can now show that completeness in $\CEq$ under $\kr$ reductions implies compl
   Since $R$ is in $\mathcal{C}$ by hypothesis, it is therefore $\mathcal{C}$-complete.
 \end{proof}
 
-Specifically, if $R$ is \NPEq-complete then it is \NP-complete.
-This corollary provides not only a proof that $\PEq=\NPEq$ implies $\P=\NP$, but also a clearer proof of \autocite[Proposition~8.1]{bcffm}.
+This corollary provides a clearer proof of \autocite[Proposition~8.1]{bcffm}.
 
-\begin{corollary}
-  $\PEq=\NPEq$ if and only if $\P=\NP$.
+\begin{corollary}[{\autocite[Proposition~8.1]{bcffm}}]
+  If $\GI$ is \NPEq-complete then the polynomial time hierarchy collapses to the second level ($\PH=\STP$).
 \end{corollary}
 \begin{proof}
-  For the forward direction, if $\PEq=\NPEq$, then some \NP-complete equivalence relation is in $\P$.
-  Since polynomial time many-one reductions compose, this implies a polynomial time algorithm for any problem in $\NP$, so $\P=\NP$.
-
-  The reverse direction is obvious.
+  If $\GI$ is \NPEq-complete then it is \NP-complete by \autoref{prop:ceqimpliesc}.
+  This implies the stated collapse (see \autocite{schoning87}).
 \end{proof}
 
-\begin{proposition}[{\autocite[Proposition~8.1]{bcffm}}]
-  If $\GI$ is \NPEq-complete then the polynomial time hierarchy collapses to the second level ($\PH=\STP$).
+This also means that for well-behaved complexity classes, equality of the corresponding equivalence classes implies equality of the general classes.
+
+\begin{proposition}
+  Suppose $\mathcal{C}_1$ and $\mathcal{C}_2$ are complexity classes satisfying the following conditions.
+  \begin{itemize}
+  \item $\mathcal{C}_1 \subseteq \mathcal{C}_2$
+  \item $\IsoK \in \mathcal{C}_2$
+  \item $\mathcal{C}_1$ is closed under $\mor$ reductions
+  \item there is a $\mathcal{C}_2$-complete property on $\mathcal{K}$
+  \item there is a $\mathcal{C}_2\Eq$-complete equivalence relation $R$
+  \end{itemize}
+  Then $\mathcal{C}_1 = \mathcal{C}_2$ if and only if $\mathcal{C}_1\Eq = \mathcal{C}_2\Eq$.
 \end{proposition}
 \begin{proof}
-  If $\GI$ is \NPEq-complete then it is \NP-complete by \autoref{cor:ceqimpliesc}.
-  This implies the stated collapse (see \autocite{schoning87}).
+  If $\mathcal{C}_1 = \mathcal{C}_2$, then $\mathcal{C}_1\Eq = \mathcal{C}_2\Eq$ by their definitions.
+  Suppose now that $\mathcal{C}_1\Eq = \mathcal{C}_2\Eq$.
+  We know that $R$ is $\mathcal{C}_2$-complete since it meets all the requirements in the hypothesis of \autoref{prop:ceqimpliesc}.
+  Since $R \in \mathcal{C}_2\Eq$ and $\mathcal{C}_2\Eq = \mathcal{C}_1\Eq$ by hypothesis, $R \in \mathcal{C}_1\Eq$, and hence $R \in \mathcal{C}_1$.
+  Since $\mathcal{C}_1$ is closed under $\mor$ reductions, $\mathcal{C}_2 \subseteq \mathcal{C}_1$.
+  Since $\mathcal{C}_1 \subseteq \mathcal{C}_2$ by hypothesis, we have shown the equality of the two complexity classes.
+\end{proof}
+
+\begin{corollary}
+  $\PEq = \NPEq$ if and only if $\P = \NP$.
+\end{corollary}
+\begin{proof}
+  Choose $\mathcal{C}_1 = \P$ and $\mathcal{C}_2 = \NP$ in the previous corollary.
+  \begin{itemize}
+  \item $\P \subseteq \NP$.
+  \item Let $\mathcal(K)$ be the set of graphs; $\GI$ is in $\NP$.
+  \item $\P$ is closed under $\mor$ reductions.
+  \item Hamiltonicity, for example, is a $\NP$-complete property on graphs.
+  \item \autoref{cor:npcompleteeqrel} show the existence of an $\NPEq$-complete equivalence relation.
+  \end{itemize}
+  All of the conditions are satisfied, so $\P = \NP$ if and only if $\PEq = \NPEq$.
 \end{proof}
 
 Note that we currently do not know whether $\NPEq$ (or $\SKPEq$ for any $k$) has a complete problem under polynomial time kernel reductions.
@@ -151,9 +177,9 @@ In either case, the structures $Y$ and $Z$ have the same size as $X$ (since our 
 The number of structures of size $|X|$ is finite, so $[X]$ is finite.
 
 As a contrast, consider the equivalence relation
-\begin{displaymath}
+\begin{equation}\label{eq:ones}
   R=\lb\pair{x}{y} \st x\plain{and}y\plain{have the same number of}1\textnormal{s}\rb.
-\end{displaymath}
+\end{equation}
 $R$ has an infinite number of equivalence classes: $[1]$, $[11]$, $[111]$, etc.
 Each equivalence class is itself infinite as well: if $w\in\Sigma^*$ then $[w]$ contains $w$, $0w$, $00w$, etc.
 
@@ -164,7 +190,7 @@ Note that in the following theorem, if an equivalence relation $B$ is ``complete
   % If \Pi is additionally an $\mathcal{C}$-complete property, then A^=(\Pi) would be an $\mathcal{C}$-complete equivalence relation.
   Suppose
   \begin{itemize}
-  \item $R$ is defined as in the preceding discussion,
+  \item $R$ is defined as in \eqref{eq:ones},
   \item $\mathcal{C}$ is a complexity class such that $\IsoK\in\mathcal{C}$ and $R\in\mathcal{C}$, and
   \item $\Pi$ is a uniform property.
   \end{itemize}
