@@ -1,4 +1,4 @@
-%% tocbase.cls version 3.3   2010-09-23  ToC base style file
+%% tocbase.cls version 4.35   2013-12-31  ToC base style file
 
 % Filename: tocbase.cls
 %
@@ -11,26 +11,75 @@
 %
 % Search for ``%%% PART'' to find the main parts of this class file.
 
-%% Version 2.26: fixes tocadjust homepage bug & compilation advertisements.
-%% Version 2.27: Adds letterpaper as option for the article class.
-%% Version 3.1: Adds further support for hyperxmp data & license data. New copyright and license boxes. First put in to circulation with volume 5.
-%% Version 3.2: Fixes date layout bug when no dates are defined; alter copyright layout.
-%% Version 3.21: Fixes copyright date layout; uniformizes copyright/cc symbols.
-%% Version 3.22: Fixes spacing around copyright symbol when \toc@date not set.
-%% Version 3.23: Deprecates tocadjust.sty, icons are now loaded if the files exist.
-%% Version 3.24: Reorders package loading so that hyperref is after graphicx. Adds checks for custom icons.
-%% Version 3.25: Insures that \hypersetup is called on 1st page, fixing a bug that can occur with long abstracts and classification=float.
-%% Version 3.26: Removes letterpaper option to hyperref, no longer supported.
-%% Version 3.3: Includes microtype; minor changes to theoremstyles;
-%%      changes in dedication layout spacing.
-
+%% Version 4.0: New tocdetail for lastpage; this is only to be used
+%% in cases where the article has already been published and we wish
+%% to hardcode the lastpage number for the purposes of forcibly
+%% producing the bibliographic information in the header despite
+%% typesetting changes (the principal example is when we release
+%% articles to the arXiv).
+%%
+%% Finally, NOTEs and COMMENTs styles are now set using the
+%% \tocdetails command. E.g., "..., note, ..." or "..., comment,
+%% ..." For consistency, you may use "..., article, ..." as well.
+%%
+%% Version 4.01 Adds support for \begin{question}..\end{question}.
+%%
+%% Version 4.02 Adds documentation to classification layout.
+%%
+%% Version 4.03 Fixes a bug where classifications would be floated on
+%% the second page for long abstract.
+%%
+%% Version 4.1 Changes abstract (and dedication) layout to use
+%% \quotation rather than \leftskip & \rightskip; this appears to give
+%% more robust changes to margins so that enumerate
+%% environments are layed out correctly. This version also slightly condenses
+%% the material on the front page by removing some \largeskips.
+%%
+%% Version 4.11 Conditional layout for classification data.
+%%
+%% Version 4.12: - Migrated from color to xcolor.
+%%               - Migrated to T1 fontencoding to have better support
+%%               for breaking through words with accents.
+%%               - Added the textcomp package, so that copyright
+%%               symbols are a single glyph.
+%%               - modified \expref to omit hyperrefs when in a pdf
+%%               string.
+%%
+%% Version 4.2:  Removes definition of the algorithm theorem type to
+%% avoid clashes with, e.g., the algorithmicx class which invokes the
+%% float class with a float called algorithm. 
+%%
+%% Version 4.2 compatibility warning: may not be backward compatible.
+%%
+%% Version 4.3: Introduces usage of the ccicons package to typeset the
+%% Creative Commons icons. Additionally, uses the ccicons package to
+%% redefine the \textcopyright to mimic the layout of the
+%% ccicons. (Thus the .pdf files for the copyright icon and the ccicon
+%% are no longer necessary.) Slight change to cc attribution
+%% text. Implements \exprefsilent{}{}, analogous to the \expref
+%% command, but which does not produce a text reference to the object,
+%% just the hyperlinked reference.
+%%
+%% Version 4.31 Changed placement of (CC-BY) text in CC license statement.
+%%
+%% Version 4.32 Removed period after title page dates.
+%%
+%% Version 4.33 Removed colons before title page dates, replaced them with \,
+%%       (small space), capitalized Rev/Pub   (LB/JW)
+%%
+%% Version 4.34 Fixed versioning information only.
+%%
+%% Version 4.35 Adds support for footnotes in the title with no
+%% footnote marker (via \titlefootnote). Adds support for \cclass,
+%% \eee, and \expeqref.
+%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% PART: Declare class and load external packages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Need this version of LaTeX at least (for ClassWarning commands)
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesClass{tocbase}[2010/09/23 v3.3 Theory of Computing Base]
+\ProvidesClass{tocbase}[2013/12/31 v4.35 Theory of Computing Base]
 
 % Do not pass the following options down to the article class
 \def\toc@dontpassoptions{10pt,11pt,12pt,oneside,twoside}
@@ -46,23 +95,31 @@
 % Now load article class and handle options.
 \LoadClass[11pt,twoside,letterpaper]{article}
 
-% JJF 12 January 2012 - Use aliascnt to allow for correct autoref names.
-\RequirePackage{aliascnt}
+\RequirePackage{ifpdf}
 
-% Insure that we use postscript type 1 times.
+%% Check that we are running pdfLaTeX; otherwise complain.
+\ifpdf{}\else%
+{\ClassError{tocbase}{pdfLaTeX not detected. Theory of
+    Computing classes require pdfLaTeX.}{Insure that you are compiling
+    with pdflatex.}}\fi
+
+% Insure that we use postscript type 1 times, with T1 encoding. Load
+% textcomp, so that copyright symbols are single gylphs.
+\RequirePackage[T1]{fontenc}
 \RequirePackage{mathptmx}
-
-% Load microtype.
-\RequirePackage{microtype}
+\RequirePackage{textcomp}
 
 % Load amsmath and amsthm packages
 \RequirePackage{amsmath}
 \RequirePackage{amsthm}
 \RequirePackage{amssymb}
 
-% Load color, eucal.
-\RequirePackage{color}
+% Load xcolor, eucal.
+\RequirePackage{xcolor}
 \RequirePackage{eucal}
+
+% Load microtype.
+\RequirePackage{microtype}
 
 % We'll require the page number of the last page in the title and
 % running footers.
@@ -96,6 +153,10 @@
   breaklinks=true,
   pdfstartview=FitH,
   pdfpagelayout=OneColumn]{hyperref}
+
+% Load the ccicons package (N.b., This must occur after loading
+% hyperref in order for the \textcopyright symbol to be set correctly.)
+\RequirePackage[copyright]{ccicons}[2012/05/22]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% IF macro
@@ -178,10 +239,11 @@
 \newcommand{\toc@published}{\@empty}
 \newcommand{\toc@revised}{\@empty}
 \newcommand{\toc@declaredfirstpage}{\@empty}
+\newcommand{\toc@declaredlastpage}{\@empty}
 \newcommand{\toc@doi}{\@empty}
 \newcommand{\toc@url}{\@empty}
 
-%%% The rest of this part establises the hookds for the \tocdetails command.
+%%% The rest of this part establises the hooks for the \tocdetails command.
 \define@key{tocdet}{year}{\renewcommand{\toc@year}{#1}}
 \define@key{tocdet}{volume}{\renewcommand{\toc@volume}{#1}}
 \define@key{tocdet}{number}{\renewcommand{\toc@number}{#1}}
@@ -189,6 +251,7 @@
 \define@key{tocdet}{published}{\renewcommand{\toc@published}{#1}}
 \define@key{tocdet}{revised}{\renewcommand{\toc@revised}{#1}}
 \define@key{tocdet}{firstpage}{\renewcommand{\toc@declaredfirstpage}{#1}}
+\define@key{tocdet}{lastpage}{\renewcommand{\toc@declaredlastpage}{#1}}
 \define@key{tocdet}{doi}{\renewcommand{\toc@doi}{#1}}
 \define@key{tocdet}{url}{\renewcommand{\toc@url}{#1}}
 
@@ -205,6 +268,7 @@
 \newcommand\toc@runningtitle{}
 \newcommand\toc@firstpage{\getpagerefnumber{FirstPage}}
 \newcommand\toc@lastpage{\getpagerefnumber{LastPage}}
+
 % The next four are set in frontmatter environment
 \newcommand\toc@authors\@empty
 \newcommand\toc@acmclassification{{\color{red} ADD ACM
@@ -236,7 +300,7 @@ CLASSIFICATIONS!}}
 % Embed license data in the xmp block.
 \hypersetup{%
  pdfcopyright={This document is licensed under a Creative Commons Attribution 3.0 license},%
-  pdflicenseurl={\toc@cclicenseurl}}
+ pdflicenseurl={\toc@cclicenseurl}}
 
 % Embed remaining data after user has set it in preamble.
 \AtBeginDocument{%
@@ -251,29 +315,16 @@ CLASSIFICATIONS!}}
 %% Define copyright text.
 %% Determine exterior and interion widths for the copyright box.
 \newlength\toc@crboxheight
-\newlength\toc@cciconheight
-\newlength\toc@copyrighticonheight
-
 \setlength\toc@crboxheight{3.5ex}
-\setlength\toc@cciconheight{6pt}
-\setlength\toc@copyrighticonheight{\toc@cciconheight}
 
 \newcommand{\toc@crlayout}[1]{\fontsize{8}{9}\usefont{OT1}{ptm}{m}{n}\selectfont{#1}}
 
 %% If there is no year, layout copyright line apropriately.
 \newcommand{\toc@conditionalyearlayout}{\ifex{\toc@year}{\@empty}{}\else{\toc@crlayout{\toc@year~}}\fi}
 
-%% Set up text-based copyright/cc icons as a fallback.
-\newcommand{\toc@ccicon@pdf}[1]{\raisebox{-.1#1}{\includegraphics[height=#1]{toc-cc.pdf}}}
-\newcommand{\toc@ccicon@text}[1]{\toc@crlayout{$\bigcirc$\hspace{-6.6pt}\raisebox{.5pt}{\tiny{cc}}\hspace{1.5pt}}}
-\IfFileExists{toc-cc.pdf}{\newcommand{\toc@ccicon}{\toc@ccicon@pdf}}{\newcommand{\toc@ccicon}{\toc@ccicon@text}}
-
-\newcommand{\toc@copyrighticon@pdf}[1]{\raisebox{-.1#1}{\includegraphics[height=#1]{toc-copyright.pdf}}}
-\newcommand{\toc@copyrighticon@text}[1]{\toc@crlayout{\copyright}}
-\IfFileExists{toc-copyright.pdf}{\newcommand{\toc@copyrighticon}{\toc@copyrighticon@pdf}}{\newcommand{\toc@copyrighticon}{\toc@copyrighticon@text}}
-
-\newcommand{\toc@jlicensestatement}{\href{\toc@cclicenseurl}{\toc@ccicon{\toc@cciconheight}~\toc@crlayout{Licensed under a Creative Commons Attribution License}}}
-\newcommand{\toc@acopyrightstatement}{\toc@crlayout{\href{\toc@licenseurl}{\toc@copyrighticon{\toc@copyrighticonheight}~\toc@conditionalyearlayout\toc@copyrightauthor}}}
+\newcommand{\toc@jlicensestatement}{\href{\toc@cclicenseurl}{\ccby~\toc@crlayout{Licensed
+under a Creative Commons Attribution License (CC-BY)}}}
+\newcommand{\toc@acopyrightstatement}{\toc@crlayout{\href{\toc@licenseurl}{\textcopyright~\toc@conditionalyearlayout\toc@copyrightauthor}}}
 \newcommand{\toc@doitext}{\ifex{\toc@doi}{\@empty}{}\else{\toc@crlayout{\href{\toc@doiderefaddress\toc@doi}{DOI:~\toc@doi}}}\fi}
 
 \newcommand{\toc@copyrightbox}
@@ -314,30 +365,38 @@ CLASSIFICATIONS!}}
   \begin{minipage}{\toc@bannerwidth}%
     \centering \toc@bannertexta\\ \toc@bannertextb\\
    \vspace{2mm} \hrule\vspace{1pt}\hrule%
-  \end{minipage}}
+ \end{minipage}}
   
 % Define the date box. If \toc@received is
 % undefined, this will simply print
 % the current date, as does the article class.
-\newcommand\toc@reviseddatelayout{\ifex\toc@revised\@empty{}\else{revised: \toc@revised; }\fi}
+\newcommand\toc@reviseddatelayout{\ifex\toc@revised\@empty{}\else{Revised\, \toc@revised; }\fi}
 \newcommand\toc@datelayout%
 {\fontsize{10}{12}\usefont{OT1}{ptm}{m}{sl}\selectfont%
   \ifex{\toc@received}{\@empty}{\@date}%
   \else%
-  {{Received: \toc@received; %
+  {{Received\, \toc@received; %
    \toc@reviseddatelayout%
-    published: \toc@published.}}%
+    Published\, \toc@published}}%
   \fi}
 
 %% Setup classification box.
-\newcommand\toc@classificationbox{%
+\newcommand{\toc@classificationbox}{%
  \parbox[t]{\textwidth}{%
-  \noindent \textbf{ACM Classification: }\toc@acmclassification 
-  \par \medskip
-  \noindent \textbf{AMS Classification: }\toc@amsclassification 
-  \par \medskip
-  \noindent \textbf{Key words and phrases: }\toc@keywords \par}%
-}
+ \ifex{\toc@acmclassification}{\@empty}{}
+ \else{\noindent \textbf{ACM Classification: }\toc@acmclassification% 
+       \par \medskip}
+ \fi
+%
+ \ifex{\toc@amsclassification}{\@empty}{}
+ \else{\noindent \textbf{AMS Classification: }\toc@amsclassification%
+       \par \medskip}
+ \fi
+%
+ \ifex{\toc@keywords}{\@empty}{}
+ \else{\noindent \textbf{Key words and phrases: }\toc@keywords \par}%
+ \fi%
+}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% PART: Header and footer initialization
@@ -349,8 +408,7 @@ CLASSIFICATIONS!}}
 \newcommand\toc@runningcitation%
 {\href{\toc@journaldoiaddress}{\textsc{\toc@journalname}}}
 
-\newcommand\toc@runningcitation@nolink%
-{\textsc{\toc@journalname}}
+\newcommand\toc@runningcitation@nolink{\textsc{\toc@journalname}}
 
 % Header layout wrapper.
 \newcommand\toc@headerlayout[1]
@@ -510,17 +568,16 @@ CLASSIFICATIONS!}}
 
  %Define dedication environment
  \newenvironment{dedication}{%
-  \global\setbox\toc@dedication=\vbox\bgroup
-  \leftskip 1cm \rightskip 1cm
-  \noindent \itshape % Dedication is set in italics.
-}{\par \bigskip\egroup} % End of definition of dedication
+  \global\setbox\toc@dedication=\vbox\bgroup%
+  \quotation
+  \noindent \itshape \hfill% Dedication is set in italics.
+}{\endquotation\par\egroup} % End of definition of dedication
 
  %Define abstract environment
  \renewenvironment{abstract}{%
-  \global\setbox\toc@abstract=\vbox\bgroup
-  \leftskip 1cm \rightskip 1cm
-  \noindent {\bfseries Abstract:}  % caption `Abstract' (bold)
- }{\par \bigskip\egroup} % End of definition of abstract
+  \global\setbox\toc@abstract=\vbox\bgroup%
+  \quotation\noindent {\bfseries Abstract:}  % caption `Abstract' (bold)
+ }{\endquotation\par\egroup} % End of definition of abstract
 
  %(Re)Define Author environment
  \let\orig@author\author % Store original \author commannd
@@ -546,7 +603,7 @@ CLASSIFICATIONS!}}
  \newcommand{\tocams}[1]{\renewcommand{\toc@amsclassification}{##1}}
  \newcommand{\tocacm}[1]{\renewcommand{\toc@acmclassification}{##1}}
  \newcommand{\tockeywords}[1]{\renewcommand{\toc@keywords}{##1}}
-}{ %
+}{%
 \ifnum \value{toc@numauthors}=0
     \renewcommand{\toc@authors}{{\color{red} No Authors Defined}}
 \fi
@@ -556,19 +613,21 @@ CLASSIFICATIONS!}}
 \orig@author{\toc@authors}
 \toc@maketitle
 \bigskip
-\ifex\toc@floatclass{float} % Typeset classification as float
-  \begin{figure}[!b]
-    \toc@classificationbox
-  \end{figure}
-\fi
 %
 \unvbox\toc@dedication
+%
+% If we are floating the classification data, we need to declare the
+% float above the abstract in case it is long. This typeset the
+% classification as float, amid the abstract in the case when it flows
+% onto the second page.
+\ifex\toc@floatclass{float}{\begin{figure}[!b]\toc@classificationbox\end{figure}}\fi
+%
 \unvbox\toc@abstract
-
-\ifex\toc@floatclass{text} % Typeset as usual
-\noindent
-  \toc@classificationbox
-\fi
+%
+\ifex{\toc@floatclass}{text}{\noindent\toc@classificationbox}\fi
+% Typeset as text, following the
+% abstract; this is fine unless the
+% abstract is very long.
 
 % Undefine keywords, abstract
 \let\author\relax
@@ -579,54 +638,33 @@ CLASSIFICATIONS!}}
 \let\tockeywords\relax
 } % End of Frontmatter
 
+% Special footnote construct for title footnotes that does not produce a footnote mark.
+
+\def\titlefootnote{\xdef\@thefnmark{}\@footnotetext}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% PART: Theorem Environments and \ref-like macros
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Generic hyperref construct
-\newcommand{\expref}[2]{\hyperref[#2]{#1~\ref{#2}}}
+\newcommand{\expref}[2]{\texorpdfstring{\hyperref[#2]{#1~\ref{#2}}}{#1~\ref{#2}}} 
+\newcommand{\expeqref}[2]{\texorpdfstring{\hyperref[#2]{#1~\eqref{#2}}}{#1~\eqref{#2}}} 
+\newcommand{\exprefsilent}[2]{\texorpdfstring{\hyperref[#2]{#1}}{#1}}
 
 % Hyperref variants
-\newcommand{\secref}[1]{\hyperref[#1]{Section~\ref{#1}}}
-\newcommand{\subsecref}[1]{\hyperref[#1]{Section~\ref{#1}}}
+\newcommand{\secref}[1]{\expref{Section}{#1}}
+\newcommand{\subsecref}[1]{\expref{Section}{#1}}
 
 % Theorems, lemmata, corollaries, etc. are interleaved 
 % and numbered by section.
-
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
-%\newtheorem{lemma}[theorem]{Lemma}
-%\newtheorem{corollary}[theorem]{Corollary}
-%\newtheorem{claim}[theorem]{Claim}
-%\newtheorem{proposition}[theorem]{Proposition}
-%\newtheorem{fact}[theorem]{Fact}
-%\newtheorem{conjecture}[theorem]{Conjecture}
-
-% JJF 12 January 2012 - Need to do some black magic to get autoref names.
-
-\newaliascnt{lemma}{theorem}
-\newtheorem{lemma}[lemma]{Lemma}
-\aliascntresetthe{lemma}
-
-\newaliascnt{claim}{theorem}
-\newtheorem{claim}[claim]{Claim}
-\aliascntresetthe{claim}
-
-\newaliascnt{corollary}{theorem}
-\newtheorem{corollary}[corollary]{Corollary}
-\aliascntresetthe{corollary}
-
-\newaliascnt{proposition}{theorem}
-\newtheorem{proposition}[proposition]{Proposition}
-\aliascntresetthe{proposition}
-
-\newaliascnt{fact}{theorem}
-\newtheorem{fact}[fact]{Fact}
-\aliascntresetthe{fact}
-
-\newaliascnt{conjecture}{theorem}
-\newtheorem{conjecture}[conjecture]{Conjecture}
-\aliascntresetthe{conjecture}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{conjecture}[theorem]{Conjecture}
 
 % Definition style theorem like environments
 \theoremstyle{definition}
@@ -642,29 +680,30 @@ CLASSIFICATIONS!}}
 \newtheorem{exercise}[theorem]{Exercise}
 \newtheorem{notation}[theorem]{Notation}
 \newtheorem{problem}[theorem]{Problem}
+\newtheorem{question}[theorem]{Question}
 \newtheorem{solution}[theorem]{Solution}
 \newtheorem{summary}[theorem]{Summary}
-
-% Algorithms are numbered separately.
-\newtheorem{algorithm}{Algorithm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% PART: Predefined Math Symbols
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
 % Predefined common number systems.
-% JJF 12 January 2012 - Commented \C because it is used in complexity.sty.
-%\newcommand{\C}{{\mathbb C}}
+\newcommand{\C}{{\mathbb C}}
 \newcommand{\R}{{\mathbb R}}
 \newcommand{\Q}{{\mathbb Q}}
 \newcommand{\Z}{{\mathbb Z}}
 \newcommand{\N}{{\mathbb N}}
 
+\newcommand{\eee}{\mathrm e}
+\newcommand{\cclass}[1]{\textsf{#1}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% PART: Predefined Abbreviations
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\ie}{i.\,e.}
+\newcommand{\ie}{i.\,e.} 
+\newcommand{\Ie}{I.\,e.} 
 \newcommand{\eg}{e.\,g.}
 \newcommand{\Eg}{E.\,g.}
 \newcommand{\phd}{Ph.\,D.}
@@ -678,10 +717,10 @@ CLASSIFICATIONS!}}
 % Predefined e-mail punctuation.
 \IfFileExists{tocat.png}{%
   \newcommand{\tocat}{\includegraphics[scale=0.0234]{tocat}}}{%
-  \newcommand{\tocat}{ [at] }}
+  \newcommand{\tocat}{~[at]~}}
 \IfFileExists{tocdot.png}{%
   \newcommand{\tocdot}{\includegraphics[scale=0.0234]{tocdot}}}{%
-  \newcommand{\tocdot}{ [dot] }}
+  \newcommand{\tocdot}{~[dot]~}}
 
 % Only have the plural version. Singular version will be an
 % alternate name for the plural version. Environment will know
@@ -757,28 +796,36 @@ CLASSIFICATIONS!}}
 \AtEndOfClass{% Include eprint support, check for existence of custom icons.
 \IfFileExists{eprint.sty}{\RequirePackage{eprint}}{%
 \ClassWarningNoLine{tocbase}{No eprint support detected}}
-\IfFileExists{toc-cc.pdf}{}{\ClassWarningNoLine{tocbase}{No Creative Commons symbol (toc-cc.pdf) found}}
-\IfFileExists{toc-copyright.pdf}{}{\ClassWarningNoLine{tocbase}{No copyright symbol (toc-copyright.pdf) found}}
 \IfFileExists{tocat.png}{}{\ClassWarningNoLine{tocbase}{No graphic '@' symbol (tocat.png) found}}
 \IfFileExists{tocdot.png}{}{\ClassWarningNoLine{tocbase}{No graphic '.' symbol (tocdot.png) found}}
 }
 
 \AtBeginDocument{%
-  \ifex\toc@declaredfirstpage\@empty
-  \else
-  \setcounter{page}{\toc@declaredfirstpage}
-  \fi
-}
+  %% Set up page numbers according to tocdetails calls.
+  %% First the first page:
+  \ifex\toc@declaredfirstpage\@empty{%
+    \ClassWarningNoLine{tocbase}{Use the firstpage command to
+      insure that page numbers match journal}}%
+  \else{%
+    \setcounter{page}{\toc@declaredfirstpage}%
+    {\ifodd\toc@declaredfirstpage\else%
+      \ClassWarningNoLine{tocbase}{Starting page number (\toc@declaredfirstpage) is not odd}%
+      \fi}}%
+  \fi%
+  %% Then the last page:
+  %% Use the lastpage number determined by the lastpage package unless
+  %% the lastpage has been hardcoded in the tocdetails command.
+  \ifex\toc@declaredlastpage\@empty{}\else%
+  \renewcommand{\toc@lastpage}{\toc@declaredlastpage}%
+  \fi}
 
 \AtEndDocument{%
-  \ifex\toc@declaredfirstpage\@empty
-  {\ClassWarningNoLine{tocbase}{Use the firstjournalpage command to
-      insure that page numbers match journal}}
-  \else  % If not empty we assume it is a number
-  \ifodd\toc@declaredfirstpage
-  \else
-  {\ClassWarningNoLine{tocbase}{Starting page number
-      (\toc@declaredfirstpage) is not odd}}
-  \fi   
-  \fi
+  %% Produce a warning if the hardcoded lastpage disagrees with the
+  %% compiled lastpage.
+  \newcommand\toc@checklastpage{%
+    \ifex\toc@declaredlastpage{\getpagerefnumber{LastPage}}{}\else%
+    \ClassWarningNoLine{tocbase}{Declared last page
+      (\toc@declaredlastpage) not equal to compiled last page (\getpagerefnumber{LastPage})}%
+    \fi}
+  \ifex\toc@declaredlastpage\@empty{}\else\toc@checklastpage\fi
 }

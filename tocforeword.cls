@@ -1,6 +1,6 @@
-%% toc.cls 3.23   2013-06-04    ToC style file
+%% tocforeword.cls 0.94   2013-06-04    ToC style file
 %------------------------------------------------------------------
-% Filename: toc.cls
+% Filename: tocforeword.cls
 %
 % This documentclass is intended for typesetting articles for the
 %
@@ -10,38 +10,25 @@
 %
 % Search for ``%%% PART'' to find the main parts of this class file.
 
-%% Version 2.26 fixes compilation advertisements.
+%% Version 0.94 fixes first peage header so that it is consistent with
+%% our article style.
 %%
-%% Version 2.27 adds support for ToC NOTE and establishes
-%% \numberwithin{equation}{section} only for regular (long-form)
-%% submissions; equation numbering for comments, notes is
-%% linear. Reinstated backreferencing in the bibliography, as it now
-%% points to page numbers.
+%% Version 0.93 fixes versioning information only
 %%
-%% Version 3.0 adds support for banner treatment of special
-%% issues. Special issue information is passed through the tocdetails
-%% command. Additionally, notes and comments are now handled
-%% differently, these alterations to the style are invoked by passing
-%% "note" or "comment" to the tocdetails command.
+%% Version 0.92 adds codes for three new "Predefined special issues"
 %%
-%% Version 3.1 adds support for the RESEARCH SURVEY article type,
-%% activated by the keyword "survey" in the tocdetails
-%% command. Surveys are treated as regular long-form articles with a
-%% extra banner reading "RESEARCH SURVEY."
+%% Version 0.91 removes conditional classification command, this is
+%% now handled in tocbase version 4.11.
 %%
-%% Version 3.2 changes bibliographic layout for the article to include
-%% the number, in parentheses, after the volume.
+%% Version 0.9. First release version, based on toc.cls.
 %%
-%% Version 3.21 adds a small space between volume and number in banner and footer.
-%% Version 3.22 adds codes for three new "Predefined special issues"
-%% Version 3.23 fixed versioning information only.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% PART: Declare class and load external packages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Need this version of LaTeX atleast (for ClassWarning commands)
 \NeedsTeXFormat{LaTeX2e}[1994/06/01] 
-\ProvidesClass{toc}[2013/06/04 v3.23 Theory of Computing]
+\ProvidesClass{tocforeword}[2013/06/04 v0.94 Theory of Computing Foreword]
  
 % Pass all options along to tocbase:
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{tocbase}}
@@ -88,9 +75,10 @@
 \define@key{tocdet}{specissue}{\renewcommand{\toc@specialissue}{#1}%
   \toc@specialissuesetup}
 \define@key{tocdet}{article}[true]{}
-\define@key{tocdet}{note}[true]{\toc@notesetup}
-\define@key{tocdet}{comment}[true]{\toc@commentsetup}
-\define@key{tocdet}{survey}[true]{\toc@surveysetup}
+
+%% We just set the date to be the published date, in which case
+%% tocbase will lay it out without the "published:" string.
+\define@key{tocdet}{published}{\date{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%% PART: Title page components
@@ -103,8 +91,7 @@
 
 \newcommand{\toc@bannerpubdata}
 {\fontsize{11}{13}\usefont{OT1}{ptm}{m}{n}\selectfont
-  {,\ Volume \toc@volume\,(\toc@number), \toc@year, 
-    pp. \toc@firstpage--\toc@lastpage}}
+  {,\ Volume \toc@volume\,(\toc@number), \toc@year, pp. \toc@firstpage--\toc@lastpage}}
 
 \renewcommand\toc@bannertexta%
 {\ifex\toc@volume\@empty
@@ -123,6 +110,10 @@
     \toc@bannerspecialissue%
   \end{minipage}}
 
+\renewcommand{\toc@amsclassification}{\@empty}
+\renewcommand{\toc@acmclassification}{\@empty}
+\renewcommand{\toc@keywords}{\@empty}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%% PART: Header and footer initialization
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -131,7 +122,8 @@
 {\ifex\toc@volume\@empty
   \href{\toc@journaldoiaddress}{\textsc{\toc@journalname}}
   \else
-  \href{\toc@journaldoiaddress}{\textsc{\toc@journalname}}\toc@bannerpubdata
+  \href{\toc@journaldoiaddress}{\textsc{\toc@journalname}}, Volume \toc@volume\ (\toc@year),
+  pp. \toc@firstpage--\toc@lastpage
   \fi
 }
 %% These two must be identical, save for the hyperlinks.
@@ -174,9 +166,50 @@
       \numberwithin{equation}{section}}
     \else{}\fi}}
 
+\newcommand{\toc@editortitlesingular}{GUEST EDITOR}
+\newcommand{\toc@editortitleplural}{GUEST EDITORS}
+
+\newcommand{\editortitlesingular}[1]{\renewcommand{\toc@editortitlesingular}{#1}}
+\newcommand{\editortitleplural}[1]{\renewcommand{\toc@editortitleplural}{#1}}
+
+
 %% Predefined special issues
 \newcommand{\motwani}{Special issue in honor of Rajeev Motwani}
 \newcommand{\boolean}{Special issue: Analysis of Boolean Functions}
 \newcommand{\approxrandomBC}{Special issue: APPROX-RANDOM 2012}
 \newcommand{\itcsBD}{Special issue: ITCS 2013}
 %% explanation: BC = 2012 BD = 2013 ... CA = 2020 ...
+
+\renewenvironment{tocauthors}{ % Beginning of environment
+
+                     % Initialise an empty tocabout command
+\newcommand{\tocabout}{\@empty}  
+
+% Define tocinfo environment
+ \newenvironment{tocinfo}[1][\@empty]{%
+  \begin{verse}
+  % Redefine \tocabout command for the author if nickname given
+  \ifx##1\@empty
+     \renewcommand{\tocabout}{\@empty}
+  \else
+     \renewcommand{\tocabout}%
+                  {\hyperlink{author.about.##1}%
+                  {\small [About the author]}}
+  \fi
+  \ifx##1\@empty\relax\else\hypertarget{author.info.##1}{}\fi
+ }{% End of environment
+\end{verse} \filbreak
+} % End of tocinfo
+
+\filbreak % Prefer a page break here rather than later
+\bigskip\noindent
+\ifnum \value{toc@numauthors}>1
+   \textsf{\toc@editortitleplural}
+\else
+   \textsf{\toc@editortitlesingular}
+\fi
+}{%
+\let\tocinfo\relax % Undefine tocinfo
+\let\tocabout\relax
+}
+%  end tocauthors environment

@@ -1,4 +1,4 @@
-%% toclibrary.cls 2.27   9-13-2010    ToC library style file
+%% toclibrary.cls 2.3   2010-10-05    ToC library style file
 
 % Filename: toclibrary.cls
 %
@@ -10,30 +10,28 @@
 %
 % Search for ``%%% PART'' to find the main parts of this class file.
 
+%% Version 2.26 moves seriesdoi into options.
+%%
 %% Version 2.27 removes toc@seriesabbrev command and all references to
 %%     it. WARNING: This has visible effect on the style, removing, e.g.,
 %%     TCGS from the banner and footer of our graduate surveys series.
 %%     Additionally, 2.27 fixes the way that we call amsmath.
-%% Version 2.26 moves seriesdoi into options.
-
-
+%%
+%% Version 2.3 changes selection of series type from an option to the
+%% class to a switch in the tocdetails command.
+%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% PART: Declare class and load external packages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Need this version of LaTeX atleast (for ClassWarning commands)
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesClass{toclibrary}[2010/09/13 v2.27 Theory of Computing Library]
+\ProvidesClass{toclibrary}[2010/10/05 v2.3 Theory of Computing Library]
 
 \RequirePackage{amsmath}
 
 \newcommand{\toc@seriesname}{Series}
 \newcommand{\toc@seriesdoi}{10.4086/toc}
-
-\DeclareOption{gradsurvey}{%
-  \renewcommand{\toc@seriesname}{Graduate Surveys}%
- \renewcommand{\toc@seriesdoi}{10.4086/toc.gs}%
-  }
 
 % Pass all options along to tocbase:
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{tocbase}}
@@ -42,10 +40,19 @@
 % Now load article class and handle options.
 \LoadClass{tocbase}
 
+% Setup name, address, &c.
+
 \renewcommand{\toc@journalname}{Theory of Computing Library}
 \renewcommand\toc@journaldoi{10.4086/toc}
 \renewcommand{\toc@journaldoiaddress}{\toc@doiderefaddress\toc@journaldoi} 
 \newcommand{\toc@seriesdoiaddress}{\toc@doiderefaddress\toc@seriesdoi} 
+
+% Set up the tocdetail hook for the series types
+
+\define@key{tocdet}{gradsurvey}[true]{%
+  \renewcommand{\toc@seriesname}{Graduate Surveys}%
+  \renewcommand{\toc@seriesdoi}{10.4086/toc.gs}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% PART: Title page components
