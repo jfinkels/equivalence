@@ -1,9 +1,0 @@
-\begin{theorem}
-  If $\P\neq\NP$ and $\NPEq$ has complete problems under polynomial time kernel reductions, then there is problem in $\NPEq$ which is neither complete nor in $\PEq$.
-\end{theorem}
-\begin{proofidea}
-  Similar to the proof of Ladner's Theorem, but replacing arbitrary languages with equivalence relations.
-  Enumerate each equivalence relation in $\PEq$ and in $\NPEq$ and find a ``witness'' that each of the former is different from an $\NPEq$-complete problem and that each of the latter is different from the trivial equivalence relation.
-  Construct an equivalence relation which includes a witness for each of these pairs, so that it is different from each problem in $\PEq$ and each $\NPEq$-complete problem.
-  Such an equivalence relation will reduce to the $\NPEq$-complete problem, and hence will be in $\NPEq$, since it is closed under polynomial time reductions.
-\end{proofidea}
