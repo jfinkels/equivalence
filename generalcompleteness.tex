@@ -115,7 +115,7 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
 
   Next we show that $R_K$ is an equivalence relation.
   Reflexivity follows from the reflexivity of the equality relation.
-  For symmetry, suppose $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R_K$.
+  For symmetry, suppose that the pair $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}$ is in $R_K$.
   Since \autoref{itm:emx} and \autoref{itm:emy} are true by hypothesis, we know that symmetry on strings of length at most $\max(|x|, |y|)$ in $L(M)$ is satisfied, and that includes the strings $x$ and $y$.
   So since $M$ accepts $\pair{x}{y}$ it must follow that $M$ accepts $\pair{y}{x}$.
   Furthermore, \autoref{itm:machine}, \autoref{itm:emx}, and \autoref{itm:emy} are the same up to symmetry of $x$ and $y$, so we have $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{x}{1^{t_x}}}\in R_K$.
@@ -134,7 +134,7 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   It remains to show that this reduction is correct.
 
   Suppose $\pair{x}{y}\in S$.
-  Now $f(x)=\triple{M}{x}{1^{6p(|\pair{x}{x}|)+c}}$ and $f(y)=\triple{M}{y}{1^{6p(|\pair{y}{y}|)+c}}$.
+  Now $f(x)=\triple{M}{x}{1^{6p(|\pair{x}{x}|)+c}}$ and, similarly, $f(y)=\triple{M}{y}{1^{6p(|\pair{y}{y}|)+c}}$.
   \autoref{itm:machine} is true by construction, and \autoref{itm:accepts} is true since $M$ is the machine which decides $S$.
   Assume \autoref{itm:emx} is false.
   Then $M$ does not accept an equivalence relation on strings of length at most $|x|$.
@@ -158,7 +158,7 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
 \end{openproblem}
 
 \begin{openproblem}
-  Can this theorem be used to construct $\krnt$-hard problems for smaller complexity classes like $\NLEq$ under the appropriate time-bounded reduction?
+  Can this theorem be used to construct $\krnt$-hard problems for smaller complexity classes such as $\NLEq$ under the appropriate time-bounded reduction?
   Larger classes such as $\EXPEq$?
 \end{openproblem}
 
