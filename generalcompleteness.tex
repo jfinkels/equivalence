@@ -20,7 +20,7 @@ $\forall\mathcal{C}$ is called the \defn{closure of $\mathcal{C}$ under polynomi
 
 Before proving this theorem, we will provide some immediate corollaries of this general result.
 
-\begin{corollary}
+\begin{corollary}\label{cor:sufficient}
   If $\mathcal{C}$ is a subset of $\PSPACE$ and $\mathcal{C}=\CRAZY$, then $\CEq$ has a complete problem under $\kr$ reductions.
 \end{corollary}
 
@@ -155,6 +155,12 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
 \begin{openproblem}
   Under what conditions does a complexity class have a complete problem?
   Can we adapt this idea to create a complete problem for $\PEq$ or $\NPEq$?
+\end{openproblem}
+
+\begin{openproblem}
+  Is the converse of \autoref{cor:sufficient}, or perhaps a partial converse, true?
+  In other words, is it true that the existence of a $\CEq$-complete problem problem implies closure under complement or universal quantification (or both)?
+  If so, this would be evidence that no $\NPEq$-complete problem exists, since this would imply $\NP = \coNP$.
 \end{openproblem}
 
 \begin{openproblem}
