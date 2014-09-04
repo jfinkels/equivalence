@@ -203,10 +203,11 @@ We are now prepared to prove the main technical theorem which will allow us to c
 We would now like to show that the result of this theorem holds when $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2=\NPEqC$.
 
 \begin{proposition}\label{prop:npeqc}
-  If $\PEq\neq\NPEq$ and $\NPEqC$ is non-empty, then $\PEq\cap\NPEqC=\emptyset$.
+  If $\PEq \neq \NPEq$, then $\PEq \cap \NPEqC = \emptyset$.
 \end{proposition}
 \begin{proof}
-  Assume $\PEq\cap\NPEqC\neq\emptyset$.
+  If $\NPEqC$ is empty, then $\PEq \cap \NPEqC = \emptyset$ unconditionally.
+  Assume $\NPEqC$ is nonempty, and $\PEq \cap \NPEqC \neq \emptyset$.
   Let $R$ be the \NPEq-complete equivalence relation which is also in \PEq.
   Then all problems in $\NPEq$ can be kernel reduced to $R$ in polynomial time, and $R$ can be decided in polynomial time.
   Therefore, $\PEq=\NPEq$.
@@ -214,12 +215,12 @@ We would now like to show that the result of this theorem holds when $\mathcal{C
   Therefore $\PEq\cap\NPEqC=\emptyset$.
 \end{proof}
 
-A reminder: as stated in the introduction, polynomial time kernel reductions, and $\NPEq$ is closed under polynomial time kernel reductions.
+A reminder: as stated in the introduction, polynomial time kernel reductions compose, and $\NPEq$ is closed under polynomial time kernel reductions.
 We use these facts in the proof of the following theorem.
 
 \intermediary
 \begin{proof}
-  The hypothesis of this theorem is the same as in \autoref{prop:npeqc}, so $\PEq\cap\NPEqC=\emptyset$.
+  By \autoref{prop:npeqc}, if $\PEq \neq \NPEq$, then $\PEq \cap \NPEqC = \emptyset$.
   Let $S$ be an \NPEq-complete problem.
   Choose $R_1=S$, $R_2=\emptyset$, $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2=\NPEqC$.
   Note that since $\P$ and $\NPC$ are computably enumerable, so are $\PEq$ and $\NPEqC$.
