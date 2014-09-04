@@ -24,19 +24,27 @@ First we need to provide some technical definitions and machinery.
 \end{definition}
 
 \begin{definition}
-  Given an alphabet $\Sigma$ with at least two different symbols, say $0$ and $1$, the \defn{kernel join} of two equivalence relations $R$ and $S$ over $\Sigma^*$ is $R\kj S=\lb\pair{x0}{y0}\st\pair{x}{y}\in R\rb\cup\lb\pair{x1}{y1}\st\pair{x}{y}\in S\rb$.
+  The \defn{kernel join} of two equivalence relations $R$ and $S$, denoted $R \kj S$, is defined by
+  \begin{equation*}
+    R \kj S = \lb \pair{x0}{y0} \st \pair{x}{y} \in R \rb \cup \lb \pair{x1}{y1} \st \pair{x}{y} \in S \rb \cup \{(\lambda, \lambda)\}.
+  \end{equation*}
 \end{definition}
 
+The pair of empty strings $(\lambda, \lambda)$ is required in the above definition so that the equivalence classes of $R \kj S$ partition the set of all finite strings $\Sigma^*$.
+
 \begin{lemma}\label{lem:join}
-  If $R$ and $S$ are equivalence relations on $\Sigma^*$, then $R\kj S$ is an equivalence relation (on $\Sigma^*\backslash\{\lambda\}$).
+  If $R$ and $S$ are equivalence relations, then $R \kj S$ is an equivalence relation.
 \end{lemma}
 \begin{proof}
-  Let $x$, $y$ and $z$ be non-empty strings in $\Sigma^*$.
+  Since the equivalence class of the empty string, $[\lambda]$, is a singleton set, each of the three properties required of an equivalence relation hold for that set.
+  Thus we need only consider nonempty strings.
+  Let $x$, $y$ and $z$ be nonempty strings in $\Sigma^*$.
   
-  Since $x$ is non-empty, $x=x'0$ or $x=x'1$.
-  Since $R$ is reflexive, $\pair{x'}{x'}\in R$.
-  Hence $\pair{x}{x}\in R\kj S$.
-  Therefore $R\kj S$ is reflexive.
+  Since $x$ is non-empty, $x = x'0$ or $x = x'1$.
+  If $x = x'0$, then $\pair{x'}{x'} \in R$ since $R$ is reflexive.
+  If $x = x'1$, then $\pair{x'}{x'} \in S$ since $R$ is reflexive.
+  Hence $\pair{x}{x}\in R\kj S$ regardless of the last bit of $x$.
+  Therefore $R \kj S$ is reflexive.
   
   Suppose $\pair{x}{y}\in R\kj S$.
   Then either $x=x'0$, $y=y'0$ and $\pair{x'}{y'}\in R$ or $x=x'1$, $y=y'1$ and $\pair{x'}{y'}\in S$.
@@ -80,7 +88,8 @@ First we need to provide some technical definitions and machinery.
   If $r$ is time constructible, then $G[r]\in\P$.
 \end{lemma}
 \begin{proof}
-  Proof omitted.
+  %% TODO add theorem number in this citation
+  The proof can be found in \autocite{bdg95}.
 \end{proof}
 
 We will denote the Cartesian product $G[r]\times G[r]$ by the slightly more succinct ${G[r]}^2$, and $\overline{G[r]}\times\overline{G[r]}$ by $\overline{G[r]}^2$.
