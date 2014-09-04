@@ -38,14 +38,14 @@ packages:
 * `tikz`
 * `type1cm`
 
-This document also requires [Biber][1] for bibliography management.
+This document also requires [Biber][2] for bibliography management.
 
 To install these on Ubuntu 11.04 through 14.04, run
 
     sudo apt-get install texlive-base texlive-latex-base texlive-pictures \
       texlive-science biber
 
-[1]: http://biblatex-biber.sourceforge.net/
+[2]: http://biblatex-biber.sourceforge.net/
 
 ## Compiling ##
 
