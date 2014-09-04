@@ -22,48 +22,26 @@ To download the paper using [Git][1], run
 Besides `pdflatex`, compile-time dependencies include the following LaTeX
 packages:
 
-* `amsthm`
 * `amsmath`
 * `amssymb`
+* `amsthm`
 * `babel`
 * `biblatex`
 * `complexity`
 * `csquotes`
+* `draftwatermark`
 * `hyperref`
+* `inputenc`
 * `textcomp`
 * `thmtools`
 * `thm-restate`
-* `xy`
+* `tikz`
+* `type1cm`
 
 To install these on Ubuntu 11.04 through 14.04, run
 
     sudo apt-get install texlive-base texlive-latex-base texlive-pictures \
       texlive-science
-
-To compile the poster which corresponds to the article, compile-time
-dependencies include the following LaTeX packages:
-
-* `amsmath`
-* `amsthm`
-* `complexity`
-* `type1cm`
-* `tkz-graph`
-* `xy`
-
-On Ubuntu 11.04 and 11.10, the necessary system packages which contain these
-LaTeX packages (other than `tkz-graph`, see below) are:
-
-* `texlive-latex-base`
-* `texlive-latex-extra`
-* `texlive-science`
-
-To install them, run
-
-    sudo apt-get install texlive-latex-base texlive-latex-extra texlive-science
-
-`tkz-graph` must be downloaded manually and placed in the `poster/` directory
-(or somewhere else where LaTeX can find it). It can be downloaded from
-http://www.ctan.org/tex-archive/macros/latex/contrib/tkz/tkz-graph.
 
 ## Compiling ##
 
@@ -74,13 +52,6 @@ To compile this article, run
     pdflatex equivalence
 
 The output is `equivalence.pdf`.
-
-To compile the poster corresponding to the article, run
-
-    cd poster
-    ./compile-poster.sh
-
-The output is `poster/poster.pdf`
 
 ## Copyright ##
 
