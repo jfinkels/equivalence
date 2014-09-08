@@ -29,6 +29,19 @@
 \usepackage{type1cm}
 \usepackage[firstpage]{draftwatermark}
 \usepackage{tikz}
+\usepackage{microtype}
+
+%% Set the amount by which certain characters protrude into the margins.
+\LoadMicrotypeFile{cmr}
+\SetProtrusion
+    [load=cmr-OT1]
+    {encoding=OT1, family=cmr}
+    {
+      \textquotedblright = {,1000},
+      {]} = {,1000},
+      {,} = {,1000},
+      . = {,1000}
+    }
 
 \SetWatermarkLightness{0.9}
 \SetWatermarkText{Work-in-progress}
