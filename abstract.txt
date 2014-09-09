@@ -1,18 +1,29 @@
-In this paper, we examine a recently introduced type of effective reduction
-which applies solely to problems of equivalence or isomorphism: the "kernel
-reduction".  Specifically, we examine reductions among languages in the
-complexity class consisting of all languages induced by equivalence relations
-for which membership can be decided by a non-deterministic polynomial time
-Turing machine.  This class is called "NPEq"; the definitions for PEq and
-coNPEq are analagous.
+Today, the computational complexity of equivalence problems such as the graph
+isomorphism problem and the Boolean formula equivalence problem remain only
+partially understood.  One of the most important tools for determining the
+(relative) difficulty of a computational problem is the many-one reduction,
+which provides a way to encode an instance of one problem into an instance of
+another.  In equivalence problems, the goal is to determine if a pair of
+strings is related, so a many-one reduction with access to the entire pair may
+be too powerful.  A recently introduced type of reduction, the "kernel
+reduction", defined only on equivalence problems, allows the transformation of
+each string in the pair independently.  Understanding the limitations of the
+kernel reduction as compared with the many-one reduction improves our
+understanding of the limitations of computers in solving problems of
+equivalence.  We investigated not only these limitations, but also whether
+classes of equivalence problems have complete problems under kernel reductions.
+This paper provides a detailed collection of basic results about kernel
+reductions.
 
-We prove a general theorem which provides a problem which is hard under
-polynomial time kernel reductions for several classes of equivalence relations,
-including (Sigma_k)PEq and PSPACEEq.  In fact, such a problem is complete for
-PSPACEEq under polynomial time kernel reductions.  We also show that if there
-is a complete problem under kernel reductions in NPEq, then that problem is
-also complete under many-one reductions in NP.  Finally we use a proof of
-Ladner's theorem to show that if PEq does not equal NPEq and there are problems
-in NPEq which are complete under polynomial time kernel reductions then there
-are NPEq-intermediary problems---problems which are in NPEq, but not complete
-under kernel reductions and not in PEq.
+After exploring possible definitions of complexity classes of equivalence
+relations, we prove that polynomial time kernel reductions are strictly less
+powerful than polynomial time many-one reductions.  We also provide sufficient
+conditions for complete problems under kernel reductions, show that
+completeness under kernel reductions can sometimes imply completeness under
+many-one reductions, and finally prove that equivalence problems of
+intermediate difficulty can exist under the right conditions.  Though kernel
+reductions share some basic properties with many-one reductions, ultimately the
+number and size of equivalence classes can prevent the existence of a kernel
+reduction, regardless of the complexity of the equivalence problem.  TODO: Need
+a final "perspectives" sentence here, focusing on anyone reading it: what
+should be done next?
