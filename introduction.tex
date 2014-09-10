@@ -6,33 +6,40 @@
 %% Commons Attribution-ShareAlike 4.0 International License,
 %% https://creativecommons.org/licenses/by-sa/4.0/.
 \section{Introduction}
+% Foreword
 
-\todo{Rewrite this introduction in a TMnT way.}
+% context (focus on anyone) why now? - current situation, and why the need is so important
+Determining the computational complexity of deciding whether two graphs are isomorphic has significant implications in nearly every field of computer science.
+One main technique for determining the complexity of the problem is showing how the difficulty of the problem relates to the difficulty of other known problems.
+The relative difficulty of computational problems are often compared using the many-one reduction, a function by which we encode an instance of a problem as an instance of another problem.
+In the case of the graph isomorphism problem, a many-one reduction from the graph isomorphism problem to, for example, the directed graph isomorphism problem allows the function computing the reduction to have access to both graphs.
+However, access to both graphs is not necessary for computing the reduction; the function transforms each undirected graph independently into a directed graph.
+In other words, the reduction is in reality defined on the domain of graphs, not on the domain of pairs of graphs.
+This is a far more natural way to define reductions between problems of equivalence, and is furthermore a finer-grained comparison of the relative difficulty of the two computational problems.
 
-In this paper we examine the power of ``kernel reductions'' on languages induced by equivalence relations, specifically for which membership can be decided by a non-deterministic Turing machine running in time polynomial in the length of the input.
-Given two equivalence relations $R$ and $S$, each of which can be expressed as a set of pairs of strings, a \defn{kernel reduction} from $R$ to $S$ is a function $f$ for which $\pair{x}{y}\in R\iff\pair{f(x)}{f(y)}\in S$.
-This function maps each \emph{member} of the pair in $R$ to an element of a pair in the relation $S$, instead of mapping the \emph{entire} pair to another pair.
-The full definition of ``kernel reduction'' is given by Fortnow and Grochow \autocite{fg11} (and is repeated below), though the idea has existed before then.
-In fact, all polynomial time many-one reductions to and from the graph isomorphism problem are, to the best of our knowledge, in fact kernel reductions, though they have not before been called by this name.
-The same seems to go for polynomial time many-one reductions to and from other equivalence problems.
-This kind of reduction is more natural than the usual many-one reduction for problems of equivalence.
-It is therefore important to study the power of these reductions and how they can help further classify currently known and newly discovered complexity classes.
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+The \emph{kernel reduction}, defined in \autocite[Definition~4.13]{fg09}, formally captures this notion of reduction among computational problems of equivalence involving independent transformation of each element of a pair.
+This type of reduction has appeared previously under other names not only in this setting but also in more general settings (``Borel reduction'', ``strong isomorphism reduction'', ``strong equivalence reduction'', ``relation reduction'', ``component-wise reduction'', etc.).
+To the best of our knowledge, every known many-one reduction between problems of equivalence is really a kernel reduction (see, for any early example, the list of problems many-one reducible to graph isomorphism given in \autocite{bc79}).
+Since most reductions between problems of equivalence seem to be kernel reductions, are they truly useful in theory or in practice?
+If so, since the kernel reduction has access only to one element of a pair at a time, what are the limitations of kernel reductions?
 
-We would briefly like to point out that \autocite{bcffm} provides a thorough treatment of the kernel reduction (from the viewpoint of a logician), there called a ``strong isomorphism reduction'', and this work extends and clarifies several of the results from that paper (from the viewpoint of a complexity theorist).
-We have attempted to provide plentiful explicit references to specific theorems in that work where appropriate and we encourage the reader to examine the original theorems and proofs.
-\todo{Describe the work of \autocite{gz14}.}
+%%% relevant existing work, given as part of the need
+Soe of our theorems adapt or clarify existing work in order to have simpler, self-contained, complexity-theoretic proofs of important theorems about kernel reductions.
+Kernel reductions are defined in \autocite{fg09}, where the authors ask whether kernel reductions and many-one reductions are provably different.
+However, no further proofs are given there, other than the general idea that an imbalance in the number of equivalence classes of the two equivalence problems prevents the existence of a kernel reduction.
+In computability theory, a similar type of reduction between equivalence problems has been well-studied by a series of recent papers (for example, \autocite{gg01, ff12, ffn12, chm12, imnn13, almnss14, mn14}).
+However, these papers do not focus on efficiently computable reductions.
+In \autocite{bcffm}, the authors provide a thorough treatment of not only the kernel reduction but also a generalization called the ``strong isomorphism reduction''.
+We modify some of their techniques to prove theorems, some more general and some more specific than in that work, in a way that requires only some basic knowledge of complexity theory.
+The authors of \autocite{gz14} extended the work of \autocite{bcffm}, and in doing so, independently proved the main combinatorial idea used in this paper to examine the limitations of kernel reductions.
+This paper complements that work, as we focus mainly on basic completeness results.
 
-In \autoref{sec:preliminaries} we provide the definitions necessary for the study of polynomial time kernel reductions and effectively computable equivalence problems.
-In \autoref{sec:definitions} we provide some possible definitions for $\NPEq$, the class of equivalence problems for which membership can be decided in nondeterministic polynomial time.
-
-In the next three sections we see a common thread among some of the results.
-The results show that the number of equivalence classes in an equivalence relation is important in determining if reductions to and from it are possible.
-In \autoref{sec:limitations} we show that polynomial time many-one reductions are strictly more powerful than polynomial time many-one reductions.
-In \autoref{sec:generalcompleteness} we provide general sufficient conditions under which a complexity class consisting of equivalence relations contains a problem which is hard under polynomial time kernel reductions.
-In \autoref{sec:npeqcompleteness} we explore the relationship between completeness in $\NP$ under polynomial time many-one reductions and completeness in $\NPEq$ under polynomial time kernel reductions.
-
-In \autoref{sec:intermediary} we adapt a proof by Sch\"{o}ning's ``uniform diagonalization theorem'' to the setting of equivalence relations and polynomial time kernel reductions in order to prove results about intermediary problems.
-In \autoref{sec:openproblems} we provide a few open problems, although many open problems are posed throughout this work.
-
-
-\todo{Add citations to all the recent work on completeness in the arithmetic hierarchy under reductions similar to kernel reductions \autocite{gg01, ff12, ffn12, chm12, imnn13, almnss14, mn14}}
+% task (focus on author) why me? - what was undertaken to address the need
+We undertook a thorough investigation of the basic properties of kernel reductions, comparing them with the basic properties of many-one reductions.
+% object (focus on document) why this document - what the document covers
+The starting point for understanding many-one reductions is $\P$ and $\NP$, so we attempted to extend the definition from \autocite{fg09} of $\PEq$, the class of equivalence problems decidable in polynomial time, to the definition of the complexity class $\NPEq$ (\autoref{sec:definitions}).
+We determined the limitations of kernel reductions; these appear to be combinatorial, not computational, in nature (\autoref{sec:limitations}).
+We discovered sufficient conditions for complete problems under kernel reductions in classes of equivalence problems (\autoref{sec:generalcompleteness}).
+We compared the new notion of completeness under kernel reductions with the usual notion of completeness under many-one reductions (\autoref{sec:npeqcompleteness}).
+Finally, as an analog to $\NP$-intermediary problems with respect to many-one reductions, we examined the possibility of $\NPEq$-intermediary problems with respect to kernel reductions (\autoref{sec:intermediary}).
