@@ -6,8 +6,25 @@
 %% Commons Attribution-ShareAlike 4.0 International License,
 %% https://creativecommons.org/licenses/by-sa/4.0/.
 \section{Limitations of kernel reductions}\label{sec:limitations}
+% Foreword
+%
+% context (focus on anyone) why now? - current situation, and why the need is so important
+Can a kernel reduction be used anywhere a many-one reduction can be used?
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+If so, a function with access to one element of a pair would be exactly as powerful as a function with access to both elements of a pair; our intuition is that this is unlikely.
+% task (focus on author) why me? - what was undertaken to address the need
+% object (focus on document) why this document - what the document covers
+This section proves that polynomial time kernel reductions are strictly weaker than polynomial time many-one reductions.
 
-\todo{Write a new introductory paragraph here.}
+% Summary
+%
+% findings (focus on author) what? - what the work revealed when performing the task
+We discovered that a bound on the size of the image of a kernel reduction implies that the function can only access a finite number of equivalence classes.
+Constructing equivalence relations so that there is an imbalance in the number of equivalence classes with respect to any fixed function suffices to show that no polynomial time kernel reduction can exist between the two.
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+As a more restrictive type of reduction and hence as a finer-grained tool for comparing the relative difficulty of equivalence problems, kernel reductions should be used when proving a reduction (if one exists) between equivalence problems.
+% perspective (focus on anyone) what now? - what should be done next
+This will be important for \autoref{sec:generalcompleteness} as well, since it means that completeness under kernel reductions is distinct from completeness under many-one reductions.
 
 We adopt and extend the notation $\#R$, from \autocite{bcffm}, to denote the number of equivalence classes in an equivalence relation $R$.
 
