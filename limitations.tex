@@ -334,7 +334,7 @@ Though it is not explicitly stated here, this theorem can be generalized to kern
   Computing the index $i$ of the equivalence class of a string $x$ of length $n$ can be performed as follows.
   First, compute in parallel the values $p_1(1), \dotsc, p_{n + 1}(n + 1)$.
   Since each $p_i$ is increasing, $n$ is definitely smaller than $p_{n + 1}(n + 1)$.
-  Computing the exponentiation of $O(n)$ pairs of strings of length $O(n)$ each can be performed by a $\TC^0$ circuit.
+  Computing the exponentiation of $O(n)$ pairs of strings of length $O(n)$ each can be performed by a $\TC^0$ circuit, and $\TC^0 \subseteq \NC^1$.
   Next, for each $i \in \{1, \dotsc, n\}$ in parallel, decide if $p_i(i) + 1 \leq n \leq p_{i + 1}(i + 1)$, thereby determining whether the input is in $S_i$.
   These comparisons can be performed by an $\NC^1$ circuit.
   Finally, use $O(\log n)$ single-bit multiplexers in parallel to output the index (in binary) of the sole equivalence class $S_i$ containing $x$.
