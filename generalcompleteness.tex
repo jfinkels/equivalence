@@ -9,9 +9,30 @@
     [Conditions for complete problems under polynomial time kernel reductions]
     {Conditions for complete problems \\ under polynomial time kernel reductions}
 \label{sec:generalcompleteness}
+% Foreword
+%
+% context (focus on anyone) why now? - current situation, and why the need is so important
+Most well-behaved complexity classes contain problems that are complete under many-one reductions.
+Do the corresponding classes of equivalence problems contain problems that are complete under kernel reductions?
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+Having access to a complete problem offers many benefits to a complexity theorist, and improves our understanding of equivalence problems in general.
+In \autocite[Theorem~8.7]{bcffm}, the authors constructed a complete problem with respect to polynomial time kernel reductions for $\NPEq$ under the assumption that $\NP = \coNP$.
+% task (focus on author) why me? - what was undertaken to address the need
+Since we consider that assumption unlikely, we determined sufficient conditions for having a complete problem under polynomial time kernel reductions.
+% object (focus on document) why this document - what the document covers
+This section presents a more general theorem that implies as a corollary a complete problem for $\NPEq$ under the assumption $\NP = \coNP$.
 
-In this section we use the techniques of \autocite[Theorem~8.7]{bcffm} to present a general theorem which provides equivalence relations which are hard for a number of interesting complexity classes under polynomial time kernel reductions.
-We need one additional definition here.
+% Summary
+%
+% findings (focus on author) what? - what the work revealed when performing the task
+By extending the technique of \autocite[Theorem~8.7]{bcffm}, we found that $\PSPACEEq$ has a complete problem under polynomial time kernel reductions unconditionally.
+We also show that each level of the polynomial time hierarchy contains an equivalence problem that is hard for the lower levels under these reductions.
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+This means that some well-known classes do have complete problems, and the existence for complete problems in other classes, like $\NP$ and even $\P$, remains possible.
+% perspective (focus on anyone) what now? - what should be done next
+Since the equivalence problem we constructed is highly artificial, we were unable to find any natural problems that are hard or complete.
+
+We need one additional definition in order to describe the complexity classes that contain a hard problem under kernel reductions.
 If $\mathcal{C}$ is a complexity class then the class $\forall\mathcal{C}$ is the set of languages $A$ such that there exists a language $B\in\mathcal{C}$ and a polynomial $p$ satisfying $x\in A$ if and only if $\forall w\in\Sigma^{\leq p(|x|)} \pair{x}{w}\in B$.
 $\forall\mathcal{C}$ is called the \defn{closure of $\mathcal{C}$ under polynomially bounded universal quantification}.
 
