@@ -30,109 +30,125 @@ These results are more indication that when comparing the relative difficulty of
 % perspective (focus on anyone) what now? - what should be done next
 The potential lack of a complete problem under injective kernel reductions suggests that a conjecture analagous to the Berman--Hartmanis conjecture, which states that all $\NP$-complete problems are isomorphic with respect to many-one reductions, may be false in $\NPEq$.
 
-Suppose (for the rest of this section) that $\mathcal{K}$ is some set of structures in which
-\begin{enumerate}
-\item each structure $X$ has a size, denoted $|X|$, and
-\item pairs $(X, Y)$ have some notion of equivalence, denoted $X\cong Y$, in which $X\cong Y$ implies $|X|=|Y|$.
-\end{enumerate}
-Let $\IsoK=\lb\pair{X}{Y}\st X\cong Y\rb$.
-\begin{example}
-  Consider the set of structures $\mathcal{G}$, the set of all finite undirected graphs.
-  All isomorphic graphs have the same number of vertices.
-  In this case, $\IsoG=\GI$, the well-studied graph isomorphism problem.
-\end{example}
+%% Suppose (for the rest of this section) that $\mathcal{K}$ is some set of structures in which
+%% \begin{enumerate}
+%% \item each structure $X$ has a size, denoted $|X|$, and
+%% \item pairs $(X, Y)$ have some notion of equivalence, denoted $X\cong Y$, in which $X\cong Y$ implies $|X|=|Y|$.
+%% \end{enumerate}
+%% Let $\IsoK=\lb\pair{X}{Y}\st X\cong Y\rb$.
+%% \begin{example}
+%%   Consider the set of structures $\mathcal{G}$, the set of all finite undirected graphs.
+%%   All isomorphic graphs have the same number of vertices.
+%%   In this case, $\IsoG=\GI$, the well-studied graph isomorphism problem.
+%% \end{example}
 
-Let $\Pi$ be some property (that is, a boolean proposition) for which $X\cong Y$ implies $\Pi(X)=\Pi(Y)$ (that is, they are either both true or both false).
-Call $\Pi$ the \defn{null property} if it is false for all structures.
-We say that $\Pi$ is a \defn{uniform property} if for all $n\in\mathbb{N}$ there exists a structure $X$ with $|X|=n$ such that $\Pi(X)$ is true.
-Let $L_\Pi$ be the language of structures $X$ defined by $\lb X\st\Pi(X)\textnormal{ is true}\rb$.
-Say that $\Pi$ is a \defn{$\mathcal{C}$-complete property} if $L_\Pi$ is $\mathcal{C}$-complete under $\mor$ reductions in some complexity class $\mathcal{C}$.
-It is easy to see that if $\Pi$ is either a uniform property or a $\mathcal{C}$-complete property, then it is not a null property.
+In this section, the propositions about equivalence problems are quite general, so we require some additional definitions.
+Suppose $R$ is an equivalence relation on $\Sigma^*$.
+A \defn{property on $R$} (or more simply, a property, when $R$ is understood from context) is a Boolean function on $\Sigma^*$ such that $\pair{x}{y} \in R$ implies $\Pi(x) = \Pi(y)$.
+A property is the \defn{null property} if it has the value $0$ on all inputs.
+%Let $\Pi$ be a property for which $X\cong Y$ implies $\Pi(X)=\Pi(Y)$ (that is, they are either both true or both false).
+%Call $\Pi$ the \defn{null property} if it is false for all structures.
+%We say that $\Pi$ is a \defn{uniform property} if for all $n\in\mathbb{N}$ there exists a structure $X$ with $|X|=n$ such that $\Pi(X)$ is true.
+If $\Pi$ is a property, let $L_\Pi$ be the language defined by $L_\Pi = \{ x \, | \, \Pi(x) = 1 \}$.
+The property $\Pi$ is a \defn{$\mathcal{C}$-complete property} if $L_\Pi$ is $\mathcal{C}$-complete under $\mor$ reductions in some complexity class $\mathcal{C}$.
+%It is easy to see that if $\Pi$ is either a uniform property or a $\mathcal{C}$-complete property, then it is not a null property.
 \begin{example}
-  Hamiltonicity is a uniform property on the set of finite undirected graphs (the circle graph on $n$ vertices has a Hamiltonian cycle for all $n\in\mathbb{N}$).
-  It is also an \NP-complete property, since in this case, $L_\Pi=\mathsf{HAMPATH}$.
+  The set of all pairs of isomorphic graphs, denoted \textsc{Graph Isomorphism}, is an equivalence relation on strings encoding undirected graphs.
+  Hamiltonicity (that is, having a cycle that includes each vertex) is a property on the set of all isomorphic graphs. %(the circle graph on $n$ vertices has a Hamiltonian cycle for all $n\in\mathbb{N}$).
+  It is also an \NP-complete property, since in this case, $L_\Pi = \textsc{Hamiltonian Cycle}$.
 \end{example}
 
 We first show that there are problems in $\CEq$ which are also $\mathcal{C}$-complete (though they may not necessarily be \CEq-complete).
-Define $A(\Pi)$ by
+Call an equivalence relation $R$ \defn{uniform} if $\pair{x}{y} \in R$ implies $|x| = |y|$.
+For any equivalence relation $R$, define $A_R(\Pi)$ by
 \begin{displaymath}
-  A(\Pi) = \lb \pair{X}{Y}\st \pair{X}{Y}\in\IsoK \plain{or} (\Pi(X) \plain{and} \Pi(Y) \text{ are both true})\rb.
+  A_R(\Pi) = \lb \pair{x}{y}\st \pair{x}{y} \in R \plain{or} \Pi(x) = \Pi(y) = 1\rb.
 \end{displaymath}
+(We sometimes simply write $A(\Pi)$ if the equivalence relation is understood from context.)
 By checking the three required properties of an equivalence relation, we find the following.
 (The proof of this proposition is straightforward and is left as an exercise for the reader.)
 \begin{proposition}
-  For all properties $\Pi$ on elements of $\mathcal{K}$, $A(\Pi)$ is an equivalence relation on $\mathcal{K}$.
+  For each equivalence relation $R$ and each property $\Pi$ on $R$, the set $A_R(\Pi)$ is an equivalence relation.
 \end{proposition}
 We use this fact to show that there are $\mathcal{C}$-complete equivalence relations.
 \begin{proposition}\label{prop:APi}
-  Let $\mathcal{C}$ be a complexity class such that $\IsoK\in\mathcal{C}$.
+  Let $R$ be a uniform equivalence relation and let $\mathcal{C}$ be a complexity class containing $R$.
   If $\Pi$ is a $\mathcal{C}$-complete property, then $A(\Pi)$ is a $\mathcal{C}$-complete equivalence relation.
 \end{proposition}
 \begin{proof}
   The previous proposition shows that $A(\Pi)$ is an equivalence relation, so it remains to show that it is $\mathcal{C}$-complete.
   %% TODO Why is this statement true? We need to require that C is closed under
   %% conjunction.
-  $A(\Pi)$ is in $\mathcal{C}$ because $X\cong Y$, $\Pi(X)$, and $\Pi(Y)$ can all be checked by a $\mathcal{C}$ algorithm.
+  $A(\Pi)$ is in $\mathcal{C}$ because both $R$ and $L_\Pi$ are in $\mathcal{C}$ by hypothesis.
+  Thus we need only show that $A(\Pi)$ is hard for $\mathcal{C}$ under $\mor$ reductions.
 
-  Let $Y$ be a graph for which $\Pi(Y)$ is true, which exists because $\Pi$ is not a null property.
-  The reduction is from $L_\Pi$, and the mapping is given by $X\mapsto\pair{X}{Y}$.
-  This function is computable in polynomial time (the size of the structure $Y$ is constant with respect to the size of the structure $Y$).
+  Let $y$ be a string for which $\Pi(y)$ is true; such a string must exist because $\Pi$ is $\mathcal{C}$-complete and therefore non-null.
+  The reduction is from $L_\Pi$, and the mapping is given by $x \mapsto \pair{x}{y}$.
+  This function is computable in linear time (the length of $y$ is constant with respect to the length of $x$).
 
-  Suppose $X\in L_\Pi$, then $\Pi(X)$ and $\Pi(Y)$ are both true, so $\pair{X}{Y}\in A(\Pi)$.
-  Suppose now that $X\notin L_\Pi$, so it certainly must not be the case that $\Pi(X)$ and $\Pi(Y)$ are both true.
-  However, neither can $X\cong Y$ be true, since otherwise $\Pi(X)$ would be true (since the property $\Pi$ is true on all structures which are isomorphic).
-  Thus $\pair{X}{Y}\notin A(\Pi)$.
-  We conclude that $L_\Pi\mor A(\Pi)$, and so it is a $\mathcal{C}$-complete equivalence relation.
+  Now we show that $x \in L_\Pi$ if and only if $\pair{x}{y} \in A(\Pi)$.
+  If $x \in L_\Pi$, then $\Pi(x) = \Pi(y) = 1$, so $\pair{x}{y} \in A(\Pi)$.
+  If $\pair{x}{y} \in A(\Pi)$, then either $\Pi(x) = \Pi(y) = 1$, in which case $x \in L_\Pi$, or $\pair{x}{y} \in R$, in which case $\Pi(x) = \Pi(y) = 1$ anyway.
+  In either case $x \in L_\Pi$.
+  We conclude that $L_\Pi \mor A(\Pi)$, and so $A(\Pi)$ is a $\mathcal{C}$-complete equivalence relation.
 \end{proof}
 
-We know that $\NP$ contains \GI, and that \NP-complete graph properties exist (Hamoltinicity, 3-colorability, etc.), so it follows that there exist equivalence relations which are \NP-complete.
+We know that \textsc{Graph Isomorphism} is a uniform equivalence relation in $\NP$, and that \NP-complete graph properties exist (Hamoltinicity, 3-colorability, etc.), thus there are equivalence relations which are \NP-complete.
 
 \begin{corollary}\label{cor:npcompleteeqrel}
-  If $\Pi$ is an \NP-complete property on graphs, then $A(\Pi)$ is an \NP-complete equivalence relation.
+  If $\Pi$ is an \NP-complete property on \textsc{Graph Isomorphism}, then $A(\Pi)$ is an \NP-complete equivalence relation.
 \end{corollary}
+
+\begin{example}
+  If the uniform equivalence relation is \textsc{Graph Isomorphism} and $\Pi$ is the Hamiltonicity property, then the equivalence relation
+  \begin{equation*}
+    \{ \pair{G}{H} \, | \, G \cong H \text{ or both } G \text{ and } H \text{ have a Hamiltonian cycle}  \}
+  \end{equation*}
+  is \NP-complete.
+\end{example}
 
 We can now show that completeness in $\CEq$ under $\kr$ reductions implies completeness in $\mathcal{C}$ under $\mor$ reductions.
 
 \begin{proposition}\label{prop:ceqimpliesc}
-  Let $\mathcal{C}$ be a complexity class such that $\IsoK\in\mathcal{C}$.
-  If there exists a $\mathcal{C}$-complete property on $\mathcal{K}$ and an equivalence relation $R$ is \CEq-complete then $R$ is also $\mathcal{C}$-complete.
+  Let $R$ be a uniform equivalence relation and let $\mathcal{C}$ be a complexity class containing $R$.
+  If there is a $\mathcal{C}$-complete property on $R$ and an equivalence relation $S$ is \CEq-complete then $S$ is also $\mathcal{C}$-complete.
 \end{proposition}
 \begin{proof}
-  Let $\Pi$ be the $\mathcal{C}$-complete property.
-  Let $A$ be a $\mathcal{C}$-complete equivalence relation in $\mathcal{C}$, which exists by \autoref{prop:APi}.
-  Since $R$ is \CEq-complete, there exists a polynomial time kernel reduction, call it $f$, from $A$ to $R$.
-  The polynomial time many-one reduction from $A$ to $R$ induced by $f$, namely $\pair{x}{y}\mapsto\pair{f(x)}{f(y)}$, proves that $R$ is $\mathcal{C}$-hard.
-  Since $R$ is in $\mathcal{C}$ by hypothesis, it is therefore $\mathcal{C}$-complete.
+  Let $\Pi$ be the $\mathcal{C}$-complete property on $R$.
+  Let $A$ be the $\mathcal{C}$-complete equivalence relation guaranteed by \autoref{prop:APi}.
+  Since $S$ is \CEq-complete, there is a polynomial time kernel reduction $f$ from $A$ to $S$.
+  The polynomial time many-one reduction from $A$ to $S$ induced by $f$, namely the function $\pair{x}{y} \mapsto \pair{f(x)}{f(y)}$, proves that $S$ is $\mathcal{C}$-hard.
+  Since $S$ is in $\mathcal{C}$ by hypothesis, it is therefore $\mathcal{C}$-complete.
 \end{proof}
 
 This corollary provides a clearer proof of \autocite[Proposition~8.1]{bcffm}.
 
 \begin{corollary}[{\autocite[Proposition~8.1]{bcffm}}]
-  If $\GI$ is \NPEq-complete then the polynomial time hierarchy collapses to the second level ($\PH=\STP$).
+  If \textsc{Graph Isomorphism} is \NPEq-complete then the polynomial hierarchy collapses to the second level ($\PH = \STP$).
 \end{corollary}
 \begin{proof}
-  If $\GI$ is \NPEq-complete then it is \NP-complete by \autoref{prop:ceqimpliesc}.
-  This implies the stated collapse (see \autocite{schoning87}).
+  Let the equivalence relation $R$ be \textsc{Graph Isomorphism}, the complexity class $\mathcal{C}$ be $\NP$, the $\mathcal{C}$-complete property be Hamiltonicity, and the equivalence relation $S$ be \textsc{Graph Isomorphism}.
+  Then \autoref{prop:ceqimpliesc} implies that \textsc{Graph Isomorphism} is $\NP$-complete, which yields the stated collapse (see \autocite{schoning87}).
 \end{proof}
 
 This also means that for well-behaved complexity classes, equality of the corresponding equivalence classes implies equality of the general classes.
 
 \begin{proposition}
-  Suppose $\mathcal{C}_1$ and $\mathcal{C}_2$ are complexity classes satisfying the following conditions.
+  Suppose $R$ is a uniform equivalence relation and $\mathcal{C}_1$ and $\mathcal{C}_2$ are complexity classes satisfying the following conditions.
   \begin{itemize}
   \item $\mathcal{C}_1 \subseteq \mathcal{C}_2$
-  \item $\IsoK \in \mathcal{C}_2$
+  \item $R \in \mathcal{C}_2$
   \item $\mathcal{C}_1$ is closed under $\mor$ reductions
-  \item there is a $\mathcal{C}_2$-complete property on $\mathcal{K}$
-  \item there is a $\mathcal{C}_2\Eq$-complete equivalence relation $R$
+  \item there is a $\mathcal{C}_2$-complete property on $R$
+  \item there is a $\mathcal{C}_2\Eq$-complete equivalence relation $S$
   \end{itemize}
   Then $\mathcal{C}_1 = \mathcal{C}_2$ if and only if $\mathcal{C}_1\Eq = \mathcal{C}_2\Eq$.
 \end{proposition}
 \begin{proof}
   If $\mathcal{C}_1 = \mathcal{C}_2$, then $\mathcal{C}_1\Eq = \mathcal{C}_2\Eq$ by their definitions.
   Suppose now that $\mathcal{C}_1\Eq = \mathcal{C}_2\Eq$.
-  We know that $R$ is $\mathcal{C}_2$-complete since it meets all the requirements in the hypothesis of \autoref{prop:ceqimpliesc}.
-  Since $R \in \mathcal{C}_2\Eq$ and $\mathcal{C}_2\Eq = \mathcal{C}_1\Eq$ by hypothesis, $R \in \mathcal{C}_1\Eq$, and hence $R \in \mathcal{C}_1$.
+  We know that $S$ is $\mathcal{C}_2$-complete since it meets all the requirements in the hypothesis of \autoref{prop:ceqimpliesc}.
+  Since $S \in \mathcal{C}_2\Eq$ and $\mathcal{C}_2\Eq = \mathcal{C}_1\Eq$ by hypothesis, $S \in \mathcal{C}_1\Eq$, and hence $S \in \mathcal{C}_1$.
   Since $\mathcal{C}_1$ is closed under $\mor$ reductions, $\mathcal{C}_2 \subseteq \mathcal{C}_1$.
   Since $\mathcal{C}_1 \subseteq \mathcal{C}_2$ by hypothesis, we have shown the equality of the two complexity classes.
 \end{proof}
@@ -144,50 +160,52 @@ This also means that for well-behaved complexity classes, equality of the corres
   Choose $\mathcal{C}_1 = \P$ and $\mathcal{C}_2 = \NP$ in the previous corollary.
   \begin{itemize}
   \item $\P \subseteq \NP$.
-  \item Let $\mathcal{K}$ be the set of graphs; $\GI$ is in $\NP$.
+  \item Let $R$ be \textsc{Graph Isomorphism}; it is in $\NP$.
   \item $\P$ is closed under $\mor$ reductions.
   \item Hamiltonicity, for example, is an $\NP$-complete property on graphs.
-  \item \autoref{cor:npcompleteeqrel} show the existence of an $\NPEq$-complete equivalence relation.
+  \item \autoref{cor:npcompleteeqrel} shows the existence of an $\NPEq$-complete equivalence relation.
   \end{itemize}
   All of the conditions are satisfied, so $\P = \NP$ if and only if $\PEq = \NPEq$.
 \end{proof}
 
-Note that we currently do not know whether $\NPEq$ (or $\SKPEq$ for any $k$) has a complete problem under polynomial time kernel reductions.
+We currently do not know whether $\NPEq$ (or $\SKPEq$ for any $k$) has a complete problem under polynomial time kernel reductions.
 \begin{openproblem}
   Can we prove that $\NPEq$ (or $\SKPEq$ for any $k$) has a complete problem unconditionally?
 \end{openproblem}
 
 We will for now consider the consequences of the assumption that there exists a \CEq-complete problem.
 
-Define $A^=(\Pi)$ by
+Define $A_R^=(\Pi)$ by
 \begin{displaymath}
-  A^=(\Pi) = \lb \pair{X}{Y} \st \pair{X}{Y}\in A(\Pi) \plain{and} |X|=|Y|\rb
+  A_R^=(\Pi) = \lb \pair{x}{y} \st \pair{x}{y}\in A_R(\Pi) \plain{and} |x| = |y|\rb
 \end{displaymath}
-for all properties $\Pi$.
-(Note that the requirement that $|X|=|Y|$ only affects the ``$\Pi(X)$ and $\Pi(Y)$ are both true'' part of the definition of $A(\Pi)$, since $X\cong Y$ implies $|X|=|Y|$ by our initial assumptions.)
+for each uniform equivalence relation $R$ and each property $\Pi$ on $R$.
+(The requirement that $|x| = |y|$ only affects the ``$\Pi(x) = \Pi(y) = 1$'' part of the definition of $A_R(\Pi)$, since $R$ is uniform.)
+Again, we may omit the subscript $R$ if it is understood from context.
 
 \begin{proposition}\label{prop:APieq}
-  Let $\mathcal{C}$ be a complexity class such that $\IsoK\in\mathcal{C}$.
+  Let $R$ be a uniform equivalence relation and $\mathcal{C}$ be a complexity class containing $R$.
   If $\Pi$ is a uniform $\mathcal{C}$-complete property, then $A^=(\Pi)$ is a $\mathcal{C}$-complete equivalence relation.
 \end{proposition}
 \begin{proof}
   % TODO Is it possible to do this for arbitrary structures without stating
   % explicitly how to force the output length?
-  The proof is the same as the proof of \autoref{prop:APi}, but the reduction enforces that the structure $Y$ is a structure with $|Y|=|X|$ for which $\Pi(Y)$ is true, which exists because $\Pi$ is a uniform property by hypothesis.
+  The proof is the same as the proof of \autoref{prop:APi}, but the reduction enforces that the string $y$ satisfying both $|y| = |x|$ and $\Pi(y) = 1$.
+  Such a string exists because $\Pi$ is a uniform property by hypothesis.
 \end{proof}
 
 Note that the number of equivalence classes of $A^=(\Pi)$ is infinite, since there will be at least one equivalence class for each length.
 However, each of those equivalence classes is itself finite.
-As justification, consider the equivalence class of an arbitrary structure $X$ in $A^=(\Pi)$, $[X]$.
-$[X]$ includes exactly all the structures $Y$ which are isomorphic to $X$ plus (at most) all structures $Z$ for which $\Pi(Z)$ is true and $|X|=|Z|$ (if $\Pi(X)$ is true at all).
-In either case, the structures $Y$ and $Z$ have the same size as $X$ (since our notion of isomorphism implies that $Y$ and $Z$ have equal sizes).
-The number of structures of size $|X|$ is finite, so $[X]$ is finite.
+As justification, consider the equivalence class $[x]$ of an arbitrary string $x$ in $A^=(\Pi)$.
+The equivalence class $[x]$ includes exactly all the strings $y$ that are related to $x$ plus (at most) all strings $z$ for which $\Pi(z) = 1$ and $|x| = |z|$ (if $\Pi(x) = 1$ at all).
+In either case, the strings $y$ and $z$ have the same size as $x$ (since our implicit equivalence relation is uniform, hence $y$ and $z$ have the same length).
+The number of strings of length $|x|$ is finite, so $[x]$ is finite.
 
 As a contrast, consider the equivalence relation
 \begin{equation}\label{eq:ones}
-  R=\lb\pair{x}{y} \st x\plain{and}y\plain{have the same number of}1\textnormal{s}\rb.
+  S = \lb\pair{x}{y} \st x\plain{and}y\plain{have the same number of}1\textnormal{s}\rb.
 \end{equation}
-$R$ has an infinite number of equivalence classes: $[1]$, $[11]$, $[111]$, etc.
+$S$ has an infinite number of equivalence classes: $[1]$, $[11]$, $[111]$, etc.
 Each equivalence class is itself infinite as well: if $w\in\Sigma^*$ then $[w]$ contains $w$, $0w$, $00w$, etc.
 
 These observations lead us to the following theorem.
@@ -197,35 +215,37 @@ Note that in the following theorem, if an equivalence relation $B$ is ``complete
   % If \Pi is additionally an $\mathcal{C}$-complete property, then A^=(\Pi) would be an $\mathcal{C}$-complete equivalence relation.
   Suppose
   \begin{itemize}
-  \item $R$ is defined as in \eqref{eq:ones}
-  \item $\mathcal{C}$ is a complexity class such that $\IsoK\in\mathcal{C}$ and $R\in\mathcal{C}$
-  \item $\Pi$ is a uniform property
+  \item $R$ is a uniform equivalence relation
+  \item $S$ is defined as in \eqref{eq:ones}
+  \item $\mathcal{C}$ is a complexity class containing both $R$ and $S$
+  \item $\Pi$ is a uniform property on $R$
   \end{itemize}
-  If $A^=(\Pi)$ is complete in $\CEq$ under $\kr$ reductions, then it is not complete under $\kri$ reductions.
+  If $A_R^=(\Pi)$ is complete in $\CEq$ under $\kr$ reductions, then it is not complete under $\kri$ reductions.
 \end{theorem}
 \begin{proof}
-  For the sake of brevity, in this proof we will refer to $A^=(\Pi)$ by the shorter $A$.
+  For the sake of brevity, in this proof we will refer to $A_R^=(\Pi)$ by the shorter $A$.
 
-  Since $A$ is \CEq-complete, $R\kr A$.
-  Thus there exists a polynomial time computable function $f$ such that $\pair{x}{y}\in R$ if and only if $\pair{f(x)}{f(y)}\in A$.
+  Since $A$ is \CEq-complete, $S \kr A$.
+  Thus there exists a polynomial time computable function $f$ such that $\pair{x}{y}\in S$ if and only if $\pair{f(x)}{f(y)}\in A$.
 
   Let $w\in\sigmastar$.
-  Then $f(w)=X$ for some structure $X\in\mathcal{K}$.
-  By the arguments in the discussion preceding this theorem, $[w]_R$ is infinite and $[f(w)]_A$ is finite.
-  By \autoref{lem:image}, $f([w]_R)\subseteq [f(w)]_A$.
-  Consider $f|_{[w]_R}$, that is, $f$ restricted to the domain $[w]_R$.
-  Then $f|_{[w]_R}$ is a mapping from the infinite set $[w]_R$ to the finite set $[f(w)]_A$.
-  By the pigeonhole principle, $f|_{[w]_R}$ is not injective.
+  Then $f(w)=x$ for some string $x$.
+  By the arguments in the discussion preceding this theorem, $[w]_S$ is infinite and $[f(w)]_A$ is finite.
+  By \autoref{lem:image}, $f([w]_S)\subseteq [f(w)]_A$.
+  Consider $f|_{[w]_S}$, that is, $f$ restricted to the domain $[w]_S$.
+  Then $f|_{[w]_S}$ is a mapping from the infinite set $[w]_S$ to the finite set $[f(w)]_A$.
+  By the pigeonhole principle, $f|_{[w]_S}$ is not injective.
   Hence the unrestricted reduction $f$ is not injective, and therefore $A$ is not $\kri$-complete in \CEq.
 \end{proof}
 
 \begin{corollary}
   % If \Pi is additionally an \NP-complete property, then $A^=(\Pi)$ would be an \NP-complete equivalence relation.
-  Let $\Pi$ be a uniform graph property.
+  Let $\Pi$ be a uniform property on \textsc{Graph Isomorphism}.
   If $A^=(\Pi)$ is complete in $\NPEq$ under $\kr$ reductions, then it is not complete under $\kri$ reductions.
 \end{corollary}
 \begin{proof}
-  $\NP$ satisfies the conditions on $\mathcal{C}$ in the hypothesis of the previous theorem if we choose $\mathcal{K}$ to be the set of graphs so that $\IsoK$ is $\GI$ (that is, $\GI\in\NP$ and $R\in\NP$).
+  Let the equivalence relation $R$ be \textsc{Graph Isomorphism}, the complexity class $\mathcal{C}$ be $\NP$, and the uniform property $\Pi$ be Hamiltonicity.
+  Then the previous theorem implies that $A^=(\Pi)$ is not complete under $\kri$ reductions.
 \end{proof}
 
 This result is interesting because it again demonstrates that the number and size of equivalence classes is important when considering the (im)possibility of polynomial time kernel reductions between equivalence relations.
