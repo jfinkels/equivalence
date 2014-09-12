@@ -6,10 +6,23 @@
 %% Commons Attribution-ShareAlike 4.0 International License,
 %% https://creativecommons.org/licenses/by-sa/4.0/.
 \section{Conclusion}
-\todo{fill me in}
 % Summary
 %
 % findings (focus on author) what? - what the work revealed when performing the task
+Throughout this work we have proven that kernel reductions are similar to many-one reductions in the most basic ways, but differ in some key aspects.
+Like many-one reductions, kernel reductions are transitive and have good closure properties.
+The class of equivalence problems in $\PSPACE$ has a complete problem under kernel reductions (\autoref{cor:hardproblems}).
+The equivalence of the two equalities $\P = \NP$ and $\PEq = \NPEq$ (\autoref{cor:pnppeqnpeq}) uses the similarity between many-one and kernel reductions.
+Just as many-one reductions allow the existence of $\NP$-intermediary problems, kernel reductions allow for the possibility of $\NPEq$-intermediary problems (\autoref{thm:intermediary}).
+On the other hand, there are equivalence relations between which there is a many-one reduction but no kernel reduction (\autoref{thm:different}).
+Specifically, if there are more equivalence classes, up to strings of certain lengths, in $R$ than in $S$, then no kernel reduction can exist.
+Finally, under some assumptions, there is an equivalence problem that is not complete for $\NPEq$ under injective kernel reductions (\autoref{cor:inj}), whereas most $\NP$-complete problems seem to be isomorphic.
 
 % conclusion (focus on readers) so what? - what the findings mean for the audience
+The techniques used in this paper to show that kernel reductions are weaker than many-one reductions are combinatorial techniques (for example, comparing the numbers of equivalence classes).
+We don't know whether complexity theoretic techniques can be used to show the same things.
 % perspective (focus on anyone) what now? - what should be done next
+Besides the open problems listed throughout the paper, we consider the following questions to be worth exploring.
+First, there are many problems of \emph{inequivalence} in \autocite{gj79} which are listed as \NP-complete or \PSPACE-complete.
+What do these problems have to do with \NPEq-completeness, \coNPEq-completeness, and \PSPACEEq-completeness?
+Second, do the complexity results from, for example, \autocite{at96} or \autocite{rs11}, which study isomorphisms and congruences of boolean formulae, boolean circuits, polynomials, and other structures, translate to the setting of kernel reductions?

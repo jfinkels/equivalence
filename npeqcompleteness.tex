@@ -153,7 +153,7 @@ This also means that for well-behaved complexity classes, equality of the corres
   Since $\mathcal{C}_1 \subseteq \mathcal{C}_2$ by hypothesis, we have shown the equality of the two complexity classes.
 \end{proof}
 
-\begin{corollary}
+\begin{corollary}\label{cor:pnppeqnpeq}
   $\P = \NP$ if and only if $\PEq = \NPEq$.
 \end{corollary}
 \begin{proof}
@@ -238,7 +238,7 @@ Note that in the following theorem, if an equivalence relation $B$ is ``complete
   Hence the unrestricted reduction $f$ is not injective, and therefore $A$ is not $\kri$-complete in \CEq.
 \end{proof}
 
-\begin{corollary}
+\begin{corollary}\label{cor:inj}
   % If \Pi is additionally an \NP-complete property, then $A^=(\Pi)$ would be an \NP-complete equivalence relation.
   Let $\Pi$ be a uniform property on \textsc{Graph Isomorphism}.
   If $A^=(\Pi)$ is complete in $\NPEq$ under $\kr$ reductions, then it is not complete under $\kri$ reductions.
