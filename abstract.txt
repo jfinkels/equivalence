@@ -10,7 +10,7 @@ reduction", defined only on equivalence problems, allows the transformation of
 each string in the pair independently.  Understanding the limitations of the
 kernel reduction as compared with the many-one reduction improves our
 understanding of the limitations of computers in solving problems of
-equivalence.  We investigated not only these limitations, but also whether
+equivalence.  We investigate not only these limitations, but also whether
 classes of equivalence problems have complete problems under kernel reductions.
 This paper provides a detailed collection of basic results about kernel
 reductions.
