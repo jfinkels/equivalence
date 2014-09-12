@@ -175,7 +175,8 @@ The idea behind \autoref{thm:density} leads to a construction of equivalence rel
 
 \begin{construction}\label{con:rands}
   Let $f_1, f_2, \dotsc$ be an enumeration of all polynomial time computable functions.
-  Assume without loss of generality \todo{state why} that for all positive integers $i$, function $f_i$ runs in time $p_i(n)$, where $p_i(n) = i n^i$ for all positive integers $n$.
+  %% TODO state why this can be done without loss of generality.
+  Assume, without loss of generality, that for all positive integers $i$, function $f_i$ runs in time $p_i(n)$, where $p_i(n) = i n^i$ for all positive integers $n$.
 
   Suppose $n$ is a positive integer.
   Define $R_n$ as the set of all strings of length $n$, except $R_1$, which also includes the string of length $0$.
@@ -208,7 +209,7 @@ The idea behind \autoref{thm:density} leads to a construction of equivalence rel
   \end{align*}
   Thus there is at least one string in $S_n$.
   Next, for any string $x$, there exists an $n$ such that $p_n(n) + 1 \leq |x| \leq p_{n + 1}(n + 1)$, so every string in $\Sigma^*$ is in some $S_n$.
-  \todo{I don't know how to explain this further.}
+  %% TODO I don't know how to explain this further.
   Finally, suppose $m$ and $n$ are distinct positive integers and assume without loss of generality that $m < n$, or in other words, that $m + 1 \leq n$.
   Then $p_{m + 1}(m + 1) \leq p_n(n) < p_n(n) + 1$, so no string of length at most $p_{m + 1}(m + 1)$ can also have length at least $p_n(n) + 1$.
   Hence, $S_m$ and $S_n$ are disjoint.
