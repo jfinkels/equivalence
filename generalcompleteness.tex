@@ -51,8 +51,8 @@ Before proving this theorem, we will provide some immediate corollaries of this 
   Under polynomial time kernel reductions,
   \begin{enumerate}
   %\item $\EXPEq$ has a complete problem
-  \item $\PSPACEEq$ has a complete problem
-  \item $\PKPEq$ contains a problem that is hard for $\DKPEq$, for all $k \geq 1$
+  \item $\PSPACEEq$ has a complete problem,
+  \item $\PKPEq$ contains a problem that is hard for $\DKPEq$, for all $k \geq 1$.
   %\item\label{itm:hardforsigma} $\PKPOPEq$ contains a problem which is hard for $\SKPEq$, for all $k\geq 0$
   %\item $\PKPOPEq$ contains a problem which is hard for $\PKPEq$, for all $k\geq 0$
   %\item $\coNPEq$ contains a problem which is hard for $\PEq$
@@ -103,11 +103,11 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   First we will define a helper algorithm which decides whether a given machine accepts an equivalence relation on strings up to a given length.
   Define the algorithm $A$ as follows on input $\pair{M}{n}$, where $M$ is a polynomially clocked Turing machine of type $\mathcal{C}$ and $n\in\mathbb{N}$:
   \begin{enumerate}
-  \item universally guess $a,b,$ and $c\in\Sigma^{\leq n}$
-  \item simulate $M$ on $\pair{a}{a}$; if it rejects, reject
-  \item simulate $M$ on $\pair{a}{b}$, then on $\pair{b}{a}$; if the former accepts and the latter rejects, reject
-  \item simulate $M$ on $\pair{a}{b}$, then on $\pair{b}{c}$, then on $\pair{a}{c}$; if the first two accept and the last one rejects, reject
-  \item if execution reaches this point, accept
+  \item universally guess $a,b,$ and $c\in\Sigma^{\leq n}$,
+  \item simulate $M$ on $\pair{a}{a}$; if it rejects, reject,
+  \item simulate $M$ on $\pair{a}{b}$, then on $\pair{b}{a}$; if the former accepts and the latter rejects, reject,
+  \item simulate $M$ on $\pair{a}{b}$, then on $\pair{b}{c}$, then on $\pair{a}{c}$; if the first two accept and the last one rejects, reject,
+  \item if execution reaches this point, accept.
   \end{enumerate}
   These simulations check that $L(M)$ satisfies reflexivity, symmetry, and transitivity on strings of length at most $n$.
   If $A$ accepts, then the three properties are satisfied, and if it rejects then one of the three properties is violated.
@@ -123,10 +123,10 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   \end{align*}
   where the conditions are
   \begin{enumerate}
-  \item\label{itm:machine} $M$ is a polynomially clocked Turing machine of type $\mathcal{C}$
-  \item\label{itm:emx} $A$ accepts $\pair{M}{|x|}$ within $t_x$ steps
-  \item\label{itm:emy} $A$ accepts $\pair{M}{|y|}$ within $t_y$ steps
-  \item\label{itm:accepts} $M$ accepts $\pair{x}{y}$
+  \item\label{itm:machine} $M$ is a polynomially clocked Turing machine of type $\mathcal{C}$,
+  \item\label{itm:emx} $A$ accepts $\pair{M}{|x|}$ within $t_x$ steps,
+  \item\label{itm:emy} $A$ accepts $\pair{M}{|y|}$ within $t_y$ steps,
+  \item\label{itm:accepts} $M$ accepts $\pair{x}{y}$.
   \end{enumerate}
   We claim that $R_K$ is in $\CRAZYEq$ and $\CEq$-hard.
 
