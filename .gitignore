@@ -1,3 +1,16 @@
+abstract.tex
+introduction.tex
+preliminaries.tex
+definitions.tex
+limitations.tex
+generalcompleteness.tex
+npeqcompleteness.tex
+intermediary.tex
+conclusion.tex
+acknowledgments.tex
+mycomplexity.sty
+equivalence.bib
+
 .*
 #*
 *#

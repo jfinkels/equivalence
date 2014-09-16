@@ -1,11 +1,1931 @@
-%% equivalence.tex - Polynomial-time kernel reductions
+%%% Template (2011/07/27) for an article using cc
+\begin{filecontents*}{\jobname.bib}
+@inproceedings{miller77,
+ author = {Miller, Gary L.},
+ title = {Graph isomorphism, general remarks},
+ booktitle = {Proceedings of the ninth annual ACM symposium on Theory of
+                  computing},
+ series = {STOC '77},
+ year = {1977},
+ location = {Boulder, Colorado, United States},
+ pages = {143--150},
+ numpages = {8},
+ doi = {10.1145/800105.803404},
+ acmid = {803404},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+}
+
+
+@article{miller79,
+ author = "Gary L. Miller",
+ title = "Graph Isomorphism, General Remarks",
+ journal = "Journal of Computer and System Sciences",
+ year = "1979",
+ volume = "18",
+ number = "2",
+ pages = "128--142",
+ thanks = "NSF NRC-A5549, Alfred P. Sloan Foundation 74-12-5, ARPA ONR
+                  N00014-75-C-1091",
+ month = "April"
+}
+                  
+@inproceedings{kozen77,
+ author = "Kozen, Dexter",
+ title = "Complexity of finitely presented algebras",
+ booktitle = "Proceedings of the ninth annual ACM symposium on Theory of
+                  computing",
+ series = "STOC '77",
+ year = "1977",
+ location = "Boulder, Colorado, United States",
+ pages = "164--177",
+ numpages = "14",
+ doi = "10.1145/800105.803406",
+ acmid = "803406",
+ publisher = "ACM",
+ address = "New York, NY, USA"
+}
+
+@article{wl68,
+ author = "B. Weisfeiler and A. A. Lehman",
+ title = "Reduction of a graph to a canonical form and an algebra arising
+                  during this reduction",
+ journal = "Nauchno-Techn. Inform.",
+ volume = "2",
+ number = "9",
+ pages = "12--16",
+ numpages = "5",
+ year = "1968"
+}
+
+@article{hn70,
+ author = "Pavol Hell and Jaroslav, Ne\u{s}et\u{r}il",
+ title = "Graphs and $k$-societies",
+ journal = "Canadian Mathematical Bulletin",
+ volume = "13",
+ year = "1970",
+ pages = "375--381",
+ numpages = "7"
+}
+
+@article{pultr64,
+ author = "A. Pultr",
+ title = "Concerning universal categories",
+ journal = "Commentationes Mathematicae Universitatis Carolinae",
+ month = "March",
+ year = "1964",
+ volume = "5",
+ number = "4",
+ pages = "227--239",
+ numpages = "13"
+}
+
+@article{zkt85,
+ author = "V. N. Zemlyachenko and N. M. Korneenko and R. I. Tyshkevich",
+ title = "Graph isomorphism problem",
+ journal = "Journal of Mathematical Sciences",
+ year = "1985",
+ month = "May",
+ volume = "29",
+ number = "4",
+ pages = "1426--1481",
+ numpages = "56",
+ publisher = "Springer New York",
+ doi = "10.1007/BF02104746"
+}
+
+@techreport{babai79,
+ author = {L\'{a}szl\'{o} Babai},
+ title = {Monte Carlo algorithms in graph isomorphism testing},
+ number = {DMS 79-10},
+ institution = {Universit\'{e} de Montr\'{e}al},
+ year = {1979}
+}
+
+@article{booth78,
+ author = {Kellogg S. Booth},
+ title = {Isomorphism Testing for Graphs, Semigroups, and Finite Automata are
+                  Polynomially Equivalent Problems},
+ publisher = {SIAM},
+ year = {1978},
+ journal = {SIAM Journal on Computing},
+ volume = {7},
+ number = {3},
+ pages = {273--279},
+ doi = {10.1137/0207023}
+}
+
+@article{frucht50,
+ author = "Robert Frucht",
+ title = "Lattices with a given abstract group of automorphisms",
+ journal = "Canadian Journal of Mathematics",
+ year = "1950",
+ volume = "2",
+ pages = "417--419",
+ numpages = "3"
+}
+
+@book{gj79,
+ author = "Michael R. Garey and David S. Johnson",
+ title = "Computers and Intractability: A Guide to the Theory of
+                  NP-completeness",
+ publisher = "W. H. Freeman and Company",
+ year = "1979",
+ address = "New York, NY"
+}
+
+@article{grigoriev83,
+ author = "D. Yu. Grigor'ev",
+ title = "Complexity of ``wild'' matrix problems and of isomorphism of algebras
+                  and graphs",
+ journal = "Journal of Mathematical Sciences",
+ publisher = "Springer New York",
+ volume = "22",
+ number = "3",
+ month = "June",
+ year = "1983",
+ doi = "10.1007/BF01084390",
+ pages = "1285--1289",
+ numpages = "5"
+}
+
+@book{kst93,
+  title={The graph isomorphism problem: its structural complexity},
+  author={K\"{o}bler, J. and Sch\"{o}ning, U. and Tor\'{a}n, J.},
+  year={1993},
+  publisher={Springer}
+}
+
+@article{cc81,
+ title = "Concerning the complexity of deciding isomorphism of block designs",
+ journal = "Discrete Applied Mathematics",
+ volume = "3",
+ number = "3",
+ pages = "155--162",
+ year = "1981",
+ issn = "0166-218X",
+ doi = "10.1016/0166-218X(81)90012-3",
+ author = "Marlene J. Colbourn and Charles J. Colbourn"
+}
+
+@inproceedings{schoning87,
+ author = {Sch\"{o}ning, Uwe},
+ title = {Graph Isomorphism is in the Low Hierarchy},
+ booktitle = {Proceedings of the 4th Annual Symposium on Theoretical Aspects of
+ Computer Science},
+ series = {STACS '87},
+ year = {1987},
+ isbn = {3-540-17219-X},
+ pages = {114--124},
+ numpages = {11},
+ doi = {10.1007/BFb0039590},
+ publisher = {Springer-Verlag},
+ address = {London, UK}
+}
+
+@inproceedings{buss97,
+ author = {Samuel Buss},
+ title = {Alogtime Algorithms for Tree Isomorphism, Comparison, and
+                  Canonization},
+ booktitle = {In Computational Logic and Proof Theory, 5th Kurt G\"{o}del
+                  Colloquium '97, Lecture Notes in Computer Science no. 1289},
+ year = {1997},
+ pages = {18--33},
+ publisher = {Springer-Verlag}
+}
+
+@book{ahu74,
+ author = {Aho, Alfred V. and Hopcroft, John E. and Ullman, J. D.},
+ title = {The Design and Analysis of Computer Algorithms},
+ year = {1974},
+ isbn = {0201000296},
+ publisher = {Addison-Wesley Longman Publishing Co., Inc.},
+ address = {Boston, MA, USA}
+}
+
+@article{asu79,
+ author = {A. V. Aho and Y. Sagiv and J. D. Ullman},
+ title = {Equivalences among Relational Expressions},
+ publisher = {SIAM},
+ year = {1979},
+ journal = {SIAM Journal on Computing},
+ volume = {8},
+ number = {2},
+ pages = {218--246},
+ doi = {10.1137/0208017}
+}
+
+@inproceedings{nr08,
+ author = {Narayanamurthy, Shravan Matthur and Ravindran, Balaraman},
+ title = {On the hardness of finding symmetries in Markov decision processes},
+ booktitle = {ICML '08: Proceedings of the 25th international conference on
+                  Machine learning},
+ year = {2008},
+ isbn = {978-1-60558-205-4},
+ pages = {688--695},
+ location = {Helsinki, Finland},
+ doi = {http://doi.acm.org/10.1145/1390156.1390243},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+}
+
+@article{ks03,
+ author = {Volker Kaibel and Alexander Schwartz},
+ title = {On the Complexity of Polytope Isomorphism Problems},
+ journal = {Graphs and Combinatorics},
+ year = {2003},
+ volume = {19}
+}
+
+@article{mckay79,
+ title = "Hadamard equivalence via graph isomorphism",
+ journal = "Discrete Mathematics",
+ volume = "27",
+ number = "2",
+ pages = "213--214",
+ year = "1979",
+ issn = "0012-365X",
+ doi = "10.1016/0012-365X(79)90113-4",
+ author = "Brendan D. McKay"
+}
+
+@book{sipser06,
+ author = "Michael Sipser",
+ title = "Introduction to the Theory of Computation",
+ publisher = "Thomson Course Technology",
+ edition = "2",
+ isbn = "978-0534950972",
+ year = "2006" 
+}
+
+@book{bdg95, 
+ author = "Jos\'{e} Luis Balc\'{a}zar and Josep D\'{i}az and Joaquim
+                  Gabarr\'{o}",
+ title = {{Structural Complexity I}},
+ publisher = "Springer-Verlag",
+ month = "February",
+ year = "1995",
+ edition = "2"
+}
+
+@article{fg11,
+title = "Complexity classes of equivalence problems revisited",
+journal = "Information and Computation",
+volume = "209",
+number = "4",
+pages = "748--763",
+year = "2011",
+issn = "0890-5401",
+doi = "10.1016/j.ic.2011.01.006",
+author = "Lance Fortnow and Joshua A. Grochow",
+keywords = "Computational complexity",
+keywords = "Complexity class",
+keywords = "Oracle",
+keywords = "Probabilistic computation",
+keywords = "Quantum computation",
+keywords = "Equivalence relation",
+keywords = "Isomorphism problem",
+keywords = "Normal form",
+keywords = "Canonical form"
+}
+
+@article{ladner,
+ author = {Ladner, Richard E.},
+ title = {{On the Structure of Polynomial Time Reducibility}},
+ journal = {Journal of the ACM},
+ volume = {22},
+ issue = {1},
+ month = {January},
+ year = {1975},
+ issn = {0004-5411},
+ pages = {155--171},
+ numpages = {17},
+ doi = {10.1145/321864.321877},
+ acmid = {321877},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+}
+
+@article{schoning,
+title = "A uniform approach to obtain diagonal sets in complexity classes",
+journal = "Theoretical Computer Science",
+volume = "18",
+number = "1",
+pages = "95--103",
+year = "1982",
+issn = "0304-3975",
+doi = "10.1016/0304-3975(82)90114-1",
+author = {Uwe Sch\"{o}ning}
+}
+
+@article{bcffm,
+title = {Strong Isomorphism Reductions in Complexity Theory},
+author = {Samuel R. Buss and Yijia Chen and J\"{o}rg Flum and Sy Friedman and Moritz M\"{u}ller},
+journal = {The Journal of Symbolic Logic},
+volume = 76,
+issue = 4,
+year = 2011,
+pages = {1381--1402},
+doi = {10.2178/jsl/1318338855},
+}
+
+@incollection {sipser,
+author = {Sipser, Michael},
+affiliation = {Massachusetts Institute of Technology Mathematics Department 02139 Cambridge Massachusetts 02139 Cambridge Massachusetts},
+title = {On relativization and the existence of complete sets},
+booktitle = {Automata, Languages and Programming},
+series = {Lecture Notes in Computer Science},
+editor = {Nielsen, Mogens and Schmidt, Erik},
+publisher = {Springer Berlin / Heidelberg},
+isbn = {978-3-540-11576-2},
+keyword = {Computer Science},
+pages = {523-531},
+volume = {140},
+doi = {10.1007/BFb0012797},
+year = {1982}
+}
+
+@incollection {hi,
+author = {Hartmanis, Juris and Immerman, Neil},
+affiliation = {Cornell University Department of Computer Science 14853 Ithaca NY 14853 Ithaca NY},
+title = {On complete problems for {$\NP\cap\coNP$}},
+booktitle = {Automata, Languages and Programming},
+series = {Lecture Notes in Computer Science},
+editor = {Brauer, Wilfried},
+publisher = {Springer Berlin / Heidelberg},
+isbn = {978-3-540-15650-5},
+keyword = {Computer Science},
+pages = {250-259},
+volume = {194},
+doi = {10.1007/BFb0015750},
+year = {1985}
+}
+
+@article{at96,
+author = {Manindra Agrawal and Thomas Thierauf},
+title = {{The Boolean Isomorphism Problem}},
+journal ={{Foundations of Computer Science, Annual IEEE Symposium on}},
+volume = {0},
+isbn = {0-8186-7594-2},
+year = {1996},
+pages = {422},
+doi = {10.1109/SFCS.1996.548501},
+publisher = {IEEE Computer Society},
+address = {Los Alamitos, CA, USA},
+}
+
+@inproceedings{rs11,
+  author    = {Raghavendra Rao B.V. and Jayalal Sarma M.N.},
+  title     = {Isomorphism testing of read-once functions and polynomials},
+  booktitle = {Foundations of Software Technology and Theoretical Computer Science},
+  month = {December},
+  year      = {2011},
+  doi = {10.4230/LIPIcs.FSTTCS.2010.1}
+}
+
+@proceedings{fstccs2011,
+  editor    = {Supratik Chakraborty and Amit Kumar},
+  title     = {IARCS Annual Conference on Foundations of Software Technology
+               and Theoretical Computer Science},
+  booktitle = {FSTTCS},
+  publisher = {Schloss Dagstuhl - Leibniz-Zentrum fuer Informatik},
+  series    = {LIPIcs},
+  month = {December},
+  year      = {2011},
+  isbn      = {978-3-939897-23-1},
+}
+
+@mastersthesis{ianovski12,
+  author = {Egor Ianovski},
+  title = {Computable component-wise reducibility},
+  school = {University of Auckland},
+  year = 2012,
+  url = {http://arxiv.org/abs/1301.7112}
+}
+
+@article{chm12,
+  title={The hierarchy of equivalence relations on the natural numbers under computable reducibility},
+  author={Coskey, Samuel and Hamkins, Joel David and Miller, Russell},
+  journal={Computability},
+  volume=1,
+  number=1,
+  pages={15--38},
+  year=2012,
+  doi = {10.3233/COM-2012-004},
+  publisher={IOS Press}
+}
+
+@article{imnn13,
+  title={Complexity of equivalence relations and preorders from computability theory},
+  author={Ianovski, Egor and Miller, Russell and Ng, Keng Meng and Nies, Andre},
+  journal={arXiv},
+  note = {Preprint},
+  url = {http://arxiv.org/abs/1302.0580v2},
+  year={2013}
+}
+
+@unpublished{gz14,
+  title = {On Polynomial-Time Relation Reducibility},
+  author = {Su Gao and Caleb Ziegler},
+  year = 2014,
+  url = {http://www.math.unt.edu/~sgao/pub/paper46.html},
+  note = {To appear}
+}
+
+@article{gg01,
+year=2001,
+issn={0039-3215},
+journal={Studia Logica},
+volume=67,
+number=1,
+doi={10.1023/A:1010521410739},
+title={Computably Enumerable Equivalence Relations},
+publisher={Kluwer Academic Publishers},
+author={Gao, Su and Gerdes, Peter},
+pages={27--59},
+}
+
+@article{ff12,
+author = {Fokina, Ekaterina B. and Friedman, Sy-David},
+title = {On $\Sigma^1_1$ equivalence relations over the natural numbers},
+journal = {Mathematical Logic Quarterly},
+volume = 58,
+number = {1-2},
+publisher = {WILEY-VCH Verlag},
+issn = {1521-3870},
+doi = {10.1002/malq.201020063},
+pages = {113--124},
+year = 2012
+}
+
+@article{almnss14,
+  title={Universal computably enumerable equivalence relations},
+  author={Andrews, Uri and Lempp, Steffen and Miller, Joseph S and Ng, Keng Meng and San Mauro, Luca and Sorbi, Andrea},
+  journal={The Journal of Symbolic Logic},
+  volume=79,
+  number=01,
+  pages={60--88},
+  year=2014,
+  publisher={Cambridge Univ Press}
+}
+
+@incollection{ffn12,
+year=2012,
+isbn={978-3-642-32620-2},
+booktitle={Logic, Language, Information and Computation},
+volume=7456,
+series={Lecture Notes in Computer Science},
+editor={Ong, Luke and de Queiroz, Ruy},
+doi={10.1007/978-3-642-32621-9_2},
+title={Equivalence Relations That Are $\Sigma^0_3$ Complete for Computable Reducibility},
+publisher={Springer Berlin Heidelberg},
+author={Fokina, Ekaterina and Friedman, Sy and Nies, André},
+pages={26--33}
+}
+
+@unpublished{mn14,
+  year = 2014,
+  title = {Finitary reducibilities on equivalence relations},
+  author = {Russell Miller and Keng Meng Ng},
+  note = {To appear}
+}
+
+@book{savage98,
+  author = {John E. Savage},
+  title = {Models of Computation: Exploring the Power of Computing},
+  year = {1998},
+  publisher = {Addison-Wesley}
+}
+
+@techreport{bc79,
+  author = {Kellogg S. Booth and Charles J. Colbourn},
+  title = {Problems Polynomially Equivalent to Graph Isomorphism},
+  year = 1979,
+  month = jun,
+  institution = {University of Waterloo},
+  number = {CS-77-04}
+}
+\end{filecontents*}
+\begin{filecontents}{conclusion.tex}
+\section{Conclusion}
+% Summary
+%
+% findings (focus on author) what? - what the work revealed when performing the task
+Throughout this work we have proven that kernel reductions are similar to many-one reductions in the most basic ways, but differ in some key aspects.
+Like many-one reductions, kernel reductions are transitive and have good closure properties.
+The class of equivalence problems in $\PSPACE$ has a complete problem under kernel reductions (\ref{cor:hardproblems}).
+The equivalence of the two equalities $\P = \NP$ and $\PEq = \NPEq$ (\ref{cor:pnppeqnpeq}) uses the similarity between many-one and kernel reductions.
+Just as many-one reductions allow the existence of $\NP$-intermediary problems, kernel reductions allow for the possibility of $\NPEq$-intermediary problems (\ref{thm:intermediary}).
+On the other hand, there are equivalence relations between which there is a many-one reduction but no kernel reduction (\ref{thm:different}).
+Specifically, if there are more equivalence classes, up to strings of certain lengths, in $R$ than in $S$, then no kernel reduction can exist.
+Finally, under some assumptions, there is an equivalence problem that is not complete for $\NPEq$ under injective kernel reductions (\ref{cor:inj}), whereas most $\NP$-complete problems seem to be isomorphic.
+
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+The techniques used in this paper to show that kernel reductions are weaker than many-one reductions are combinatorial techniques (for example, comparing the numbers of equivalence classes).
+We don't know whether complexity theoretic techniques can be used to show the same things.
+% perspective (focus on anyone) what now? - what should be done next
+Besides the open problems listed throughout the paper, we consider the following questions to be worth exploring.
+First, there are many problems of \emph{inequivalence} in \cite{gj79} which are listed as \NP-complete or \PSPACE-complete.
+What do these problems have to do with \NPEq-completeness, \coNPEq-completeness, and \PSPACEEq-completeness?
+Second, do the complexity results from, for example, \cite{at96} or \cite{rs11}, which study isomorphisms and congruences of boolean formulae, boolean circuits, polynomials, and other structures, translate to the setting of kernel reductions?
+\end{filecontents}
+\begin{filecontents}{definitions.tex}
+%% definitions.tex - definitions of kernel reductions and equivalence classes
 %%
 %% Copyright 2010, 2011, 2012, 2014 Jeffrey Finkelstein.
 %%
 %% This LaTeX markup document is made available under the terms of the Creative
 %% Commons Attribution-ShareAlike 4.0 International License,
 %% https://creativecommons.org/licenses/by-sa/4.0/.
-\documentclass{article}
+\section{Definitions of \texorpdfstring{\NPEq}{NPEq}}
+\label{sec:definitions}
+% Foreword
+%
+% context (focus on anyone) why now? - current situation, and why the need is so important
+The main property of languages in $\NP$ is that membership in each language is verifiable in polynomial time, given a witness to the membership.
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+Many important equivalence problems are in $\NP$, and some are even $\NP$-complete, but these are complete under traditional many-one reductions, not kernel reductions.
+%%% relevant existing work, given as part of the need
+% task (focus on author) why me? - what was undertaken to address the need
+We wish to define $\NPEq$ as the class of equivalence problems that are efficiently verifiable, just as we define $\NP$ as the class of all computational problems.
+One way to define $\NPEq$ is simply as the subclass of $\NP$ that includes only equivalence problems.
+% object (focus on document) why this document - what the document covers
+This section provides some other possible definitions and compares them.
+
+% Summary
+%
+% findings (focus on author) what? - what the work revealed when performing the task
+We are unable to show that any of the definitions below are equivalent to the definition of $\NPEq$ as the subclass of $\NP$ containing only equivalence problems (except the corresponding definition based on an $\NP$-verifier).
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+For now, we must use that definition when discussing completeness in $\NPEq$ under kernel reductions.
+% perspective (focus on anyone) what now? - what should be done next
+It remains to show whether any of these alternative definitions are distinct, and whether any of them has a complete problem under kernel reductions.
+
+For the sake of brevity, in all definitions below, when we write $\exists w$, we mean $\exists w$ with length polynomially bounded with respect to the length of $x$, $y$, or the pair $\pair{x}{y}$ (depending on the requirements of the particular definition).
+
+The first two definitions are analogs of the two fundamental definitions of \NP.
+$\NPEq_1$ coincides with the definition of $\NPEq$ we gave in the previous section.
+\begin{definition}\label{def:npeq1}
+  An equivalence relation $R$ is in $\NPEqOne$ if there exists a non-deterministic Turing machine, call it $N$, which halts in time polynomial in the length of the input, such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff N(\pair{x}{y})\plain{accepts}
+  \end{displaymath}
+\end{definition}
+\begin{definition}\label{def:npeq2}
+  An equivalence relation $R$ is in $\NPEqTwo$ if there exists a language $L\in\P$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w\colon \pair{\pair{x}{y}}{w}\in L
+  \end{displaymath}
+\end{definition}
+
+The next two definitions attempt to require that the witness language is itself an equivalence relation, instead of an arbitrary language in $\P$, as in \ref{def:npeq2}.
+\begin{definition}\label{def:npeq3}
+  An equivalence relation $R$ is in $\NPEqThree$ if there exists an equivalence relation $R'\in \PEq$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w_x,w_y\colon \pair{\pair{x}{w_x}}{\pair{y}{w_y}}\in R'
+  \end{displaymath}
+\end{definition}
+\begin{definition}\label{def:npeq4}
+  An equivalence relation $R$ is in $\NPEqFour$ if there exists an equivalence relation $R'\in \PEq$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w\colon \pair{\pair{x}{w}}{\pair{y}{w}}\in R'
+  \end{displaymath}
+\end{definition}
+
+The next two definitions attempt to allow the possibility of not just a simple string which witnesses the equivalence of $x$ and $y$, but a ``witness function'' which may map $x$ and $y$, along with witness strings, to an equivalence relation in \PEq.
+\begin{definition}\label{def:npeq5}
+  An equivalence relation $R$ is in $\NPEqFive$ if there exists an equivalence relation $R'\in \PEq$ and a function $f\in\FP$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w_x,w_y\colon \pair{f(x, w_x)}{f(y, w_y)}\in R'
+  \end{displaymath}
+\end{definition}
+\begin{definition}\label{def:npeq6}
+  An equivalence relation $R$ is in $\NPEqSix$ if there exists an equivalence relation $R'\in \PEq$ and a function $f\in\FP$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w\colon \pair{f(x, w)}{f(y, w)}\in R'
+  \end{displaymath}
+\end{definition}
+
+The final two definitions attempt to describe equivalence relations for which there is a ``witnessed complete invariant'', which maps equivalent strings to equal strings when given access to some witness of their equivalence.
+We say that an equivalence relation $R$ on a universe $U$ has a \defn{one-witness complete invariant} if there exists a function $f\colon U\times S\to T$ such that $(x,y)\in R$ if and only if $\exists w\in S\colon f(x, w)=f(y, w)$, and we say that it has a \defn{two-witness complete invariant} if $(x, y)\in R$ if and only if $\exists w_x, w_y\in S\colon f(x, w_x)=f(y, w_y)$.
+\begin{definition}\label{def:npeq7}
+  An equivalence relation $R$ is in $\NPEqSeven$ if it has a polynomial time computable two-witness complete invariant, that is, a function $f\in\FP$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w_x, w_y\colon f(x, w_x) = f(y, w_y)
+  \end{displaymath}
+\end{definition}
+\begin{definition}\label{def:npeq8}
+  An equivalence relation $R$ is in $\NPEqEight$ if it has a polynomial time computable one-witness complete invariant, that is, a function $f\in\FP$ such that
+  \begin{displaymath}
+    \pair{x}{y}\in R\iff \exists w\colon f(x, w) = f(y, w)
+  \end{displaymath}
+\end{definition}
+
+The definitions of these complexity classes produce a chain of inclusions beginning with $\NPEqEight$ at the bottom and terminating with $\NPEqOne$ at the top (\ref{fig:inclusions}).
+\begin{figure}
+  \caption{\label{fig:inclusions}Inclusions among possible definitions of equivalence relations verifiable in deterministic polynomial time.}
+  \begin{center}
+    \begin{tikzpicture}[->]
+      \node at (0, 0) (8) {$\NPEq_8$};
+      \node at (-1, 1) (7) {$\NPEq_7$};
+      \node at (1, 1) (6) {$\NPEq_6$};
+      \node at (3, 1) (4) {$\NPEq_4$};
+      \node at (0, 2) (5) {$\NPEq_5$};
+      \node at (2, 2) (3) {$\NPEq_3$};
+      \node at (0, 3) (2) {$\NPEq_2$};
+      \node at (2, 3) (1) {$\NPEq_1$};
+      \draw (8) to (7);
+      \draw (8) to (6);
+      \draw[<->] (6) to (4);
+      \draw (7) to (5);
+      \draw (6) to (5);
+      \draw[<->] (5) to (3);
+      \draw (5) to (2);
+      \draw[<->] (2) to (1);
+    \end{tikzpicture}
+  \end{center}
+\end{figure}
+The main ideas of these inclusions are presented in the following theorem (the complete proofs are tedious and so are omitted here).
+\begin{theorem}\label{thm:definitions}\mbox{}
+  \begin{enumerate}
+  \item $\NPEqOne = \NPEqTwo$,
+  \item $\NPEqEight \subseteq \NPEqSix$ and $\NPEqSeven \subseteq \NPEqFive$,
+  \item $\NPEqEight \subseteq \NPEqSeven$ and $\NPEqSix \subseteq \NPEqFive$,
+  \item $\NPEqSix = \NPEqFour$ and $\NPEqFive = \NPEqThree$.
+  \end{enumerate}
+\end{theorem}
+\begin{namedproof}{Proof sketch}\mbox{}
+  \begin{enumerate}
+  \item Follows immediately from the standard definitions of \NP.
+  \item Choose the relation $R'$ in the definitions of $\NPEqSix$ and $\NPEqFive$ to be the equality relation.
+  \item Choose $w_x$ and $w_y$ in $\NPEqSeven$ and $\NPEqFive$ to be equal to the $w$ from $\NPEqEight$ and $\NPEqSix$.
+  \item
+    For the forward direction, hard-code the function $f$ from the definitions of $\NPEqSix$ and $\NPEqFive$ into the relation $R'$ in the definitions of $\NPEqFour$ and $\NPEqThree$.
+    For the reverse direction, keep the relation $R'$ and choose the identity function to be $f$ in the definitions of $\NPEqSix$ and $\NPEqFive$.
+    \qed
+  \end{enumerate}
+\end{namedproof}
+
+In \cite{fg11}, the authors define the class $\Ker$ as the set of all equivalence relations $R$ that have a polynomial time computable \emph{complete invariant} (that is, a function $f \in \FP$ such that $(x, y) \in R$ if and only if $f(x) = f(y)$).
+Our one-witness and two-witness complete invariants are special cases of the general complete invariant.
+They provide evidence that $\Ker$ and $\PEq$ are different by showing that equality of the two classes implies some unlikely collapses in ``higher'' complexity classes.
+Our intuition is that $\NPEq_8$ is different from $\NPEq_6$ (and similarly that $\NPEq_7$ is different from $\NPEq_5$), since the former requires equality while the latter requires only equivalence, in a very broad sense.
+If this intuition is correct, then we can provide further evidence that $\Ker$ and $\PEq$ are different.
+
+\begin{theorem}
+  If $\Ker = \PEq$, then $\NPEq_8 = \NPEq_6 = \NPEq_4$ and $\NPEq_7 = \NPEq_5 = \NPEq_3$.
+\end{theorem}
+\begin{proof}
+  Since $\NPEq_8 \subseteq \NPEq_6 = \NPEq_4$ and $\NPEq_7 \subseteq \NPEq_5 = \NPEq_3$ unconditionally, it suffices to show $\NPEq_4 \subseteq \NPEq_8$ and $\NPEq_3 \subseteq \NPEq_7$.
+
+  First, suppose $R \in \NPEq_3$, so there is an $R' \in \PEq$ such that $\pair{x}{y} \in R$ if and only if there are $w_x$ and $w_y$ such that $\pair{\pair{x}{w_x}}{\pair{y}{w_y}} \in R'$.
+  Since $\Ker = \PEq$, there is a function $f \in \FP$ such that $\pair{\pair{x}{w_x}}{\pair{y}{w_y}} \in R'$ if and only if $f(x, w_x) = f(y, w_y)$.
+  Thus there is a function $f$ such that $\pair{x}{y} \in R$ if and only if there are $w_x$ and $w_y$ such that $f(x, w_x) = f(y, w_y)$.
+  Therefore $R \in \NPEq_7$.
+
+  The proof that $\NPEq_4 \subseteq \NPEq_8$ is similar; the only exception is that there is a single witness $w$ instead of two witnesses $w_x$ and $w_y$.
+\end{proof}
+
+\begin{openquestion}
+  Does one of the complexity classes defined here have a complete problem under $\kr$ reductions?
+\end{openquestion}
+\begin{openquestion}
+  Can we prove equality for the remaining classes, or are some of these classes provably distinct?
+\end{openquestion}
+\end{filecontents}
+\begin{filecontents}{generalcompleteness.tex}
+\section
+    [Conditions for complete problems under polynomial time kernel reductions]
+    {Conditions for complete problems \\ under polynomial time kernel reductions}
+\label{sec:generalcompleteness}
+% Foreword
+%
+% context (focus on anyone) why now? - current situation, and why the need is so important
+Most well-behaved complexity classes contain problems that are complete under many-one reductions.
+Do the corresponding classes of equivalence problems contain problems that are complete under kernel reductions?
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+Having access to a complete problem offers many benefits to a complexity theorist, and improves our understanding of equivalence problems in general.
+In \cite[Theorem~8.7]{bcffm}, the authors constructed a complete problem with respect to polynomial time kernel reductions for $\NPEq$ under the assumption that $\NP = \coNP$.
+% task (focus on author) why me? - what was undertaken to address the need
+Since we consider that assumption unlikely, we determine sufficient conditions for having a complete problem under polynomial time kernel reductions.
+% object (focus on document) why this document - what the document covers
+This section presents a more general theorem that implies as a corollary a complete problem for $\NPEq$ under the assumption $\NP = \coNP$.
+
+% Summary
+%
+% findings (focus on author) what? - what the work revealed when performing the task
+By extending the technique of \cite[Theorem~8.7]{bcffm}, we find that $\PSPACEEq$ has a complete problem under polynomial time kernel reductions unconditionally.
+We also show that each level of the polynomial time hierarchy contains an equivalence problem that is hard for the lower levels under these reductions.
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+This means that some well-known classes do have complete problems, and the existence for complete problems in other classes, like $\NP$ and even $\P$, remains possible.
+% perspective (focus on anyone) what now? - what should be done next
+Since the equivalence problem we constructed is highly artificial, we were unable to find any natural problems that are hard or complete.
+
+We need one additional definition in order to describe the complexity classes that contain a hard problem under kernel reductions.
+If $\mathcal{C}$ is a complexity class then the class $\forall\mathcal{C}$ is the set of languages $A$ such that there exists a language $B\in\mathcal{C}$ and a polynomial $p$ satisfying $x\in A$ if and only if $\forall w\in\Sigma^{\leq p(|x|)} \pair{x}{w}\in B$.
+$\forall\mathcal{C}$ is called the \defn{closure of $\mathcal{C}$ under polynomially bounded universal quantification}.
+
+\begin{theorem}\label{thm:generalcompleteness}
+  Let $\mathcal{C}$ be a subset of $\PSPACE$ which contains the problem of deciding whether two strings are equal.
+  Then there exists an equivalence relation in $\CRAZYEq$ which is hard for $\CEq$ under $\kr$ reductions.
+\end{theorem}
+
+Before proving this theorem, we will provide some immediate corollaries of this general result.
+
+\begin{corollary}\label{cor:sufficient}
+  If $\mathcal{C}$ is a subset of $\PSPACE$ and $\mathcal{C}=\CRAZY$, then $\CEq$ has a complete problem under $\kr$ reductions.
+\end{corollary}
+
+\begin{corollary}\label{cor:hardproblems}
+  Under polynomial time kernel reductions,
+  \begin{enumerate}
+  %\item $\EXPEq$ has a complete problem
+  \item $\PSPACEEq$ has a complete problem,
+  \item $\PKPEq$ contains a problem that is hard for $\DKPEq$, for all $k \geq 1$.
+  %\item\label{itm:hardforsigma} $\PKPOPEq$ contains a problem which is hard for $\SKPEq$, for all $k\geq 0$
+  %\item $\PKPOPEq$ contains a problem which is hard for $\PKPEq$, for all $k\geq 0$
+  %\item $\coNPEq$ contains a problem which is hard for $\PEq$
+  \end{enumerate}
+\end{corollary}
+\begin{proof}\mbox{}
+  \begin{enumerate}
+  %\item $\EXP$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in exponential time).
+  \item $\PSPACE$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in polynomial space).
+  \item
+    First, $(\forall(\DKP \cup \mathsf{co}\DKP))\mathsf{Eq} = (\forall \DKP)\mathsf{Eq}$, since $\DKP$ is closed under complement.  % \cite[Proposition~8.4 (a)]{bdg95}
+    Next, $(\forall \DKP)\mathsf{Eq} = \PKPEq$, since $\forall \DKP = \PKP$.  % \cite[Proposition~8.3 (g)]{bdg95}
+    Now if we choose $\mathcal{C} = \DKP$ in \ref{thm:generalcompleteness}, then $\PKPEq$ has a problem that is hard for $\DKPEq$ under $\kr$ reductions.
+    \qed
+  %\item If $\mathcal{C}=\SKP$, then the $\kr$-hard problem is in $(\forall(\SKP\cup\mathsf{co}\SKP))\mathsf{Eq}=(\forall(\SKP\cup\PKP))\mathsf{Eq}=\PKPOPEq$.
+  %\item Same as the previous justification, but starting with $\mathcal{C}=\PKP$.\qedhere
+%  \item Same as the previous justification, but starting with $\mathcal{C}=\P$.
+  \end{enumerate}
+\end{proof}
+
+More specifically, this means that $\coNPEq$ (which equals $\POPEq$) has a problem that is $\kr$-hard for $\PEq$ (which equals $\DOPEq$).
+This corollary also leads to \cite[Theorem~8.7, part~1]{bcffm}, which is restated here.
+
+\begin{corollary}[{\cite[Theorem~8.7, part~1]{bcffm}}]
+  If $\NP = \coNP$ then $\NPEq$ has a complete problem under polynomial time kernel reductions.
+\end{corollary}
+\begin{proof}
+  If $\NP = \coNP$, then the polynomial hierarchy collapses to $\POP$, and specifically $\PTP = \DTP = \POP = \coNP = \NP$.
+  From \ref{cor:hardproblems} we conclude that $\NPEq$ has a $\kr$-hard problem for $\NPEq$.
+  Such a problem is by definition $\NPEq$-complete.
+\end{proof}
+
+We now return to the proof of \ref{thm:generalcompleteness} by first providing some motivating ideas.
+Recall the canonical complete problem (sometimes called the ``universal'' problem) for $\NP$ (and indeed for various other complexity classes):
+\begin{displaymath}
+  K = \lb\triple{M}{x}{1^t} \st M\plain{accepts} x \plain{within} t \textnormal{ steps}\rb
+\end{displaymath}
+The idea of this proof is to adapt this into an equivalence relation $R_K$ consisting of pairs of triples of the form $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}$, where $M$ accepts $\pair{x}{y}$, as in the reduction from an arbitrary $\NP$ language to $K$.
+The problem we encounter here is that $R_K$ is not necessarily an equivalence relation.
+Consider, for example, transitivity, which must be satisfied for all possible pairs of the form $\triple{M}{w}{1^{t_w}}$.
+For \emph{arbitrary machines} $M$, just because $M$ accepts $\pair{x}{y}$ and $\pair{y}{z}$ does not necessarily mean that $M$ accepts $\pair{x}{z}$.
+The solution is to encode into $R_K$ the requirement that the language which $M$ accepts, $L(M)$, is itself an equivalence relation.
+The three properties required of $R_K$ then follow from the properties of $L(M)$.
+%
+%As a technical consideration for this proof, we point out languages in $\PSPACE$ may be decided by alternating Turing machines which run in polynomial time, so it is permissible to consider polynomially clocked Turing machines.
+%
+\begin{proof}[Proof of \ref{thm:generalcompleteness}]
+  First we will define a helper algorithm which decides whether a given machine accepts an equivalence relation on strings up to a given length.
+  Define the algorithm $A$ as follows on input $\pair{M}{n}$, where $M$ is a polynomially clocked Turing machine of type $\mathcal{C}$ and $n\in\mathbb{N}$:
+  \begin{enumerate}
+  \item universally guess $a,b,$ and $c\in\Sigma^{\leq n}$,
+  \item simulate $M$ on $\pair{a}{a}$; if it rejects, reject,
+  \item simulate $M$ on $\pair{a}{b}$, then on $\pair{b}{a}$; if the former accepts and the latter rejects, reject,
+  \item simulate $M$ on $\pair{a}{b}$, then on $\pair{b}{c}$, then on $\pair{a}{c}$; if the first two accept and the last one rejects, reject,
+  \item if execution reaches this point, accept.
+  \end{enumerate}
+  These simulations check that $L(M)$ satisfies reflexivity, symmetry, and transitivity on strings of length at most $n$.
+  If $A$ accepts, then the three properties are satisfied, and if it rejects then one of the three properties is violated.
+  Since $M$ is a machine of type $\mathcal{C}$, checking if $M$ accepts on some input and if $M$ rejects on some input is in $\mathcal{C}\cup\mathsf{co}\mathcal{C}$.
+  The universal guesses of $a,b,$ and $c$ (of length at most $n$) followed by checks of whether the six simulations of $M$ accept or reject place $L(A)$ in the class $\CRAZY$.
+  If $p$ is the polynomial which bounds the running time of $M$, then the running time of this algorithm is $6p\left(\left|\pair{1^n}{1^n}\right|\right)+c$, where $c$ is a constant which represents the time needed to account for the implementation of $A$ (the control of the simulations of $M$, performing logical conjunctions, etc.).
+  Hence the running time of $A$ is polynomial in $n$.
+
+  Now we can define the set $R_K$ as follows.
+  A pair of strings $\pair{u}{v}$ is in $R_K$ if and only if either $u = v$ or $u$ and $v$, when interpreted as strings of the form $\triple{M}{x}{1^{t_x}}$ and $\triple{M}{y}{1^{t_y}}$, respectively, satisfy the four conditions
+  \begin{enumerate}
+  \item\label{itm:machine} $M$ is a polynomially clocked Turing machine of type $\mathcal{C}$,
+  \item\label{itm:emx} $A$ accepts $\pair{M}{|x|}$ within $t_x$ steps,
+  \item\label{itm:emy} $A$ accepts $\pair{M}{|y|}$ within $t_y$ steps,
+  \item\label{itm:accepts} $M$ accepts $\pair{x}{y}$.
+  \end{enumerate}
+  We claim that $R_K$ is in $\CRAZYEq$ and $\CEq$-hard.
+
+  First we show that $R_K\in\CRAZY$.
+  By the argument above, $A$ is a $\CRAZY$ algorithm.
+  %Since $M$ is a polynomially clocked $\mathcal{C}$ machine by \ref{itm:machine}, then the simulation of $M$ on $\pair{x}{y}$ in \ref{itm:accepts} can be performed by a $\mathcal{C}$ algorithm.
+  Assuming without loss of generality that $|x|\geq |y|$, if $A$ accepts $\pair{M}{|x|}$ within $t_x$ steps then we know that there is a polynomial time bound on the running time of $M$ on input $\pair{x}{y}$, so simulating it is certainly in $\CRAZY$.
+  Finally, testing for equality is in $\mathcal{C}$ by hypothesis so deciding $R_K$ overall can be performed by a $\CRAZY$ algorithm.
+
+  Next we show that $R_K$ is an equivalence relation.
+  Reflexivity follows from the reflexivity of the equality relation.
+  For symmetry, suppose that the pair $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}$ is in $R_K$.
+  Since \ref{itm:emx} and \ref{itm:emy} are true by hypothesis, we know that symmetry on strings of length at most $\max(|x|, |y|)$ in $L(M)$ is satisfied, and that includes the strings $x$ and $y$.
+  So since $M$ accepts $\pair{x}{y}$ it must follow that $M$ accepts $\pair{y}{x}$.
+  Furthermore, \ref{itm:machine}, \ref{itm:emx}, and \ref{itm:emy} are the same up to symmetry of $x$ and $y$, so we have $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{x}{1^{t_x}}}\in R_K$.
+  For transitivity, suppose that both $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}\in R_K$ and $\pair{\triple{M}{y}{1^{t_y}}}{\triple{M}{z}{1^{t_z}}}\in R_K$.
+  Since transitivity is true on strings of length at most $\max(|x|, |y|, |z|)$ by the transitivity propositions checked by \ref{itm:emx} and \ref{itm:emy}, and since $M$ accepts both $\pair{x}{y}$ and $\pair{y}{z}$ by hypothesis, it must follow that $M$ accepts $\pair{x}{z}$.
+  Again the conditions in \ref{itm:machine}, \ref{itm:emx}, and \ref{itm:emy} are the same.
+  We have shown that $R_K$ is reflexive, symmetric, and transitive, so it is an equivalence relation.
+  At this point, we have proven that $R_K\in\CRAZYEq$.
+
+  Now we need to show that $R_K$ is $\CEq$-hard.
+  Let $S\in\CEq$.
+  Suppose $M$ is the polynomially clocked $\mathcal{C}$ machine which decides $S$, and $p$ is the polynomial which bounds the running time of $M$.
+  Then the kernel reduction from $S$ to $R_K$ is $w\mapsto\triple{M}{w}{1^{6p(|\pair{w}{w}|)+c}}$, where $p$ and $c$ are the polynomial and constant described in the first paragraph of this proof.
+  Call this reduction $f$.
+  The reduction is obviously computable in time polynomial in $|w|$.
+  It remains to show that this reduction is correct.
+
+  Suppose $\pair{x}{y}\in S$.
+  Now $f(x)=\triple{M}{x}{1^{6p(|\pair{x}{x}|)+c}}$ and, similarly, $f(y)=\triple{M}{y}{1^{6p(|\pair{y}{y}|)+c}}$.
+  \ref{itm:machine} is true by construction, and \ref{itm:accepts} is true since $M$ is the machine which decides $S$.
+  Assume \ref{itm:emx} is false.
+  Then $M$ does not accept an equivalence relation on strings of length at most $|x|$.
+  This is a contradiction, since $M$ decides $S$, an equivalence relation, by hypothesis.
+  Therefore \ref{itm:emx} must be satisfied.
+  The same argument applies to \ref{itm:emy}.
+  Hence $\pair{f(x)}{f(y)}\in R_K$.
+
+  If $\pair{x}{y}\notin S$ then $M$ does not accept $\pair{x}{y}$, since otherwise $\pair{x}{y}$ would be a member of $S$.
+  Hence $\pair{x}{y}\notin R_K$.
+  Therefore we have shown that $R_K$ is $\CEq$-hard.
+\end{proof}
+
+\begin{openquestion}
+  Is there a more general characterization of complexity classes which have a $\kr$-hard problem?
+\end{openquestion}
+
+\begin{openquestion}
+  Under what conditions does a complexity class have a complete problem?
+  Can we adapt this idea to create a complete problem for $\PEq$ or $\NPEq$?
+\end{openquestion}
+
+\begin{openquestion}
+  Is the converse of \ref{cor:sufficient}, or perhaps a partial converse, true?
+  In other words, is it true that the existence of a $\CEq$-complete problem problem implies closure under complement or universal quantification (or both)?
+  If so, this would be evidence that no $\NPEq$-complete problem exists, since this would imply $\NP = \coNP$.
+\end{openquestion}
+
+\begin{openquestion}
+  Can this theorem be used to construct $\krnt$-hard problems for smaller complexity classes such as $\NLEq$ under the appropriate time-bounded reduction?
+  Larger classes such as $\EXPEq$?
+\end{openquestion}
+
+\begin{openquestion}
+  To what other equivalence relations does our $\kr$-hard problem reduce?
+  Are there ``natural'' $\kr$-hard problems in complexity classes which satisfy the conditions in \ref{thm:generalcompleteness}?
+\end{openquestion}
+
+%% As an additional corollary, we show that the equivalence relation $R_K$ is necessarily hard given a known hard equivalence relation under $\kr$ reductions.
+
+%% \begin{corollary}
+%%   Let $\mathcal{C}_1$ be a complexity class and $\mathcal{C}_2$ be a subset of $\PSPACE$ which contains the problem of deciding whether two strings are equal.
+%%   If there exists an equivalence relation $S$ in $\CTEq$ which is hard for $\COEq$ under $\kr$ reductions, then there is an equivalence relation in $\CRAZIEREq$ which is hard for $\COEq$ under $\kr$ reductions.
+%% \end{corollary}
+%% \begin{proof}
+%%   $S\kr R_K$ by the reduction described in the proof of \ref{thm:generalcompleteness}.
+%%   A similar analysis shows that $R_K\in\CRAZIEREq$.
+%%   Since $S$ is hard for $\COEq$ and polynomial time kernel reductions compose, $R_K$ is also hard for $\COEq$.
+%% \end{proof}
+
+%% This last question leads us to briefly note that equivalence of true quantified boolean formulas is a \PSPACE-complete problem; perhaps it is also a \PSPACEEq-complete problem.
+%% \begin{proposition}
+%%   Define $\QBFEq$ by
+%%   \begin{displaymath}
+%%     \QBFEq = \{\pair{\phi}{\psi} | \phi \iff \psi\},
+%%   \end{displaymath}
+%%   where $\phi$ and $\psi$ are fully quantified boolean formulae.
+%%   Then $\QBFEq$ is \PSPACE-complete.
+%% \end{proposition}
+%% \begin{proof}
+%%   Suppose $\phi$ denotes $\overline{Q}\tau$, where $\overline{Q}$ represents the sequence of quantified variables and $\tau$ is the boolean formula over those variables.
+%%   Then the many-one reduction from $\QBF$ is $\phi\mapsto\pair{\phi}{\exists z\colon\overline{Q}(\tau\land z)}$, where $z$ is a variable not already in $\phi$.
+%%   This reduction can obviously be computed in time polynomial in the length of the input, $\phi$.
+%%   If $\phi$ is not satisfiable, then no assignment of $z$ makes $\overline{Q}(\tau\land z)$ satisfiable, because $\tau$ will always be false.
+%%   Hence $\exists z\colon\overline{Q}(\tau\land z)$ must be false.
+%%   If $\phi$ is satisfiable, then choosing $z$ to be true makes $\overline{Q}(\tau\land z)$ true.
+%%   Thus $\phi$ is satisfiable if and only if $\exists z\colon\overline{Q}(\tau\land z)$ is satisfiable, so $\QBF\mor\QBFEq$.
+%%   Since $\QBFEq$ is clearly decidable in $\PSPACE$, we conclude that $\QBFEq$ is \PSPACE-complete.
+%% \end{proof}
+\end{filecontents}
+\begin{filecontents}{intermediary.tex}
+\section{Existence of intermediary problems}
+\label{sec:intermediary}
+% Foreword
+%
+% context (focus on anyone) why now? - current situation, and why the need is so important
+According to the seminal theorem by Ladner \cite{ladner}, if $\P \neq \NP$, then there are problems of intermediate complexity, in the sense that these problems are neither in $\P$ nor $\NP$-complete.
+The theorem does not immediately imply a similar result for equivalence problems, since $\PEq$ is different from $\P$ and $\NPEq$ is different from $\NP$ (specifically, in each case, the latter contains problems that are not equivalence problems).
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+Do kernel reductions induce the same rich structure between $\PEq$ and $\NPEq$ as do many-one reductions between $\P$ and $\NP$?
+% task (focus on author) why me? - what was undertaken to address the need
+We adapt Schöning's Uniform Diagonalization Theorem \cite{schoning}, a generalized version of Ladner's Theorem, to classes of equivalence problems.
+The specific presentation we follow is from \cite{bdg95}.
+% object (focus on document) why this document - what the document covers
+This section details the proof of that adaptation.
+
+% Summary
+%
+% findings (focus on author) what? - what the work revealed when performing the task
+The main theorem of this section, following as a corollary from the Uniform Diagonalization Theorem for equivalence problems, is as follows (where $\NPEqC$ denotes the set of $\NPEq$-complete problems).
+\begin{restatable*}{theorem}{intermediary}\label{thm:intermediary}
+  If $\PEq \neq \NPEq$ and $\NPEqC$ is non-empty, then there is an equivalence relation in $\NPEq$ which is in neither $\PEq$ nor $\NPEqC$.
+\end{restatable*}
+Although this theorem relies on the assumption that $\NPEqC$-complete problems exist, no such assumption is required to show the existence of intermediary problems between, say, $\PHEq$ and $\PSPACEEq$ (\ref{cor:pspace}).
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+We conclude that even though kernel reductions are strictly weaker than many-one reductions, they still preserve the hierarchies of problems of various computational complexities we expect from our understanding of traditional complexity classes.
+% perspective (focus on anyone) what now? - what should be done next
+The graph isomorphism problem, as one of the few candidates for an $\NP$-intermediary problem, may be the best candidate for an $\NPEq$-intermediary problem as well.
+
+First we need to provide some technical definitions.
+
+\begin{definition}
+  A class of languages $\mathcal{C}$ is \defn{closed under finite variations} if and only if $A\in \mathcal{C}$ and $A\symdiff B$ (the symmetric difference of $A$ and $B$) is finite implies $B\in \mathcal{C}$ for all $B$.
+\end{definition}
+
+\begin{definition}
+  The \defn{kernel join} of two equivalence relations $R$ and $S$, denoted $R \kj S$, is defined by
+  \begin{equation*}
+    R \kj S = \lb \pair{x0}{y0} \st \pair{x}{y} \in R \rb \cup \lb \pair{x1}{y1} \st \pair{x}{y} \in S \rb \cup \{(\lambda, \lambda)\}.
+  \end{equation*}
+\end{definition}
+
+The pair of empty strings $(\lambda, \lambda)$ is required in the above definition so that the equivalence classes of $R \kj S$ partition the set of all finite strings $\Sigma^*$.
+
+\begin{lemma}\label{lem:join}
+  If $R$ and $S$ are equivalence relations, then $R \kj S$ is an equivalence relation.
+\end{lemma}
+\begin{proof}
+  Since the equivalence class of the empty string, $[\lambda]$, is a singleton set, each of the three properties required of an equivalence relation hold for that set.
+  Thus we need only consider nonempty strings.
+  Let $x$, $y$ and $z$ be nonempty strings in $\Sigma^*$.
+  
+  Since $x$ is non-empty, $x = x'0$ or $x = x'1$.
+  If $x = x'0$, then $\pair{x'}{x'} \in R$ since $R$ is reflexive.
+  If $x = x'1$, then $\pair{x'}{x'} \in S$ since $R$ is reflexive.
+  Hence $\pair{x}{x}\in R\kj S$ regardless of the last bit of $x$.
+  Therefore $R \kj S$ is reflexive.
+  
+  Suppose $\pair{x}{y}\in R\kj S$.
+  Then either $x=x'0$, $y=y'0$ and $\pair{x'}{y'}\in R$ or $x=x'1$, $y=y'1$ and $\pair{x'}{y'}\in S$.
+  In either case, symmetry follows from the symmetry of $R$ or $S$.
+
+  Suppose $\pair{x}{y}$ and $\pair{y}{z}$ are both in $R\kj S$.
+  In the case that $x=x'0$, $y=y'0$ and $\pair{x'}{y'}\in R$, and that $z=z'0$ and $\pair{y'}{z'}\in R$, then by the transitivity of $R$, $\pair{x'}{z'}\in R$, so $\pair{x}{z}\in R\kj S$.
+  The argument is similar in the case that $x=x'1$, $y=y'1$ and $z=z'1$.
+  It is a contradiction for the other two cases to exist, since $y$ cannot be equal to both $y'0$ and $y'1$.
+
+  Since $R\kj S$ is reflexive, symmetric and transitive, $R\kj S$ is an equivalence relation.
+\end{proof}
+
+\begin{proposition}\label{prop:symdiff}
+  Symmetric difference of equivalence relations preserves symmetry.
+\end{proposition}
+\begin{proof}
+  Let $R$ and $S$ be equivalence relations.
+  Let $(x,y)\in(R\symdiff S)$.
+  In the case that $(x,y)\in R$ and $(x,y)\notin S$, then $(y,x)\in R$.
+  If $(y,x)$ were in $S$, then $(x,y)$ would also be in $S$, by symmetry, but this is a contradiction.
+  Hence $(y,x)\in R$ and $(y,x)\notin S$.
+  The argument for the other case is symmetric.
+  Therefore $(x,y)\in(R\symdiff S)\implies (y,x)\in(R\symdiff S)$.
+\end{proof}
+
+\begin{definition}
+  Let $r\colon\mathbb{N}\to\mathbb{N}$ be a computable function such that $r(m)>m$ for all $m$.
+  Define the set $G[r]$ as
+  \begin{displaymath}
+    G[r]=\lb x\in\Sigma^* \st r^n(0)\leq|x|<r^{n+1}(0) \plain{for some even} n\rb
+  \end{displaymath}
+  where $r^n(m)$ denotes the $n$-fold application of $r$ to $m$:
+  \begin{displaymath}
+    \overbrace{r\circ r\circ r\circ\cdots\circ r}^{n \plain{times}}(m)
+  \end{displaymath}
+  $G[r]$ is called the \defn{gap language} generated by $r$.
+\end{definition}
+
+\begin{lemma}\label{lem:gap_p}
+  If $r$ is time constructible, then $G[r]\in\P$.
+\end{lemma}
+\begin{proof}
+  %% TODO add theorem number in this citation
+  The proof can be found in \cite{bdg95}.
+\end{proof}
+
+We will denote the Cartesian product $G[r]\times G[r]$ by the slightly more succinct ${G[r]}^2$, and $\overline{G[r]}\times\overline{G[r]}$ by $\overline{G[r]}^2$.
+Elements of ${G[r]}^2$ are pairs of strings whose lengths are in the ``even gaps'' of $r$, while elements of $\overline{G[r]}^2$ are pairs of strings whose lengths are in the ``odd gaps'' of $r$.
+
+\begin{lemma}
+  ${G[r]}^2$ and $\overline{G[r]}^2$ are \defn{partial equivalence relations} (that is, they are symmetric and transitive).
+\end{lemma}
+\begin{proof}
+  We will prove the theorem for ${G[r]}^2$; a symmetric argument proves the theorem for $\overline{G[r]}^2$.
+
+  Let $x,y\in\Sigma^*$.
+  Suppose $\pair{x}{y}\in {G[r]}^2$, so the lengths of $x$ and $y$ are both in an even gap of $r$.
+  Then $\pair{y}{x}\in{G[r]}^2$, so ${G[r]}^2$ is symmetric.
+  Now let $z\in\Sigma^*$ and suppose also that $\pair{y}{z}\in {G[r]}^2$.
+  Then $y$ and $z$ are both in an even gap of $r$, so $x$, $y$ and $z$ are all in some even gap of $r$, and hence $\pair{x}{z}\in {G[r]}^2$.
+  Therefore ${G[r]}^2$ is transitive.
+\end{proof}
+
+We are now prepared to prove the main technical theorem which will allow us to construct an equivalence relation which is ``between'' two complexity classes.
+
+\begin{theorem}\label{thm:diag}
+  Let $R_1$ and $R_2$ be decidable equivalence relations, and let $\mathcal{C}_1$ and $\mathcal{C}_2$ be classes of decidable equivalence relations such that
+  \begin{enumerate}
+  \item $R_1\notin\mathcal{C}_1$,
+  \item $R_2\notin\mathcal{C}_2$,
+  \item $\mathcal{C}_1$ and $\mathcal{C}_2$ are computably enumerable,
+  \item $\mathcal{C}_1$ and $\mathcal{C}_2$ are closed under finite variations.
+  \end{enumerate}
+  Then there exists a decidable equivalence relation $R$ such that
+  \begin{enumerate}
+  \item $R\notin \mathcal{C}_1$,
+  \item $R\notin \mathcal{C}_2$,
+  \item $R\kr R_1\kj R_2$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  Let $P_1, P_2, \ldots$ and $Q_1, Q_2, \ldots$ be enumerations of Turing machines deciding the languages in $\mathcal{C}_1$ and $\mathcal{C}_2$ respectively.
+  Define the functions
+  \begin{eqnarray*}
+    r_1(n)=\underset{i\leq n}{max}\{|z_{i,n}|\}+1 & \text{and} &
+    r_2(n)=\underset{i\leq n}{max}\{|z'_{i,n}|\}+1
+  \end{eqnarray*}
+  where $z_{i,n}$ is the smallest word in $\Sigma^*$ such that there exists an $x\in\Sigma^*$, with $n<|x|\leq|z_{i,n}|$, such that $\pair{z_{i,n}}{x}\in(L(P_i)\symdiff R_1)$, and $z'_{i,n}$ is the smallest word in $\Sigma^*$ such that there exists an $x'\in\Sigma^*$, with $n<|x'|\leq|z'_{i,n}|$, such that $\pair{z'_{i,n}}{x'}\in(L(Q_i)\symdiff R_2)$.
+  Note that it also suffices to find an $x$ and $x'$ such that $\pair{x}{z_{i,n}}\in(L(P_i)\symdiff R_1)$ and $\pair{x'}{z'_{i,n}}\in(L(Q_i)\symdiff R_2)$, since symmetric difference on equivalence relations preserves symmetry by \ref{prop:symdiff}.
+  The more important requirement is that $|x|\leq|z_{i,n}|$, since we will require below that both $x$ and $z_{i,n}$ are in the same gap of a specific function.
+
+  We claim that $z_{i,n}$ and $z'_{i,n}$ always exist.
+  Assume that no such $z_{i,n}$ exists, so there are no words such that there exists an $x\in\Sigma^*$, with $n<|x|\leq|z_{i,n}|$, such that $\pair{z_{i,n}}{x}\in(L(P_i)\symdiff R_1)$.
+  Therefore, there are no pairs in $(L(P_i)\symdiff R_1)$ with both elements of length greater than $n$.
+  Then there are a finite number of pairs in $L(P_i)\symdiff R_1$, so $R_1$ is a finite variation of $L(P_i)$.
+  Since $\mathcal{C}_1$ is closed under finite variations, $R_1\in\mathcal{C}_1$.
+  This is a contradiction with the hypothesis that $R_1\notin\mathcal{C}_1$.
+  Therefore such a $z_{i,n}$ always exists.
+  The argument that $z'_{i,n}$ always exists is similar.
+
+  Since $L(P_i)$ and $L(Q_i)$ are decidable for all $i$, and since $R_1$ and $R_2$ are decidable, so are $L(P_i)\symdiff R_1$ and $L(Q_i)\symdiff R_2$.
+  For each $n$, there is a procedure which always halts and which computes $z_{i,n}$.
+  A similar procedure computes $z'_{i,n}$.
+  The procedure which computes the maximum of a finite set of numbers and which adds one to that value always halts as well, so $r_1$ and $r_2$ are total computable functions.
+
+  Let $r\ge \max(r_1,r_2)$ be a non-decreasing time constructible function (the proof that such a function exists is left as an exercise to the reader).
+  % The proof can be found in Lemma 2.3 on p. 46 of [BDG95].
+  Now for all $n$ and all $i\leq n$, each element of the pair $\pair{z_{i,n}}{x}$ has length between $n$ and $r_1(n)$, by construction.
+  The same is true for $\pair{z'_{i,n}}{x'}$ between $n$ and $r_2(n)$.
+  Notice that $\pair{z_{i,n}}{x}$ and $\pair{z'_{i,n}}{x'}$ are ``witnesses'' that $R_1\neq L(P_i)$ and $R_2\neq L(Q_i)$ respectively.
+  Hence for all $n$, there are some witnesses between $n$ and $r(n)$ that for all $i\leq n$, $R_1\neq L(P_i)$ and $R_2\neq L(Q_i)$.
+
+  Define $R=({G[r]}^2\cap R_1)\cup(\overline{G[r]}^2\cap R_2)$, so $R$ is equal to pairs of $R_1$ in the ``even gaps'' of r and $R$ is equal to pairs of $R_2$ in the ``odd gaps'' of $r$.
+  It remains to show that $R$ is an equivalence relation which satisfies the properties stated in the theorem.
+
+  First we show that $R$ is indeed an equivalence relation.
+  Symmetry and transitivity follow from the symmetry and transitivity of $R_1$, $R_2$, ${G[r]}^2$ and $\overline{G[r]}^2$.
+  To show reflexivity, suppose $x\in G[r]$.
+  Hence $\pair{x}{x}\in {G[r]}^2$.
+  Since $R_1$ is an equivalence relation, $\pair{x}{x}\in R_1$.
+  Therefore $\pair{x}{x}\in({G[r]}^2\cap R_1)$, so $\pair{x}{x}\in R$.
+  The argument for the case that $x\in\overline{G[r]}$ is similar.
+  Therefore $R$ is reflexive, symmetric and transitive.
+
+  Next we show that $R\notin\mathcal{C}_1$.
+  The argument which proves $R\notin\mathcal{C}_2$ is symmetric.
+  Assume $R\in\mathcal{C}_1$ in order to produce a contradiction.
+  Then there exists an $i$ such that $R=L(P_i)$.
+  Let $m$ be an even integer such that $r^m(0)\geq i$.
+  By construction, there exists a pair $\pair{x}{z}$ such that $r^m(0)\leq|x|\leq|z|<r^{m+1}(0)$ and $\pair{x}{z}\in(L(P_i)\symdiff R_1)$.
+  Since $m$ is even, $\pair{x}{z}\in {G[r]}^2$.
+  Since $R$ is equal to $R_1$ where it coincides with ${G[r]}^2$, then $\pair{x}{z}\in(L(P_i)\symdiff R)$.
+  This is a contradiction with the hypothesis that $R=L(P_i)$.
+  Therefore $R\notin\mathcal{C}_1$.
+
+  Finally, we show that $R\kr R_1\kj R_2$.
+  First, we note that $R_1\kj R_2$ is an equivalence relation by \ref{lem:join}, so a kernel reduction here is syntactically possible.
+  Since $G[r]\in\P$ by \ref{lem:gap_p}, the function defined by
+  \begin{displaymath}
+    f(x)=
+    \begin{cases}
+      x0 & \text{if}\, x\in G[r]\\
+      x1 & \text{if}\, x\notin G[r]\\
+    \end{cases}
+  \end{displaymath}
+  is a polynomial time computable function.
+  
+  To show that $f$ computes the reduction from $R$ to $R_1\kj R_2$ correctly, suppose first that $\pair{x}{y}\in R$, so $\pair{x}{y}$ is in either $({G[r]}^2\cap R_1)$ or $(\overline{G[r]}^2\cap R_2)$.
+  In the former case, both $x$ and $y$ are in $G[r]$, so $f(x)=x0$ and $f(y)=y0$, and both $x$ and $y$ are in $R_1$, so $\pair{x0}{y0}=\pair{f(x)}{f(y)}\in R_1$.
+  The argument for the latter case is symmetric.
+
+  For the converse, suppose $\pair{f(x)}{f(y)}\in R_1\kj R_2$.
+  Then $f(x)$ and $f(y)$ either both end with $0$ or both end with $1$.
+  In the case that both end with $0$, then there exist some strings $w_x$ and $w_y$ such that $f(x)=w_x0$, $f(y)=w_y0$ and $\pair{w_x}{w_y}\in R_1$.
+  By construction of $f$, $w_x$ must equal the input $x$ and $w_y$ must equal the input $y$, so $\pair{x}{y}\in R_1$.
+  Also by construction, $f(x)=x0$ if and only if $x\in G[x]$ and $f(y)=y0$ if and only if $y\in G[x]$, so $\pair{x}{y}\in{G[r]}^2$.
+  Hence $\pair{x}{y}\in({G[r]}^2\cap R_1)\subseteq R$.
+  The argument for the case that both $f(x)$ and $f(y)$ end with $1$ is symmetric, and shows that $\pair{x}{y}\in(\overline{G[r]}^2\cap R_2)\subseteq R$.
+  Therefore $\pair{x}{y}\in R$ if and only if $\pair{f(x)}{f(y)}\in R_1\kj R_2$, so $f$ correctly computes the reduction from $R$ to $R_1\kj R_2$.
+
+  Since we have shown that the equivalence relation $R$ satisfies the properties in the statement of the theorem, this concludes the proof.
+\end{proof}
+
+We would now like to show that the result of this theorem holds when $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2=\NPEqC$.
+
+\begin{proposition}\label{prop:npeqc}
+  If $\PEq \neq \NPEq$, then $\PEq \cap \NPEqC = \emptyset$.
+\end{proposition}
+\begin{proof}
+  If $\NPEqC$ is empty, then $\PEq \cap \NPEqC = \emptyset$ unconditionally.
+  Assume $\NPEqC$ is nonempty, and $\PEq \cap \NPEqC \neq \emptyset$.
+  Let $R$ be the \NPEq-complete equivalence relation which is also in \PEq.
+  Then all problems in $\NPEq$ can be kernel reduced to $R$ in polynomial time, and $R$ can be decided in polynomial time.
+  Therefore, $\PEq=\NPEq$.
+  This is a contradiction with the hypothesis.
+  Therefore $\PEq\cap\NPEqC=\emptyset$.
+\end{proof}
+
+A reminder: as stated in the introduction, polynomial time kernel reductions compose, and $\NPEq$ is closed under polynomial time kernel reductions.
+We use these facts in the proof of the following theorem.
+
+\intermediary
+\begin{proof}
+  By \ref{prop:npeqc}, if $\PEq \neq \NPEq$, then $\PEq \cap \NPEqC = \emptyset$.
+  Let $S$ be an \NPEq-complete problem.
+  Choose $R_1=S$, $R_2=\emptyset$, $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2=\NPEqC$.
+  Note that since $\P$ and $\NPC$ are computably enumerable, so are $\PEq$ and $\NPEqC$.
+  Then by \ref{thm:diag}, there exists an equivalence relation $R$ which is in neither $\NPEqC$ nor $\PEq$, but which kernel reduces to $S\kj\emptyset$.
+  Since $S\kj\emptyset$ trivially kernel reduces to $S$, and since polynomial time kernel reductions compose, $R\kr S$.
+  Since $\NPEq$ is closed under polynomial time kernel reductions, $R\in\NPEq$.
+\end{proof}
+
+This also introduces a host of similar corollaries showing the existence of intermediary problems for other classes of equivalence relations which have $\kr$-complete problems; for more examples, see the original paper by \cite{schoning}.
+In particular, we can make the following stronger statement using \ref{cor:hardproblems}.
+(Note that $\PHEq$ is the class of equivalence relations in $\PH$, the polynomial hierarchy.)
+\begin{corollary}\label{cor:pspace}
+  If $\PSPACEEq\neq\PHEq$ then there exists an equivalence relation in $\PSPACEEq$ which is neither in $\PHEq$ nor $\PSPACEEq$-complete.
+\end{corollary}
+\end{filecontents}
+\begin{filecontents}{introduction.tex}
+\section{Introduction}
+% Foreword
+
+% context (focus on anyone) why now? - current situation, and why the need is so important
+Determining the computational complexity of deciding whether two graphs are isomorphic has significant implications in nearly every field of computer science.
+One main technique for determining the complexity of the problem is showing how the difficulty of the problem relates to the difficulty of other known problems.
+The relative difficulty of computational problems are often compared using the many-one reduction, a function by which we encode an instance of a problem as an instance of another problem.
+In the case of the graph isomorphism problem, a many-one reduction from the graph isomorphism problem to, for example, the directed graph isomorphism problem allows the function computing the reduction to have access to both graphs.
+However, access to both graphs is not necessary for computing the reduction; the function transforms each undirected graph independently into a directed graph.
+In other words, the reduction is in reality defined on the domain of graphs, not on the domain of pairs of graphs.
+This is a far more natural way to define reductions between problems of equivalence, and is furthermore a finer-grained comparison of the relative difficulty of the two computational problems.
+
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+The \emph{kernel reduction}, defined in \cite[Definition~4.13]{fg11}, formally captures this notion of reduction among computational problems of equivalence involving independent transformation of each element of a pair.
+This type of reduction has appeared previously under other names not only in this setting but also in more general settings (``Borel reduction'', ``strong isomorphism reduction'', ``strong equivalence reduction'', ``relation reduction'', ``component-wise reduction'', etc.).
+To the best of our knowledge, every known many-one reduction between problems of equivalence is really a kernel reduction (see, for an early example, the list of problems many-one reducible to graph isomorphism given in \cite{bc79}).
+Since most reductions between problems of equivalence seem to be kernel reductions, are they truly useful in theory or in practice?
+If so, since the kernel reduction has access only to one element of a pair at a time, what are the limitations of kernel reductions?
+
+%%% relevant existing work, given as part of the need
+Some of our theorems adapt or clarify existing work in order to have simpler, self-contained, complexity-theoretic proofs of important theorems about kernel reductions.
+Kernel reductions are defined in \cite{fg11}, where the authors ask whether kernel reductions and many-one reductions are provably different.
+However, no further proofs are given there, other than the general idea that an imbalance in the number of equivalence classes of the two equivalence problems prevents the existence of a kernel reduction.
+In computability theory, a similar type of reduction between equivalence problems has been well-studied by a series of recent papers (for example, \cite{gg01, ff12, ffn12, chm12, imnn13, almnss14, mn14}).
+However, these papers do not focus on efficiently computable reductions.
+In \cite{bcffm}, the authors provide a thorough treatment of not only the kernel reduction but also a generalization called the ``strong isomorphism reduction''.
+We modify some of their techniques to prove theorems, some more general and some more specific than in that work, in a way that requires only some basic knowledge of complexity theory.
+The authors of \cite{gz14} extended the work of \cite{bcffm}, and in doing so, independently proved the main combinatorial idea used in this paper to examine the limitations of kernel reductions.
+This paper complements that work, as we focus mainly on basic completeness results.
+
+% task (focus on author) why me? - what was undertaken to address the need
+We undertake a thorough investigation of the basic properties of kernel reductions, comparing them with the basic properties of many-one reductions.
+% object (focus on document) why this document - what the document covers
+The starting point for understanding many-one reductions is $\P$ and $\NP$, so we attempted to extend the definition from \cite{fg11} of $\PEq$, the class of equivalence problems decidable in polynomial time, to the definition of the complexity class $\NPEq$ (\ref{sec:definitions}).
+We determined the limitations of kernel reductions; these appear to be combinatorial, not computational, in nature (\ref{sec:limitations}).
+We discovered sufficient conditions for complete problems under kernel reductions in classes of equivalence problems (\ref{sec:generalcompleteness}).
+We compared the new notion of completeness under kernel reductions with the usual notion of completeness under many-one reductions (\ref{sec:npeqcompleteness}).
+Finally, as an analog to $\NP$-intermediary problems with respect to many-one reductions, we examined the possibility of $\NPEq$-intermediary problems with respect to kernel reductions (\ref{sec:intermediary}).
+\end{filecontents}
+\begin{filecontents}{limitations.tex}
+\section{Limitations of kernel reductions}\label{sec:limitations}
+% Foreword
+%
+% context (focus on anyone) why now? - current situation, and why the need is so important
+Can a kernel reduction be used anywhere a many-one reduction can be used?
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+If so, a function with access to one element of a pair would be exactly as powerful as a function with access to both elements of a pair; our intuition is that this is unlikely.
+% task (focus on author) why me? - what was undertaken to address the need
+% object (focus on document) why this document - what the document covers
+This section proves that polynomial time kernel reductions are strictly weaker than polynomial time many-one reductions.
+
+% Summary
+%
+% findings (focus on author) what? - what the work revealed when performing the task
+We find that a bound on the size of the image of a kernel reduction implies that the function can only access a finite number of equivalence classes.
+Constructing equivalence relations so that there is an imbalance in the number of equivalence classes with respect to any fixed function suffices to show that no polynomial time kernel reduction can exist between the two.
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+As a more restrictive type of reduction and hence as a finer-grained tool for comparing the relative difficulty of equivalence problems, kernel reductions should be used when proving a reduction (if one exists) between equivalence problems.
+% perspective (focus on anyone) what now? - what should be done next
+This will be important for \ref{sec:generalcompleteness} as well, since it means that completeness under kernel reductions is distinct from completeness under many-one reductions.
+
+We adopt and extend the notation $\#R$, from \cite{bcffm}, to denote the number of equivalence classes in an equivalence relation $R$.
+
+\begin{definition}[{\cite[Section~5]{bcffm}}]%Definition~7.2]{bcffm}}]
+  Suppose $R$ is an equivalence relation on $\Sigma^*$.
+  Let $\#R(n) = \left|\left\{[x]_R \, \middle| \, x \in \Sigma^{\leq n}\right\}\right|$, or in other words, $\#R(n)$ is the number of equivalence classes in $R$ for strings of length at most $n$.
+  Let $\#R = \max\limits_{n \in \mathbb{N}} \#R(n)$ if the maximum exists, or in other words, $\#R$ is the number of equivalence classes in $R$.
+\end{definition}
+
+As first stated in \cite{fg11}, if the number of equivalence classes in $R$ is greater than the number of equivalence classes in $S$, then no kernel reduction can exist (regardless of any time or space bounds on the function computing the reduction).
+For completeness, we prove this basic fact in \ref{prop:noreduction} below.
+However, a many-one reduction can overcome this restriction by having access to both strings in the pair.
+Before proving that, we require the following lemma showing that kernel reductions must preserve ``related-ness'' of pairs of elements by mapping equivalence classes in $R$ to equivalence classes in $S$.
+
+\begin{lemma}\label{lem:image}
+  Suppose $R$ and $S$ are equivalence relations on $\Sigma^*$.
+  Suppose $R \krnt S$ and $f$ is the function computing the kernel reduction.
+  Let $\hat{f}$ denote the function defined by $\hat{f}([x]_R) = [f(x)]_S$, for all equivalence classes $[x]_R$ in $R$.
+  Then
+  \begin{itemize}
+  \item $\hat{f}$ is injective,
+  \item $f([w]_R) \subseteq \hat{f}([w]_R)$ for any $w \in \Sigma^*$.
+  \end{itemize}
+\end{lemma}
+\begin{proof}
+  First, we prove that $\hat{f}$ is injective.
+  Let $[x]_R$ and $[y]_R$ be distinct equivalence classes in $R$.
+  Suppose $\hat{f}([x]_R) = \hat{f}([y]_R)$, so $[f(x)]_S = [f(y)]_S$.
+  In other words, $\pair{f(x)}{f(y)} \in S$.
+  By definition of the kernel reduction $f$, this implies $\pair{x}{y} \in R$.
+  Therefore $[x]_R = [y]_R$.
+
+  Next, we prove that $f([w]_R) \subseteq \hat{f}([w]_R)$.
+  Since $w \in [w]_R$, it follows that $f(w) \in f([w]_R)$.
+  Let $x \in f([w]_R)$.
+  Then $\pair{x}{f(w)} \in S$, so $x \in [f(w)]_S$.
+  Therefore $f([w]_R) \subseteq [f(w)]_S = \hat{f}([w]_R)$.
+\end{proof}
+
+\begin{proposition}\label{prop:noreduction}
+  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
+  If $\#R > \#S$, then $R \nkrnt S$.
+
+  Furthermore, suppose $\#R = n$ and $\#S = m$, and suppose $m \geq 2$.
+  Let $r_1, \dotsc, r_n$ and $s_1, \dotsc, s_m$ denote representatives of the equivalence classes in $R$ and $S$, respectively.
+  If the problem of deciding whether $x \in [r_i]_R$ for any $x \in \Sigma^*$ is recognizable, then $R \mornt S$.
+\end{proposition}
+\begin{proof}
+  Assume that $R \krnt S$.
+  By \ref{lem:image}, the function mapping equivalence classes in $R$ to equivalence classes in $S$ induced by the kernel reduction is injective.
+  However, this violates the pigeonhole principle.
+  Therefore no kernel reduction exists from $R$ to $S$.
+
+  On the other hand, there is a many-one reduction from $R$ to $S$.
+  First, suppose $S$ has $m$ equivalence classes and let $s_1, \dotsc, s_m$ be representatives of each equivalence class in $S$.
+  On input $\pair{x}{y}$, for each $i \in \{1, \dotsc, n\}$ in parallel, determine if $x \in [r_i]_R$ and $y \in [r_i]_R$ (also in parallel).
+  If $x$ and $y$ are both in $[r_i]_R$ for some $i$, output $\pair{s_i}{s_i}$, otherwise output $\pair{s_1}{s_2}$.
+
+  Since each string must be in exactly one of the equivalence classes of $R$, this function must halt when searching for the equivalence class for the strings $x$ and $y$.
+  If $\pair{x}{y} \in R$, then they are in the same equivalence class of $R$ and hence the function will output $\pair{s_i}{s_i}$, which is in $S$ by the reflexivity of $S$.
+  If $\pair{x}{y} \notin R$, then they are in different equivalence classes and hence the function will output $\pair{s_1}{s_2}$, which is not in $S$ because $[s_1]_S \neq [s_2]_S$ by hypothesis.
+  Therefore this function is a computable many-one reduction from $R$ to $S$.
+\end{proof}
+
+\begin{example}
+  Let $R = \mathbb{Z} / 3 \mathbb{Z}$ and $S = \mathbb{Z} / 2 \mathbb{Z}$.
+  Then $R \mornt S$ but $R \nkrnt S$.
+\end{example}
+
+As seen in \ref{prop:noreduction}, for equivalence relations $R$ and $S$ with a finite number of equivalence classes, a kernel reduction from $R$ to $S$ can only exist if the number of equivalence classes in $R$ is at most the number of equivalence classes in $S$.
+However, most ``interesting'' equivalence relations have an infinite number of equivalence classes.
+In \cite[Section~4]{fg11}, the authors ask if there are such equivalence relations ``of the same densities [that is, density of equivalence classes] on which kernel reduction and [many-one] reduction differ''.
+\cite[Theorem~5.1]{bcffm} (see also \cite[Remark~5.2]{bcffm}) answers this question affirmatively, providing an infinite antichain of equivalence relations that are equivalent under polynomial time many-one reductions but otherwise incomparable under polynomial time ``strong isomorphism reductions'' (proven in \cite[Section~7]{bcffm} to be equivalent to polynomial time kernel reductions).
+We will provide a simple proof of a special case of \cite[Theorem~5.1]{bcffm}, showing that an imbalance in the density of equivalence classes prevents a kernel reduction.
+This proof is valuable because it requires only knowledge of basic computational complexity theory and not knowledge of Boolean algebras, descriptive set theory, or other mathematical logic.
+
+First we show that an equivalence relation dense in equivalence classes cannot be reduced to one sparse in equivalence classes.
+We emphasize that our result does not concern the sparseness of strings in a language, but the sparseness of equivalence classes in an equivalence relation.
+This complements the work on ``potential reducibility'' defined in \cite[Section~5]{bcffm}.
+
+\begin{definition}[{\cite[Definition~7.2]{bcffm}}]
+  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
+  $R$ is \defn{potentially reducible} to $S$, denoted $R\pot S$, if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, $\#R(n)\leq \#S(p(n))$.
+\end{definition}
+
+It follows from the definitions that for any equivalence relations $R$ and $S$, $R\kr S\implies R\pot S$, and hence $R\npot S \implies R\nkr S$ (this is stated and proven explicitly in \cite[Lemma~5.5]{bcffm}).
+As an analog to traditional sparse languages, we provide a definition of ``kernel sparsity'', and show its application to determining potential reducibility and hence kernel reducibility.
+
+\begin{definition}
+  An equivalence relation $R$ on $\Sigma^*$ is \defn{kernel sparse} if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, $\#R(n)\leq p(n)$.
+  In other words, the number of equivalence classes in $R$ for strings of length at most $n$ is bounded above by a polynomial in $n$.
+
+  An equivalence relation is \defn{kernel dense} if it is not kernel sparse.
+  Formally, if for all polynomials $p$ there exists an $n\in\mathbb{N}$ such that $\#R(n)>p(n)$.
+  In other words, the number of equivalence classes in $R$ for strings of length at most $n$ is greater than any polynomial in $n$.
+\end{definition}
+
+These definitions allow us to provide the following very natural proposition.
+Intuitively, it states that an equivalence relation with many closely packed equivalence classes cannot reduce (under polynomially bounded notions of reduction) to an equivalence relation with few but widely spaced equivalence classes.
+This is essentially a special case of \cite[Lemma~2.3]{gz14}.
+
+\begin{theorem}\label{thm:density}
+  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
+  If $R$ is kernel dense and $S$ is kernel sparse, then $R\nkr S$.
+\end{theorem}
+\begin{proof}
+  That $R\npot S$ implies $R\nkr S$ was already stated in the text preceding this theorem, so it suffices to show that $R\npot S$.
+
+  Assume that $R\pot S$ with the intention of producing a contradiction.
+  Let $p$ be the polynomial such that $\#R(n)\leq \#S(p(n))$ (this is the definition of potential reducibility).
+  Let $q$ be the polynomial such that for all $n$, $\#S(n)< q(n)$ (this is the definition of kernel sparse).
+  %% TODO is this true?
+  Assume without loss of generality that $q$ is non-decreasing (we can do this because for each polynomial $a$ there exists a non-decreasing polynomial $b$ such that $a(n)\leq b(n)$ for all $n$).
+  For each natural number $n$, we have $\#S(n) \leq q(0) + q(1) + \cdots + q(n) \leq n \cdot q(n)$ (since $q$ is non-decreasing).
+  Replacing $n$ with $p(n)$ in the above inequality, it follows that $\#S(p(n)) \leq p(n) \cdot q(p(n))$, which is a polynomial in $n$.
+  (This is an overestimate, but we can be generous here and still produce a contradiction.)
+  Let $r(n)=p(n)\cdot q(p(n))$.
+
+  Let $n_0$ be the natural number such that $\#R(n_0) > r(n_0)$, by the definition of kernel sparse.
+  Since $\#S(p(n_0)) \leq r(n_0)$, we have $\#R(n_0) > \#S(p(n_0))$.
+  In other words, there are more equivalence classes in $R$ for strings up to length $n_0$ than there are in $S$ for strings up to length $p(n_0)$.
+  By the pigeonhole principle, we conclude that $R$ cannot potentially reduce to $S$, because the number of equivalence classes in $R$ for strings up to length $n_0$ is too great compared to the number of equivalence classes in $S$ for strings up to length $p(n_0)$.
+  This is a contradiction with the assumption that $R\pot S$.
+  We have shown this for arbitrary polynomials (which came from the definitions of potential reducibility and kernel sparsity), so we can conclude that the result holds for all equivalence relations $R$ and $S$ which are kernel dense and kernel sparse, respectively.
+\end{proof}
+
+\begin{example}
+  Consider the equality relation (that is, $x$ relates to $y$ if $x = y$) and the ``length equality'' relation (that is, $x$ relates to $y$ if $|x| = |y|$).
+  The equality relation is kernel dense, since there are $2^n$ equivalence classes for strings of length at most $n$ (one for each string).
+  The ``equal lengths'' relation is kernel sparse, since there are $n + 1$ equivalence classes for strings of length at most $n$ (one for each length, including length $0$).
+  Therefore there is no polynomial time kernel reduction from the equality relation to the ``equal lengths'' relation.
+\end{example}
+
+This places a strong restriction on equivalence relations which are hard (or complete) under polynomial time kernel reductions: they cannot be kernel sparse.
+
+\begin{corollary}
+  Let $\CEq$ be a complexity class of equivalence relations containing the equality relation $R_{eq}$.
+  If an equivalence relation $R$ is kernel sparse, then it is not $\CEq$-hard.
+\end{corollary}
+\begin{proof}
+  $R_{eq}$ is kernel dense since it contains $2^n$ equivalence classes at each length $n$, one for each distinct string.
+  Since $R$ is kernel sparse, then $R_{eq} \nkr R$ by \ref{thm:density}.
+  Since $R_{eq} \in \CEq$, the equivalence relation $R$ cannot be $\CEq$-hard.
+\end{proof}
+
+Polynomial time many-one reductions are more powerful than polynomial time kernel reductions, because the former are not subject to restrictions on numbers of equivalence classes as in \ref{prop:noreduction} and \ref{thm:density}.
+The idea behind \ref{thm:density} leads to a construction of equivalence relations $R$ and $S$ between which there is a polynomial time many-one reduction but no polynomial time kernel reduction.
+
+\begin{namedtheorem}{Construction}\label{con:rands}
+  Let $f_1, f_2, \dotsc$ be an enumeration of all polynomial time computable functions.
+  %% TODO state why this can be done without loss of generality.
+  Assume, without loss of generality, that for all positive integers $i$, function $f_i$ runs in time $p_i(n)$, where $p_i(n) = i n^i$ for all positive integers $n$.
+
+  Suppose $n$ is a positive integer.
+  Define $R_n$ as the set of all strings of length $n$, except $R_1$, which also includes the string of length $0$.
+  Define $S_n$ as the set of all strings $s$ satisfying the inequality $p_n(n) + 1 \leq |s| \leq p_{n + 1}(n + 1)$, except $S_1$, which includes all strings of length at most $p_2(2)$.
+
+  Define sets $R$ and $S$ as
+  \begin{equation*}
+    R = \bigcup_{n \in \mathbb{Z}^+} R_n \times R_n \text{ and } S = \bigcup_{n \in \mathbb{Z}^+} S_n \times S_n.
+  \end{equation*}
+\end{namedtheorem}
+
+\begin{lemma}
+  $R$ and $S$ are equivalence relations.
+\end{lemma}
+\begin{proof}
+  $R$ and $S$ are equivalence relations if $\{R_n\}_{n \in \mathbb{Z}^+}$ and $\{S_n\}_{n \in \mathbb{Z}^+}$ are valid partitions of $\Sigma^*$, so it suffices to show that each set in the collection is nonempty, the union of each collection includes all nonempty strings in $\Sigma^*$, and each collection is pairwise disjoint.
+
+  The set $R_n$ includes at least one string of length $n$, so each $R_n$ is nonempty.
+  Any string of length $n$ is in $R_n$, so $\Sigma^* \subseteq \cup_n R_n$.
+  If $m$ and $n$ are distinct positive integers, no string can have both length $m$ and length $n$, so $R_m \cap R_n = \emptyset$.
+  Hence $\{R_n\}_n$ is a valid partition.
+
+  We need to show $p_n(n) + 1 \leq p_{n + 1}(n + 1)$ in order to prove that there is at least one string (of length $p_n(n) + 1$, for example) in $S_n$.
+  \begin{align*}
+    p_n(n) + 1 &= n (n^n) + 1 \\
+    &\leq n (n^n) + n^n \\ %% && \text{(since } 1 \leq n^n \text{ for each } n \text{)} \\
+    &= (n + 1) n^n \\
+    &\leq (n + 1) (n + 1)^{n + 1} \\
+    &= p_{n + 1}(n + 1).
+  \end{align*}
+  Thus there is at least one string in $S_n$.
+  Next, for any string $x$, there exists an $n$ such that $p_n(n) + 1 \leq |x| \leq p_{n + 1}(n + 1)$, so every string in $\Sigma^*$ is in some $S_n$.
+  %% TODO I don't know how to explain this further.
+  Finally, suppose $m$ and $n$ are distinct positive integers and assume without loss of generality that $m < n$, or in other words, that $m + 1 \leq n$.
+  Then $p_{m + 1}(m + 1) \leq p_n(n) < p_n(n) + 1$, so no string of length at most $p_{m + 1}(m + 1)$ can also have length at least $p_n(n) + 1$.
+  Hence, $S_m$ and $S_n$ are disjoint.
+  Thus, $\{S_n\}_n$ is a valid partition.
+
+  Since both collections are valid partitions, the relations $R$ and $S$ are both equivalence relations.
+\end{proof}
+
+Again, this is a special case of \cite[Theorem~5.1]{bcffm}, but has a much simpler proof and sufficiently demonstrates that polynomial time kernel reductions and polynomial time many-one reductions are different.
+
+\begin{theorem}\label{thm:different}
+  There are equivalence relations $R$ and $S$ such that $R \mor S$ but $R \nkr S$.
+  Furthermore, $R$ and $S$ are in $\NC^1$.
+\end{theorem}
+
+The main idea behind this theorem is that no matter which polynomial time function we consider as a possible kernel reduction, the number of equivalence classes in $R$ is greater than the number of equivalence classes in $S$, for sufficiently large strings.
+\ref{thm:density} doesn't apply in this setting because both $R$ and $S$ are kernel sparse.
+Since we have carefully constructed these sets, $S$ is more kernel sparse than $R$.
+This basic idea was presented independently in \cite[Lemma~2.3]{gz14}.
+
+Though it is not explicitly stated here, this theorem can be generalized to kernel reductions with other (non-polynomial) time bounds in a straightforward manner.
+
+\begin{proof}[Proof of \ref{thm:different}]
+  Let $R$ and $S$ be the equivalence relations in \ref{con:rands}.
+  The following function is a polynomial time many-one reduction from $R$ to $S$.
+  On input $\pair{x}{y}$, if $|x| = |y|$ (or if $|x|$ and $|y|$ are both in $\{0, 1\}$), output $\pair{a}{a}$, otherwise output $\pair{a}{b}$, where $a$ is a string in $S_1$ and $b$ is a string in $S_2$.
+  Computing and comparing the lengths of $x$ and $y$ can be done in linear time and writing the output requires only a constant number of steps, since the lengths of $a$ and $b$ are independent of the lengths of $x$ and $y$.
+  Thus this function is computable in linear time, and hence in polynomial time.
+  If $\pair{x}{y} \in R$, then the function outputs $\pair{a}{a}$, which is in $S$ since $S$ is reflexive.
+  If $\pair{x}{y} \notin R$, then the function outputs $\pair{a}{b}$, which is not in $S$ since $a$ and $b$ are in different equivalence classes of $S$.
+  Therefore there is a correct polynomial time many-one reduction from $R$ to $S$.
+
+  Now assume with the intention of producing a contradiction that there is a polynomial time kernel reduction from $R$ to $S$.
+  Since $f_1, f_2, \dotsc$ is an enumeration of all polynomial time computable functions, the reduction from $R$ to $S$ is $f_n$, with running time $p_n$, for some positive integer $n$.
+  Consider a string $x$ of length $n + 1$ (for example, $x = 1^{n + 1}$); $x$ is in equivalence class $R_{n + 1}$.
+  Since the running time of $f_n$ is $p_n$, the length of $f_n(x)$ is at most $p_n(n + 1)$.
+  Since $p_1, p_2, \dotsc$ is an increasing sequence (in the sense that $p_j(n) < p_{j + 1}(n)$ for all natural numbers $n$ and all positive integers $j$), we have $p_n(n + 1) < p_{n + 1}(n + 1) < p_{n + 1}(n + 1) + 1$.
+  %% The image of any string of length $n + 1$ has length at most $p_n(n + 1)$, which is strictly less than $p_{n + 1}(n + 1) + 1$.
+  By the construction of $R$ and $S$, we have $\#R(n + 1) = n + 1$ and $\#S(p_n(n + 1)) \leq \#S(p_{n + 1}(n + 1)) = n$ (for an illustration, see \ref{fig:sparse}).
+  By the pigeonhole principle, there must be two strings $x$ and $y$ of length at most $n + 1$ in different equivalence classes of $R$ whose image under $f_n$ is in the same equivalence class of $S$.
+  Since $\pair{x}{y} \notin R$ if and only if $\pair{f(x)}{f(y)} \notin S$, this is a contradiction.
+  Therefore $R \nkr S$.
+
+  \begin{figure}
+    \caption{\label{fig:sparse}For a fixed kernel reduction $f_n$ running in time $p_n$, the image of a string of length $n + 1$ can only be a string of length at most $p_n(n + 1)$.
+      The number of equivalence classes in $R$ for strings of length $n + 1$ is greater than the number of equivalence classes in $S$ for strings of length $p_n(n + 1)$ for each polynomial $p_n$.}
+    \begin{center}
+      \begin{tikzpicture}[yscale=0.5]
+        \begin{scope}[shift={(0, 5)}]
+          \node at (0, 1) {$R$};
+
+          %% Rectangles for equivalence classes of $R$.
+          \draw (2, 0)
+          %% TODO should be a way to use [current node is local] option here...
+          ++(0, 1) node[anchor=east] {$\dotsb$} ++(0, -1)
+          rectangle ++(1, 2)
+          ++(0.2, -2)
+          rectangle ++(1, 2)
+          ++(0.2, -2)
+          rectangle ++(1, 2)
+          ++(0, -1)
+          node[anchor=west] {$\dotsb$}
+          ;
+
+          %% Labels for each equivalence class of $R$.
+          \path
+          (2.5, 1) node {$R_n$}
+          ++(1.2, 0) node {$R_{n + 1}$}
+          ++(1.2, 0) node {$R_{n + 2}$}
+          ;
+        \end{scope}
+
+        %% Arrow from top to bottom showing image under $f_n$.
+        \begin{scope}[shift={(0, 1)}]
+          \draw
+          (4.5, 1) node[shape=circle, fill=black, inner sep=1pt] (source) {}
+          ++(-0.8, 3.2) node[shape=circle, fill=black, inner sep=1pt] (target) {};
+          \path[<-, >=stealth] (source) edge node[anchor=south west] {$f_n$} (target);
+        \end{scope}
+
+        \begin{scope}[shift={(0, 1)}]
+          \node at (0, 1) {$S$};
+
+          %% Rectangles for equivalence classes of $S$.
+          \draw (2, 0)
+          %% TODO should be a way to use [current node is local] option here...
+          ++(0, 1) node[anchor=east] {$\dotsb$} ++(0, -1)
+          rectangle ++(3, 2)
+          ++(0.2, -2)
+          rectangle ++(4, 2)
+          ++(0, -1)
+          node[anchor=west] {$\dotsb$}
+          ;
+
+          %% Labels for each equivalence class of $S$.
+          \path
+          (3.5, 1) node {$S_n$}
+          ++(3.8, 0) node {$S_{n + 1}$}
+          ;
+        \end{scope}
+
+        %% Labels underneath each $S_i$ showing length bounds.
+        \begin{scope}
+          \draw[shorten >=1pt]
+          (2, 0) node[anchor=north] (pn) {$p_n(n) + 1$}
+          -- ++(0, 1);
+          \draw[thick, color=gray] (4.5, 3.5)
+          -- ++(0, -5)
+          node[anchor=north, color=black] (pnplus1) {$p_n(n + 1)$}
+          ;
+          \draw[shorten >=1pt]
+          (5.2, 0) node[anchor=north west, color=black] (pnplus1nplus1) {$p_{n + 1}(n + 1)$}
+          -- ++(-0.2, 1);
+          ;
+        \end{scope}
+      \end{tikzpicture}
+    \end{center}
+  \end{figure}
+
+  Finally, we show that $R$ and $S$ are in $\NC^1$.
+  Deciding whether two strings have the same length is trivial, so $R$ is certainly in $\NC^1$.
+  To decide $S$, we compute the index $i$ of the equivalence class $S_i$ containing the string $x$ and the index $j$ of the equivalence class $S_j$ containing the string $y$, then compare them for equality.
+  Computing the index $i$ of the equivalence class of a string $x$ of length $n$ can be performed as follows.
+  First, compute in parallel the values $p_1(1), \dotsc, p_{n + 1}(n + 1)$.
+  Since each $p_i$ is increasing, $n$ is definitely smaller than $p_{n + 1}(n + 1)$.
+  Computing the exponentiation of $O(n)$ pairs of strings of length $O(n)$ each can be performed by a $\TC^0$ circuit, and $\TC^0 \subseteq \NC^1$.
+  Next, for each $i \in \{1, \dotsc, n\}$ in parallel, decide if $p_i(i) + 1 \leq n \leq p_{i + 1}(i + 1)$, thereby determining whether the input is in $S_i$.
+  These comparisons can be performed by an $\NC^1$ circuit.
+  Finally, use $O(\log n)$ single-bit multiplexers in parallel to output the index (in binary) of the sole equivalence class $S_i$ containing $x$.
+  A single-bit multiplexer for $O(\log n)$ input bits can be implemented by a circuit of size $O(\log n)$ and depth $O(\log \log n)$ \cite[Lemma~2.5.5]{savage98}, so this phase of the computation can be performed by an $\NC^1$ circuit.
+  Computing the indices $i$ and $j$ for the two input strings can be performed in parallel, and the final comparison for equality of $i$ and $j$ adds only $O(\log n)$ depth to the circuit.
+  Therefore $S \in \NC^1$.
+\end{proof}
+\end{filecontents}
+\begin{filecontents}{npeqcompleteness.tex}
+\section
+    [Relationship between completeness under kernel and many-one reductions]
+    {Relationship between completeness \\ under kernel and many-one reductions}
+\label{sec:npeqcompleteness}
+% Foreword
+%
+% context (focus on anyone) why now? - current situation, and why the need is so important
+A kernel reduction implies a many-one reduction, but does completeness under kernel reductions imply completeness under many-one reductions?
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+Since polynomial time kernel reductions are different from polynomial time many-one reductions (\ref{thm:different}), completeness in classes of equivalence problems may differ under these reductions as well.
+% task (focus on author) why me? - what was undertaken to address the need
+We determine the conditions under which completeness under kernel reductions implies completeness under many-one reductions.
+% object (focus on document) why this document - what the document covers
+This section presents some information about the relationship between these two types of reductions.
+
+% Summary
+%
+% findings (focus on author) what? - what the work revealed when performing the task
+Essentially, we find that completeness under many-one reductions follows as a straightforward consequence of completeness under kernel reductions as long as the relevant complexity class admits a complete problem.
+We also show that the kernel reduction is too weak to allow for completeness under injective (that is, one-to-one) reductions, for combinatorial reasons similar to those in \ref{sec:limitations}.
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+These results are more indication that when comparing the relative difficulty of equivalence problems, one should attempt to construct a kernel reduction instead of a many-one reduction.
+% perspective (focus on anyone) what now? - what should be done next
+The potential lack of a complete problem under injective kernel reductions suggests that a conjecture analagous to the Berman--Hartmanis conjecture, which states that all $\NP$-complete problems are isomorphic with respect to many-one reductions, may be false in $\NPEq$.
+
+%% Suppose (for the rest of this section) that $\mathcal{K}$ is some set of structures in which
+%% \begin{enumerate}
+%% \item each structure $X$ has a size, denoted $|X|$, and
+%% \item pairs $(X, Y)$ have some notion of equivalence, denoted $X\cong Y$, in which $X\cong Y$ implies $|X|=|Y|$.
+%% \end{enumerate}
+%% Let $\IsoK=\lb\pair{X}{Y}\st X\cong Y\rb$.
+%% \begin{example}
+%%   Consider the set of structures $\mathcal{G}$, the set of all finite undirected graphs.
+%%   All isomorphic graphs have the same number of vertices.
+%%   In this case, $\IsoG=\GI$, the well-studied graph isomorphism problem.
+%% \end{example}
+
+In this section, the propositions about equivalence problems are quite general, so we require some additional definitions.
+Suppose $R$ is an equivalence relation on $\Sigma^*$.
+A \defn{property on $R$} (or more simply, a property, when $R$ is understood from context) is a Boolean function on $\Sigma^*$ such that $\pair{x}{y} \in R$ implies $\Pi(x) = \Pi(y)$.
+A property is the \defn{null property} if it has the value $0$ on all inputs.
+%Let $\Pi$ be a property for which $X\cong Y$ implies $\Pi(X)=\Pi(Y)$ (that is, they are either both true or both false).
+%Call $\Pi$ the \defn{null property} if it is false for all structures.
+%We say that $\Pi$ is a \defn{uniform property} if for all $n\in\mathbb{N}$ there exists a structure $X$ with $|X|=n$ such that $\Pi(X)$ is true.
+If $\Pi$ is a property, let $L_\Pi$ be the language defined by $L_\Pi = \{ x \, | \, \Pi(x) = 1 \}$.
+The property $\Pi$ is a \defn{$\mathcal{C}$-complete property} if $L_\Pi$ is $\mathcal{C}$-complete under $\mor$ reductions in some complexity class $\mathcal{C}$.
+%It is easy to see that if $\Pi$ is either a uniform property or a $\mathcal{C}$-complete property, then it is not a null property.
+\begin{example}
+  The set of all pairs of isomorphic graphs, denoted \textsc{Graph Isomorphism}, is an equivalence relation on strings encoding undirected graphs.
+  Hamiltonicity (that is, having a cycle that includes each vertex) is a property on the set of all isomorphic graphs. %(the circle graph on $n$ vertices has a Hamiltonian cycle for all $n\in\mathbb{N}$).
+  It is also an \NP-complete property, since in this case, $L_\Pi = \textsc{Hamiltonian Cycle}$.
+\end{example}
+
+We first show that there are problems in $\CEq$ which are also $\mathcal{C}$-complete (though they may not necessarily be \CEq-complete).
+Call an equivalence relation $R$ \defn{uniform} if $\pair{x}{y} \in R$ implies $|x| = |y|$.
+For any equivalence relation $R$, define $A_R(\Pi)$ by
+\begin{displaymath}
+  A_R(\Pi) = \lb \pair{x}{y}\st \pair{x}{y} \in R \plain{or} \Pi(x) = \Pi(y) = 1\rb.
+\end{displaymath}
+(We sometimes simply write $A(\Pi)$ if the equivalence relation is understood from context.)
+By checking the three required properties of an equivalence relation, we find the following.
+(The proof of this proposition is straightforward and is left as an exercise for the reader.)
+\begin{proposition}
+  For each equivalence relation $R$ and each property $\Pi$ on $R$, the set $A_R(\Pi)$ is an equivalence relation.
+\end{proposition}
+We use this fact to show that there are $\mathcal{C}$-complete equivalence relations.
+\begin{proposition}\label{prop:APi}
+  Let $R$ be a uniform equivalence relation and let $\mathcal{C}$ be a complexity class containing $R$.
+  If $\Pi$ is a $\mathcal{C}$-complete property, then $A(\Pi)$ is a $\mathcal{C}$-complete equivalence relation.
+\end{proposition}
+\begin{proof}
+  The previous proposition shows that $A(\Pi)$ is an equivalence relation, so it remains to show that it is $\mathcal{C}$-complete.
+  %% TODO Why is this statement true? We need to require that C is closed under
+  %% conjunction.
+  $A(\Pi)$ is in $\mathcal{C}$ because both $R$ and $L_\Pi$ are in $\mathcal{C}$ by hypothesis.
+  Thus we need only show that $A(\Pi)$ is hard for $\mathcal{C}$ under $\mor$ reductions.
+
+  Let $y$ be a string for which $\Pi(y)$ is true; such a string must exist because $\Pi$ is $\mathcal{C}$-complete and therefore non-null.
+  The reduction is from $L_\Pi$, and the mapping is given by $x \mapsto \pair{x}{y}$.
+  This function is computable in linear time (the length of $y$ is constant with respect to the length of $x$).
+
+  Now we show that $x \in L_\Pi$ if and only if $\pair{x}{y} \in A(\Pi)$.
+  If $x \in L_\Pi$, then $\Pi(x) = \Pi(y) = 1$, so $\pair{x}{y} \in A(\Pi)$.
+  If $\pair{x}{y} \in A(\Pi)$, then either $\Pi(x) = \Pi(y) = 1$, in which case $x \in L_\Pi$, or $\pair{x}{y} \in R$, in which case $\Pi(x) = \Pi(y) = 1$ anyway.
+  In either case $x \in L_\Pi$.
+  We conclude that $L_\Pi \mor A(\Pi)$, and so $A(\Pi)$ is a $\mathcal{C}$-complete equivalence relation.
+\end{proof}
+
+We know that \textsc{Graph Isomorphism} is a uniform equivalence relation in $\NP$, and that \NP-complete graph properties exist (Hamoltinicity, 3-colorability, etc.), thus there are equivalence relations which are \NP-complete.
+
+\begin{corollary}\label{cor:npcompleteeqrel}
+  If $\Pi$ is an \NP-complete property on \textsc{Graph Isomorphism}, then $A(\Pi)$ is an \NP-complete equivalence relation.
+\end{corollary}
+
+\begin{example}
+  If the uniform equivalence relation is \textsc{Graph Isomorphism} and $\Pi$ is the Hamiltonicity property, then the equivalence relation
+  \begin{equation*}
+    \{ \pair{G}{H} \, | \, G \cong H \text{ or both } G \text{ and } H \text{ have a Hamiltonian cycle}  \}
+  \end{equation*}
+  is \NP-complete.
+\end{example}
+
+We can now show that completeness in $\CEq$ under $\kr$ reductions implies completeness in $\mathcal{C}$ under $\mor$ reductions.
+
+\begin{proposition}\label{prop:ceqimpliesc}
+  Let $R$ be a uniform equivalence relation and let $\mathcal{C}$ be a complexity class containing $R$.
+  If there is a $\mathcal{C}$-complete property on $R$ and an equivalence relation $S$ is \CEq-complete then $S$ is also $\mathcal{C}$-complete.
+\end{proposition}
+\begin{proof}
+  Let $\Pi$ be the $\mathcal{C}$-complete property on $R$.
+  Let $A$ be the $\mathcal{C}$-complete equivalence relation guaranteed by \ref{prop:APi}.
+  Since $S$ is \CEq-complete, there is a polynomial time kernel reduction $f$ from $A$ to $S$.
+  The polynomial time many-one reduction from $A$ to $S$ induced by $f$, namely the function $\pair{x}{y} \mapsto \pair{f(x)}{f(y)}$, proves that $S$ is $\mathcal{C}$-hard.
+  Since $S$ is in $\mathcal{C}$ by hypothesis, it is therefore $\mathcal{C}$-complete.
+\end{proof}
+
+This corollary provides a clearer proof of \cite[Proposition~8.1]{bcffm}.
+
+\begin{corollary}[{\cite[Proposition~8.1]{bcffm}}]
+  If \textsc{Graph Isomorphism} is \NPEq-complete then the polynomial hierarchy collapses to the second level ($\PH = \STP$).
+\end{corollary}
+\begin{proof}
+  Let the equivalence relation $R$ be \textsc{Graph Isomorphism}, the complexity class $\mathcal{C}$ be $\NP$, the $\mathcal{C}$-complete property be Hamiltonicity, and the equivalence relation $S$ be \textsc{Graph Isomorphism}.
+  Then \ref{prop:ceqimpliesc} implies that \textsc{Graph Isomorphism} is $\NP$-complete, which yields the stated collapse (see \cite{schoning87}).
+\end{proof}
+
+This also means that for well-behaved complexity classes, equality of the corresponding equivalence classes implies equality of the general classes.
+
+\begin{proposition}
+  Suppose $R$ is a uniform equivalence relation and $\mathcal{C}_1$ and $\mathcal{C}_2$ are complexity classes such that
+  \begin{itemize}
+  \item $\mathcal{C}_1 \subseteq \mathcal{C}_2$,
+  \item $R \in \mathcal{C}_2$,
+  \item $\mathcal{C}_1$ is closed under $\mor$ reductions,
+  \item there is a $\mathcal{C}_2$-complete property on $R$,
+  \item there is a $\mathcal{C}_2\Eq$-complete equivalence relation $S$.
+  \end{itemize}
+  Then $\mathcal{C}_1 = \mathcal{C}_2$ if and only if $\mathcal{C}_1\Eq = \mathcal{C}_2\Eq$.
+\end{proposition}
+\begin{proof}
+  If $\mathcal{C}_1 = \mathcal{C}_2$, then $\mathcal{C}_1\Eq = \mathcal{C}_2\Eq$ by their definitions.
+  Suppose now that $\mathcal{C}_1\Eq = \mathcal{C}_2\Eq$.
+  We know that $S$ is $\mathcal{C}_2$-complete since it meets all the requirements in the hypothesis of \ref{prop:ceqimpliesc}.
+  Since $S \in \mathcal{C}_2\Eq$ and $\mathcal{C}_2\Eq = \mathcal{C}_1\Eq$ by hypothesis, $S \in \mathcal{C}_1\Eq$, and hence $S \in \mathcal{C}_1$.
+  Since $\mathcal{C}_1$ is closed under $\mor$ reductions, $\mathcal{C}_2 \subseteq \mathcal{C}_1$.
+  Since $\mathcal{C}_1 \subseteq \mathcal{C}_2$ by hypothesis, we have shown the equality of the two complexity classes.
+\end{proof}
+
+\begin{corollary}\label{cor:pnppeqnpeq}
+  $\P = \NP$ if and only if $\PEq = \NPEq$.
+\end{corollary}
+\begin{proof}
+  Choose $\mathcal{C}_1 = \P$ and $\mathcal{C}_2 = \NP$ in the previous corollary.
+  \begin{itemize}
+  \item $\P \subseteq \NP$.
+  \item Let $R$ be \textsc{Graph Isomorphism}; it is in $\NP$.
+  \item $\P$ is closed under $\mor$ reductions.
+  \item Hamiltonicity, for example, is an $\NP$-complete property on graphs.
+  \item \ref{cor:npcompleteeqrel} shows the existence of an $\NPEq$-complete equivalence relation.
+  \end{itemize}
+  All of the conditions are satisfied, so $\P = \NP$ if and only if $\PEq = \NPEq$.
+\end{proof}
+
+We currently do not know whether $\NPEq$ (or $\SKPEq$ for any $k$) has a complete problem under polynomial time kernel reductions.
+\begin{openquestion}
+  Can we prove that $\NPEq$ (or $\SKPEq$ for any $k$) has a complete problem unconditionally?
+\end{openquestion}
+
+We will for now consider the consequences of the assumption that there exists a \CEq-complete problem.
+
+Define $A_R^=(\Pi)$ by
+\begin{displaymath}
+  A_R^=(\Pi) = \lb \pair{x}{y} \st \pair{x}{y}\in A_R(\Pi) \plain{and} |x| = |y|\rb
+\end{displaymath}
+for each uniform equivalence relation $R$ and each property $\Pi$ on $R$.
+(The requirement that $|x| = |y|$ only affects the ``$\Pi(x) = \Pi(y) = 1$'' part of the definition of $A_R(\Pi)$, since $R$ is uniform.)
+Again, we may omit the subscript $R$ if it is understood from context.
+
+\begin{proposition}\label{prop:APieq}
+  Let $R$ be a uniform equivalence relation and $\mathcal{C}$ be a complexity class containing $R$.
+  If $\Pi$ is a uniform $\mathcal{C}$-complete property, then $A^=(\Pi)$ is a $\mathcal{C}$-complete equivalence relation.
+\end{proposition}
+\begin{proof}
+  % TODO Is it possible to do this for arbitrary structures without stating
+  % explicitly how to force the output length?
+  The proof is the same as the proof of \ref{prop:APi}, but the reduction enforces that the string $y$ satisfying both $|y| = |x|$ and $\Pi(y) = 1$.
+  Such a string exists because $\Pi$ is a uniform property by hypothesis.
+\end{proof}
+
+Note that the number of equivalence classes of $A^=(\Pi)$ is infinite, since there will be at least one equivalence class for each length.
+However, each of those equivalence classes is itself finite.
+As justification, consider the equivalence class $[x]$ of an arbitrary string $x$ in $A^=(\Pi)$.
+The equivalence class $[x]$ includes exactly all the strings $y$ that are related to $x$ plus (at most) all strings $z$ for which $\Pi(z) = 1$ and $|x| = |z|$ (if $\Pi(x) = 1$ at all).
+In either case, the strings $y$ and $z$ have the same size as $x$ (since our implicit equivalence relation is uniform, hence $y$ and $z$ have the same length).
+The number of strings of length $|x|$ is finite, so $[x]$ is finite.
+
+As a contrast, consider the equivalence relation
+\begin{equation}\label{eq:ones}
+  S = \lb\pair{x}{y} \st x\plain{and}y\plain{have the same number of}1\textnormal{s}\rb.
+\end{equation}
+$S$ has an infinite number of equivalence classes: $[1]$, $[11]$, $[111]$, etc.
+Each equivalence class is itself infinite as well: if $w\in\Sigma^*$ then $[w]$ contains $w$, $0w$, $00w$, etc.
+
+These observations lead us to the following theorem.
+Note that in the following theorem, if an equivalence relation $B$ is ``complete under $\kri$ reductions in $\CEq$'' we mean that every equivalence relation in $\CEq$ reduces to $B$ by a polynomial time computable kernel reduction which is also injective (that is, ``one-to-one'').
+
+\begin{theorem}
+  % If \Pi is additionally an $\mathcal{C}$-complete property, then A^=(\Pi) would be an $\mathcal{C}$-complete equivalence relation.
+  Suppose
+  \begin{itemize}
+  \item $R$ is a uniform equivalence relation,
+  \item $S$ is defined as in \eqref{eq:ones},
+  \item $\mathcal{C}$ is a complexity class containing both $R$ and $S$,
+  \item $\Pi$ is a uniform property on $R$.
+  \end{itemize}
+  If $A_R^=(\Pi)$ is complete in $\CEq$ under $\kr$ reductions, then it is not complete under $\kri$ reductions.
+\end{theorem}
+\begin{proof}
+  For the sake of brevity, in this proof we will refer to $A_R^=(\Pi)$ by the shorter $A$.
+
+  Since $A$ is \CEq-complete, $S \kr A$.
+  Thus there exists a polynomial time computable function $f$ such that $\pair{x}{y}\in S$ if and only if $\pair{f(x)}{f(y)}\in A$.
+
+  Let $w\in\sigmastar$.
+  Then $f(w)=x$ for some string $x$.
+  By the arguments in the discussion preceding this theorem, $[w]_S$ is infinite and $[f(w)]_A$ is finite.
+  By \ref{lem:image}, $f([w]_S)\subseteq [f(w)]_A$.
+  Consider $f|_{[w]_S}$, that is, $f$ restricted to the domain $[w]_S$.
+  Then $f|_{[w]_S}$ is a mapping from the infinite set $[w]_S$ to the finite set $[f(w)]_A$.
+  By the pigeonhole principle, $f|_{[w]_S}$ is not injective.
+  Hence the unrestricted reduction $f$ is not injective, and therefore $A$ is not $\kri$-complete in \CEq.
+\end{proof}
+
+\begin{corollary}\label{cor:inj}
+  % If \Pi is additionally an \NP-complete property, then $A^=(\Pi)$ would be an \NP-complete equivalence relation.
+  Let $\Pi$ be a uniform property on \textsc{Graph Isomorphism}.
+  If $A^=(\Pi)$ is complete in $\NPEq$ under $\kr$ reductions, then it is not complete under $\kri$ reductions.
+\end{corollary}
+\begin{proof}
+  Let the equivalence relation $R$ be \textsc{Graph Isomorphism}, the complexity class $\mathcal{C}$ be $\NP$, and the uniform property $\Pi$ be Hamiltonicity.
+  Then the previous theorem implies that $A^=(\Pi)$ is not complete under $\kri$ reductions.
+\end{proof}
+
+This result is interesting because it again demonstrates that the number and size of equivalence classes is important when considering the (im)possibility of polynomial time kernel reductions between equivalence relations.
+\end{filecontents}
+\begin{filecontents}{preliminaries.tex}
+\section{Preliminaries}
+\label{sec:preliminaries}
+
+The set of natural numbers (including $0$) is denoted $\mathbb{N}$, the set of integers is denoted $\mathbb{Z}$, and the set of positive integers is denoted $\mathbb{Z}^+$.
+
+If $f\colon S\to T$ is a well-defined function and $S'\subseteq S$, then \defn{$f$ restricted to the domain $S'$} is the function $f'\colon S'\to T$ defined by $f'(x)=f(x)$ for all $x\in S'$.
+We denote this restricted function on a smaller domain by $f|_{S'}$.
+The \emph{image of $S'$}, denoted $f(S')$, is defined by $f(S') = \{f(s) \, | \, s \in S'\}$.
+
+In this paper, $\Sigma$ denotes the binary alphabet $\{0, 1\}$.
+$\Sigma^*$ is the set of all binary strings over the alphabet $\Sigma$ and $\Sigma^{\leq n}$ is the set $\lb w\in\Sigma^* \st |w|\leq n \rb$.
+The empty string will be denoted by $\lambda$.
+If $\sigma\in\Sigma$ then $\sigma^k$ is the string consisting of $k$ concatenated copies of the symbol $\sigma$.
+If $x$ and $y$ are elements of $\Sigma^*$, then we denote by $\pair{x}{y}$ the \defn{pairwise encoding} of $x$ and $y$, which is itself an element of $\Sigma^*$.
+In this paper, we will assume the reasonable pairwise encoding defined by $\pair{x}{y}=x_1x_1x_2x_2\cdots x_{|x|}x_{|x|}01y_1y_1y_2y_2\cdots y_{|y|}y_{|y|}$ for all $x$ and $y$ in $\Sigma^*$.
+As usual, a \defn{language} over an alphabet $\Sigma$ is a subset of $\Sigma^*$.
+The \defn{complement} of a language $L$ is $\Sigma^*\backslash L$, and is denoted $\overline{L}$.
+
+The complexity classes $\P$, $\NP$, $\FP$ (polynomial time computable functions), $\SKP$, $\PKP$, $\DKP$, and $\PSPACE$ have the usual definitions.
+The set of words accepted by a Turing machine $M$ is denoted $L(M)$.
+The \defn{complement} of a complexity class $\mathcal{C}$ is the set of complements of languages in $\mathcal{C}$, and is denoted $\coC$.
+
+We say a Turing machine $M$ is a \defn{polynomially clocked Turing machine} if the description of $M$ includes a positive integer $k$ such that $M$ halts within time $kn^k$ on all inputs of length $n$.
+
+If $L_1$ and $L_2$ are languages, we say that \defn{$L_1$ many-one reduces to $L_2$} if there exists a computable function $f$ such that $w \in L_1$ if and only if $f(w) \in L_2$.
+We denote this by $L_1 \mornt L_2$.
+If $f$ is computable in polynomial time, we denote this by $L_1 \mor L_2$.
+%% If $L_1 \mor L_2$ and $L_2 \mor L_1$, we say that $L_1$ and $L_2$ are \defn{equivalent under polynomial time many-one reductions}, and denote this by $L_1\moe L_2$.
+
+A set $R \subseteq \Sigma^* \times \Sigma^*$ is an \defn{equivalence relation on $\Sigma^*$} if $R$ satisfies the following three properties.
+\begin{itemize}
+\item (reflexivity) For all $x \in \Sigma^*$, $(x,x)\in R$.
+\item (symmetry) For all $x,y\in \Sigma^*$, $(x,y)\in R$ implies $(y,x)\in R$.
+\item (transitivity) For all $x,y,z\in \Sigma^*$, $(x,y)\in R$ and $(y,z)\in R$ implies $(x,z)\in R$.
+\end{itemize}
+An equivalence relation $R$ can be encoded as a language by taking the pairwise encoding of each pair in $R$.
+In this way we can study the computational complexity of classes of languages which represent equivalence relations.
+In this paper we will abuse notation and write $\pair{x}{y}\in R$ for an equivalence relation $R$ on $\Sigma^*$, but what we really mean is $(x,y)\in R$ and $\pair{x}{y}\in L_R$, the language on the alphabet $\Sigma$ induced by $R$.
+
+The \defn{equivalence class} of $x$ with respect to an equivalence relation $R$ on $\Sigma^*$ is $\lb y\in \Sigma^* \st (x,y)\in R \rb$.
+It is denoted $[x]_R$, or if the context is clear, simply $[x]$.
+Each element $x\in \Sigma^*$ is in exactly one equivalence class, so the equivalence classes of an equivalence relation on $\Sigma^*$ provide a partition of $\Sigma^*$.
+Conversely, a partition of $\Sigma^*$ induces an equivalence relation on $\Sigma^*$ in which a pair of elements is in the relation if they are in the same block of the partition.
+
+A \defn{complete invariant} for an equivalence relation $R$ on $\Sigma^*$ is a function $f\colon \Sigma^*\to T$ such that for all $x,y\in \Sigma^*$, $(x,y)\in R$ if and only if $f(x)=f(y)$.
+%% (In other words, a complete invariant is a kernel reduction from $R$ to the equality relation.)
+In \ref{sec:definitions} we will define generalizations of the complete invariant which accept as input an additional witness to the equivalence of $x$ and $y$.
+
+\defn{$\PEq$} is the class of equivalence relations for which membership can be decided by a Turing machine running in deterministic polynomial time.
+\defn{$\NPEq$} is the class of equivalence relations for which membership can be decided by a Turing machine running in non-deterministic polynomial time.
+In other words, $\PEq$ is the set of (languages induced by) equivalence relations which are in \P, and $\NPEq$ is the set of (languages induced by) equivalence relations which are in \NP.
+In general, the class \defn{$\CEq$} is the class of languages induced by equivalence relations which are in the complexity class $\mathcal{C}$.
+As usual, $\PEq\subseteq\NPEq$.
+%\defn{$\Ker$} is the class of equivalence relations which have a polynomial time computable complete invariant.
+
+We now require a natural notion of reduction among equivalence relations.
+If $R$ and $S$ are equivalence relations on $\Sigma^*$, we say $R$ \defn{kernel reduces to} $S$ if there exists a computable $f\colon\Sigma^*\to\Sigma^*$ such that $\forall x,y\in\Sigma^*$, $\pair{x}{y}\in R\iff \pair{f(x)}{f(y)}\in S$.
+We denote this by $R\krnt S$.
+If $f$ is computable in polynomial time, then we say $R$ \defn{polynomial time kernel reduces to} $S$ and use the notation $R\kr S$.
+
+Notice the difference between a kernel reduction and a plain old many-one reduction: a kernel reduction maps $\pair{x}{y}\in R$ to $\pair{f(x)}{f(y)}\in S$, whereas a many-one reduction maps $\pair{x}{y}\in R$ to $f(\pair{x}{y})\in S$, for some polynomial time computable function $f$.
+Informally, a function which computes a many-one reduction has access to both $x$ and $y$ but a function which computes a kernel reduction has access to only one of $x$ and $y$ at a time.
+Since it is more restrictive, a kernel reduction induces a many-one reduction (namely the function $\pair{x}{y} \mapsto \pair{f(x)}{f(y)}$).
+Still, kernel reductions compose just as many-one reductions do, and $\NPEq$ is closed under polynomial time kernel reductions, allowing us to adapt existing complexity theoretic analysis to the study of complexity of equivalence relations.
+
+As an analog to polynomial time many-one completeness in \NP, we define a similar notion of completeness under polynomial time kernel reductions in \NPEq.
+An equivalence relation $S$ is \defn{\NPEq-hard} if for all $R\in\NPEq$, $R\kr S$.
+If $S$ is also in \NPEq, then it is \defn{\NPEq-complete}.
+If $S$ is \NPEq-complete, we sometimes say that $S$ is \defn{complete under $\kr$ reductions in \NPEq}.
+Generally, an equivalence relation $S$ is \defn{$\CEq$-hard} if for all $R\in\CEq$, $R\kr S$, and \defn{$\CEq$-complete} if it is additionally in $\CEq$.
+\end{filecontents}
+\begin{filecontents}{mycomplexity.sty}
+\newclass{\NPEq}{NPEq}
+\newclass{\coNPEq}{coNPEq}
+\newclass{\NPEqOne}{NPEq_1}
+\newclass{\NPEqTwo}{NPEq_2}
+\newclass{\NPEqThree}{NPEq_3}
+\newclass{\NPEqFour}{NPEq_4}
+\newclass{\NPEqFive}{NPEq_5}
+\newclass{\NPEqSix}{NPEq_6}
+\newclass{\NPEqSeven}{NPEq_7}
+\newclass{\NPEqEight}{NPEq_8}
+\newclass{\NPEqC}{NPEqC}
+\newclass{\PEq}{PEq}
+\newclass{\NPcoNP}{NP\cap coNP}
+\newclass{\NPcoNPEq}{(NP\cap coNP)Eq}
+\newclass{\CEq}{\mathcal{C}Eq}
+\newclass{\COEq}{\mathcal{C}_1Eq}
+\newclass{\CTEq}{\mathcal{C}_2Eq}
+\newclass{\PHEq}{PHEq}
+\newclass{\DKP}{\Delta_k P}
+\newclass{\DKPEq}{\Delta_k PEq}
+\newclass{\DTP}{\Delta_2 P}
+%\newclass{\DOP}{\Delta_1 P}
+\newclass{\DOPEq}{\Delta_1 PEq}
+\newclass{\SKP}{\Sigma_kP}
+\newclass{\SKPEq}{\Sigma_kPEq}
+\newclass{\PKP}{\Pi_kP}
+\newclass{\PKPEq}{\Pi_kPEq}
+\newclass{\PKPOP}{\Pi_{k+1}P}
+\newclass{\PKPOPEq}{\Pi_{k+1}PEq}
+\newclass{\POP}{\Pi_1 P}
+\newclass{\PTP}{\Pi_2 P}
+\newclass{\POPEq}{\Pi_1 PEq}
+\newclass{\STP}{\Sigma_2P\cap\Pi_2P}
+\newclass{\CRAZY}{\forall(\mathcal{C}\cup co\mathcal{C})}
+\newclass{\CRAZYEq}{(\forall(\mathcal{C}\cup co\mathcal{C}))Eq}
+\newclass{\CRAZIEREq}{(\forall(\mathcal{C}_2\cup co\mathcal{C}_2))Eq}
+%\newclass{\SKPEq}{(\Sigma_kP\cap\Pi_kP)Eq}
+\newclass{\coC}{co\mathcal{C}}
+\newclass{\PSPACEEq}{PSPACEEq}
+\newclass{\EXPEq}{EXPEq}
+\newclass{\NLEq}{NLEq}
+\newclass{\Ker}{Ker}
+\newclass{\Eq}{Eq}
+\newlang{\Iso}{Iso}
+\newlang{\IsoK}{Iso(\mathcal{K})}
+\newlang{\IsoG}{Iso(\mathcal{G})}
+\end{filecontents}
+
+\documentclass[T1]{cc}
+
+%%\ccsps{}
+
+%%% personal macros and packages
+
+%% Hacks for compatibility with 'complexity'.
+\let\cc\relax
+\let\CP\relax
 
 %% This must come before hyperref.
 \usepackage{amsthm}
@@ -18,57 +1938,33 @@
 \usepackage[english]{babel}
 %% This must come before csquotes.
 \usepackage[utf8]{inputenc}
+\usepackage{lmodern}
 %% This is strongly recommended by biblatex.
 \usepackage{csquotes}
-\usepackage[backend=biber]{biblatex}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{complexity}
-\usepackage{textcomp} % for \textlangle, \textrangle
-%% This is required by draftwatermark.
-\usepackage{type1cm}
-\usepackage[firstpage]{draftwatermark}
 \usepackage{tikz}
 \usepackage{microtype}
 
 %% Set the amount by which certain characters protrude into the margins.
 \LoadMicrotypeFile{cmr}
 \SetProtrusion
-    [load=cmr-OT1]
-    {encoding=OT1, family=cmr}
+    [load=lmr-T1]
+    {encoding=T1, family=lmr}
     {
-      \textquotedblleft = {1000,},
       \textquotedblright = {,1000},
+      \textquotedblleft = {1000,},
+      {[} = {1000,},
       {]} = {,1000},
       {,} = {,1000},
       . = {,1000}
     }
 
-\SetWatermarkLightness{0.9}
-\SetWatermarkText{Work-in-progress}
-\SetWatermarkFontSize{3.5cm}
-
 \hypersetup{pdftitle={Polynomial time kernel reductions}, pdfauthor={Jeffrey Finkelstein}}
 
-\addbibresource{equivalence.bib}
-
-\declaretheorem[numberwithin=section]{theorem}
-\declaretheorem[numberlike=theorem]{claim}
-\declaretheorem[numberlike=theorem]{lemma}
-\declaretheorem[numberlike=theorem]{proposition}
-\declaretheorem[numberlike=theorem]{corollary}
-\declaretheorem[numberlike=theorem, style=definition]{construction}
-\declaretheorem[numberlike=theorem, style=definition]{definition}
-\declaretheorem[numberlike=theorem, style=definition, name=Open problem]{openproblem}
-\declaretheorem[numberlike=theorem, style=definition]{example}
-\declaretheorem[numberlike=theorem, style=definition]{remark}
-
-% create a proof sketch environment
-\newenvironment{sketch}{\begin{proof}[Proof sketch]}{\end{proof}}
 
 % custom shortcut commands
-%\newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}} % formatting emails
-\newcommand{\email}[1]{\textlangle\href{mailto:#1}{\nolinkurl{#1}}\textrangle}
 \newcommand{\plain}[1]{\text{ #1 }} % plain text inside math environments
 \newcommand{\sigmastar}{\{0, 1\}^{*}} % the set of all binary strings
 \newcommand{\kj}{\overset{ker}{\oplus}} % kernel join
@@ -89,26 +1985,74 @@
 \newcommand{\defn}[1]{\emph{#1}} % emphasize words which are being defined
 \newcommand{\pair}[2]{\left\langle#1,#2\right\rangle} % pairing function
 \newcommand{\triple}[3]{\left\langle#1,#2,#3\right\rangle} % tripling function
-%% \newcommand{\Q}{\textsf{Q}} % to represent an unknown quantifier
-%% \newcommand{\QBF}{\lang{QBF}} % the language QBF
-%% \newcommand{\QBFEq}{\lang{QBFEq}} % the language of equivalent QBFs
-\newcommand{\todo}[1]{\textbf{TODO #1}}
 
-% redefine footnote so it has no reference and no number
-\long\def\symbolfootnote#1{\begingroup%
-\def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup} 
+%%% end of personal macros and packages
 
-% define the author, title, and date
-\author{Jeffrey~Finkelstein\\ Computer Science Department, Boston University
-  \and Benjamin~Hescott\\ Computer Science Department, Tufts University}
-\title{Polynomial time kernel reductions}
+\contact{jeffreyf@bu.edu}% Insert contact email address here.
+\submitted{?? September 2014}% Insert the date on which you made the original
+           % submission of your paper to computational complexity,
+           % in the format \submitted{8 August 2008}.
+\title{Polynomial time kernel reductions}% Insert title here. (Use \\ to split lines.)
+%%\titlehead{}% If necessary insert running head title here.
+\author{
+  Jeffrey Finkelstein \\
+  Department of Computer Science \\
+Boston University \\
+Boston, MA 02215 %\\
+%\email{jeffreyf@bu.edu} \\
+%\homepage{http://cs-people.bu.edu/jeffreyf}
+\and
+Benjamin Hescott \\
+Department of Computer Science \\
+Tufts University \\
+Medford, MA 02155 % \\
+%\email{hescott@tufts.edu} \\
+%\homepage{www.cs.tufts.edu/~hescott}
+}
+% Insert author list here. (Each author must be given
+         % including his/her current address, email and possibly
+         % homepage.  Lines are seperated by \\, different authors
+         % are separated by \and .)
+%%\authorhead{}% If necessary insert running head authors here.
+%%\authorlist{}% If necessary insert title author list here.
+
+\begin{abstract}
+  % Foreword
+  %
+  % context (focus on anyone) why now? - current situation, and why the need is so important
+  Today, the computational complexity of equivalence problems such as the graph isomorphism problem and the Boolean formula equivalence problem remain only partially understood.
+  One of the most important tools for determining the (relative) difficulty of a computational problem is the many-one reduction, which provides a way to encode an instance of one problem into an instance of another.
+  In equivalence problems, the goal is to determine if a pair of strings is related, so a many-one reduction with access to the entire pair may be too powerful.
+  % need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+  A recently introduced type of reduction, the \emph{kernel reduction}, defined only on equivalence problems, allows the transformation of each string in the pair independently.
+  Understanding the limitations of the kernel reduction as compared with the many-one reduction improves our understanding of the limitations of computers in solving problems of equivalence.
+  % task (focus on author) why me? - what was undertaken to address the need
+  We investigate not only these limitations, but also whether classes of equivalence problems have complete problems under kernel reductions.
+  % object (focus on document) why this document - what the document covers
+  This paper provides a detailed collection of basic results about kernel reductions.
+
+  % Summary
+  %
+  % findings (focus on author) what? - what the work revealed when performing the task
+  After exploring possible definitions of complexity classes of equivalence relations, we prove that polynomial time kernel reductions are strictly less powerful than polynomial time many-one reductions.
+  We also provide sufficient conditions for complete problems under kernel reductions, show that completeness under kernel reductions can sometimes imply completeness under many-one reductions, and finally prove that equivalence problems of intermediate difficulty can exist under the right conditions.
+  % conclusion (focus on readers) so what? - what the findings mean for the audience
+  Though kernel reductions share some basic properties with many-one reductions, ultimately the number and size of equivalence classes can prevent the existence of a kernel reduction, regardless of the complexity of the equivalence problem.
+  % perspective (focus on anyone) what now? - what should be done next
+  The most important open problem we leave unsolved is proving the unconditional existence of a complete problem under kernel reductions for some basic complexity classes that are well-known to have complete problems under many-one reductions.
+\end{abstract}
+
+\begin{keywords}
+  Computational complexity, structural complexity, kernel reductions, completeness, equivalence relations
+\end{keywords}
+
+\begin{subject}
+  68Q15, 68Q17
+\end{subject}
 
 \begin{document}
 
-\maketitle
-
-\input{abstract}
-\input{copyright}
+%%% Insert your article text here.
 
 \input{introduction}
 \input{preliminaries}
@@ -118,8 +2062,15 @@
 \input{npeqcompleteness}
 \input{intermediary}
 \input{conclusion}
-\input{acknowledgments}
 
-\printbibliography
+\begin{acknowledge}
+  The authors acknowledge the invaluable help provided by Josh~Grochow and Steve~Homer.
+\end{acknowledge}
+%% \noacknowledge% This command must be here if there are no
+                 % acknowledgements.
+
+\bibliography{journals,\jobname}% Put your bibliography into the above
+                                % filecontents environment!
 
 \end{document}
+
