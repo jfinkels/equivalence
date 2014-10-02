@@ -49,7 +49,8 @@ It is denoted $[x]_R$, or if the context is clear, simply $[x]$.
 Each element $x\in \Sigma^*$ is in exactly one equivalence class, so the equivalence classes of an equivalence relation on $\Sigma^*$ provide a partition of $\Sigma^*$.
 Conversely, a partition of $\Sigma^*$ induces an equivalence relation on $\Sigma^*$ in which a pair of elements is in the relation if they are in the same block of the partition.
 
-A \defn{complete invariant} for an equivalence relation $R$ on $\Sigma^*$ is a function $f\colon \Sigma^*\to T$ such that for all $x,y\in \Sigma^*$, $(x,y)\in R$ if and only if $f(x)=f(y)$.
+A \defn{complete invariant} for an equivalence relation $R$ on $\Sigma^*$ is a function $f\colon \Sigma^* \to \Sigma^*$ such that for each $x$ and $y$ in $\Sigma^*$, we have $(x, y) \in R$ if and only if $f(x) = f(y)$.
+(A \emph{canonical form} for an equivalence relation is a complete invariant satisfying the additional requirement that $f(x) \in [x]_R$; canonical forms, though important, do not appear in this paper.)
 %% (In other words, a complete invariant is a kernel reduction from $R$ to the equality relation.)
 In \autoref{sec:definitions} we will define generalizations of the complete invariant which accept as input an additional witness to the equivalence of $x$ and $y$.
 
@@ -65,7 +66,7 @@ If $R$ and $S$ are equivalence relations on $\Sigma^*$, we say $R$ \defn{kernel 
 We denote this by $R\krnt S$.
 If $f$ is computable in polynomial time, then we say $R$ \defn{polynomial time kernel reduces to} $S$ and use the notation $R\kr S$.
 
-Notice the difference between a kernel reduction and a plain old many-one reduction: a kernel reduction maps $\pair{x}{y}\in R$ to $\pair{f(x)}{f(y)}\in S$, whereas a many-one reduction maps $\pair{x}{y}\in R$ to $f(\pair{x}{y})\in S$, for some polynomial time computable function $f$.
+Notice the difference between a kernel reduction and a many-one reduction: a kernel reduction maps $\pair{x}{y}\in R$ to $\pair{f(x)}{f(y)}\in S$, whereas a many-one reduction maps $\pair{x}{y}\in R$ to $f(\pair{x}{y})\in S$, for some polynomial time computable function $f$.
 Informally, a function which computes a many-one reduction has access to both $x$ and $y$ but a function which computes a kernel reduction has access to only one of $x$ and $y$ at a time.
 Since it is more restrictive, a kernel reduction induces a many-one reduction (namely the function $\pair{x}{y} \mapsto \pair{f(x)}{f(y)}$).
 Still, kernel reductions compose just as many-one reductions do, and $\NPEq$ is closed under polynomial time kernel reductions, allowing us to adapt existing complexity theoretic analysis to the study of complexity of equivalence relations.

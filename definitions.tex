@@ -18,16 +18,19 @@ Many important equivalence problems are in $\NP$, and some are even $\NP$-comple
 We wish to define $\NPEq$ as the class of equivalence problems that are efficiently verifiable, just as we define $\NP$ as the class of all computational problems.
 One way to define $\NPEq$ is simply as the subclass of $\NP$ that includes only equivalence problems.
 % object (focus on document) why this document - what the document covers
-This section provides some other possible definitions and compares them.
+This section provides some other possible definitions based on our intuition about ``efficiently verifiable'' equivalence problems and compares those definitions.
 
 % Summary
 %
 % findings (focus on author) what? - what the work revealed when performing the task
-We are unable to show that any of the definitions below are equivalent to the definition of $\NPEq$ as the subclass of $\NP$ containing only equivalence problems (except the corresponding definition based on an $\NP$-verifier).
+%%% We are unable to show that any of the definitions below are equivalent to the definition of $\NPEq$ as the subclass of $\NP$ containing only equivalence problems (except the corresponding definition based on an $\NP$-verifier).
+We show that the alternative definitions of $\NPEq$ form a hierarchy below $\NPEq$ as defined above.
+In other words, $\NPEq$ is the most general class of efficiently verifiable equivalence problems.
 % conclusion (focus on readers) so what? - what the findings mean for the audience
-For now, we must use that definition when discussing completeness in $\NPEq$ under kernel reductions.
+When attempting to prove that there are complete problems in $\NPEq$ under kernel reductions, we must therefore use this most general definition.
+%%For now, we must use that definition when discussing completeness in $\NPEq$ under kernel reductions.
 % perspective (focus on anyone) what now? - what should be done next
-It remains to show whether any of these alternative definitions are distinct, and whether any of them has a complete problem under kernel reductions.
+It remains to show whether any of the (non-equal) alternative definitions are distinct, and whether any of them has a complete problem under kernel reductions.
 
 For the sake of brevity, in all definitions below, when we write $\exists w$, we mean $\exists w$ with length polynomially bounded with respect to the length of $x$, $y$, or the pair $\pair{x}{y}$ (depending on the requirements of the particular definition).
 
@@ -47,6 +50,7 @@ $\NPEq_1$ coincides with the definition of $\NPEq$ we gave in the previous secti
 \end{definition}
 
 The next two definitions attempt to require that the witness language is itself an equivalence relation, instead of an arbitrary language in $\P$, as in \autoref{def:npeq2}.
+Each of these ``witness equivalence relations'' is a set of pairs of pairs, in which each inner pair includes a witness string.
 \begin{definition}\label{def:npeq3}
   An equivalence relation $R$ is in $\NPEqThree$ if there exists an equivalence relation $R'\in \PEq$ such that
   \begin{displaymath}
@@ -89,7 +93,7 @@ We say that an equivalence relation $R$ on a universe $U$ has a \defn{one-witnes
   \end{displaymath}
 \end{definition}
 
-The definitions of these complexity classes produce a chain of inclusions beginning with $\NPEqEight$ at the bottom and terminating with $\NPEqOne$ at the top (\autoref{fig:inclusions}).
+The definitions of these complexity classes produce a hierarchy of inclusions beginning with $\NPEqEight$ at the bottom and terminating with $\NPEqOne$ at the top (\autoref{fig:inclusions}).
 \begin{figure}
   \caption{\label{fig:inclusions}Inclusions among possible definitions of equivalence relations verifiable in deterministic polynomial time.}
   \begin{center}
@@ -113,7 +117,6 @@ The definitions of these complexity classes produce a chain of inclusions beginn
     \end{tikzpicture}
   \end{center}
 \end{figure}
-The main ideas of these inclusions are presented in the following theorem (the complete proofs are tedious and so are omitted here).
 \begin{theorem}\label{thm:definitions}\mbox{}
   \begin{enumerate}
   \item $\NPEqOne = \NPEqTwo$,
@@ -154,9 +157,10 @@ If this intuition is correct, then we can provide further evidence that $\Ker$ a
   The proof that $\NPEq_4 \subseteq \NPEq_8$ is similar; the only exception is that there is a single witness $w$ instead of two witnesses $w_x$ and $w_y$.
 \end{proof}
 
-\begin{openproblem}
-  Does one of the complexity classes defined here have a complete problem under $\kr$ reductions?
-\end{openproblem}
-\begin{openproblem}
-  Can we prove equality for the remaining classes, or are some of these classes provably distinct?
-\end{openproblem}
+%% %% These are stated in the introduction, so don't need to be restated here.
+%% \begin{openproblem}
+%%   Does one of the complexity classes defined here have a complete problem under $\kr$ reductions?
+%% \end{openproblem}
+%% \begin{openproblem}
+%%   Can we prove equality for the remaining classes, or are some of these classes provably distinct?
+%% \end{openproblem}

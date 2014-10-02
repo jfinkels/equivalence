@@ -12,8 +12,7 @@ kernel reduction as compared with the many-one reduction improves our
 understanding of the limitations of computers in solving problems of
 equivalence.  We investigate not only these limitations, but also whether
 classes of equivalence problems have complete problems under kernel reductions.
-This paper provides a detailed collection of basic results about kernel
-reductions.
+This paper provides a detailed collection of results about kernel reductions.
 
 After exploring possible definitions of complexity classes of equivalence
 relations, we prove that polynomial time kernel reductions are strictly less
