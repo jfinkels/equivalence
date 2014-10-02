@@ -116,12 +116,21 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   If $p$ is the polynomial which bounds the running time of $M$, then the running time of this algorithm is $6p\left(\left|\pair{1^n}{1^n}\right|\right)+c$, where $c$ is a constant which represents the time needed to account for the implementation of $A$ (the control of the simulations of $M$, performing logical conjunctions, etc.).
   Hence the running time of $A$ is polynomial in $n$.
 
-  Now we can define the set $R_K$ by
-  \begin{align*}
-    R_K = {} & \lb\pair{u}{v} \st u=v\rb \\
-    & \cup \lb\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}} \st \textnormal{1 through 4 below are satisfied}\rb
-  \end{align*}
-  where the conditions are
+  %% Now we can define the set $R_K$ by
+  %% \begin{align*}
+  %%   R_K = {} & \lb\pair{u}{v} \st u=v\rb \\
+  %%   & \cup \lb\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}} \st \textnormal{1 through 4 below are satisfied}\rb
+  %% \end{align*}
+  %% where the conditions are
+  %% \begin{enumerate}
+  %% \item\label{itm:machine} $M$ is a polynomially clocked Turing machine of type $\mathcal{C}$,
+  %% \item\label{itm:emx} $A$ accepts $\pair{M}{|x|}$ within $t_x$ steps,
+  %% \item\label{itm:emy} $A$ accepts $\pair{M}{|y|}$ within $t_y$ steps,
+  %% \item\label{itm:accepts} $M$ accepts $\pair{x}{y}$.
+  %% \end{enumerate}
+  %% We claim that $R_K$ is in $\CRAZYEq$ and $\CEq$-hard.
+  Now we can define the set $R_K$ as follows.
+  A pair of strings $\pair{u}{v}$ is in $R_K$ if and only if either $u = v$ or $u$ and $v$, when interpreted as strings of the form $\triple{M}{x}{1^{t_x}}$ and $\triple{M}{y}{1^{t_y}}$, respectively, satisfy the four conditions
   \begin{enumerate}
   \item\label{itm:machine} $M$ is a polynomially clocked Turing machine of type $\mathcal{C}$,
   \item\label{itm:emx} $A$ accepts $\pair{M}{|x|}$ within $t_x$ steps,
