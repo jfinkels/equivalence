@@ -78,7 +78,7 @@ The next two definitions attempt to allow the possibility of not just a simple s
   \end{displaymath}
 \end{definition}
 
-The final two definitions attempt to describe equivalence relations for which there is a ``witnessed complete invariant'', which maps equivalent strings to equal strings when given access to some witness of their equivalence.
+The final two definitions attempt to describe equivalence relations for which there is a ``witnessed complete invariant''\kern-0.5em, which maps equivalent strings to equal strings when given access to some witness of their equivalence.
 We say that an equivalence relation $R$ on a universe $U$ has a \defn{one-witness complete invariant} if there exists a function $f\colon U\times S\to T$ such that $(x,y)\in R$ if and only if $\exists w\in S\colon f(x, w)=f(y, w)$, and we say that it has a \defn{two-witness complete invariant} if $(x, y)\in R$ if and only if $\exists w_x, w_y\in S\colon f(x, w_x)=f(y, w_y)$.
 \begin{definition}\label{def:npeq7}
   An equivalence relation $R$ is in $\NPEqSeven$ if it has a polynomial time computable two-witness complete invariant, that is, a function $f\in\FP$ such that
