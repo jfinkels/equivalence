@@ -49,20 +49,20 @@ Before proving that, we require the following lemma showing that kernel reductio
   \item $f([w]_R) \subseteq \hat{f}([w]_R)$ for any $w \in \Sigma^*$.
   \end{itemize}
 \end{lemma}
-\begin{proof}
-  First, we prove that $\hat{f}$ is injective.
-  Let $[x]_R$ and $[y]_R$ be distinct equivalence classes in $R$.
-  Suppose $\hat{f}([x]_R) = \hat{f}([y]_R)$, so $[f(x)]_S = [f(y)]_S$.
-  In other words, $\pair{f(x)}{f(y)} \in S$.
-  By definition of the kernel reduction $f$, this implies $\pair{x}{y} \in R$.
-  Therefore $[x]_R = [y]_R$.
+%% \begin{proof}
+%%   First, we prove that $\hat{f}$ is injective.
+%%   Let $[x]_R$ and $[y]_R$ be distinct equivalence classes in $R$.
+%%   Suppose $\hat{f}([x]_R) = \hat{f}([y]_R)$, so $[f(x)]_S = [f(y)]_S$.
+%%   In other words, $\pair{f(x)}{f(y)} \in S$.
+%%   By definition of the kernel reduction $f$, this implies $\pair{x}{y} \in R$.
+%%   Therefore $[x]_R = [y]_R$.
 
-  Next, we prove that $f([w]_R) \subseteq \hat{f}([w]_R)$.
-  Since $w \in [w]_R$, it follows that $f(w) \in f([w]_R)$.
-  Let $x \in f([w]_R)$.
-  Then $\pair{x}{f(w)} \in S$, so $x \in [f(w)]_S$.
-  Therefore $f([w]_R) \subseteq [f(w)]_S = \hat{f}([w]_R)$.
-\end{proof}
+%%   Next, we prove that $f([w]_R) \subseteq \hat{f}([w]_R)$.
+%%   Since $w \in [w]_R$, it follows that $f(w) \in f([w]_R)$.
+%%   Let $x \in f([w]_R)$.
+%%   Then $\pair{x}{f(w)} \in S$, so $x \in [f(w)]_S$.
+%%   Therefore $f([w]_R) \subseteq [f(w)]_S = \hat{f}([w]_R)$.
+%% \end{proof}
 
 \begin{proposition}\label{prop:noreduction}
   Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
@@ -72,27 +72,27 @@ Before proving that, we require the following lemma showing that kernel reductio
   Let $r_1, \dotsc, r_n$ and $s_1, \dotsc, s_m$ denote representatives of the equivalence classes in $R$ and $S$, respectively.
   If the problem of deciding whether $x \in [r_i]_R$ for any $x \in \Sigma^*$ is recognizable, then $R \mornt S$.
 \end{proposition}
-\begin{proof}
-  Assume that $R \krnt S$.
-  By \autoref{lem:image}, the function mapping equivalence classes in $R$ to equivalence classes in $S$ induced by the kernel reduction is injective.
-  However, this violates the pigeonhole principle.
-  Therefore no kernel reduction exists from $R$ to $S$.
+%% \begin{proof}
+%%   Assume that $R \krnt S$.
+%%   By \autoref{lem:image}, the function mapping equivalence classes in $R$ to equivalence classes in $S$ induced by the kernel reduction is injective.
+%%   However, this violates the pigeonhole principle.
+%%   Therefore no kernel reduction exists from $R$ to $S$.
 
-  On the other hand, there is a many-one reduction from $R$ to $S$.
-  First, suppose $S$ has $m$ equivalence classes and let $s_1, \dotsc, s_m$ be representatives of each equivalence class in $S$.
-  On input $\pair{x}{y}$, for each $i \in \{1, \dotsc, n\}$ in parallel, determine if $x \in [r_i]_R$ and $y \in [r_i]_R$ (also in parallel).
-  If $x$ and $y$ are both in $[r_i]_R$ for some $i$, output $\pair{s_i}{s_i}$, otherwise output $\pair{s_1}{s_2}$.
+%%   On the other hand, there is a many-one reduction from $R$ to $S$.
+%%   First, suppose $S$ has $m$ equivalence classes and let $s_1, \dotsc, s_m$ be representatives of each equivalence class in $S$.
+%%   On input $\pair{x}{y}$, for each $i \in \{1, \dotsc, n\}$ in parallel, determine if $x \in [r_i]_R$ and $y \in [r_i]_R$ (also in parallel).
+%%   If $x$ and $y$ are both in $[r_i]_R$ for some $i$, output $\pair{s_i}{s_i}$, otherwise output $\pair{s_1}{s_2}$.
 
-  Since each string must be in exactly one of the equivalence classes of $R$, this function must halt when searching for the equivalence class for the strings $x$ and $y$.
-  If $\pair{x}{y} \in R$, then they are in the same equivalence class of $R$ and hence the function will output $\pair{s_i}{s_i}$, which is in $S$ by the reflexivity of $S$.
-  If $\pair{x}{y} \notin R$, then they are in different equivalence classes and hence the function will output $\pair{s_1}{s_2}$, which is not in $S$ because $[s_1]_S \neq [s_2]_S$ by hypothesis.
-  Therefore this function is a computable many-one reduction from $R$ to $S$.
-\end{proof}
+%%   Since each string must be in exactly one of the equivalence classes of $R$, this function must halt when searching for the equivalence class for the strings $x$ and $y$.
+%%   If $\pair{x}{y} \in R$, then they are in the same equivalence class of $R$ and hence the function will output $\pair{s_i}{s_i}$, which is in $S$ by the reflexivity of $S$.
+%%   If $\pair{x}{y} \notin R$, then they are in different equivalence classes and hence the function will output $\pair{s_1}{s_2}$, which is not in $S$ because $[s_1]_S \neq [s_2]_S$ by hypothesis.
+%%   Therefore this function is a computable many-one reduction from $R$ to $S$.
+%% \end{proof}
 
-\begin{example}
-  Let $R = \mathbb{Z} / 3 \mathbb{Z}$ and $S = \mathbb{Z} / 2 \mathbb{Z}$.
-  Then $R \mornt S$ but $R \nkrnt S$.
-\end{example}
+%% \begin{example}
+%%   Let $R = \mathbb{Z} / 3 \mathbb{Z}$ and $S = \mathbb{Z} / 2 \mathbb{Z}$.
+%%   Then $R \mornt S$ but $R \nkrnt S$.
+%% \end{example}
 
 As seen in \autoref{prop:noreduction}, for equivalence relations $R$ and $S$ with a finite number of equivalence classes, a kernel reduction from $R$ to $S$ can only exist if the number of equivalence classes in $R$ is at most the number of equivalence classes in $S$.
 However, most ``interesting'' equivalence relations have an infinite number of equivalence classes.
@@ -151,12 +151,12 @@ This is essentially a special case of \autocite[Lemma~2.3]{gz14}.
   We have shown this for arbitrary polynomials (which came from the definitions of potential reducibility and kernel sparsity), so we can conclude that the result holds for all equivalence relations $R$ and $S$ which are kernel dense and kernel sparse, respectively.
 \end{proof}
 
-\begin{example}
-  Consider the equality relation and the ``equal lengths'' relation (that is, $x$ relates to $y$ if $|x| = |y|$).
-  The equality relation is kernel dense, since there are $2^n$ equivalence classes for strings of length at most $n$ (one for each string).
-  The ``equal lengths'' relation is kernel sparse, since there are $n + 1$ equivalence classes for strings of length at most $n$ (one for each length, including length $0$).
-  Therefore there is no polynomial time kernel reduction from the equality relation to the ``equal lengths'' relation.
-\end{example}
+%% \begin{example}
+%%   Consider the equality relation and the ``equal lengths'' relation (that is, $x$ relates to $y$ if $|x| = |y|$).
+%%   The equality relation is kernel dense, since there are $2^n$ equivalence classes for strings of length at most $n$ (one for each string).
+%%   The ``equal lengths'' relation is kernel sparse, since there are $n + 1$ equivalence classes for strings of length at most $n$ (one for each length, including length $0$).
+%%   Therefore there is no polynomial time kernel reduction from the equality relation to the ``equal lengths'' relation.
+%% \end{example}
 
 This places a strong restriction on equivalence relations which are hard (or complete) under polynomial time kernel reductions: they cannot be kernel sparse.
 
@@ -164,11 +164,11 @@ This places a strong restriction on equivalence relations which are hard (or com
   Let $\CEq$ be a complexity class of equivalence relations containing the equality relation $R_{eq}$.
   If an equivalence relation $R$ is kernel sparse, then it is not $\CEq$-hard.
 \end{corollary}
-\begin{proof}
-  $R_{eq}$ is kernel dense since it contains $2^n$ equivalence classes at each length $n$, one for each distinct string.
-  Since $R$ is kernel sparse, then $R_{eq} \nkr R$ by \autoref{thm:density}.
-  Since $R_{eq} \in \CEq$, the equivalence relation $R$ cannot be $\CEq$-hard.
-\end{proof}
+%% \begin{proof}
+%%   $R_{eq}$ is kernel dense since it contains $2^n$ equivalence classes at each length $n$, one for each distinct string.
+%%   Since $R$ is kernel sparse, then $R_{eq} \nkr R$ by \autoref{thm:density}.
+%%   Since $R_{eq} \in \CEq$, the equivalence relation $R$ cannot be $\CEq$-hard.
+%% \end{proof}
 
 Polynomial time many-one reductions are more powerful than polynomial time kernel reductions, because the former are not subject to restrictions on numbers of equivalence classes as in \autoref{prop:noreduction} and \autoref{thm:density}.
 The idea behind \autoref{thm:density} leads to a construction of equivalence relations $R$ and $S$ between which there is a polynomial time many-one reduction but no polynomial time kernel reduction.
@@ -191,32 +191,32 @@ The idea behind \autoref{thm:density} leads to a construction of equivalence rel
 \begin{lemma}
   $R$ and $S$ are equivalence relations.
 \end{lemma}
-\begin{proof}
-  $R$ and $S$ are equivalence relations if $\{R_n\}_{n \in \mathbb{Z}^+}$ and $\{S_n\}_{n \in \mathbb{Z}^+}$ are valid partitions of $\Sigma^*$, so it suffices to show that each set in the collection is nonempty, the union of each collection includes all nonempty strings in $\Sigma^*$, and each collection is pairwise disjoint.
+%% \begin{proof}
+%%   $R$ and $S$ are equivalence relations if $\{R_n\}_{n \in \mathbb{Z}^+}$ and $\{S_n\}_{n \in \mathbb{Z}^+}$ are valid partitions of $\Sigma^*$, so it suffices to show that each set in the collection is nonempty, the union of each collection includes all nonempty strings in $\Sigma^*$, and each collection is pairwise disjoint.
 
-  The set $R_n$ includes at least one string of length $n$, so each $R_n$ is nonempty.
-  Any string of length $n$ is in $R_n$, so $\Sigma^* \subseteq \cup_n R_n$.
-  If $m$ and $n$ are distinct positive integers, no string can have both length $m$ and length $n$, so $R_m \cap R_n = \emptyset$.
-  Hence $\{R_n\}_n$ is a valid partition.
+%%   The set $R_n$ includes at least one string of length $n$, so each $R_n$ is nonempty.
+%%   Any string of length $n$ is in $R_n$, so $\Sigma^* \subseteq \cup_n R_n$.
+%%   If $m$ and $n$ are distinct positive integers, no string can have both length $m$ and length $n$, so $R_m \cap R_n = \emptyset$.
+%%   Hence $\{R_n\}_n$ is a valid partition.
 
-  We need to show $p_n(n) + 1 \leq p_{n + 1}(n + 1)$ in order to prove that there is at least one string (of length $p_n(n) + 1$, for example) in $S_n$.
-  \begin{align*}
-    p_n(n) + 1 &= n (n^n) + 1 \\
-    &\leq n (n^n) + n^n \\ %% && \text{(since } 1 \leq n^n \text{ for each } n \text{)} \\
-    &= (n + 1) n^n \\
-    &\leq (n + 1) (n + 1)^{n + 1} \\
-    &= p_{n + 1}(n + 1).
-  \end{align*}
-  Thus there is at least one string in $S_n$.
-  Next, for any string $x$, there exists an $n$ such that $p_n(n) + 1 \leq |x| \leq p_{n + 1}(n + 1)$, so every string in $\Sigma^*$ is in some $S_n$.
-  %% TODO I don't know how to explain this further.
-  Finally, suppose $m$ and $n$ are distinct positive integers and assume without loss of generality that $m < n$, or in other words, that $m + 1 \leq n$.
-  Then $p_{m + 1}(m + 1) \leq p_n(n) < p_n(n) + 1$, so no string of length at most $p_{m + 1}(m + 1)$ can also have length at least $p_n(n) + 1$.
-  Hence, $S_m$ and $S_n$ are disjoint.
-  Thus, $\{S_n\}_n$ is a valid partition.
+%%   We need to show $p_n(n) + 1 \leq p_{n + 1}(n + 1)$ in order to prove that there is at least one string (of length $p_n(n) + 1$, for example) in $S_n$.
+%%   \begin{align*}
+%%     p_n(n) + 1 &= n (n^n) + 1 \\
+%%     &\leq n (n^n) + n^n \\ %% && \text{(since } 1 \leq n^n \text{ for each } n \text{)} \\
+%%     &= (n + 1) n^n \\
+%%     &\leq (n + 1) (n + 1)^{n + 1} \\
+%%     &= p_{n + 1}(n + 1).
+%%   \end{align*}
+%%   Thus there is at least one string in $S_n$.
+%%   Next, for any string $x$, there exists an $n$ such that $p_n(n) + 1 \leq |x| \leq p_{n + 1}(n + 1)$, so every string in $\Sigma^*$ is in some $S_n$.
+%%   %% TODO I don't know how to explain this further.
+%%   Finally, suppose $m$ and $n$ are distinct positive integers and assume without loss of generality that $m < n$, or in other words, that $m + 1 \leq n$.
+%%   Then $p_{m + 1}(m + 1) \leq p_n(n) < p_n(n) + 1$, so no string of length at most $p_{m + 1}(m + 1)$ can also have length at least $p_n(n) + 1$.
+%%   Hence, $S_m$ and $S_n$ are disjoint.
+%%   Thus, $\{S_n\}_n$ is a valid partition.
 
-  Since both collections are valid partitions, the relations $R$ and $S$ are both equivalence relations.
-\end{proof}
+%%   Since both collections are valid partitions, the relations $R$ and $S$ are both equivalence relations.
+%% \end{proof}
 
 Again, this is a special case of \autocite[Theorem~5.1]{bcffm}, but has a much simpler proof and sufficiently demonstrates that polynomial time kernel reductions and polynomial time many-one reductions are different.
 

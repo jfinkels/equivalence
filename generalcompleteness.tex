@@ -58,20 +58,20 @@ Before proving this theorem, we will provide some immediate corollaries of this 
   %\item $\coNPEq$ contains a problem which is hard for $\PEq$
   \end{enumerate}
 \end{corollary}
-\begin{proof}\mbox{}
-  \begin{enumerate}
-  %\item $\EXP$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in exponential time).
-  \item $\PSPACE$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in polynomial space).
-  \item
-    First, $(\forall(\DKP \cup \mathsf{co}\DKP))\mathsf{Eq} = (\forall \DKP)\mathsf{Eq}$, since $\DKP$ is closed under complement.  % \autocite[Proposition~8.4 (a)]{bdg95}
-    Next, $(\forall \DKP)\mathsf{Eq} = \PKPEq$, since $\forall \DKP = \PKP$.  % \autocite[Proposition~8.3 (g)]{bdg95}
-    Now if we choose $\mathcal{C} = \DKP$ in \autoref{thm:generalcompleteness}, then $\PKPEq$ has a problem that is hard for $\DKPEq$ under $\kr$ reductions.
-    \qedhere
-  %\item If $\mathcal{C}=\SKP$, then the $\kr$-hard problem is in $(\forall(\SKP\cup\mathsf{co}\SKP))\mathsf{Eq}=(\forall(\SKP\cup\PKP))\mathsf{Eq}=\PKPOPEq$.
-  %\item Same as the previous justification, but starting with $\mathcal{C}=\PKP$.\qedhere
-%  \item Same as the previous justification, but starting with $\mathcal{C}=\P$.
-  \end{enumerate}
-\end{proof}
+%% \begin{proof}\mbox{}
+%%   \begin{enumerate}
+%%   %\item $\EXP$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in exponential time).
+%%   \item $\PSPACE$ is closed under complement (because it is a deterministic complexity class) and polynomially bounded universal quantification (because we can simulate the universal guess deterministically in polynomial space).
+%%   \item
+%%     First, $(\forall(\DKP \cup \mathsf{co}\DKP))\mathsf{Eq} = (\forall \DKP)\mathsf{Eq}$, since $\DKP$ is closed under complement.  % \autocite[Proposition~8.4 (a)]{bdg95}
+%%     Next, $(\forall \DKP)\mathsf{Eq} = \PKPEq$, since $\forall \DKP = \PKP$.  % \autocite[Proposition~8.3 (g)]{bdg95}
+%%     Now if we choose $\mathcal{C} = \DKP$ in \autoref{thm:generalcompleteness}, then $\PKPEq$ has a problem that is hard for $\DKPEq$ under $\kr$ reductions.
+%%     \qedhere
+%%   %\item If $\mathcal{C}=\SKP$, then the $\kr$-hard problem is in $(\forall(\SKP\cup\mathsf{co}\SKP))\mathsf{Eq}=(\forall(\SKP\cup\PKP))\mathsf{Eq}=\PKPOPEq$.
+%%   %\item Same as the previous justification, but starting with $\mathcal{C}=\PKP$.\qedhere
+%% %  \item Same as the previous justification, but starting with $\mathcal{C}=\P$.
+%%   \end{enumerate}
+%% \end{proof}
 
 More specifically, this means that $\coNPEq$ (which equals $\POPEq$) has a problem that is $\kr$-hard for $\PEq$ (which equals $\DOPEq$).
 This corollary also leads to \autocite[Theorem~8.7, part~1]{bcffm}, which is restated here.
@@ -79,11 +79,11 @@ This corollary also leads to \autocite[Theorem~8.7, part~1]{bcffm}, which is res
 \begin{corollary}[{\autocite[Theorem~8.7, part~1]{bcffm}}]
   If $\NP = \coNP$ then $\NPEq$ has a complete problem under polynomial time kernel reductions.
 \end{corollary}
-\begin{proof}
-  If $\NP = \coNP$, then the polynomial hierarchy collapses to $\POP$, and specifically $\PTP = \DTP = \POP = \coNP = \NP$.
-  From \autoref{cor:hardproblems} we conclude that $\NPEq$ has a $\kr$-hard problem for $\NPEq$.
-  Such a problem is by definition $\NPEq$-complete.
-\end{proof}
+%% \begin{proof}
+%%   If $\NP = \coNP$, then the polynomial hierarchy collapses to $\POP$, and specifically $\PTP = \DTP = \POP = \coNP = \NP$.
+%%   From \autoref{cor:hardproblems} we conclude that $\NPEq$ has a $\kr$-hard problem for $\NPEq$.
+%%   Such a problem is by definition $\NPEq$-complete.
+%% \end{proof}
 
 We now return to the proof of \autoref{thm:generalcompleteness} by first providing some motivating ideas.
 Recall the canonical complete problem (sometimes called the ``universal'' problem) for $\NP$ (and indeed for various other complexity classes):
@@ -180,31 +180,30 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   Therefore we have shown that $R_K$ is $\CEq$-hard.
 \end{proof}
 
-\begin{openproblem}
-  Is there a more general characterization of complexity classes which have a $\kr$-hard problem?
-\end{openproblem}
+%% \begin{openproblem}
+%%   Is there a more general characterization of complexity classes which have a $\kr$-hard problem?
+%% \end{openproblem}
 
-\begin{openproblem}\label{open:npeqc}
-  Under what conditions does a complexity class have a complete problem?
-  Can we adapt this idea to create a complete problem for $\PEq$ or $\NPEq$?
-  Is there an $\NPEq$-complete problem unconditionally?
-\end{openproblem}
+%% \begin{openproblem}
+%%   Under what conditions does a complexity class have a complete problem?
+%%   Can we adapt this idea to create a complete problem for $\PEq$ or $\NPEq$?
+%% \end{openproblem}
 
-\begin{openproblem}
-  Is the converse of \autoref{cor:sufficient}, or perhaps a partial converse, true?
-  In other words, is it true that the existence of a $\CEq$-complete problem problem implies closure under complement or universal quantification (or both)?
-  If so, this would be evidence that no $\NPEq$-complete problem exists, since this would imply $\NP = \coNP$.
-\end{openproblem}
+%% \begin{openproblem}
+%%   Is the converse of \autoref{cor:sufficient}, or perhaps a partial converse, true?
+%%   In other words, is it true that the existence of a $\CEq$-complete problem problem implies closure under complement or universal quantification (or both)?
+%%   If so, this would be evidence that no $\NPEq$-complete problem exists, since this would imply $\NP = \coNP$.
+%% \end{openproblem}
 
-\begin{openproblem}
-  Can this theorem be used to construct $\krnt$-hard problems for smaller complexity classes such as $\NLEq$ under the appropriate time-bounded reduction?
-  Larger classes such as $\EXPEq$?
-\end{openproblem}
+%% \begin{openproblem}
+%%   Can this theorem be used to construct $\krnt$-hard problems for smaller complexity classes such as $\NLEq$ under the appropriate time-bounded reduction?
+%%   Larger classes such as $\EXPEq$?
+%% \end{openproblem}
 
-\begin{openproblem}
-  To what other equivalence relations does our $\kr$-hard problem reduce?
-  Are there ``natural'' $\kr$-hard problems in complexity classes which satisfy the conditions in \autoref{thm:generalcompleteness}?
-\end{openproblem}
+%% \begin{openproblem}
+%%   To what other equivalence relations does our $\kr$-hard problem reduce?
+%%   Are there ``natural'' $\kr$-hard problems in complexity classes which satisfy the conditions in \autoref{thm:generalcompleteness}?
+%% \end{openproblem}
 
 %% As an additional corollary, we show that the equivalence relation $R_K$ is necessarily hard given a known hard equivalence relation under $\kr$ reductions.
 
