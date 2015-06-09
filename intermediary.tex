@@ -52,26 +52,27 @@ The pair of empty strings $(\lambda, \lambda)$ is required in the above definiti
   If $R$ and $S$ are equivalence relations, then $R \kj S$ is an equivalence relation.
 \end{lemma}
 \begin{proof}
-  Since the equivalence class of the empty string, $[\lambda]$, is a singleton set, each of the three properties required of an equivalence relation hold for that set.
-  Thus we need only consider nonempty strings.
-  Let $x$, $y$ and $z$ be nonempty strings in $\Sigma^*$.
-  
-  Since $x$ is non-empty, $x = x'0$ or $x = x'1$.
-  If $x = x'0$, then $\pair{x'}{x'} \in R$ since $R$ is reflexive.
-  If $x = x'1$, then $\pair{x'}{x'} \in S$ since $R$ is reflexive.
-  Hence $\pair{x}{x}\in R\kj S$ regardless of the last bit of $x$.
-  Therefore $R \kj S$ is reflexive.
-  
-  Suppose $\pair{x}{y}\in R\kj S$.
-  Then either $x=x'0$, $y=y'0$ and $\pair{x'}{y'}\in R$ or $x=x'1$, $y=y'1$ and $\pair{x'}{y'}\in S$.
-  In either case, symmetry follows from the symmetry of $R$ or $S$.
-
-  Suppose $\pair{x}{y}$ and $\pair{y}{z}$ are both in $R\kj S$.
-  In the case that $x=x'0$, $y=y'0$ and $\pair{x'}{y'}\in R$, and that $z=z'0$ and $\pair{y'}{z'}\in R$, then by the transitivity of $R$, $\pair{x'}{z'}\in R$, so $\pair{x}{z}\in R\kj S$.
-  The argument is similar in the case that $x=x'1$, $y=y'1$ and $z=z'1$.
-  It is a contradiction for the other two cases to exist, since $y$ cannot be equal to both $y'0$ and $y'1$.
-
-  Since $R\kj S$ is reflexive, symmetric and transitive, $R\kj S$ is an equivalence relation.
+  The proof follows immediately from the definitions.
+  %% Since the equivalence class of the empty string, $[\lambda]$, is a singleton set, each of the three properties required of an equivalence relation hold for that set.
+  %% Thus we need only consider nonempty strings.
+  %% Let $x$, $y$ and $z$ be nonempty strings in $\Sigma^*$.
+  %%
+  %% Since $x$ is non-empty, $x = x'0$ or $x = x'1$.
+  %% If $x = x'0$, then $\pair{x'}{x'} \in R$ since $R$ is reflexive.
+  %% If $x = x'1$, then $\pair{x'}{x'} \in S$ since $R$ is reflexive.
+  %% Hence $\pair{x}{x}\in R\kj S$ regardless of the last bit of $x$.
+  %% Therefore $R \kj S$ is reflexive.
+  %%
+  %% Suppose $\pair{x}{y}\in R\kj S$.
+  %% Then either $x=x'0$, $y=y'0$ and $\pair{x'}{y'}\in R$ or $x=x'1$, $y=y'1$ and $\pair{x'}{y'}\in S$.
+  %% In either case, symmetry follows from the symmetry of $R$ or $S$.
+  %%
+  %% Suppose $\pair{x}{y}$ and $\pair{y}{z}$ are both in $R\kj S$.
+  %% In the case that $x=x'0$, $y=y'0$ and $\pair{x'}{y'}\in R$, and that $z=z'0$ and $\pair{y'}{z'}\in R$, then by the transitivity of $R$, $\pair{x'}{z'}\in R$, so $\pair{x}{z}\in R\kj S$.
+  %% The argument is similar in the case that $x=x'1$, $y=y'1$ and $z=z'1$.
+  %% It is a contradiction for the other two cases to exist, since $y$ cannot be equal to both $y'0$ and $y'1$.
+  %%
+  %% Since $R\kj S$ is reflexive, symmetric and transitive, $R\kj S$ is an equivalence relation.
 \end{proof}
 
 \begin{proposition}\label{prop:symdiff}
@@ -115,14 +116,15 @@ Elements of ${G[r]}^2$ are pairs of strings whose lengths are in the ``even gaps
   ${G[r]}^2$ and $\overline{G[r]}^2$ are \defn{partial equivalence relations} (that is, they are symmetric and transitive).
 \end{lemma}
 \begin{proof}
-  We will prove the theorem for ${G[r]}^2$; a symmetric argument proves the theorem for $\overline{G[r]}^2$.
-
-  Let $x,y\in\Sigma^*$.
-  Suppose $\pair{x}{y}\in {G[r]}^2$, so the lengths of $x$ and $y$ are both in an even gap of $r$.
-  Then $\pair{y}{x}\in{G[r]}^2$, so ${G[r]}^2$ is symmetric.
-  Now let $z\in\Sigma^*$ and suppose also that $\pair{y}{z}\in {G[r]}^2$.
-  Then $y$ and $z$ are both in an even gap of $r$, so $x$, $y$ and $z$ are all in some even gap of $r$, and hence $\pair{x}{z}\in {G[r]}^2$.
-  Therefore ${G[r]}^2$ is transitive.
+  The proof follows immediately from the definitions.
+  %% We will prove the theorem for ${G[r]}^2$; a symmetric argument proves the theorem for $\overline{G[r]}^2$.
+  %%
+  %% Let $x,y\in\Sigma^*$.
+  %% Suppose $\pair{x}{y}\in {G[r]}^2$, so the lengths of $x$ and $y$ are both in an even gap of $r$.
+  %% Then $\pair{y}{x}\in{G[r]}^2$, so ${G[r]}^2$ is symmetric.
+  %% Now let $z\in\Sigma^*$ and suppose also that $\pair{y}{z}\in {G[r]}^2$.
+  %% Then $y$ and $z$ are both in an even gap of $r$, so $x$, $y$ and $z$ are all in some even gap of $r$, and hence $\pair{x}{z}\in {G[r]}^2$.
+  %% Therefore ${G[r]}^2$ is transitive.
 \end{proof}
 
 We are now prepared to prove the main technical theorem which will allow us to construct an equivalence relation which is ``between'' two complexity classes.
