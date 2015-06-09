@@ -1,6 +1,6 @@
 %% definitions.tex - definitions of kernel reductions and equivalence classes
 %%
-%% Copyright 2010, 2011, 2012, 2014 Jeffrey Finkelstein.
+%% Copyright 2010, 2011, 2012, 2014, 2015 Jeffrey Finkelstein.
 %%
 %% This LaTeX markup document is made available under the terms of the Creative
 %% Commons Attribution-ShareAlike 4.0 International License,
@@ -34,127 +34,151 @@ It remains to show whether any of the (non-equal) alternative definitions are di
 
 For the sake of brevity, in all definitions below, when we write $\exists w$, we mean $\exists w$ with length polynomially bounded with respect to the length of $x$, $y$, or the pair $\pair{x}{y}$ (depending on the requirements of the particular definition).
 
-The first two definitions are analogs of the two fundamental definitions of \NP.
-$\NPEq_1$ coincides with the definition of $\NPEq$ we gave in the previous section.
+The first definition is the analog of the fundamental definition of $\NP$; it is the formal definition of the class $\NPEq$ introduced in the previous section.
+
 \begin{definition}\label{def:npeq1}
-  An equivalence relation $R$ is in $\NPEqOne$ if there exists a non-deterministic Turing machine, call it $N$, which halts in time polynomial in the length of the input, such that
+  An equivalence relation $R$ is in $\NPEq$ if there is a polynomial $p$ and a nondeterministic Turing machine $N$ such that for each $x$ and $y$, the machine $N$ halts in time $p(\left|\pair{x}{y}\right|)$ and
   \begin{displaymath}
-    \pair{x}{y}\in R\iff N(\pair{x}{y})\plain{accepts}
+    \pair{x}{y} \in R \iff N(\pair{x}{y}) \text{ accepts}.
   \end{displaymath}
 \end{definition}
-\begin{definition}\label{def:npeq2}
-  An equivalence relation $R$ is in $\NPEqTwo$ if there exists a language $L\in\P$ such that
+%% \begin{definition}\label{def:npeq2}
+%%   An equivalence relation $R$ is in $\NPEqTwo$ if there exists a language $L\in\P$ such that
+%%   \begin{displaymath}
+%%     \pair{x}{y}\in R\iff \exists w\colon \pair{\pair{x}{y}}{w}\in L
+%%   \end{displaymath}
+%% \end{definition}
+
+Just as there is a definition of $\NP$ using polynomial-time verifiers, there is an equivalent definition for $\NPEq$ using polynomial-time verifiers.
+However, this definition feels a bit unnatural when dealing with equivalence relations, since the witness language would be a relation (of the form ``$(x, y)$ relates to $w$''), but not an \emph{equivalence} relation.
+The next two definitions attempt to require that the witness language is itself an equivalence relation, instead of an arbitrary language in $\P$.
+Each of these ``witness equivalence relations'' is a set of pairs of pairs, in which each inner pair includes a witness string.
+
+\begin{definition}\label{def:npeq3}
+  Suppose $R'$ is an equivalence relation in $\PEq$.
+  An equivalence relation $R$ is a \emph{two-witness projection} of $R'$ if
   \begin{displaymath}
-    \pair{x}{y}\in R\iff \exists w\colon \pair{\pair{x}{y}}{w}\in L
+    \pair{x}{y} \in R \iff \exists w_x, w_y \colon \pair{\pair{x}{w_x}}{\pair{y}{w_y}} \in R'\kern-0.3em.
   \end{displaymath}
+  The class $\Proj_2$ is the collection of all two-witness projections of equivalence relations in $\PEq$.
 \end{definition}
 
-The next two definitions attempt to require that the witness language is itself an equivalence relation, instead of an arbitrary language in $\P$, as in \autoref{def:npeq2}.
-Each of these ``witness equivalence relations'' is a set of pairs of pairs, in which each inner pair includes a witness string.
-\begin{definition}\label{def:npeq3}
-  An equivalence relation $R$ is in $\NPEqThree$ if there exists an equivalence relation $R'\in \PEq$ such that
-  \begin{displaymath}
-    \pair{x}{y}\in R\iff \exists w_x,w_y\colon \pair{\pair{x}{w_x}}{\pair{y}{w_y}}\in R'
-  \end{displaymath}
-\end{definition}
 \begin{definition}\label{def:npeq4}
-  An equivalence relation $R$ is in $\NPEqFour$ if there exists an equivalence relation $R'\in \PEq$ such that
+  Suppose $R'$ is an equivalence relation in $\PEq$.
+  An equivalence relation $R$ is a \emph{one-witness projection} of $R'$ if
   \begin{displaymath}
-    \pair{x}{y}\in R\iff \exists w\colon \pair{\pair{x}{w}}{\pair{y}{w}}\in R'
+    \pair{x}{y} \in R \iff \exists w \colon \pair{\pair{x}{w}}{\pair{y}{w}} \in R'\kern-0.3em.
   \end{displaymath}
+  The class $\Proj_1$ is the collection of all one-witness projections of equivalence relations in $\PEq$.
 \end{definition}
 
 The next two definitions attempt to allow the possibility of not just a simple string which witnesses the equivalence of $x$ and $y$, but a ``witness function'' which may map $x$ and $y$, along with witness strings, to an equivalence relation in \PEq.
+
 \begin{definition}\label{def:npeq5}
-  An equivalence relation $R$ is in $\NPEqFive$ if there exists an equivalence relation $R'\in \PEq$ and a function $f\in\FP$ such that
+  Suppose $R$ and $R'$ are equivalence relations.
+  A function $f$ is a \emph{nondeterministic polynomial-time two-witness kernel reduction} from $R$ to $R'$ if $f$ is in $\FP$ and
   \begin{displaymath}
-    \pair{x}{y}\in R\iff \exists w_x,w_y\colon \pair{f(x, w_x)}{f(y, w_y)}\in R'
+    \pair{x}{y} \in R \iff \exists w_x, w_y \colon \pair{f(x, w_x)}{f(y, w_y)} \in R'\kern-0.3em.
   \end{displaymath}
+  The class $\Cl_2$ is the closure of $\PEq$ under these reductions.
 \end{definition}
+
 \begin{definition}\label{def:npeq6}
-  An equivalence relation $R$ is in $\NPEqSix$ if there exists an equivalence relation $R'\in \PEq$ and a function $f\in\FP$ such that
+  Suppose $R$ and $R'$ are equivalence relations.
+  A function $f$ is a \emph{nondeterministic polynomial-time one-witness kernel reduction} from $R$ to $R'$ if $f$ is in $\FP$ and
   \begin{displaymath}
-    \pair{x}{y}\in R\iff \exists w\colon \pair{f(x, w)}{f(y, w)}\in R'
+    \pair{x}{y} \in R \iff \exists w \colon \pair{f(x, w)}{f(y, w)} \in R'\kern-0.3em.
   \end{displaymath}
+  The class $\Cl_1$ is the closure of $\PEq$ under these reductions.
 \end{definition}
 
-The final two definitions attempt to describe equivalence relations for which there is a ``witnessed complete invariant''\kern-0.5em, which maps equivalent strings to equal strings when given access to some witness of their equivalence.
-We say that an equivalence relation $R$ on a universe $U$ has a \defn{one-witness complete invariant} if there exists a function $f\colon U\times S\to T$ such that $(x,y)\in R$ if and only if $\exists w\in S\colon f(x, w)=f(y, w)$, and we say that it has a \defn{two-witness complete invariant} if $(x, y)\in R$ if and only if $\exists w_x, w_y\in S\colon f(x, w_x)=f(y, w_y)$.
+The final two definitions attempt to describe equivalence relations for which there is a ``witnessed complete invariant''\kern-0.5em,\kern0.5em which maps equivalent strings to \emph{equal} strings when given access to some witness of their equivalence.
+%% We say that an equivalence relation $R$ on a universe $U$ has a \defn{one-witness complete invariant} if there is a function $f \colon U \times S \to T$ such that $(x, y) \in R$ if and only if $\exists w \in S \colon f(x, w) = f(y, w)$, and we say that it has a \defn{two-witness complete invariant} if $(x, y) \in R$ if and only if $\exists w_x, w_y\in S\colon f(x, w_x)=f(y, w_y)$.
+
 \begin{definition}\label{def:npeq7}
-  An equivalence relation $R$ is in $\NPEqSeven$ if it has a polynomial time computable two-witness complete invariant, that is, a function $f\in\FP$ such that
+  Suppose $R$ is an equivalence relation.
+  A function $f$ is a \emph{nondeterministic polynomial-time two-witness complete invariant} for $R$ if $f$ is in $\FP$ and
   \begin{displaymath}
-    \pair{x}{y}\in R\iff \exists w_x, w_y\colon f(x, w_x) = f(y, w_y)
+    \pair{x}{y} \in R \iff \exists w_x, w_y \colon f(x, w_x) = f(y, w_y).
   \end{displaymath}
-\end{definition}
-\begin{definition}\label{def:npeq8}
-  An equivalence relation $R$ is in $\NPEqEight$ if it has a polynomial time computable one-witness complete invariant, that is, a function $f\in\FP$ such that
-  \begin{displaymath}
-    \pair{x}{y}\in R\iff \exists w\colon f(x, w) = f(y, w)
-  \end{displaymath}
+  The class $\NKer_2$ is the collection of all equivalence relations that admit such a function.
 \end{definition}
 
-The definitions of these complexity classes produce a hierarchy of inclusions beginning with $\NPEqEight$ at the bottom and terminating with $\NPEqOne$ at the top (\autoref{fig:inclusions}).
-\begin{figure}
-  \caption{\label{fig:inclusions}Inclusions among possible definitions of equivalence relations verifiable in deterministic polynomial time.}
-  \begin{center}
-    \begin{tikzpicture}[->]
-      \node at (0, 0) (8) {$\NPEq_8$};
-      \node at (-1, 1) (7) {$\NPEq_7$};
-      \node at (1, 1) (6) {$\NPEq_6$};
-      \node at (3, 1) (4) {$\NPEq_4$};
-      \node at (0, 2) (5) {$\NPEq_5$};
-      \node at (2, 2) (3) {$\NPEq_3$};
-      \node at (0, 3) (2) {$\NPEq_2$};
-      \node at (2, 3) (1) {$\NPEq_1$};
-      \draw (8) to (7);
-      \draw (8) to (6);
-      \draw[<->] (6) to (4);
-      \draw (7) to (5);
-      \draw (6) to (5);
-      \draw[<->] (5) to (3);
-      \draw (5) to (2);
-      \draw[<->] (2) to (1);
-    \end{tikzpicture}
-  \end{center}
-\end{figure}
-\begin{theorem}\label{thm:definitions}\mbox{}
-  \begin{enumerate}
-  \item $\NPEqOne = \NPEqTwo$,
-  \item $\NPEqEight \subseteq \NPEqSix$ and $\NPEqSeven \subseteq \NPEqFive$,
-  \item $\NPEqEight \subseteq \NPEqSeven$ and $\NPEqSix \subseteq \NPEqFive$,
-  \item $\NPEqSix = \NPEqFour$ and $\NPEqFive = \NPEqThree$.
-  \end{enumerate}
+\begin{definition}\label{def:npeq8}
+  Suppose $R$ is an equivalence relation.
+  A function $f$ is a \emph{nondeterministic polynomial-time one-witness complete invariant} for $R$ if $f$ is in $\FP$ and
+  \begin{displaymath}
+    \pair{x}{y} \in R \iff \exists w \colon f(x, w) = f(y, w).
+  \end{displaymath}
+  The class $\NKer_1$ is the collection of all equivalence relations that admit such a function.
+\end{definition}
+
+The definitions of these complexity classes yield a chain of inclusions beginning with $\NKer_1$ and terminating with $\NPEq$.
+%% \begin{figure}
+%%   \caption{\label{fig:inclusions}Inclusions among possible definitions of equivalence relations verifiable in deterministic polynomial time.}
+%%   \begin{center}
+%%     \begin{tikzpicture}[->]
+%%       \node at (0, 0) (8) {$\NPEq_8$};
+%%       \node at (-1, 1) (7) {$\NPEq_7$};
+%%       \node at (1, 1) (6) {$\NPEq_6$};
+%%       \node at (3, 1) (4) {$\NPEq_4$};
+%%       \node at (0, 2) (5) {$\NPEq_5$};
+%%       \node at (2, 2) (3) {$\NPEq_3$};
+%%       \node at (0, 3) (2) {$\NPEq_1$};
+%%       %% \node at (2, 3) (1) {$\NPEq_1$};
+%%       \draw (8) to (7);
+%%       \draw (8) to (6);
+%%       \draw[<->] (6) to (4);
+%%       \draw (7) to (5);
+%%       \draw (6) to (5);
+%%       \draw[<->] (5) to (3);
+%%       \draw (5) to (2);
+%%       %% \draw[<->] (2) to (1);
+%%     \end{tikzpicture}
+%%   \end{center}
+%% \end{figure}
+\begin{theorem}\label{thm:definitions}
+  $\Proj_1 = \Cl_1 = \NKer_1 \subseteq \NKer_2 \subseteq \Proj_2 = \Cl_2 \subseteq \NPEq$.
 \end{theorem}
-\begin{sketch}\mbox{}
-  \begin{enumerate}
-  \item Follows immediately from the standard definitions of \NP.
-  \item Choose the relation $R'$ in the definitions of $\NPEqSix$ and $\NPEqFive$ to be the equality relation.
-  \item Choose $w_x$ and $w_y$ in $\NPEqSeven$ and $\NPEqFive$ to be equal to the $w$ from $\NPEqEight$ and $\NPEqSix$.
-  \item
-    For the forward direction, hard-code the function $f$ from the definitions of $\NPEqSix$ and $\NPEqFive$ into the relation $R'$ in the definitions of $\NPEqFour$ and $\NPEqThree$.
-    For the reverse direction, keep the relation $R'$ and choose the identity function to be $f$ in the definitions of $\NPEqSix$ and $\NPEqFive$.
-    \qedhere
-  \end{enumerate}
+\begin{sketch}
+  $\Proj_1 \subseteq \Cl_1$ by choosing the kernel reduction $f$ to be the identity function.
+  $\Cl_1 \subseteq \NKer_1$ by choosing the complete invariant $f'$ to be
+  \begin{equation*}
+    f'(x, w') =
+    \begin{cases}
+      w'0 & \text{if } \pair{f(x, v)}{f(y, v)} \in R', \text{ where } w' = (y, v) \\
+      x1 & \text{otherwise},
+    \end{cases}
+  \end{equation*}
+  where $f$ is the kernel reduction.
+  $\NKer_1 \subseteq \Proj_1$ by choosing $R'$ to be the equality relation after an application of the complete invariant $f$ to both the left pair and the right pair in the relation.
+
+  $\NKer_1 \subseteq \NKer_2$ by choosing both $w_x$ and $w_y$ to be the witness $w$.
+  $\NKer_2 \subseteq \Cl_2$ by choosing $R'$ to be the equality relation.
+
+  $\Proj_2 \subseteq \Cl_2$ by choosing $f$ to be the identity function.
+  $\Cl_2 \subseteq \Proj_2$ by hardcoding the function $f$ into the relation $R'$.
+
+  $\Proj_2 \subseteq \NPEq$ by defining $N$ to nondeterministically choose $w_x$ and $w_y$ then verify that $\pair{x}{w_x}$ and $\pair{y}{w_y}$ are related under $R'$.
 \end{sketch}
 
-Our one-witness and two-witness complete invariants are special cases of the general complete invariant, as defined in \autoref{sec:preliminaries}.
-In \autocite{fg11}, the authors define the class $\Ker$ as the set of all equivalence relations $R$ that have a polynomial time computable complete invariant.
+We are unable to show $\Cl_2 \subseteq \NKer_2$ using the technique that shows $\Cl_1 \subseteq \NKer_1$ because the complete invariant $f'$ cannot access both of the necessary witnesses for the kernel reduction $f$ in a symmetric way.
+The best we can do is show this inclusion under an assumption.
+
+Our one-witness and two-witness complete invariants are generalizations of the deterministic complete invariant, as defined in \autoref{sec:preliminaries}.
+In \autocite{fg11}, the authors define the class $\Ker$ as the set of all equivalence relations $R$ that have a polynomial-time computable complete invariant.
 They provide evidence that $\Ker$ and $\PEq$ are different by showing that equality of the two classes implies some unlikely collapses in ``higher'' complexity classes.
-Our intuition is that $\NPEq_8$ is different from $\NPEq_6$ (and similarly that $\NPEq_7$ is different from $\NPEq_5$), since the former requires equality while the latter requires only equivalence, in a very broad sense.
-If this intuition is correct, then we can provide further evidence that $\Ker$ and $\PEq$ are different.
+Unfortunately, we are only able to show that $\Cl_2 \subseteq \NKer_2$ under the assumption that $\Ker = \PEq$.
 
-\begin{theorem}
-  If $\Ker = \PEq$, then $\NPEq_8 = \NPEq_6 = \NPEq_4$ and $\NPEq_7 = \NPEq_5 = \NPEq_3$.
-\end{theorem}
+\begin{corollary}
+  If $\Ker = \PEq$, then $\Proj_2 = \Cl_2 = \NKer_2$.
+\end{corollary}
 \begin{proof}
-  Since $\NPEq_8 \subseteq \NPEq_6 = \NPEq_4$ and $\NPEq_7 \subseteq \NPEq_5 = \NPEq_3$ unconditionally, it suffices to show $\NPEq_4 \subseteq \NPEq_8$ and $\NPEq_3 \subseteq \NPEq_7$.
-
-  First, suppose $R \in \NPEq_3$, so there is an $R' \in \PEq$ such that $\pair{x}{y} \in R$ if and only if there are $w_x$ and $w_y$ such that $\pair{\pair{x}{w_x}}{\pair{y}{w_y}} \in R'$.
+  By the previous theorem, it suffices to show $\Proj_2 \subseteq \NKer_2$.
+  Suppose $R \in \Proj_2$, so there is an $R' \in \PEq$ such that $\pair{x}{y} \in R$ if and only if there are $w_x$ and $w_y$ such that $\pair{\pair{x}{w_x}}{\pair{y}{w_y}} \in R'$.
   Since $\Ker = \PEq$, there is a function $f \in \FP$ such that $\pair{\pair{x}{w_x}}{\pair{y}{w_y}} \in R'$ if and only if $f(x, w_x) = f(y, w_y)$.
   Thus there is a function $f$ such that $\pair{x}{y} \in R$ if and only if there are $w_x$ and $w_y$ such that $f(x, w_x) = f(y, w_y)$.
-  Therefore $R \in \NPEq_7$.
-
-  The proof that $\NPEq_4 \subseteq \NPEq_8$ is similar; the only exception is that there is a single witness $w$ instead of two witnesses $w_x$ and $w_y$.
+  Therefore $R \in \NKer_2$.
 \end{proof}
 
 %% %% These are stated in the introduction, so don't need to be restated here.
