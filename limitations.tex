@@ -136,21 +136,18 @@ It is also essentially a special case of \autocite[Lemma~2.3]{gz14}, developed i
   That $R\npot S$ implies $R\nkr S$ was already stated in the text preceding this theorem, so it suffices to show that $R\npot S$.
 
   Assume that $R\pot S$ with the intention of producing a contradiction.
-  Let $p$ be the polynomial such that $\#R(n)\leq \#S(p(n))$ (this is the definition of potential reducibility).
-  Let $q$ be the polynomial such that for all $n$, $\#S(n)< q(n)$ (this is the definition of kernel sparse).
-  %% TODO is this true?
-  Assume without loss of generality that $q$ is non-decreasing (we can do this because for each polynomial $a$ there exists a non-decreasing polynomial $b$ such that $a(n)\leq b(n)$ for all $n$).
-  For each natural number $n$, we have $\#S(n) \leq q(0) + q(1) + \cdots + q(n) \leq n \cdot q(n)$ (since $q$ is non-decreasing).
-  Replacing $n$ with $p(n)$ in the above inequality, it follows that $\#S(p(n)) \leq p(n) \cdot q(p(n))$, which is a polynomial in $n$.
-  (This is an overestimate, but we can be generous here and still produce a contradiction.)
-  Let $r(n)=p(n)\cdot q(p(n))$.
+  Let $p$ be the polynomial such that $\#R(n) \leq \#S(p(n))$ (this is the definition of potential reducibility).
+  Let $q$ be the polynomial such that $\#S(n) < q(n)$ for each natural number $n$ (this is the definition of kernel sparse).
+  Substituting $p(n)$ for $n$ in this inequality yields the inequality $\#S(p(n)) < q(p(n))$, which is a polynomial in $n$.
+  %% (This is an overestimate, but we can be generous here and still produce a contradiction.)
+  Let $r = q \circ p$.
 
   Let $n_0$ be the natural number such that $\#R(n_0) > r(n_0)$, by the definition of kernel sparse.
   Since $\#S(p(n_0)) \leq r(n_0)$, we have $\#R(n_0) > \#S(p(n_0))$.
   In other words, there are more equivalence classes in $R$ for strings up to length $n_0$ than there are in $S$ for strings up to length $p(n_0)$.
   By the pigeonhole principle, we conclude that $R$ cannot potentially reduce to $S$, because the number of equivalence classes in $R$ for strings up to length $n_0$ is too great compared to the number of equivalence classes in $S$ for strings up to length $p(n_0)$.
   This is a contradiction with the assumption that $R\pot S$.
-  We have shown this for arbitrary polynomials (which came from the definitions of potential reducibility and kernel sparsity), so we can conclude that the result holds for all equivalence relations $R$ and $S$ which are kernel dense and kernel sparse, respectively.
+  We have shown this for arbitrary polynomials (which came from the definitions of potential reducibility and kernel sparsity), so we can conclude that the result holds for all equivalence relations $R$ and $S$ that are kernel dense and kernel sparse, respectively.
 \end{proof}
 
 \begin{example}
