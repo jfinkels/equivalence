@@ -38,6 +38,7 @@ As first stated in \autocite{fg11}, if the number of equivalence classes in $R$ 
 For completeness, we prove this basic fact in \autoref{prop:noreduction} below.
 However, a many-one reduction can overcome this restriction by having access to both strings in the pair.
 Before proving that, we require the following lemma showing that kernel reductions must preserve ``related-ness'' of pairs of elements by mapping equivalence classes in $R$ to equivalence classes in $S$.
+(The proof, omitted here, is a straightforward application of the definitions.)
 
 \begin{lemma}\label{lem:image}
   Suppose $R$ and $S$ are equivalence relations on $\Sigma^*$.
@@ -49,20 +50,20 @@ Before proving that, we require the following lemma showing that kernel reductio
   \item $f([w]_R) \subseteq \hat{f}([w]_R)$ for any $w \in \Sigma^*$.
   \end{itemize}
 \end{lemma}
-\begin{proof}
-  First, we prove that $\hat{f}$ is injective.
-  Let $[x]_R$ and $[y]_R$ be distinct equivalence classes in $R$.
-  Suppose $\hat{f}([x]_R) = \hat{f}([y]_R)$, so $[f(x)]_S = [f(y)]_S$.
-  In other words, $\pair{f(x)}{f(y)} \in S$.
-  By definition of the kernel reduction $f$, this implies $\pair{x}{y} \in R$.
-  Therefore $[x]_R = [y]_R$.
+%% \begin{proof}
+%%   First, we prove that $\hat{f}$ is injective.
+%%   Let $[x]_R$ and $[y]_R$ be distinct equivalence classes in $R$.
+%%   Suppose $\hat{f}([x]_R) = \hat{f}([y]_R)$, so $[f(x)]_S = [f(y)]_S$.
+%%   In other words, $\pair{f(x)}{f(y)} \in S$.
+%%   By definition of the kernel reduction $f$, this implies $\pair{x}{y} \in R$.
+%%   Therefore $[x]_R = [y]_R$.
 
-  Next, we prove that $f([w]_R) \subseteq \hat{f}([w]_R)$.
-  Since $w \in [w]_R$, it follows that $f(w) \in f([w]_R)$.
-  Let $x \in f([w]_R)$.
-  Then $\pair{x}{f(w)} \in S$, so $x \in [f(w)]_S$.
-  Therefore $f([w]_R) \subseteq [f(w)]_S = \hat{f}([w]_R)$.
-\end{proof}
+%%   Next, we prove that $f([w]_R) \subseteq \hat{f}([w]_R)$.
+%%   Since $w \in [w]_R$, it follows that $f(w) \in f([w]_R)$.
+%%   Let $x \in f([w]_R)$.
+%%   Then $\pair{x}{f(w)} \in S$, so $x \in [f(w)]_S$.
+%%   Therefore $f([w]_R) \subseteq [f(w)]_S = \hat{f}([w]_R)$.
+%% \end{proof}
 
 \begin{proposition}\label{prop:noreduction}
   Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
