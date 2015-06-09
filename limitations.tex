@@ -237,10 +237,8 @@ Though it is not explicitly stated here, this theorem can be generalized to kern
   The following function is a polynomial time many-one reduction from $R$ to $S$.
   On input $\pair{x}{y}$, if $|x| = |y|$ (or if $|x|$ and $|y|$ are both in $\{0, 1\}$), output $\pair{a}{a}$, otherwise output $\pair{a}{b}$, where $a$ is a string in $S_1$ and $b$ is a string in $S_2$.
   Computing and comparing the lengths of $x$ and $y$ can be done in linear time and writing the output requires only a constant number of steps, since the lengths of $a$ and $b$ are independent of the lengths of $x$ and $y$.
-  Thus this function is computable in linear time, and hence in polynomial time.
-  If $\pair{x}{y} \in R$, then the function outputs $\pair{a}{a}$, which is in $S$ since $S$ is reflexive.
-  If $\pair{x}{y} \notin R$, then the function outputs $\pair{a}{b}$, which is not in $S$ since $a$ and $b$ are in different equivalence classes of $S$.
-  Therefore there is a correct polynomial time many-one reduction from $R$ to $S$.
+  The correctness of the reduction follows from the fact that $a$ and $b$ are in different equivalence classes.
+  Therefore there is a polynomial-time many-one reduction from $R$ to $S$.
 
   Now assume with the intention of producing a contradiction that there is a polynomial time kernel reduction from $R$ to $S$.
   Since $f_1, f_2, \dotsc$ is an enumeration of all polynomial time computable functions, the reduction from $R$ to $S$ is $f_n$, with running time $p_n$, for some positive integer $n$.
