@@ -157,17 +157,18 @@ It is also essentially a special case of \autocite[Lemma~2.3]{gz14}, developed i
   Therefore there is no polynomial time kernel reduction from the equality relation to the ``equal lengths'' relation.
 \end{example}
 
-This places a strong restriction on equivalence relations which are hard (or complete) under polynomial time kernel reductions: they cannot be kernel sparse.
+This places a strong restriction on equivalence relations that are hard (or complete) under polynomial-time kernel reductions: they cannot be kernel sparse.
+This means that the equality relation, the densest possible equivalence relation with an exponential number of equivalence classes at each length, is a troublemaker in every complexity class that contains it.
 
 \begin{corollary}
   Let $\CEq$ be a complexity class of equivalence relations containing the equality relation $R_{eq}$.
   If an equivalence relation $R$ is kernel sparse, then it is not $\CEq$-hard.
 \end{corollary}
-\begin{proof}
-  $R_{eq}$ is kernel dense since it contains $2^n$ equivalence classes at each length $n$, one for each distinct string.
-  Since $R$ is kernel sparse, then $R_{eq} \nkr R$ by \autoref{thm:density}.
-  Since $R_{eq} \in \CEq$, the equivalence relation $R$ cannot be $\CEq$-hard.
-\end{proof}
+%% \begin{proof}
+%%   $R_{eq}$ is kernel dense since it contains $2^n$ equivalence classes at each length $n$, one for each distinct string.
+%%   Since $R$ is kernel sparse, then $R_{eq} \nkr R$ by \autoref{thm:density}.
+%%   Since $R_{eq} \in \CEq$, the equivalence relation $R$ cannot be $\CEq$-hard.
+%% \end{proof}
 
 Polynomial time many-one reductions are more powerful than polynomial time kernel reductions, because the former are not subject to restrictions on numbers of equivalence classes as in \autoref{prop:noreduction} and \autoref{thm:density}.
 The idea behind \autoref{thm:density} leads to a construction of equivalence relations $R$ and $S$ between which there is a polynomial time many-one reduction but no polynomial time kernel reduction.
@@ -191,25 +192,25 @@ The idea behind \autoref{thm:density} leads to a construction of equivalence rel
   $R$ and $S$ are equivalence relations.
 \end{lemma}
 \begin{proof}
-  $R$ and $S$ are equivalence relations if $\{R_n\}_{n \in \mathbb{Z}^+}$ and $\{S_n\}_{n \in \mathbb{Z}^+}$ are valid partitions of $\Sigma^*$, so it suffices to show that each set in the collection is nonempty, the union of each collection includes all nonempty strings in $\Sigma^*$, and each collection is pairwise disjoint.
+  $R$ and $S$ are equivalence relations if $\{R_n\}_{n \in \mathbb{Z}^+}$ and $\{S_n\}_{n \in \mathbb{Z}^+}$ are valid partitions of $\Sigma^*$, so it suffices to show that the union of each collection includes all nonempty strings in $\Sigma^*$ and that each collection is pairwise disjoint.
 
-  The set $R_n$ includes at least one string of length $n$, so each $R_n$ is nonempty.
-  Any string of length $n$ is in $R_n$, so $\Sigma^* \subseteq \cup_n R_n$.
+  %% The set $R_n$ includes at least one string of length $n$, so each $R_n$ is nonempty.
+  For $\{R_n\}_n$, any string of length $n$ is in $R_n$, so $\Sigma^* \subseteq \cup_n R_n$.
   If $m$ and $n$ are distinct positive integers, no string can have both length $m$ and length $n$, so $R_m \cap R_n = \emptyset$.
   Hence $\{R_n\}_n$ is a valid partition.
 
-  We need to show $p_n(n) + 1 \leq p_{n + 1}(n + 1)$ in order to prove that there is at least one string (of length $p_n(n) + 1$, for example) in $S_n$.
-  \begin{align*}
-    p_n(n) + 1 &= n (n^n) + 1 \\
-    &\leq n (n^n) + n^n \\ %% && \text{(since } 1 \leq n^n \text{ for each } n \text{)} \\
-    &= (n + 1) n^n \\
-    &\leq (n + 1) (n + 1)^{n + 1} \\
-    &= p_{n + 1}(n + 1).
-  \end{align*}
-  Thus there is at least one string in $S_n$.
-  Next, for any string $x$, there exists an $n$ such that $p_n(n) + 1 \leq |x| \leq p_{n + 1}(n + 1)$, so every string in $\Sigma^*$ is in some $S_n$.
+  %% We need to show $p_n(n) + 1 \leq p_{n + 1}(n + 1)$ in order to prove that there is at least one string (of length $p_n(n) + 1$, for example) in $S_n$.
+  %% \begin{align*}
+  %%   p_n(n) + 1 &= n (n^n) + 1 \\
+  %%   &\leq n (n^n) + n^n \\ %% && \text{(since } 1 \leq n^n \text{ for each } n \text{)} \\
+  %%   &= (n + 1) n^n \\
+  %%   &\leq (n + 1) (n + 1)^{n + 1} \\
+  %%   &= p_{n + 1}(n + 1).
+  %% \end{align*}
+  %% Thus there is at least one string in $S_n$.
+  For $\{S_n\}_n$, for any string $x$, there is an $n$ such that $p_n(n) + 1 \leq |x| \leq p_{n + 1}(n + 1)$, so every string in $\Sigma^*$ is in some $S_n$.
   %% TODO I don't know how to explain this further.
-  Finally, suppose $m$ and $n$ are distinct positive integers and assume without loss of generality that $m < n$, or in other words, that $m + 1 \leq n$.
+  To show pairwise disjointness, suppose $m$ and $n$ are distinct positive integers and assume without loss of generality that $m < n$, or in other words, that $m + 1 \leq n$.
   Then $p_{m + 1}(m + 1) \leq p_n(n) < p_n(n) + 1$, so no string of length at most $p_{m + 1}(m + 1)$ can also have length at least $p_n(n) + 1$.
   Hence, $S_m$ and $S_n$ are disjoint.
   Thus, $\{S_n\}_n$ is a valid partition.
