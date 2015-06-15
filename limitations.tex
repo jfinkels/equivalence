@@ -14,13 +14,13 @@ Can a kernel reduction be used anywhere a many-one reduction can be used?
 If so, a function with access to one element of a pair would be exactly as powerful as a function with access to both elements of a pair; our intuition is that this is unlikely.
 % task (focus on author) why me? - what was undertaken to address the need
 % object (focus on document) why this document - what the document covers
-This section proves that polynomial time kernel reductions are strictly weaker than polynomial time many-one reductions.
+This section proves that polynomial-time kernel reductions are strictly weaker than polynomial-time many-one reductions.
 
 % Summary
 %
 % findings (focus on author) what? - what the work revealed when performing the task
 We find that a bound on the size of the image of a kernel reduction implies that the function can only access a finite number of equivalence classes.
-Constructing equivalence relations so that there is an imbalance in the number of equivalence classes with respect to any fixed function suffices to show that no polynomial time kernel reduction can exist between the two.
+Constructing equivalence relations so that there is an imbalance in the number of equivalence classes with respect to any fixed function suffices to show that no polynomial-time kernel reduction can exist between the two.
 % conclusion (focus on readers) so what? - what the findings mean for the audience
 Thus, we conclude that polynomial-time kernel reductions are more restrictive than polynomial-time many-one reductions.
 % perspective (focus on anyone) what now? - what should be done next
@@ -98,7 +98,7 @@ Before proving that, we require the following lemma showing that kernel reductio
 As seen in \autoref{prop:noreduction}, for equivalence relations $R$ and $S$ with a finite number of equivalence classes, a kernel reduction from $R$ to $S$ can only exist if the number of equivalence classes in $R$ is at most the number of equivalence classes in $S$.
 However, most ``interesting'' equivalence relations have an infinite number of equivalence classes.
 In \autocite[Section~4]{fg11}, the authors ask if there are such equivalence relations ``of the same densities [that is, density of equivalence classes] on which kernel reduction and [many-one] reduction differ''\kern-0.5em.
-\autocite[Theorem~5.1]{bcffm} (see also \autocite[Remark~5.2]{bcffm}) answers this question affirmatively, providing an infinite antichain of equivalence relations that are equivalent under polynomial time many-one reductions but otherwise incomparable under polynomial time ``strong isomorphism reductions'' (proven in \autocite[Section~7]{bcffm} to be equivalent to polynomial time kernel reductions).
+\autocite[Theorem~5.1]{bcffm} (see also \autocite[Remark~5.2]{bcffm}) answers this question affirmatively, providing an infinite antichain of equivalence relations that are equivalent under polynomial-time many-one reductions but otherwise incomparable under polynomial-time ``strong isomorphism reductions'' (proven in \autocite[Section~7]{bcffm} to be equivalent to polynomial-time kernel reductions).
 We will provide a simple proof of a special case of \autocite[Theorem~5.1]{bcffm}, showing that an imbalance in the density of equivalence classes prevents a kernel reduction.
 This proof is valuable because it requires only knowledge of basic computational complexity theory and not knowledge of Boolean algebras, descriptive set theory, or other mathematical logic.
 
@@ -154,7 +154,7 @@ It is also essentially a special case of \autocite[Lemma~2.3]{gz14}, developed i
   Consider the equality relation and the ``equal lengths'' relation (that is, $x$ relates to $y$ if $|x| = |y|$).
   The equality relation is kernel dense, since there are $2^n$ equivalence classes for strings of length at most $n$ (one for each string).
   The ``equal lengths'' relation is kernel sparse, since there are $n + 1$ equivalence classes for strings of length at most $n$ (one for each length, including length $0$).
-  Therefore there is no polynomial time kernel reduction from the equality relation to the ``equal lengths'' relation.
+  Therefore there is no polynomial-time kernel reduction from the equality relation to the ``equal lengths'' relation.
 \end{example}
 
 This places a strong restriction on equivalence relations that are hard (or complete) under polynomial-time kernel reductions: they cannot be kernel sparse.
@@ -170,11 +170,11 @@ This means that the equality relation, the densest possible equivalence relation
 %%   Since $R_{eq} \in \CEq$, the equivalence relation $R$ cannot be $\CEq$-hard.
 %% \end{proof}
 
-Polynomial time many-one reductions are more powerful than polynomial time kernel reductions, because the former are not subject to restrictions on numbers of equivalence classes as in \autoref{prop:noreduction} and \autoref{thm:density}.
-The idea behind \autoref{thm:density} leads to a construction of equivalence relations $R$ and $S$ between which there is a polynomial time many-one reduction but no polynomial time kernel reduction.
+Polynomial-time many-one reductions are more powerful than polynomial-time kernel reductions, because the former are not subject to restrictions on numbers of equivalence classes as in \autoref{prop:noreduction} and \autoref{thm:density}.
+The idea behind \autoref{thm:density} leads to a construction of equivalence relations $R$ and $S$ between which there is a polynomial-time many-one reduction but no polynomial-time kernel reduction.
 
 \begin{construction}\label{con:rands}
-  Let $f_1, f_2, \dotsc$ be an enumeration of all polynomial time computable functions.
+  Let $f_1, f_2, \dotsc$ be an enumeration of all polynomial-time computable functions.
   %% TODO state why this can be done without loss of generality.
   Assume, without loss of generality, that for all positive integers $i$, function $f_i$ runs in time $p_i(n)$, where $p_i(n) = i n^i$ for all positive integers $n$.
 
@@ -218,14 +218,14 @@ The idea behind \autoref{thm:density} leads to a construction of equivalence rel
   Since both collections are valid partitions, the relations $R$ and $S$ are both equivalence relations.
 \end{proof}
 
-Again, this is a special case of \autocite[Theorem~5.1]{bcffm}, but has a much simpler proof and sufficiently demonstrates that polynomial time kernel reductions and polynomial time many-one reductions are different.
+Again, this is a special case of \autocite[Theorem~5.1]{bcffm}, but has a much simpler proof and sufficiently demonstrates that polynomial-time kernel reductions and polynomial-time many-one reductions are different.
 
 \begin{theorem}\label{thm:different}
   There are equivalence relations $R$ and $S$ such that $R \mor S$ but $R \nkr S$.
   Furthermore, $R$ and $S$ are in $\NC^1$.
 \end{theorem}
 
-The main idea behind this theorem is that no matter which polynomial time function we consider as a possible kernel reduction, the number of equivalence classes in $R$ is greater than the number of equivalence classes in $S$, for sufficiently large strings.
+The main idea behind this theorem is that no matter which polynomial-time function we consider as a possible kernel reduction, the number of equivalence classes in $R$ is greater than the number of equivalence classes in $S$, for sufficiently large strings.
 \autoref{thm:density} doesn't apply in this setting because both $R$ and $S$ are kernel sparse.
 Since we have carefully constructed these sets, $S$ is more kernel sparse than $R$.
 This basic idea was presented independently in \autocite[Lemma~2.3]{gz14}.
@@ -234,14 +234,14 @@ Though it is not explicitly stated here, this theorem can be generalized to kern
 
 \begin{proof}[Proof of \autoref{thm:different}]
   Let $R$ and $S$ be the equivalence relations in \autoref{con:rands}.
-  The following function is a polynomial time many-one reduction from $R$ to $S$.
+  The following function is a polynomial-time many-one reduction from $R$ to $S$.
   On input $\pair{x}{y}$, if $|x| = |y|$ (or if $|x|$ and $|y|$ are both in $\{0, 1\}$), output $\pair{a}{a}$, otherwise output $\pair{a}{b}$, where $a$ is a string in $S_1$ and $b$ is a string in $S_2$.
   Computing and comparing the lengths of $x$ and $y$ can be done in linear time and writing the output requires only a constant number of steps, since the lengths of $a$ and $b$ are independent of the lengths of $x$ and $y$.
   The correctness of the reduction follows from the fact that $a$ and $b$ are in different equivalence classes.
   Therefore there is a polynomial-time many-one reduction from $R$ to $S$.
 
-  Now assume with the intention of producing a contradiction that there is a polynomial time kernel reduction from $R$ to $S$.
-  Since $f_1, f_2, \dotsc$ is an enumeration of all polynomial time computable functions, the reduction from $R$ to $S$ is $f_n$, with running time $p_n$, for some positive integer $n$.
+  Now assume with the intention of producing a contradiction that there is a polynomial-time kernel reduction from $R$ to $S$.
+  Since $f_1, f_2, \dotsc$ is an enumeration of all polynomial-time computable functions, the reduction from $R$ to $S$ is $f_n$, with running time $p_n$, for some positive integer $n$.
   Consider a string $x$ of length $n + 1$ (for example, $x = 1^{n + 1}$); $x$ is in equivalence class $R_{n + 1}$.
   Since the running time of $f_n$ is $p_n$, the length of $f_n(x)$ is at most $p_n(n + 1)$.
   Since $p_1, p_2, \dotsc$ is an increasing sequence (in the sense that $p_j(n) < p_{j + 1}(n)$ for all natural numbers $n$ and all positive integers $j$), we have $p_n(n + 1) < p_{n + 1}(n + 1) < p_{n + 1}(n + 1) + 1$.

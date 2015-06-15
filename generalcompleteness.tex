@@ -6,8 +6,8 @@
 %% Commons Attribution-ShareAlike 4.0 International License,
 %% https://creativecommons.org/licenses/by-sa/4.0/.
 \section
-    [Conditions for complete problems under polynomial time kernel reductions]
-    {Conditions for complete problems \\ under polynomial time kernel reductions}
+    [Conditions for complete problems under polynomial-time kernel reductions]
+    {Conditions for complete problems \\ under polynomial-time kernel reductions}
 \label{sec:generalcompleteness}
 % Foreword
 %
@@ -16,17 +16,17 @@ Most well-behaved complexity classes contain problems that are complete under ma
 Do the corresponding classes of equivalence problems contain problems that are complete under kernel reductions?
 % need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
 Having access to a complete problem offers many benefits and improves our understanding of equivalence problems in general.
-In \autocite[Theorem~8.7]{bcffm}, the authors constructed a complete problem with respect to polynomial time kernel reductions for $\NPEq$ under the assumption that $\NP = \coNP$.
+In \autocite[Theorem~8.7]{bcffm}, the authors constructed a complete problem with respect to polynomial-time kernel reductions for $\NPEq$ under the assumption that $\NP = \coNP$.
 % task (focus on author) why me? - what was undertaken to address the need
-Since we consider that assumption unlikely, we determine sufficient conditions for having a complete problem under polynomial time kernel reductions.
+Since we consider that assumption unlikely, we determine sufficient conditions for having a complete problem under polynomial-time kernel reductions.
 % object (focus on document) why this document - what the document covers
 This section presents a more general theorem that implies as a corollary a complete problem for $\NPEq$ under the assumption $\NP = \coNP$.
 
 % Summary
 %
 % findings (focus on author) what? - what the work revealed when performing the task
-By extending the technique of \autocite[Theorem~8.7]{bcffm}, we find that $\PSPACEEq$ has a complete problem under polynomial time kernel reductions unconditionally.
-We also show that each level of the polynomial time hierarchy contains an equivalence problem that is hard for the lower levels under these reductions.
+By extending the technique of \autocite[Theorem~8.7]{bcffm}, we find that $\PSPACEEq$ has a complete problem under polynomial-time kernel reductions unconditionally.
+We also show that each level of the polynomial-time hierarchy contains an equivalence problem that is hard for the lower levels under these reductions.
 % conclusion (focus on readers) so what? - what the findings mean for the audience
 This means that some well-known classes do have complete problems, and the existence for complete problems in other classes, like $\NP$ and even $\P$, remains possible.
 % perspective (focus on anyone) what now? - what should be done next
@@ -48,7 +48,7 @@ Before proving this theorem, we will provide some immediate corollaries of this 
 \end{corollary}
 
 \begin{corollary}\label{cor:hardproblems}
-  Under polynomial time kernel reductions,
+  Under polynomial-time kernel reductions,
   \begin{enumerate}
   %\item $\EXPEq$ has a complete problem
   \item $\PSPACEEq$ has a complete problem,
@@ -77,7 +77,7 @@ More specifically, this means that $\coNPEq$ (which equals $\POPEq$) has a probl
 This corollary also leads to \autocite[Theorem~8.7, part~1]{bcffm}, which is restated here.
 
 \begin{corollary}[{\autocite[Theorem~8.7, part~1]{bcffm}}]
-  If $\NP = \coNP$ then $\NPEq$ has a complete problem under polynomial time kernel reductions.
+  If $\NP = \coNP$ then $\NPEq$ has a complete problem under polynomial-time kernel reductions.
 \end{corollary}
 \begin{proof}
   If $\NP = \coNP$, then the polynomial hierarchy collapses to $\POP$, and specifically $\PTP = \DTP = \POP = \coNP = \NP$.
@@ -142,7 +142,7 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
   First we show that $R_K\in\CRAZY$.
   By the argument above, $A$ is a $\CRAZY$ algorithm.
   %Since $M$ is a polynomially clocked $\mathcal{C}$ machine by \autoref{itm:machine}, then the simulation of $M$ on $\pair{x}{y}$ in \autoref{itm:accepts} can be performed by a $\mathcal{C}$ algorithm.
-  Assuming without loss of generality that $|x|\geq |y|$, if $A$ accepts $\pair{M}{|x|}$ within $t_x$ steps then we know that there is a polynomial time bound on the running time of $M$ on input $\pair{x}{y}$, so simulating it is certainly in $\CRAZY$.
+  Assuming without loss of generality that $|x|\geq |y|$, if $A$ accepts $\pair{M}{|x|}$ within $t_x$ steps then we know that there is a polynomial-time bound on the running time of $M$ on input $\pair{x}{y}$, so simulating it is certainly in $\CRAZY$.
   Finally, testing for equality is in $\mathcal{C}$ by hypothesis so deciding $R_K$ overall can be performed by a $\CRAZY$ algorithm.
 
   Next we show that $R_K$ is an equivalence relation.
@@ -159,7 +159,7 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
 
   Now we need to show that $R_K$ is $\CEq$-hard.
   Let $S\in\CEq$.
-  Suppose $M$ is the polynomially clocked $\mathcal{C}$ machine which decides $S$, and $p$ is the polynomial which bounds the running time of $M$.
+  Suppose $M$ is the polynomially clocked $\mathcal{C}$ machine that decides $S$, and $p$ is the polynomial that bounds the running time of $M$.
   Then the kernel reduction from $S$ to $R_K$ is $w\mapsto\triple{M}{w}{1^{6p(|\pair{w}{w}|)+c}}$, where $p$ and $c$ are the polynomial and constant described in the first paragraph of this proof.
   Call this reduction $f$.
   The reduction is obviously computable in time polynomial in $|w|$.
@@ -215,7 +215,7 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
 %% \begin{proof}
 %%   $S\kr R_K$ by the reduction described in the proof of \autoref{thm:generalcompleteness}.
 %%   A similar analysis shows that $R_K\in\CRAZIEREq$.
-%%   Since $S$ is hard for $\COEq$ and polynomial time kernel reductions compose, $R_K$ is also hard for $\COEq$.
+%%   Since $S$ is hard for $\COEq$ and polynomial-time kernel reductions compose, $R_K$ is also hard for $\COEq$.
 %% \end{proof}
 
 %% This last question leads us to briefly note that equivalence of true quantified boolean formulas is a \PSPACE-complete problem; perhaps it is also a \PSPACEEq-complete problem.

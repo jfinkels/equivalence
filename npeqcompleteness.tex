@@ -14,7 +14,7 @@
 % context (focus on anyone) why now? - current situation, and why the need is so important
 A kernel reduction implies a many-one reduction, but does completeness under kernel reductions imply completeness under many-one reductions?
 % need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
-Since polynomial time kernel reductions are different from polynomial time many-one reductions (\autoref{thm:different}), completeness in classes of equivalence problems may differ under these reductions as well.
+Since polynomial-time kernel reductions are different from polynomial-time many-one reductions (\autoref{thm:different}), completeness in classes of equivalence problems may differ under these reductions as well.
 % task (focus on author) why me? - what was undertaken to address the need
 We determine the conditions under which completeness under kernel reductions implies completeness under many-one reductions.
 % object (focus on document) why this document - what the document covers
@@ -100,8 +100,8 @@ This corollary provides a clearer proof of \autocite[Proposition~8.1]{bcffm}.
 
 As stated in \autoref{open:npeqc}, we do not know whether an $\NPEq$-complete problem exists.
 In the following theorem we describe an equivalence relation that, if it were $\NPEq$-complete, would prove that injective kernel reductions are strictly weaker than general kernel reductions.
-This is interesting because it again demonstrates that the number and size of equivalence classes is important when considering the (im)possibility of polynomial time kernel reductions between equivalence relations.
-In the following theorem, if an equivalence relation is ``complete under $\kri$ reductions in $\NPEq$'' we mean that every equivalence relation in $\NPEq$ reduces to it by a polynomial time computable kernel reduction which is also injective (that is, ``one-to-one'').
+This is interesting because it again demonstrates that the number and size of equivalence classes is important when considering the (im)possibility of polynomial-time kernel reductions between equivalence relations.
+In the following theorem, if an equivalence relation is ``complete under $\kri$ reductions in $\NPEq$'' we mean that every equivalence relation in $\NPEq$ reduces to it by a polynomial-time computable kernel reduction which is also injective (that is, ``one-to-one'').
 
 \begin{theorem}\label{thm:inj}
   Let $\Pi$ be a property on \textsc{GI}.
@@ -126,7 +126,7 @@ Each equivalence class is itself infinite as well: for each $w \in \Sigma^*$, th
   Let $S$ be the equivalence relation defined in the preceding paragraph.
   The language $S$ is decidable in linear time by a deterministic Turing machine, hence it is in $\NP$.
   Since $A$ is $\NPEq$-complete by hypothesis, $S \kr A$.
-  Thus there is a polynomial time computable function $f$ such that $\pair{x}{y} \in S$ if and only if $\pair{f(x)}{f(y)} \in A$.
+  Thus there is a polynomial-time computable function $f$ such that $\pair{x}{y} \in S$ if and only if $\pair{f(x)}{f(y)} \in A$.
 
   By the discussion preceding this theorem, $[w]_S$ is infinite and $[f(w)]_A$ is finite.
   By \autoref{lem:image}, $f([w]_S) \subseteq [f(w)]_A$.
