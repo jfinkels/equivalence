@@ -136,13 +136,13 @@ It is also essentially a special case of \autocite[Lemma~2.3]{gz14}, developed i
   That $R\npot S$ implies $R\nkr S$ was already stated in the text preceding this theorem, so it suffices to show that $R\npot S$.
 
   Assume that $R\pot S$ with the intention of producing a contradiction.
-  Let $p$ be the polynomial such that $\#R(n) \leq \#S(p(n))$ (this is the definition of potential reducibility).
-  Let $q$ be the polynomial such that $\#S(n) < q(n)$ for each natural number $n$ (this is the definition of kernel sparse).
+  Let $p$ be a polynomial such that $\#R(n) \leq \#S(p(n))$ (this is the definition of potential reducibility).
+  Let $q$ be a polynomial such that $\#S(n) < q(n)$ for each natural number $n$ (this is the definition of kernel sparse).
   Substituting $p(n)$ for $n$ in this inequality yields the inequality $\#S(p(n)) < q(p(n))$, which is a polynomial in $n$.
   %% (This is an overestimate, but we can be generous here and still produce a contradiction.)
   Let $r = q \circ p$.
 
-  Let $n_0$ be the natural number such that $\#R(n_0) > r(n_0)$, by the definition of kernel sparse.
+  Let $n_0$ be a natural number such that $\#R(n_0) > r(n_0)$, by the definition of kernel sparsity.
   Since $\#S(p(n_0)) \leq r(n_0)$, we have $\#R(n_0) > \#S(p(n_0))$.
   In other words, there are more equivalence classes in $R$ for strings up to length $n_0$ than there are in $S$ for strings up to length $p(n_0)$.
   By the pigeonhole principle, we conclude that $R$ cannot potentially reduce to $S$, because the number of equivalence classes in $R$ for strings up to length $n_0$ is too great compared to the number of equivalence classes in $S$ for strings up to length $p(n_0)$.
@@ -222,7 +222,7 @@ Again, this is a special case of \autocite[Theorem~5.1]{bcffm}, but has a much s
 
 \begin{theorem}\label{thm:different}
   There are equivalence relations $R$ and $S$ such that $R \mor S$ but $R \nkr S$.
-  Furthermore, $R$ and $S$ are in $\NC^1$.
+  Furthermore, $R$ and $S$ are in $\NCOneEq$.
 \end{theorem}
 
 The main idea behind this theorem is that no matter which polynomial-time function we consider as a possible kernel reduction, the number of equivalence classes in $R$ is greater than the number of equivalence classes in $S$, for sufficiently large strings.
