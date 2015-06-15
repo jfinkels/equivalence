@@ -23,11 +23,11 @@ This section details the proof of that adaptation.
 % Summary
 %
 % findings (focus on author) what? - what the work revealed when performing the task
-The main theorem of this section, following as a corollary from the Uniform Diagonalization Theorem for equivalence problems, is as follows (where $\NPEqC$ denotes the set of $\NPEq$-complete problems).
+The main theorem of this section, following as a corollary from the Uniform Diagonalization Theorem for equivalence problems, is as follows.
 \begin{restatable*}{theorem}{intermediary}\label{thm:intermediary}
-  If $\PEq \neq \NPEq$ and $\NPEqC$ is non-empty, then there is an equivalence relation in $\NPEq$ which is in neither $\PEq$ nor $\NPEqC$.
+  If $\PEq \neq \NPEq$ and there is an $\NPEq$-complete problem, then there is an equivalence relation in $\NPEq$ that is neither in $\PEq$ nor $\NPEq$-complete.
 \end{restatable*}
-Although this theorem relies on the assumption that $\NPEqC$-complete problems exist, no such assumption is required to show the existence of intermediary problems between, say, $\PHEq$ and $\PSPACEEq$ (\autoref{cor:pspace}).
+Although this theorem relies on the assumption that there is an $\NPEq$-complete problems, no such assumption is required to show the existence of intermediary problems between, say, $\PHEq$ and $\PSPACEEq$ (\autoref{cor:pspace}).
 % conclusion (focus on readers) so what? - what the findings mean for the audience
 We conclude that even though kernel reductions are strictly weaker than many-one reductions, they still preserve the hierarchies of problems of various computational complexities we expect from our understanding of traditional complexity classes.
 % perspective (focus on anyone) what now? - what should be done next
@@ -227,19 +227,16 @@ We are now prepared to prove the main technical theorem which will allow us to c
   Since we have shown that the equivalence relation $R$ satisfies the properties in the statement of the theorem, this concludes the proof.
 \end{proof}
 
-We would now like to show that the result of this theorem holds when $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2=\NPEqC$.
+We would now like to show that the result of this theorem holds when $\mathcal{C}_1 = \PEq$ and $\mathcal{C}_2$ is the set of $\NPEq$-complete problems.
 
 \begin{proposition}\label{prop:npeqc}
-  If $\PEq \neq \NPEq$, then $\PEq \cap \NPEqC = \emptyset$.
+  If $\PEq \neq \NPEq$, then no $\NPEq$-complete problem is in $\PEq$.
 \end{proposition}
 \begin{proof}
-  If $\NPEqC$ is empty, then $\PEq \cap \NPEqC = \emptyset$ unconditionally.
-  Assume $\NPEqC$ is nonempty, and $\PEq \cap \NPEqC \neq \emptyset$.
-  Let $R$ be the \NPEq-complete equivalence relation which is also in \PEq.
+  If no $\NPEq$-complete problems exist, then the conclusion holds unconditionally.
+  Thus, assume that there is an $\NPEq$-complete equivalence relation $R$ and that $R$ is in $\PEq$.
   Then all problems in $\NPEq$ can be kernel reduced to $R$ in polynomial time, and $R$ can be decided in polynomial time.
-  Therefore, $\PEq=\NPEq$.
-  This is a contradiction with the hypothesis.
-  Therefore $\PEq\cap\NPEqC=\emptyset$.
+  Therefore, $\PEq = \NPEq$, a contradiction with the hypothesis.
 \end{proof}
 
 A reminder: as stated in the introduction, polynomial-time kernel reductions compose, and $\NPEq$ is closed under polynomial-time kernel reductions.
@@ -247,18 +244,19 @@ We use these facts in the proof of the following theorem.
 
 \intermediary
 \begin{proof}
-  By \autoref{prop:npeqc}, if $\PEq \neq \NPEq$, then $\PEq \cap \NPEqC = \emptyset$.
-  Let $S$ be an \NPEq-complete problem.
-  Choose $R_1=S$, $R_2=\emptyset$, $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2=\NPEqC$.
-  Note that since $\P$ and $\NPC$ are computably enumerable, so are $\PEq$ and $\NPEqC$.
-  Then by \autoref{thm:diag}, there exists an equivalence relation $R$ which is in neither $\NPEqC$ nor $\PEq$, but which kernel reduces to $S\kj\emptyset$.
-  Since $S\kj\emptyset$ trivially kernel reduces to $S$, and since polynomial-time kernel reductions compose, $R\kr S$.
-  Since $\NPEq$ is closed under polynomial-time kernel reductions, $R\in\NPEq$.
+  By \autoref{prop:npeqc}, if $\PEq \neq \NPEq$, then no $\NPEq$-complete problem is in $\PEq$.
+  Let $S$ be an $\NPEq$-complete problem.
+  Choose $R_1=S$, $R_2=\emptyset$, $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2$ to be the set of $\NPEq$-complete problems.
+  Since $\P$ is computably enumerable, so is $\PEq$.
+  Since the set of $\NP$-complete problems is computably enumerable, so is the set of $\NPEq$-complete problems.
+  Then by \autoref{thm:diag}, there is an equivalence relation $R$ that is neither in $\PEq$ nor $\NPEq$-complete, but which kernel reduces to $S \kj \emptyset$.
+  Since $S \kj \emptyset$ trivially kernel reduces to $S$, and since polynomial-time kernel reductions compose, $R \kr S$.
+  Since $\NPEq$ is closed under polynomial-time kernel reductions, $R \in \NPEq$.
 \end{proof}
 
-This also introduces a host of similar corollaries showing the existence of intermediary problems for other classes of equivalence relations which have $\kr$-complete problems; for more examples, see the original paper by Sch\"{o}ning \autocite{schoning}.
+This also introduces a host of similar corollaries showing the existence of intermediary problems for other classes of equivalence relations which have $\kr$-complete problems; for more examples, see the original paper by Schöning \autocite{schoning}.
 In particular, we can make the following stronger statement using \autoref{cor:hardproblems}.
 (Note that $\PHEq$ is the class of equivalence relations in $\PH$, the polynomial hierarchy.)
 \begin{corollary}\label{cor:pspace}
-  If $\PSPACEEq\neq\PHEq$ then there exists an equivalence relation in $\PSPACEEq$ which is neither in $\PHEq$ nor $\PSPACEEq$-complete.
+  If $\PSPACEEq \neq \PHEq$ then there is an equivalence relation in $\PSPACEEq$ which is neither in $\PHEq$ nor $\PSPACEEq$-complete.
 \end{corollary}
