@@ -142,7 +142,7 @@ The definitions of these complexity classes yield a chain of inclusions beginnin
 %%   \end{center}
 %% \end{figure}
 \begin{theorem}\label{thm:definitions}
-  $\Proj_1 = \Cl_1 = \NKer_1 \subseteq \NKer_2 \subseteq \Proj_2 = \Cl_2 \subseteq \NPEq$.
+  $\NKer_1 = \Cl_1 = \Proj_1 \subseteq \NKer_2 \subseteq \Cl_2 = \Proj_2 \subseteq \NPEq$.
 \end{theorem}
 \begin{sketch}
   $\Proj_1 \subseteq \Cl_1$ by choosing the kernel reduction $f$ to be the identity function.
@@ -175,7 +175,7 @@ They provide evidence that $\Ker$ and $\PEq$ are different by showing that equal
 Unfortunately, we are only able to show that $\Cl_2 \subseteq \NKer_2$ under the assumption that $\Ker = \PEq$.
 
 \begin{corollary}
-  If $\Ker = \PEq$, then $\Proj_2 = \Cl_2 = \NKer_2$.
+  If $\Ker = \PEq$, then $\NKer_2 = \Cl_2 = \Proj_2$.
 \end{corollary}
 \begin{proof}
   By the previous theorem, it suffices to show $\Proj_2 \subseteq \NKer_2$.
