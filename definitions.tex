@@ -32,8 +32,6 @@ When attempting to prove that there are complete problems in $\NPEq$ under kerne
 % perspective (focus on anyone) what now? - what should be done next
 It remains to show whether any of the (non-equal) alternative definitions are distinct, and whether any of them has a complete problem under kernel reductions.
 
-For the sake of brevity, in all definitions below, when we write $\exists w$, we mean $\exists w$ with length polynomially bounded with respect to the length of $x$, $y$, or the pair $\pair{x}{y}$ (depending on the requirements of the particular definition).
-
 The first definition is the analog of the fundamental definition of $\NP$; it is the formal definition of the class $\NPEq$ introduced in the previous section.
 
 \begin{definition}\label{def:npeq1}
@@ -56,19 +54,21 @@ Each of these ``witness equivalence relations'' is a set of pairs of pairs, in w
 
 \begin{definition}\label{def:npeq3}
   Suppose $R'$ is an equivalence relation in $\PEq$.
-  An equivalence relation $R$ is a \emph{two-witness projection} of $R'$ if
+  An equivalence relation $R$ is a \emph{two-witness projection} of $R'$ if for each binary string $x$ and $y$,
   \begin{displaymath}
-    \pair{x}{y} \in R \iff \exists w_x, w_y \colon \pair{\pair{x}{w_x}}{\pair{y}{w_y}} \in R'\kern-0.3em.
+    \pair{x}{y} \in R \iff \exists w_x, w_y \colon \pair{\pair{x}{w_x}}{\pair{y}{w_y}} \in R'\kern-0.3em,
   \end{displaymath}
+  where $|w_x|$ is polynomially bounded in $|x|$ and $|w_y|$ is polynomially bounded in $|y|$.
   The class $\Proj_2$ is the collection of all two-witness projections of equivalence relations in $\PEq$.
 \end{definition}
 
 \begin{definition}\label{def:npeq4}
   Suppose $R'$ is an equivalence relation in $\PEq$.
-  An equivalence relation $R$ is a \emph{one-witness projection} of $R'$ if
+  An equivalence relation $R$ is a \emph{one-witness projection} of $R'$ if for each binary string $x$ and $y$,
   \begin{displaymath}
-    \pair{x}{y} \in R \iff \exists w \colon \pair{\pair{x}{w}}{\pair{y}{w}} \in R'\kern-0.3em.
+    \pair{x}{y} \in R \iff \exists w \colon \pair{\pair{x}{w}}{\pair{y}{w}} \in R'\kern-0.3em,
   \end{displaymath}
+  where $|w|$ is polynomially bounded in $\min(|x|, |y|)$.
   The class $\Proj_1$ is the collection of all one-witness projections of equivalence relations in $\PEq$.
 \end{definition}
 
@@ -76,19 +76,21 @@ The next two definitions attempt to allow the possibility of not just a simple s
 
 \begin{definition}\label{def:npeq5}
   Suppose $R$ and $R'$ are equivalence relations.
-  A function $f$ is a \emph{nondeterministic polynomial-time two-witness kernel reduction} from $R$ to $R'$ if $f$ is in $\FP$ and
+  A function $f$ is a \emph{nondeterministic polynomial-time two-witness kernel reduction} from $R$ to $R'$ if $f$ is in $\FP$ and for each binary string $x$ and $y$,
   \begin{displaymath}
-    \pair{x}{y} \in R \iff \exists w_x, w_y \colon \pair{f(x, w_x)}{f(y, w_y)} \in R'\kern-0.3em.
+    \pair{x}{y} \in R \iff \exists w_x, w_y \colon \pair{f(x, w_x)}{f(y, w_y)} \in R'\kern-0.3em,
   \end{displaymath}
+  where $|w_x|$ is polynomially bounded in $|x|$ and $|w_y|$ is polynomially bounded in $|y|$.
   The class $\Cl_2$ is the closure of $\PEq$ under these reductions.
 \end{definition}
 
 \begin{definition}\label{def:npeq6}
   Suppose $R$ and $R'$ are equivalence relations.
-  A function $f$ is a \emph{nondeterministic polynomial-time one-witness kernel reduction} from $R$ to $R'$ if $f$ is in $\FP$ and
+  A function $f$ is a \emph{nondeterministic polynomial-time one-witness kernel reduction} from $R$ to $R'$ if $f$ is in $\FP$ and for each binary string $x$ and $y$,
   \begin{displaymath}
-    \pair{x}{y} \in R \iff \exists w \colon \pair{f(x, w)}{f(y, w)} \in R'\kern-0.3em.
+    \pair{x}{y} \in R \iff \exists w \colon \pair{f(x, w)}{f(y, w)} \in R'\kern-0.3em,
   \end{displaymath}
+  where $|w|$ is polynomially bounded in $\min(|x|, |y|)$.
   The class $\Cl_1$ is the closure of $\PEq$ under these reductions.
 \end{definition}
 
@@ -97,19 +99,21 @@ The final two definitions attempt to describe equivalence relations for which th
 
 \begin{definition}\label{def:npeq7}
   Suppose $R$ is an equivalence relation.
-  A function $f$ is a \emph{nondeterministic polynomial-time two-witness complete invariant} for $R$ if $f$ is in $\FP$ and
+  A function $f$ is a \emph{nondeterministic polynomial-time two-witness complete invariant} for $R$ if $f$ is in $\FP$ and for each binary string $x$ and $y$,
   \begin{displaymath}
-    \pair{x}{y} \in R \iff \exists w_x, w_y \colon f(x, w_x) = f(y, w_y).
+    \pair{x}{y} \in R \iff \exists w_x, w_y \colon f(x, w_x) = f(y, w_y),
   \end{displaymath}
+  where $|w_x|$ is polynomially bounded in $|x|$ and $|w_y|$ is polynomially bounded in $|y|$.
   The class $\NKer_2$ is the collection of all equivalence relations that admit such a function.
 \end{definition}
 
 \begin{definition}\label{def:npeq8}
   Suppose $R$ is an equivalence relation.
-  A function $f$ is a \emph{nondeterministic polynomial-time one-witness complete invariant} for $R$ if $f$ is in $\FP$ and
+  A function $f$ is a \emph{nondeterministic polynomial-time one-witness complete invariant} for $R$ if $f$ is in $\FP$ and for each binary string $x$ and $y$,
   \begin{displaymath}
-    \pair{x}{y} \in R \iff \exists w \colon f(x, w) = f(y, w).
+    \pair{x}{y} \in R \iff \exists w \colon f(x, w) = f(y, w),
   \end{displaymath}
+  where $|w|$ is polynomially bounded in $\min(|x|, |y|)$.
   The class $\NKer_1$ is the collection of all equivalence relations that admit such a function.
 \end{definition}
 
