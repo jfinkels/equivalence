@@ -10,250 +10,114 @@
 % Foreword
 %
 % context (focus on anyone) why now? - current situation, and why the need is so important
-According to the seminal theorem by Ladner \autocite{ladner}, if $\P \neq \NP$, then there are problems of intermediate complexity, in the sense that these problems are neither in $\P$ nor $\NP$-complete.
+According to the seminal theorem by Ladner \autocite{ladner75}, if $\P \neq \NP$, then there are problems of intermediate complexity, in the sense that these problems are neither in $\P$ nor $\NP$-complete.
 The theorem does not immediately imply a similar result for equivalence problems, since $\PEq$ is different from $\P$ and $\NPEq$ is different from $\NP$ (specifically, in each case, the latter contains problems that are not equivalence problems).
 % need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
 Do kernel reductions induce the same rich structure between $\PEq$ and $\NPEq$ as do many-one reductions between $\P$ and $\NP$?
 % task (focus on author) why me? - what was undertaken to address the need
-We adapt Schöning's Uniform Diagonalization Theorem \autocite{schoning82}, a generalized version of Ladner's Theorem, to classes of equivalence problems.
-The specific presentation we follow is from \autocite{bdg95}.
+We adapt a proof of Ladner's theorem from \autocite{df03} (which has been attributed to Russell~Impagliazzo) to classes of equivalence problems;
+%% We adapt Schöning's Uniform Diagonalization Theorem \autocite{schoning82}, a generalized version of Ladner's Theorem, to classes of equivalence problems.
+%% The specific presentation we follow is from \autocite{bdg95}.
 % object (focus on document) why this document - what the document covers
-This section details the proof of that adaptation.
+this section details that adaptation.
 
 % Summary
 %
 % findings (focus on author) what? - what the work revealed when performing the task
-The main theorem of this section, following as a corollary from the Uniform Diagonalization Theorem for equivalence problems, is as follows.
-\begin{restatable*}{theorem}{intermediary}\label{thm:intermediary}
-  If $\PEq \neq \NPEq$ and there is an $\NPEq$-complete problem, then there is an equivalence relation in $\NPEq$ that is neither in $\PEq$ nor $\NPEq$-complete.
-\end{restatable*}
-Although this theorem relies on the assumption that there is an $\NPEq$-complete problems, no such assumption is required to show the existence of intermediary problems between, say, $\PHEq$ and $\PSPACEEq$ (\autoref{cor:pspace}).
+The main theorem of this section is the existence of $\NPEq$-intermediary problems under the assumption that $\PEq \neq \NPEq$ (which is equivalent to the assumption $\P \neq \NP$ by \autoref{thm:pnppeqnpeq}).
+%% Although this theorem relies on the assumption that there is an $\NPEq$-complete problems, no such assumption is required to show the existence of intermediary problems between, say, $\PHEq$ and $\PSPACEEq$ (\autoref{cor:pspace}).
 % conclusion (focus on readers) so what? - what the findings mean for the audience
 We conclude that even though kernel reductions are strictly weaker than many-one reductions, they still preserve the hierarchies of problems of various computational complexities we expect from our understanding of traditional complexity classes.
 % perspective (focus on anyone) what now? - what should be done next
 The graph isomorphism problem, as one of the few candidates for an $\NP$-intermediary problem, may be the best candidate for an $\NPEq$-intermediary problem as well.
 
-First we need to provide some technical definitions.
-
-\begin{definition}
-  A class of languages $\mathcal{C}$ is \defn{closed under finite variations} if and only if $A\in \mathcal{C}$ and $A\symdiff B$ (the symmetric difference of $A$ and $B$) is finite implies $B\in \mathcal{C}$ for all $B$.
-\end{definition}
-
-\begin{definition}
-  The \defn{kernel join} of two equivalence relations $R$ and $S$, denoted $R \kj S$, is defined by
-  \begin{equation*}
-    R \kj S = \lb \pair{x0}{y0} \st \pair{x}{y} \in R \rb \cup \lb \pair{x1}{y1} \st \pair{x}{y} \in S \rb \cup \{(\lambda, \lambda)\}.
-  \end{equation*}
-\end{definition}
-
-The pair of empty strings $(\lambda, \lambda)$ is required in the above definition so that the equivalence classes of $R \kj S$ partition the set of all finite strings $\Sigma^*$.
-
-\begin{lemma}\label{lem:join}
-  If $R$ and $S$ are equivalence relations, then $R \kj S$ is an equivalence relation.
-\end{lemma}
-\begin{proof}
-  The proof follows immediately from the definitions.
-  %% Since the equivalence class of the empty string, $[\lambda]$, is a singleton set, each of the three properties required of an equivalence relation hold for that set.
-  %% Thus we need only consider nonempty strings.
-  %% Let $x$, $y$ and $z$ be nonempty strings in $\Sigma^*$.
-  %%
-  %% Since $x$ is non-empty, $x = x'0$ or $x = x'1$.
-  %% If $x = x'0$, then $\pair{x'}{x'} \in R$ since $R$ is reflexive.
-  %% If $x = x'1$, then $\pair{x'}{x'} \in S$ since $R$ is reflexive.
-  %% Hence $\pair{x}{x}\in R\kj S$ regardless of the last bit of $x$.
-  %% Therefore $R \kj S$ is reflexive.
-  %%
-  %% Suppose $\pair{x}{y}\in R\kj S$.
-  %% Then either $x=x'0$, $y=y'0$ and $\pair{x'}{y'}\in R$ or $x=x'1$, $y=y'1$ and $\pair{x'}{y'}\in S$.
-  %% In either case, symmetry follows from the symmetry of $R$ or $S$.
-  %%
-  %% Suppose $\pair{x}{y}$ and $\pair{y}{z}$ are both in $R\kj S$.
-  %% In the case that $x=x'0$, $y=y'0$ and $\pair{x'}{y'}\in R$, and that $z=z'0$ and $\pair{y'}{z'}\in R$, then by the transitivity of $R$, $\pair{x'}{z'}\in R$, so $\pair{x}{z}\in R\kj S$.
-  %% The argument is similar in the case that $x=x'1$, $y=y'1$ and $z=z'1$.
-  %% It is a contradiction for the other two cases to exist, since $y$ cannot be equal to both $y'0$ and $y'1$.
-  %%
-  %% Since $R\kj S$ is reflexive, symmetric and transitive, $R\kj S$ is an equivalence relation.
-\end{proof}
-
-\begin{proposition}\label{prop:symdiff}
-  Symmetric difference of equivalence relations preserves symmetry.
-\end{proposition}
-\begin{proof}
-  Let $R$ and $S$ be equivalence relations.
-  Let $(x,y)\in(R\symdiff S)$.
-  In the case that $(x,y)\in R$ and $(x,y)\notin S$, then $(y,x)\in R$.
-  If $(y,x)$ were in $S$, then $(x,y)$ would also be in $S$, by symmetry, but this is a contradiction.
-  Hence $(y,x)\in R$ and $(y,x)\notin S$.
-  The argument for the other case is symmetric.
-  Therefore, $(x, y) \in (R \symdiff S)$ implies $(y, x) \in (R \symdiff S)$.
-\end{proof}
-
-\begin{definition}
-  Let $r\colon\mathbb{N}\to\mathbb{N}$ be a computable function such that $r(m)>m$ for all $m$.
-  Define the set $G[r]$ as
-  \begin{displaymath}
-    G[r]=\lb x\in\Sigma^* \st r^n(0)\leq|x|<r^{n+1}(0) \plain{for some even} n\rb
-  \end{displaymath}
-  where $r^n(m)$ denotes the $n$-fold application of $r$ to $m$:
-  \begin{displaymath}
-    \overbrace{r\circ r\circ r\circ\cdots\circ r}^{n \plain{times}}(m)
-  \end{displaymath}
-  $G[r]$ is called the \defn{gap language} generated by $r$.
-\end{definition}
-
-\begin{lemma}\label{lem:gap_p}
-  If $r$ is time constructible, then $G[r]\in\P$.
-\end{lemma}
-\begin{proof}
-  %% TODO add theorem number in this citation
-  The proof can be found in \autocite{bdg95}.
-\end{proof}
-
-We will denote the Cartesian product $G[r]\times G[r]$ by the slightly more succinct ${G[r]}^2$, and $\overline{G[r]}\times\overline{G[r]}$ by $\overline{G[r]}^2$.
-Elements of ${G[r]}^2$ are pairs of strings whose lengths are in the ``even gaps'' of $r$, while elements of $\overline{G[r]}^2$ are pairs of strings whose lengths are in the ``odd gaps'' of $r$.
-
-\begin{lemma}
-  ${G[r]}^2$ and $\overline{G[r]}^2$ are \defn{partial equivalence relations} (that is, they are symmetric and transitive).
-\end{lemma}
-\begin{proof}
-  The proof follows immediately from the definitions.
-  %% We will prove the theorem for ${G[r]}^2$; a symmetric argument proves the theorem for $\overline{G[r]}^2$.
-  %%
-  %% Let $x,y\in\Sigma^*$.
-  %% Suppose $\pair{x}{y}\in {G[r]}^2$, so the lengths of $x$ and $y$ are both in an even gap of $r$.
-  %% Then $\pair{y}{x}\in{G[r]}^2$, so ${G[r]}^2$ is symmetric.
-  %% Now let $z\in\Sigma^*$ and suppose also that $\pair{y}{z}\in {G[r]}^2$.
-  %% Then $y$ and $z$ are both in an even gap of $r$, so $x$, $y$ and $z$ are all in some even gap of $r$, and hence $\pair{x}{z}\in {G[r]}^2$.
-  %% Therefore ${G[r]}^2$ is transitive.
-\end{proof}
-
-We are now prepared to prove the main technical theorem which will allow us to construct an equivalence relation which is ``between'' two complexity classes.
-
-\begin{theorem}\label{thm:diag}
-  Let $R_1$ and $R_2$ be decidable equivalence relations, and let $\mathcal{C}_1$ and $\mathcal{C}_2$ be classes of decidable equivalence relations such that
-  \begin{enumerate}
-  \item $R_1\notin\mathcal{C}_1$,
-  \item $R_2\notin\mathcal{C}_2$,
-  \item $\mathcal{C}_1$ and $\mathcal{C}_2$ are computably enumerable,
-  \item $\mathcal{C}_1$ and $\mathcal{C}_2$ are closed under finite variations.
-  \end{enumerate}
-  Then there exists a decidable equivalence relation $R$ such that
-  \begin{enumerate}
-  \item $R\notin \mathcal{C}_1$,
-  \item $R\notin \mathcal{C}_2$,
-  \item $R\kr R_1\kj R_2$.
-  \end{enumerate}
+\begin{theorem}\label{thm:intermediary}
+  If $\PEq \neq \NPEq$, then there is an equivalence relation in $\NPEq$ that is neither in $\PEq$ nor $\NPEq$-complete.
 \end{theorem}
 \begin{proof}
-  Let $P_1, P_2, \ldots$ and $Q_1, Q_2, \ldots$ be enumerations of Turing machines deciding the languages in $\mathcal{C}_1$ and $\mathcal{C}_2$ respectively.
-  Define the functions
-  \begin{eqnarray*}
-    r_1(n)=\underset{i\leq n}{max}\{|z_{i,n}|\}+1 & \text{and} &
-    r_2(n)=\underset{i\leq n}{max}\{|z'_{i,n}|\}+1
-  \end{eqnarray*}
-  where $z_{i,n}$ is the smallest word in $\Sigma^*$ such that there exists an $x\in\Sigma^*$, with $n<|x|\leq|z_{i,n}|$, such that $\pair{z_{i,n}}{x}\in(L(P_i)\symdiff R_1)$, and $z'_{i,n}$ is the smallest word in $\Sigma^*$ such that there exists an $x'\in\Sigma^*$, with $n<|x'|\leq|z'_{i,n}|$, such that $\pair{z'_{i,n}}{x'}\in(L(Q_i)\symdiff R_2)$.
-  Note that it also suffices to find an $x$ and $x'$ such that $\pair{x}{z_{i,n}}\in(L(P_i)\symdiff R_1)$ and $\pair{x'}{z'_{i,n}}\in(L(Q_i)\symdiff R_2)$, since symmetric difference on equivalence relations preserves symmetry by \autoref{prop:symdiff}.
-  The more important requirement is that $|x|\leq|z_{i,n}|$, since we will require below that both $x$ and $z_{i,n}$ are in the same gap of a specific function.
+  Let $K$ be an $\NP$-complete equivalence relation.
+  We know that such equivalence relations exist by \autoref{thm:npceqrel}.
+  Define the equivalence relation $R$ by
+  \begin{equation*}
+    R = \left\{\left\langle x 0 1^{f(n) - n - 1}, y 0 1^{f(n) - n - 1}\right\rangle \, \middle| \, \pair{x}{y} \in K \text{ and } |x| = |y| = n\right\},
+  \end{equation*}
+  where $f$ is a function that will be defined below.
+  The problem $R$ is a padded version of the problem $K$.
 
-  We claim that $z_{i,n}$ and $z'_{i,n}$ always exist.
-  Assume that no such $z_{i,n}$ exists, so there are no words such that there exists an $x\in\Sigma^*$, with $n<|x|\leq|z_{i,n}|$, such that $\pair{z_{i,n}}{x}\in(L(P_i)\symdiff R_1)$.
-  Therefore, there are no pairs in $(L(P_i)\symdiff R_1)$ with both elements of length greater than $n$.
-  Then there are a finite number of pairs in $L(P_i)\symdiff R_1$, so $R_1$ is a finite variation of $L(P_i)$.
-  Since $\mathcal{C}_1$ is closed under finite variations, $R_1\in\mathcal{C}_1$.
-  This is a contradiction with the hypothesis that $R_1\notin\mathcal{C}_1$.
-  Therefore such a $z_{i,n}$ always exists.
-  The argument that $z'_{i,n}$ always exists is similar.
+  Our goal is to define the function $f$ so that $R$ is not too hard and not too easy: it's output should be large enough that $R$ is not $\NPEq$-complete but not so large that $R$ is in $\P$.
+  For this we need an enumeration of each polynomially clocked Turing machine, $\{M_i\}_i$.
+  We define $f$ for each positive integer $n$ by the following iterative process (and thus we implicitly define $R$ iteratively as well).
+  Initially, let $i = 1$, then perform the following steps for each $n$ in order.
+  \begin{itemize}
+  \item Define $f(n)$ to be $n^i$.
+  \item
+    Check if there is any pair of strings $x$ and $y$ of length at most $\log n$ such that
+    \begin{itemize}
+    \item $M_i(\pair{x}{y})$ accepts and $\pair{x}{y} \notin R$, or
+    \item $M_i(\pair{x}{y})$ rejects and $\pair{x}{y} \in R$.
+    \end{itemize}
+    If any such pair exists, increment $i$.
+  \end{itemize}
 
-  Since $L(P_i)$ and $L(Q_i)$ are decidable for all $i$, and since $R_1$ and $R_2$ are decidable, so are $L(P_i)\symdiff R_1$ and $L(Q_i)\symdiff R_2$.
-  For each $n$, there is a procedure which always halts and which computes $z_{i,n}$.
-  A similar procedure computes $z'_{i,n}$.
-  The procedure which computes the maximum of a finite set of numbers and which adds one to that value always halts as well, so $r_1$ and $r_2$ are total computable functions.
+  The function $f$ is computable in time polynomial in $n$.
+  Computing $f(n)$ requires computing $f(1)$, $f(2)$, $\dotsc$, $f(n - 1)$; if each of these $n - 1$ computations takes a polynomial amount of time, the total time required to compute $f(n)$ remains polynomial in $n$, by induction.
+  Since the strings $x$ and $y$ are of length at most $\log n$, the total number of iterations required to test all pairs of strings is polynomial in $n$.
+  \todo{Why is $M_i(\pair{x}{y})$ computable in time polynomial in $n$? It seems like it should be computable in time $O(i (\log n)^i)$, but $i$ could be as large as $n$.}
+  The language $R$ is in $\NPEq$ because it is a padded version of the language $K$, which is in $\NPEq$.
+  Since $\NP \subseteq \EXP$ and the inputs $x$ and $y$ are each of length $\log n$, membership in $R$ can be determined in time polynomial in $n$.
+  (Even though the definition of $R$ requires $f$ to be defined, $f$ is already defined for strings of length less than $n$, including the strings $x$ and $y$.)
+  Since each step can be performed in polynomial time and there are at most $n$ iterations required when defining $f(n)$, we conclude that $f$ is in time polynomial in $n$.
 
-  Let $r\ge \max(r_1,r_2)$ be a non-decreasing time constructible function (the proof that such a function exists is left as an exercise to the reader).
-  % The proof can be found in Lemma 2.3 on p. 46 of [BDG95].
-  Now for all $n$ and all $i\leq n$, each element of the pair $\pair{z_{i,n}}{x}$ has length between $n$ and $r_1(n)$, by construction.
-  The same is true for $\pair{z'_{i,n}}{x'}$ between $n$ and $r_2(n)$.
-  Notice that $\pair{z_{i,n}}{x}$ and $\pair{z'_{i,n}}{x'}$ are ``witnesses'' that $R_1\neq L(P_i)$ and $R_2\neq L(Q_i)$ respectively.
-  Hence for all $n$, there are some witnesses between $n$ and $r(n)$ that for all $i\leq n$, $R_1\neq L(P_i)$ and $R_2\neq L(Q_i)$.
+  Now we must show that $R \notin \PEq$ and $R$ is not $\NPEq$-complete.
+  First, assume with the intention of producing a contradiction that $R \in \P$.
+  Thus there is a natural number $i$ such that $M_i$ decides $R$.
+  For sufficiently large $n$, the machine $M_i$ never disagrees with $R$, so $f(n) = n^i$ for all sufficiently large $n$.
+  This yields a polynomial-time kernel reduction from $K$ to $R$ via the function $\pair{x}{y} \mapsto \left\langle x 0 1^{f(n) - n - 1}, y 0 1^{f(n) - n - 1}\right\rangle$, where $|x| = |y| = n$.
+  This mapping is polynomial-time computable because $f(n) = n^i$ for all sufficiently large $n$, and $i$ does not depend on $n$.
+  Since $\PEq$ is closed under polynomial-time kernel reductions, $K$ is in $\PEq$, and hence $\PEq = \NPEq$, since $K$ is $\NPEq$-complete.
+  This is a contradiction with the assumption that $\PEq \neq \NPEq$, hence $R \notin \PEq$.
 
-  Define $R=({G[r]}^2\cap R_1)\cup(\overline{G[r]}^2\cap R_2)$, so $R$ is equal to pairs of $R_1$ in the ``even gaps'' of $r$ and $R$ is equal to pairs of $R_2$ in the ``odd gaps'' of $r$.
-  It remains to show that $R$ is an equivalence relation which satisfies the properties stated in the theorem.
+  Second, assume with the intention of producing a contradiction that $R$ is $\NPEq$-complete.
+  Thus $K \kr R$, so there is a function $f_j$ such that $f_j$ halts within $n^j$ steps and for each string $x$ and $y$, we have $\pair{x}{y} \in K$ if and only if $\pair{f_j(x)}{f_j(y)} \in R$.
+  \todo{I don't quite see how to get this next sentence; it seems to come from the fact that the image of $K$ under $f_j$ is infinite (if it were finite, the problem would be in $\P$).}
+  There is a $k$ greater than $j$ and an $n_0$ such that for each $n \geq n_0$, we have $f(n) = n^k$.
+  Now we can construct a polynomial-time algorithm for $K$.
+  Assume without loss of generality that all inputs are pairs of strings of equal length.
+  On inputs of the form $\pair{x}{y}$, proceed as follows.
+  \begin{itemize}
+  \item If $|x| < n_0$ (or equivalently $|y| < n_0$), decide whether $\pair{x}{y} \in K$ by examining a hardcoded lookup table for strings of length less than $n_0$.
+  \item Compute $f_j(x)$ and $f_j(y)$.
+  \item If either $|f_j(x)|$ or $|f_j(y)|$ is not in the range of $f$, reject.
+  \item
+    Suppose $f_j(x) = x' 0 1^{f(m) - m - 1}$ and $f_j(y) = y' 0 1^{f(\ell) - \ell - 1}$, where $|x'| = m$ and $|y'| = \ell$.
+    Invoke this algorithm recursively on input $\pair{x'}{y'}$.
+  \end{itemize}
 
-  First we show that $R$ is indeed an equivalence relation.
-  Symmetry and transitivity follow from the symmetry and transitivity of $R_1$, $R_2$, ${G[r]}^2$ and $\overline{G[r]}^2$.
-  To show reflexivity, suppose $x\in G[r]$.
-  Hence $\pair{x}{x}\in {G[r]}^2$.
-  Since $R_1$ is an equivalence relation, $\pair{x}{x}\in R_1$.
-  Therefore $\pair{x}{x}\in({G[r]}^2\cap R_1)$, so $\pair{x}{x}\in R$.
-  The argument for the case that $x\in\overline{G[r]}$ is similar.
-  Therefore $R$ is reflexive, symmetric and transitive.
+  Assuming for now that $x'$ and $y'$ are shorter than $x$ and $y$.
+  Then the correctness of this algorithm follows from the fact that
+  \begin{equation*}
+    \pair{x}{y} \in K \iff \pair{f_j(x)}{f_j(y)} \in R \iff \pair{x'}{y'} \in K.
+  \end{equation*}
+  Since the length of the inputs to the algorithm decrease on each recursive invocation, there are at most $n$ recursive calls on inputs of pairs of strings of length $n$.
+  Eventually the solution can be found in the hardcoded lookup table (the base case of the recursion).
+  Each recursive invocation of the algorithm other than the base case requires computing $f_j$ on an input of length $n$ (twice), which can be done in polynomial time.
+  Thus the overall time required for this algorithm is polynomial in $n$.
+  This proves that $K \in \P$ and thus $\P = \NP$, a contradiction.
 
-  Next we show that $R\notin\mathcal{C}_1$.
-  The argument which proves $R\notin\mathcal{C}_2$ is symmetric.
-  Assume $R\in\mathcal{C}_1$ in order to produce a contradiction.
-  Then there exists an $i$ such that $R=L(P_i)$.
-  Let $m$ be an even integer such that $r^m(0)\geq i$.
-  By construction, there exists a pair $\pair{x}{z}$ such that $r^m(0)\leq|x|\leq|z|<r^{m+1}(0)$ and $\pair{x}{z}\in(L(P_i)\symdiff R_1)$.
-  Since $m$ is even, $\pair{x}{z}\in {G[r]}^2$.
-  Since $R$ is equal to $R_1$ where it coincides with ${G[r]}^2$, then $\pair{x}{z}\in(L(P_i)\symdiff R)$.
-  This is a contradiction with the hypothesis that $R=L(P_i)$.
-  Therefore $R\notin\mathcal{C}_1$.
-
-  Finally, we show that $R\kr R_1\kj R_2$.
-  First, we note that $R_1\kj R_2$ is an equivalence relation by \autoref{lem:join}, so a kernel reduction here is syntactically possible.
-  Since $G[r]\in\P$ by \autoref{lem:gap_p}, the function defined by
-  \begin{displaymath}
-    f(x)=
-    \begin{cases}
-      x0 & \text{if}\, x\in G[r]\\
-      x1 & \text{if}\, x\notin G[r]\\
-    \end{cases}
-  \end{displaymath}
-  is a polynomial-time computable function.
-  
-  To show that $f$ computes the reduction from $R$ to $R_1\kj R_2$ correctly, suppose first that $\pair{x}{y}\in R$, so $\pair{x}{y}$ is in either $({G[r]}^2\cap R_1)$ or $(\overline{G[r]}^2\cap R_2)$.
-  In the former case, both $x$ and $y$ are in $G[r]$, so $f(x)=x0$ and $f(y)=y0$, and both $x$ and $y$ are in $R_1$, so $\pair{x0}{y0}=\pair{f(x)}{f(y)}\in R_1$.
-  The argument for the latter case is symmetric.
-
-  For the converse, suppose $\pair{f(x)}{f(y)}\in R_1\kj R_2$.
-  Then $f(x)$ and $f(y)$ either both end with $0$ or both end with $1$.
-  In the case that both end with $0$, then there exist some strings $w_x$ and $w_y$ such that $f(x)=w_x0$, $f(y)=w_y0$ and $\pair{w_x}{w_y}\in R_1$.
-  By construction of $f$, $w_x$ must equal the input $x$ and $w_y$ must equal the input $y$, so $\pair{x}{y}\in R_1$.
-  Also by construction, $f(x)=x0$ if and only if $x\in G[x]$ and $f(y)=y0$ if and only if $y\in G[x]$, so $\pair{x}{y}\in{G[r]}^2$.
-  Hence $\pair{x}{y}\in({G[r]}^2\cap R_1)\subseteq R$.
-  The argument for the case that both $f(x)$ and $f(y)$ end with $1$ is symmetric, and shows that $\pair{x}{y}\in(\overline{G[r]}^2\cap R_2)\subseteq R$.
-  Therefore $\pair{x}{y}\in R$ if and only if $\pair{f(x)}{f(y)}\in R_1\kj R_2$, so $f$ correctly computes the reduction from $R$ to $R_1\kj R_2$.
-
-  Since we have shown that the equivalence relation $R$ satisfies the properties in the statement of the theorem, this concludes the proof.
+  Finally, we prove that $|x'| < |x|$ (the proof that $|y'| < |y|$ is the same), which we postponed from the previous paragraph.
+  Due to its time bound, $|f_j(x)| \leq |x|^j$ for any string $x$.
+  By assumption, $f(|x'|) = |x'|^k$.
+  By construction, $f(|x'|) = |f_j(x)|$
+  Combining these three relations yields the inequality
+  \begin{equation*}
+    |x'|^k = f(|x'|) = |f_j(x)| \leq |x|^j,
+  \end{equation*}
+  so $|x'| \leq |x|^{j / k} < |x|$, since $k > j$ and lengths must be natural numbers.
 \end{proof}
 
-We would now like to show that the result of this theorem holds when $\mathcal{C}_1 = \PEq$ and $\mathcal{C}_2$ is the set of $\NPEq$-complete problems.
+\todo{Explain why uniform diagonalization doesn't work; well, the uniform diagonalization theorem I think still holds, but we just can't enumerate NPEq, for example, because that is equivalent to showing a complete problem.}
 
-\begin{proposition}\label{prop:npeqc}
-  If $\PEq \neq \NPEq$, then no $\NPEq$-complete problem is in $\PEq$.
-\end{proposition}
-\begin{proof}
-  If no $\NPEq$-complete problems exist, then the conclusion holds unconditionally.
-  Thus, assume that there is an $\NPEq$-complete equivalence relation $R$ and that $R$ is in $\PEq$.
-  Then all problems in $\NPEq$ can be kernel reduced to $R$ in polynomial time, and $R$ can be decided in polynomial time.
-  Therefore, $\PEq = \NPEq$, a contradiction with the hypothesis.
-\end{proof}
-
-A reminder: as stated in the introduction, polynomial-time kernel reductions compose, and $\NPEq$ is closed under polynomial-time kernel reductions.
-We use these facts in the proof of the following theorem.
-
-\intermediary
-\begin{proof}
-  By \autoref{prop:npeqc}, if $\PEq \neq \NPEq$, then no $\NPEq$-complete problem is in $\PEq$.
-  Let $S$ be an $\NPEq$-complete problem.
-  Choose $R_1=S$, $R_2=\emptyset$, $\mathcal{C}_1=\PEq$ and $\mathcal{C}_2$ to be the set of $\NPEq$-complete problems.
-  Since $\P$ is computably enumerable, so is $\PEq$.
-  Since the set of $\NP$-complete problems is computably enumerable, so is the set of $\NPEq$-complete problems.
-  Then by \autoref{thm:diag}, there is an equivalence relation $R$ that is neither in $\PEq$ nor $\NPEq$-complete, but which kernel reduces to $S \kj \emptyset$.
-  Since $S \kj \emptyset$ trivially kernel reduces to $S$, and since polynomial-time kernel reductions compose, $R \kr S$.
-  Since $\NPEq$ is closed under polynomial-time kernel reductions, $R \in \NPEq$.
-\end{proof}
-
+\todo{Recheck and rephrase this.}
 This also introduces a host of similar corollaries showing the existence of intermediary problems for other classes of equivalence relations which have $\kr$-complete problems; for more examples, see the original paper by Schöning \autocite{schoning82}.
 In particular, we can make the following stronger statement using \autoref{cor:hardproblems}.
 (Note that $\PHEq$ is the class of equivalence relations in $\PH$, the polynomial hierarchy.)
