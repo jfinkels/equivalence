@@ -69,7 +69,7 @@ The graph isomorphism problem, as one of the few candidates for an $\NP$-interme
   Since each step can be performed in polynomial time and there are at most $n$ iterations required when defining $f(n)$, we conclude that $f$ is computable in time polynomial in $n$.
 
   Now we must show that $R \notin \PEq$ and $R$ is not $\NPEq$-complete.
-  First, assume with the intention of producing a contradiction that $R \in \P$.
+  First, assume with the intention of producing a contradiction that $R \in \PEq$.
   Thus there is a natural number $i$ such that $M_i$ decides $R$.
   For sufficiently large $n$, the machine $M_i$ never disagrees with $R$, so $f(n) = n^i$ for all sufficiently large $n$.
   This yields a polynomial-time kernel reduction from $K$ to $R$ via the function $\pair{x}{y} \mapsto \left\langle x 0 1^{f(n) - n - 1}, y 0 1^{f(n) - n - 1}\right\rangle$, where $|x| = |y| = n$.
@@ -102,7 +102,8 @@ The graph isomorphism problem, as one of the few candidates for an $\NP$-interme
   Eventually the solution can be found in the hardcoded lookup table (the base case of the recursion).
   Each recursive invocation of the algorithm other than the base case requires computing $f_j$ on an input of length $n$ (twice), which can be done in polynomial time.
   Thus the overall time required for this algorithm is polynomial in $n$.
-  This proves that $K \in \P$ and thus $\P = \NP$, a contradiction.
+  This proves that $K \in \P$ and thus $\P = \NP$.
+  Since $\P = \NP$ if and only if $\PEq = \NPEq$, we have a contradiction.
 
   Finally, we prove that $|x'| < |x|$ (the proof that $|y'| < |y|$ is the same), which we postponed from the previous paragraph.
   Due to its time bound, $|f_j(x)| \leq |x|^j$ for any string $x$.
