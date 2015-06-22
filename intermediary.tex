@@ -66,7 +66,7 @@ The graph isomorphism problem, as one of the few candidates for an $\NP$-interme
   The language $R$ is in $\NPEq$ because it is a padded version of the language $K$, which is in $\NPEq$.
   Since $\NP \subseteq \EXP$ and the inputs $x$ and $y$ are each of length $\log n$, membership in $R$ can be determined in time polynomial in $n$.
   (Even though the definition of $R$ requires $f$ to be defined, $f$ is already defined for strings of length less than $n$, including the strings $x$ and $y$.)
-  Since each step can be performed in polynomial time and there are at most $n$ iterations required when defining $f(n)$, we conclude that $f$ is in time polynomial in $n$.
+  Since each step can be performed in polynomial time and there are at most $n$ iterations required when defining $f(n)$, we conclude that $f$ is computable in time polynomial in $n$.
 
   Now we must show that $R \notin \PEq$ and $R$ is not $\NPEq$-complete.
   First, assume with the intention of producing a contradiction that $R \in \P$.
