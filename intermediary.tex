@@ -5,6 +5,7 @@
 %% This LaTeX markup document is made available under the terms of the Creative
 %% Commons Attribution-ShareAlike 4.0 International License,
 %% https://creativecommons.org/licenses/by-sa/4.0/.
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
 \section{Existence of intermediary problems}
 \label{sec:intermediary}
 % Foreword
@@ -45,26 +46,27 @@ The graph isomorphism problem, as one of the few candidates for an $\NP$-interme
   The problem $R$ is a padded version of the problem $K$.
 
   Our goal is to define the function $f$ so that $R$ is not too hard and not too easy: it's output should be large enough that $R$ is not $\NPEq$-complete but not so large that $R$ is in $\P$.
-  For this we need an enumeration of each polynomially clocked Turing machine, $\{M_i\}_i$.
+  For this we need an enumeration of each polynomially clocked Turing machine, $\{M_i\}_i$, where machine $M_i$ runs in time $i n^i$ on inputs of length $n$.
   We define $f$ for each positive integer $n$ by the following iterative process (and thus we implicitly define $R$ iteratively as well).
   Initially, let $i = 1$, then perform the following steps for each $n$ in order.
   \begin{itemize}
   \item Define $f(n)$ to be $n^i$.
   \item
-    Check if there is any pair of strings $x$ and $y$ of length at most $\log n$ such that
+    Check if there is any pair of strings $x$ and $y$, each of length at most $\log \log n$, such that
     \begin{itemize}
     \item $M_i(\pair{x}{y})$ accepts and $\pair{x}{y} \notin R$, or
     \item $M_i(\pair{x}{y})$ rejects and $\pair{x}{y} \in R$.
     \end{itemize}
-    If any such pair exists, increment $i$.
+    If any such pair exists \emph{and} $\floor{\log \log n}$ is an integer not already seen, then increment $i$.
   \end{itemize}
 
   The function $f$ is computable in time polynomial in $n$.
   Computing $f(n)$ requires computing $f(1)$, $f(2)$, $\dotsc$, $f(n - 1)$; if each of these $n - 1$ computations takes a polynomial amount of time, the total time required to compute $f(n)$ remains polynomial in $n$, by induction.
-  Since the strings $x$ and $y$ are of length at most $\log n$, the total number of iterations required to test all pairs of strings is polynomial in $n$.
-  \todo{Why is $M_i(\pair{x}{y})$ computable in time polynomial in $n$? It seems like it should be computable in time $O(i (\log n)^i)$, but $i$ could be as large as $n$.}
+  Since the strings $x$ and $y$ are of length at most $\log \log n$, the total number of iterations required to test all pairs of strings is polynomial in $n$.
+  The simulation of $M_i$ is computable in time $i (\log \log n)^i$, but $i$ is at most $\log \log n$, since $i$ can only be incremented at most $\log \log n$ times.
+  Since a polynomial in $\log \log n$ is in $O(\log n)$, the machine $M_i$ runs in time polynomial in $n$.
   The language $R$ is in $\NPEq$ because it is a padded version of the language $K$, which is in $\NPEq$.
-  Since $\NP \subseteq \EXP$ and the inputs $x$ and $y$ are each of length $\log n$, membership in $R$ can be determined in time polynomial in $n$.
+  Since $\NP \subseteq \EXP$ and the inputs $x$ and $y$ are each of length $\log \log n$, membership in $R$ can be determined in time polynomial in $n$.
   (Even though the definition of $R$ requires $f$ to be defined, $f$ is already defined for strings of length less than $n$, including the strings $x$ and $y$.)
   Since each step can be performed in polynomial time and there are at most $n$ iterations required when defining $f(n)$, we conclude that $f$ is computable in time polynomial in $n$.
 
