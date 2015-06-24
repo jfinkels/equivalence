@@ -71,7 +71,15 @@ The following three lemmas prove that this problem is of intermediate complexity
   Computing $p(n)$ requires computing $p(1)$, $p(2)$, $\dotsc$, $p(n - 1)$; if each of these $n - 1$ computations takes a polynomial amount of time, the total time required to compute $f(n)$ remains polynomial in $n$, by induction.
   Since the strings $x$ and $y$ are of length at most $\log \log n$, the total number of iterations required to test all pairs of strings is polynomial in $n$.
   The simulation of $M_i$ is computable in time $i (\log \log n)^i$, but $i$ is at most $\log \log n$, since $i$ can only be incremented at most $\log \log n$ times.
-  Since a polynomial in $\log \log n$ is in $O(\log n)$, the machine $M_i$ runs in time polynomial in $n$.
+  Using the fact that a polynomial in $\log \log n$ is bounded above by $O(\log n)$,
+  \begin{align*}
+    i (\log \log n)^i & = \log \log n (\log \log n)^{\log \log n} \\
+    & = 2^{(\log \log \log n)^2 \log \log n } \\
+    & \leq 2^{\log^3 \log n} \\
+    & = 2^{O(\log n)} \\
+    & = \poly(n),
+  \end{align*}
+  so the machine $M_i$ runs in time polynomial in $n$.
   The language $R$ is in $\NPEq$ because it is a padded version of the language $K$, which is in $\NPEq$.
   Since $\NP \subseteq \EXP$ and the inputs $x$ and $y$ are each of length $\log \log n$, membership in $R$ can be determined in time polynomial in $n$.
   (Even though the definition of $R$ requires $p$ to be defined, $p$ is already defined for strings of length less than $n$, including the strings $x$ and $y$.)
