@@ -107,8 +107,13 @@ The following three lemmas prove that this problem is of intermediate complexity
 \begin{proof}
   Assume with the intention of producing a contradiction that $R$ is $\NPEq$-complete.
   Thus $K \kr R$, so there is a function $f$ such that $f$ halts within $n^j$ steps and for each string $x$ and $y$, we have $\pair{x}{y} \in K$ if and only if $\pair{f(x)}{f(y)} \in R$.
-  \todo{I don't quite see how to get this next sentence; it seems to come from the fact that the image of $K$ under $f$ is infinite (if it were finite, the problem would be in $\P$).}
-  There is a $k$ greater than $j$ and an $n_0$ such that for each $n \geq n_0$, we have $p(n) = n^k$.
+  If the image of $f$ were finite, then $R$ would have a constant number of equivalence classes.
+  In this case, $R$ would be in $\PEq$, and since $\PEq$ is closed under polynomial-time kernel reductions, $K$ would be in $\PEq$ as well, a contradiction with the hypothesis that $\PEq \neq \NPEq$.
+
+  Suppose the image of $f$ is infinite.
+  We know $f(w)$ must be of the form $w01^{p(|w|) - n - 1}$ for each string $w$ of length $n$, so the length of $f(w)$ is $p(|w|)$.
+  There is a natural number $n_0$ such that for each $n \geq n_0$, there is a positive integer $k$ such that $k$ is greater than $j$ and for each string $w$ of length $n$, we have $|f(w)| = p(n) = n^k$.
+  (The integer $k$ is strictly greater than $j$, since if it were less than or equal to $j$, the image of $f$ would be finite.)
   Now we can construct a polynomial-time algorithm for $K$.
   Assume without loss of generality that all inputs are pairs of strings of equal length.
   On inputs of the form $\pair{x}{y}$, proceed as follows.
