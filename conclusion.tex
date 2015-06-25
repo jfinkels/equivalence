@@ -25,6 +25,14 @@ This is interesting because even though the latter appears to be a difficult pro
 
 % perspective (focus on anyone) what now? - what should be done next
 Besides the open problems listed in \autoref{sec:generalcompleteness}, we consider the following questions to be worth exploring.
-First, there are several problems of \emph{inequivalence} in \autocite{gj79} listed as $\NP$-complete or as $\PSPACE$-complete.
-What do these problems have to do with $\NPEq$-completeness, $\coNPEq$-completeness, and $\PSPACEEq$-completeness?
-Second, when can results like \autocite[Theorem~1]{rs11}, for example, which shows that an equivalence relation is complete for $\L$ under many-one reductions via a reduction from a problem that is \emph{not} an equivalence relation, be translated to a proof that the problem is complete under kernel reductions for the corresponding class of equivalence problems?
+\begin{itemize}
+\item There are several problems of \emph{inequivalence} in \autocite{gj79} listed as $\NP$-complete or as $\PSPACE$-complete.
+  What do these problems have to do with $\NPEq$-completeness, $\coNPEq$-completeness, and $\PSPACEEq$-completeness?
+\item When can results like \autocite[Theorem~1]{rs11}, for example, which shows that an equivalence relation is complete for $\L$ under many-one reductions via a reduction from a problem that is \emph{not} an equivalence relation, be translated to a proof that the problem is complete under kernel reductions for the corresponding class of equivalence problems?
+\item
+  In the case of the graph isomorphism problem, \textsc{GI}, the number $\#\textsc{GI}(n)$, in the notation of \autoref{sec:limitations}, is the number of (pairwise) non-isomorphic graphs on at most $n$ vertices.
+  This differs from the conventional notation $\#\textsc{GI}$ denoting the problem of counting the number of graphs isomorphic to a given graph.
+  In other words, our notation counts the \emph{number} of equivalence classes, whereas the latter counts the \emph{size} of an equivalence class.
+  For the graph isomorphism problem, computing the size of an equivalence class is Turing-equivalent to deciding whether two graphs are isomorphic \autocite[Theorem~1.24]{kst93}.
+  When is the problem of computing the size of an equivalence class Turing-equivalent to the problem of deciding equivalence?
+\end{itemize}
