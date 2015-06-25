@@ -17,8 +17,6 @@ The theorem does not immediately imply a similar result for equivalence problems
 Do kernel reductions induce the same rich structure between $\PEq$ and $\NPEq$ as do many-one reductions between $\P$ and $\NP$?
 % task (focus on author) why me? - what was undertaken to address the need
 We adapt a proof of Ladner's theorem from \autocite{df03} (which has been attributed to Russell~Impagliazzo) to classes of equivalence problems;
-%% We adapt Schöning's Uniform Diagonalization Theorem \autocite{schoning82}, a generalized version of Ladner's Theorem, to classes of equivalence problems.
-%% The specific presentation we follow is from \autocite{bdg95}.
 % object (focus on document) why this document - what the document covers
 this section details that adaptation.
 
@@ -155,12 +153,9 @@ Combining the preceding three lemmas yields Ladner's theorem for classes of equi
   If $\PEq \neq \NPEq$, then there is an equivalence relation in $\NPEq$ that is neither in $\PEq$ nor $\NPEq$-complete.
 \end{theorem}
 
-\todo{Explain why uniform diagonalization doesn't work; well, the uniform diagonalization theorem I think still holds, but we just can't enumerate NPEq, for example, because that is equivalent to showing a complete problem.}
+This technique can be generalized to other classes of equivalence relations, as long as the underlying machines for the smaller class can be enumerated and the larger class has an equivalence relation that is complete under many-one reductions.
+For example, we can produce equivalence relations between the polynomial hierarchy and $\PSPACE$.
 
-\todo{Recheck and rephrase this.}
-This also introduces a host of similar corollaries showing the existence of intermediary problems for other classes of equivalence relations which have $\kr$-complete problems; for more examples, see the original paper by Schöning \autocite{schoning82}.
-In particular, we can make the following stronger statement using \autoref{cor:hardproblems}.
-(Note that $\PHEq$ is the class of equivalence relations in $\PH$, the polynomial hierarchy.)
 \begin{corollary}\label{cor:pspace}
-  If $\PSPACEEq \neq \PHEq$ then there is an equivalence relation in $\PSPACEEq$ which is neither in $\PHEq$ nor $\PSPACEEq$-complete.
+  If $\PHEq \neq \PSPACEEq$, then there is an equivalence relation in $\PSPACEEq$ that is neither in $\PHEq$ nor $\PSPACEEq$-complete.
 \end{corollary}
