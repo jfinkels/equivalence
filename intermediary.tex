@@ -71,9 +71,9 @@ The following three lemmas prove that this problem is of intermediate complexity
   The simulation of $M_i$ is computable in time $i (\log \log n)^i$, but $i$ is at most $\log \log n$, since $i$ can only be incremented at most $\log \log n$ times.
   Using the fact that a polynomial in $\log \log n$ is bounded above by $O(\log n)$,
   \begin{align*}
-    i (\log \log n)^i & = \log \log n (\log \log n)^{\log \log n} \\
+    i (\log \log n)^i & \leq \log \log n (\log \log n)^{\log \log n} \\
     & = 2^{(\log \log \log n)^2 \log \log n } \\
-    & \leq 2^{\log^3 \log n} \\
+    & \leq 2^{(\log \log n)^2} \\
     & = 2^{O(\log n)} \\
     & = \poly(n),
   \end{align*}
