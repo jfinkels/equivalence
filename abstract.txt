@@ -1,29 +1,10 @@
-Today, the computational complexity of equivalence problems such as the graph
-isomorphism problem and the Boolean formula equivalence problem remain only
-partially understood.  One of the most important tools for determining the
-(relative) difficulty of a computational problem is the many-one reduction,
-which provides a way to encode an instance of one problem into an instance of
-another.  In equivalence problems, the goal is to determine if a pair of
-strings is related, so a many-one reduction with access to the entire pair may
-be too powerful.  A recently introduced type of reduction, the "kernel
-reduction", defined only on equivalence problems, allows the transformation of
-each string in the pair independently.  Understanding the limitations of the
-kernel reduction as compared with the many-one reduction improves our
-understanding of the limitations of computers in solving problems of
-equivalence.  We investigate not only these limitations, but also whether
-classes of equivalence problems have complete problems under kernel reductions.
-This paper provides a detailed collection of results about kernel reductions.
-
-After exploring possible definitions of complexity classes of equivalence
-relations, we prove that polynomial time kernel reductions are strictly less
-powerful than polynomial time many-one reductions.  We also provide sufficient
-conditions for complete problems under kernel reductions, show that
-completeness under kernel reductions can sometimes imply completeness under
-many-one reductions, and finally prove that equivalence problems of
-intermediate difficulty can exist under the right conditions.  Though kernel
-reductions share some basic properties with many-one reductions, ultimately the
-number and size of equivalence classes can prevent the existence of a kernel
-reduction, regardless of the complexity of the equivalence problem. The most
-important open problem we leave unsolved is proving the unconditional existence
-of a complete problem under kernel reductions for some basic complexity classes
-that are well-known to have complete problems under many-one reductions.
+In the framework of computational complexity, and in an effort to define
+a more natural reduction for problems of equivalence, we investigate the
+recently introduced kernel reduction, a reduction that operates on each
+element of a pair independently. This paper details the limitations and
+uses of kernel reductions. We show that kernel reductions are weaker
+than many-one reductions and provide conditions under which complete
+problems exist. Ultimately, the number and size of equivalence classes
+can dictate the existence of a kernel reduction. We leave unsolved the
+unconditional existence of a complete problem under polynomial-time
+kernel reductions for the standard complexity classes.
