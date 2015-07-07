@@ -88,7 +88,7 @@ This corollary also leads to \autocite[Theorem~8.7, part~1]{bcffm}, which is res
 We now return to the proof of \autoref{thm:generalcompleteness} by first providing some motivating ideas.
 Recall the canonical complete problem (sometimes called the ``universal'' problem) for $\NP$ (and indeed for various other complexity classes):
 \begin{displaymath}
-  K = \lb\triple{M}{x}{1^t} \st M\plain{accepts} x \plain{within} t \textnormal{ steps}\rb
+  K = \lb\triple{M}{x}{1^t} \, \middle| \, M\plain{accepts} x \plain{within} t \textnormal{ steps}\rb
 \end{displaymath}
 The idea of this proof is to adapt this into an equivalence relation $R_K$ consisting of pairs of triples of the form $\pair{\triple{M}{x}{1^{t_x}}}{\triple{M}{y}{1^{t_y}}}$, where $M$ accepts $\pair{x}{y}$, as in the reduction from an arbitrary $\NP$ language to $K$.
 The problem we encounter here is that $R_K$ is not necessarily an equivalence relation.
@@ -236,3 +236,4 @@ The three properties required of $R_K$ then follow from the properties of $L(M)$
 %%   Thus $\phi$ is satisfiable if and only if $\exists z\colon\overline{Q}(\tau\land z)$ is satisfiable, so $\QBF\mor\QBFEq$.
 %%   Since $\QBFEq$ is clearly decidable in $\PSPACE$, we conclude that $\QBFEq$ is \PSPACE-complete.
 %% \end{proof}
+\pagebreak

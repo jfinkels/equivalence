@@ -15,7 +15,7 @@ We denote this restricted function on a smaller domain by $f|_{S'}$.
 The \emph{image of $S'$}, denoted $f(S')$, is defined by $f(S') = \{f(s) \, | \, s \in S'\}$.
 
 In this paper, $\Sigma$ denotes the binary alphabet $\{0, 1\}$.
-$\Sigma^*$ is the set of all binary strings over the alphabet $\Sigma$ and $\Sigma^{\leq n}$ is the set $\lb w\in\Sigma^* \st |w|\leq n \rb$.
+$\Sigma^*$ is the set of all binary strings over the alphabet $\Sigma$ and $\Sigma^{\leq n}$ is the set $\lb w\in\Sigma^* \, \middle| \, |w|\leq n \rb$.
 The empty string will be denoted by $\lambda$.
 If $\sigma\in\Sigma$ then $\sigma^k$ is the string consisting of $k$ concatenated copies of the symbol $\sigma$.
 If $x$ and $y$ are elements of $\Sigma^*$, then we denote by $\pair{x}{y}$ the \defn{pairwise encoding} of $x$ and $y$, which is itself an element of $\Sigma^*$.
@@ -44,7 +44,7 @@ An equivalence relation $R$ can be encoded as a language by taking the pairwise 
 In this way we can study the computational complexity of classes of languages which represent equivalence relations.
 In this paper we will abuse notation and write $\pair{x}{y}\in R$ for an equivalence relation $R$ on $\Sigma^*$, but what we really mean is $(x,y)\in R$ and $\pair{x}{y}\in L_R$, the language on the alphabet $\Sigma$ induced by $R$.
 
-The \defn{equivalence class} of $x$ with respect to an equivalence relation $R$ on $\Sigma^*$ is $\lb y\in \Sigma^* \st (x,y)\in R \rb$.
+The \defn{equivalence class} of $x$ with respect to an equivalence relation $R$ on $\Sigma^*$ is $\lb y\in \Sigma^* \, \middle| \, (x,y)\in R \rb$.
 It is denoted $[x]_R$, or if the context is clear, simply $[x]$.
 Each element $x\in \Sigma^*$ is in exactly one equivalence class, so the equivalence classes of an equivalence relation on $\Sigma^*$ provide a partition of $\Sigma^*$.
 Conversely, a partition of $\Sigma^*$ induces an equivalence relation on $\Sigma^*$ in which a pair of elements is in the relation if they are in the same block of the partition.
