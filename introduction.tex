@@ -7,17 +7,15 @@
 %% https://creativecommons.org/licenses/by-sa/4.0/.
 \section{Introduction}
 % Foreword
-
+\subsection{Foreword}
 % context (focus on anyone) why now? - current situation, and why the need is so important
-The computational complexity of deciding whether two graphs are isomorphic has significant implications not only in computer science, but also in the computational forms of sciences such as chemistry, biology, and neuroscience.
-One main technique for determining the complexity of the problem is showing how the difficulty of the problem relates to the difficulty of other known problems.
-The relative difficulty of computational problems are often compared using the many-one reduction, a function by which we encode an instance of a problem as an instance of another problem.
-In the case of the graph isomorphism problem, a many-one reduction from the graph isomorphism problem to, for example, the directed graph isomorphism problem allows the function computing the reduction to have access to both graphs in an instance of the problem.
-However, access to both graphs is not necessary for computing the reduction; the function transforms each undirected graph independently into a directed graph.
-In other words, the reduction is in reality defined on the domain of graphs, not on the domain of pairs of graphs.
-This is a far more natural way to define reductions between problems of equivalence, and is furthermore a finer-grained comparison of the relative difficulty of the two computational problems.
-
+Our main tool for comparing relative difficulties of computational problems is the many-one reduction, an encoding of an instance of one problem as an instance of another.
 % need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+Reductions involving problems of equivalence like the graph isomorphism problem have access to both elements of the pair simultaneously.
+However, a more natural notion of reduction between problems of equivalence requires the reduction to access each element of the pair separately, and indeed, to the best of our knowledge, every many-one reduction between problems of equivalence behaves this way.
+
+\todo{Shorten everything below here.}
+
 The \emph{kernel reduction}, defined in \autocite[Definition~4.13]{fg11}, formally captures this notion of reduction among computational problems of equivalence involving independent transformation of each element of a pair.
 This type of reduction has appeared previously under other names not only in this setting but also in more general settings (``Borel reduction''\kern-0.5em,\kern0.5em ``strong isomorphism reduction''\kern-0.5em,\kern0.5em ``strong equivalence reduction''\kern-0.5em,\kern0.5em ``relation reduction''\kern-0.5em,\kern0.5em ``component-wise reduction''\kern-0.5em,\kern0.5em etc.).
 To the best of our knowledge, every known many-one reduction between problems of equivalence is really a kernel reduction (see, for an early example, the list of problems many-one reducible to graph isomorphism given in \autocite{bc79}).
@@ -45,3 +43,35 @@ We determine the limitations of kernel reductions; these appear to be combinator
 We discover sufficient conditions for complete problems under kernel reductions in classes of equivalence problems (\autoref{sec:generalcompleteness}).
 We compare the new notion of completeness under kernel reductions with the usual notion of completeness under many-one reductions (\autoref{sec:npeqcompleteness}).
 Finally, as an analog to $\NP$-intermediary problems with respect to many-one reductions, we examine the possibility of $\NPEq$-intermediary problems with respect to kernel reductions (\autoref{sec:intermediary}).
+
+\subsection{Conclusion}
+% Summary
+%
+% findings (focus on author) what? - what the work revealed when performing the task
+Throughout this work we have proven that kernel reductions are similar to many-one reductions in the most basic ways, but differ in some key aspects.
+Like many-one reductions, kernel reductions are transitive and have good closure properties.
+The class of equivalence problems in $\PSPACE$ has a complete problem under kernel reductions (\autoref{cor:hardproblems}).
+The equivalence of the two equalities $\P = \NP$ and $\PEq = \NPEq$ (\autoref{thm:pnppeqnpeq}) uses the similarity between many-one and kernel reductions.
+Just as many-one reductions allow the existence of $\NP$-intermediary problems, kernel reductions allow for the possibility of $\NPEq$-intermediary problems (\autoref{thm:intermediary}).
+On the other hand, there are equivalence relations between which there is a many-one reduction but no kernel reduction (\autoref{thm:different}).
+Specifically, if there are more equivalence classes, up to strings of certain lengths, in $R$ than in $S$, then no kernel reduction can exist.
+Finally, under some assumptions, there is an equivalence problem that is not complete for $\NPEq$ under injective kernel reductions (\autoref{thm:inj}), whereas nearly every known $\NP$-complete problem is isomorphic (the Berman--Hartmanis conjecture \autocite{bh77} states that \emph{every} $\NP$-complete problem is isomorphic).
+
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+The techniques used in this paper to show that kernel reductions are weaker than many-one reductions are combinatorial techniques (for example, comparing the numbers of equivalence classes).
+Combining these with other complexity theoretic and algebraic techniques has already proven useful: there is no polynomial-time kernel reduction from the graph isomorphism problem to the isomorphism problem for strongly regular graphs \autocite[Theorem~22]{babai14}.
+This is interesting because even though the latter appears to be a difficult problem, no polynomial-time many-one reduction from the former to the latter is expected to exist \autocite{babai14}, and the lack of a kernel reduction is evidence in that direction.
+
+% perspective (focus on anyone) what now? - what should be done next
+Besides the open problems listed in \autoref{sec:generalcompleteness}, we consider the following questions to be worth exploring.
+\begin{itemize}
+\item There are several problems of \emph{inequivalence} in \autocite{gj79} listed as $\NP$-complete or as $\PSPACE$-complete.
+  What do these problems have to do with $\NPEq$-completeness, $\coNPEq$-completeness, and $\PSPACEEq$-completeness?
+\item When can results like \autocite[Theorem~1]{rs11}, for example, which shows that an equivalence relation is complete for $\L$ under many-one reductions via a reduction from a problem that is \emph{not} an equivalence relation, be translated to a proof that the problem is complete under kernel reductions for the corresponding class of equivalence problems?
+\item
+  In the case of the graph isomorphism problem, \textsc{GI}, the number $\#\textsc{GI}(n)$, in the notation of \autoref{sec:limitations}, is the number of (pairwise) non-isomorphic graphs on at most $n$ vertices.
+  This differs from the conventional notation $\#\textsc{GI}$ denoting the problem of counting the number of graphs isomorphic to a given graph.
+  In other words, our notation counts the \emph{number} of equivalence classes, whereas the latter counts the \emph{size} of an equivalence class.
+  For the graph isomorphism problem, computing the size of an equivalence class is Turing-equivalent to deciding whether two graphs are isomorphic \autocite[Theorem~1.24]{kst93}.
+  When is the problem of computing the size of an equivalence class Turing-equivalent to the problem of deciding equivalence?
+\end{itemize}
