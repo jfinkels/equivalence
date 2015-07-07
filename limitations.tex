@@ -34,141 +34,141 @@ We adopt and extend the notation $\#R$ from \autocite{bcffm} to denote the numbe
   Let $\#R = \max\limits_{n \in \mathbb{N}} \#R(n)$ if the maximum exists, or in other words, $\#R$ is the number of equivalence classes in $R$.
 \end{definition}
 
-As first stated in \autocite{fg11}, if the number of equivalence classes in $R$ is greater than the number of equivalence classes in $S$, then no kernel reduction can exist (regardless of any time or space bounds on the function computing the reduction).
-For completeness, we prove this basic fact in \autoref{prop:noreduction} below.
-However, a many-one reduction can overcome this restriction by having access to both strings in the pair.
-Before proving that, we require the following lemma showing that kernel reductions must preserve ``related-ness'' of pairs of elements by mapping equivalence classes in $R$ to equivalence classes in $S$.
-(The proof, omitted here, is a straightforward application of the definitions.)
+% As first stated in \autocite{fg11}, if the number of equivalence classes in $R$ is greater than the number of equivalence classes in $S$, then no kernel reduction can exist (regardless of any time or space bounds on the function computing the reduction).
+% For completeness, we prove this basic fact in \autoref{prop:noreduction} below.
+% However, a many-one reduction can overcome this restriction by having access to both strings in the pair.
+% Before proving that, we require the following lemma showing that kernel reductions must preserve ``related-ness'' of pairs of elements by mapping equivalence classes in $R$ to equivalence classes in $S$.
+% (The proof, omitted here, is a straightforward application of the definitions.)
 
-\begin{lemma}\label{lem:image}
-  Suppose $R$ and $S$ are equivalence relations on $\Sigma^*$.
-  Suppose $R \krnt S$ and $f$ is the function computing the kernel reduction.
-  Let $\hat{f}$ denote the function defined by $\hat{f}([x]_R) = [f(x)]_S$, for all equivalence classes $[x]_R$ in $R$.
-  Then
-  \begin{itemize}
-  \item $\hat{f}$ is injective,
-  \item $f([w]_R) \subseteq \hat{f}([w]_R)$ for any $w \in \Sigma^*$.
-  \end{itemize}
-\end{lemma}
-%% \begin{proof}
-%%   First, we prove that $\hat{f}$ is injective.
-%%   Let $[x]_R$ and $[y]_R$ be distinct equivalence classes in $R$.
-%%   Suppose $\hat{f}([x]_R) = \hat{f}([y]_R)$, so $[f(x)]_S = [f(y)]_S$.
-%%   In other words, $\pair{f(x)}{f(y)} \in S$.
-%%   By definition of the kernel reduction $f$, this implies $\pair{x}{y} \in R$.
-%%   Therefore $[x]_R = [y]_R$.
+% \begin{lemma}\label{lem:image}
+%   Suppose $R$ and $S$ are equivalence relations on $\Sigma^*$.
+%   Suppose $R \krnt S$ and $f$ is the function computing the kernel reduction.
+%   Let $\hat{f}$ denote the function defined by $\hat{f}([x]_R) = [f(x)]_S$, for all equivalence classes $[x]_R$ in $R$.
+%   Then
+%   \begin{itemize}
+%   \item $\hat{f}$ is injective,
+%   \item $f([w]_R) \subseteq \hat{f}([w]_R)$ for any $w \in \Sigma^*$.
+%   \end{itemize}
+% \end{lemma}
+% %% \begin{proof}
+% %%   First, we prove that $\hat{f}$ is injective.
+% %%   Let $[x]_R$ and $[y]_R$ be distinct equivalence classes in $R$.
+% %%   Suppose $\hat{f}([x]_R) = \hat{f}([y]_R)$, so $[f(x)]_S = [f(y)]_S$.
+% %%   In other words, $\pair{f(x)}{f(y)} \in S$.
+% %%   By definition of the kernel reduction $f$, this implies $\pair{x}{y} \in R$.
+% %%   Therefore $[x]_R = [y]_R$.
 
-%%   Next, we prove that $f([w]_R) \subseteq \hat{f}([w]_R)$.
-%%   Since $w \in [w]_R$, it follows that $f(w) \in f([w]_R)$.
-%%   Let $x \in f([w]_R)$.
-%%   Then $\pair{x}{f(w)} \in S$, so $x \in [f(w)]_S$.
-%%   Therefore $f([w]_R) \subseteq [f(w)]_S = \hat{f}([w]_R)$.
-%% \end{proof}
+% %%   Next, we prove that $f([w]_R) \subseteq \hat{f}([w]_R)$.
+% %%   Since $w \in [w]_R$, it follows that $f(w) \in f([w]_R)$.
+% %%   Let $x \in f([w]_R)$.
+% %%   Then $\pair{x}{f(w)} \in S$, so $x \in [f(w)]_S$.
+% %%   Therefore $f([w]_R) \subseteq [f(w)]_S = \hat{f}([w]_R)$.
+% %% \end{proof}
 
-\begin{proposition}\label{prop:noreduction}
-  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
-  If $\#R > \#S$, then $R \nkrnt S$.
+% \begin{proposition}\label{prop:noreduction}
+%   Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
+%   If $\#R > \#S$, then $R \nkrnt S$.
 
-  Furthermore, suppose $\#R = n$ and $\#S = m$, and suppose $m \geq 2$.
-  Let $r_1, \dotsc, r_n$ and $s_1, \dotsc, s_m$ denote representatives of the equivalence classes in $R$ and $S$, respectively.
-  If the problem of deciding whether $x \in [r_i]_R$ for any $x \in \Sigma^*$ is recognizable, then $R \mornt S$.
-\end{proposition}
-\begin{proof}
-  Assume that $R \krnt S$.
-  By \autoref{lem:image}, the function mapping equivalence classes in $R$ to equivalence classes in $S$ induced by the kernel reduction is injective.
-  However, this violates the pigeonhole principle.
-  Therefore no kernel reduction exists from $R$ to $S$.
+%   Furthermore, suppose $\#R = n$ and $\#S = m$, and suppose $m \geq 2$.
+%   Let $r_1, \dotsc, r_n$ and $s_1, \dotsc, s_m$ denote representatives of the equivalence classes in $R$ and $S$, respectively.
+%   If the problem of deciding whether $x \in [r_i]_R$ for any $x \in \Sigma^*$ is recognizable, then $R \mornt S$.
+% \end{proposition}
+% \begin{proof}
+%   Assume that $R \krnt S$.
+%   By \autoref{lem:image}, the function mapping equivalence classes in $R$ to equivalence classes in $S$ induced by the kernel reduction is injective.
+%   However, this violates the pigeonhole principle.
+%   Therefore no kernel reduction exists from $R$ to $S$.
 
-  On the other hand, there is a many-one reduction from $R$ to $S$.
-  First, suppose $S$ has $m$ equivalence classes and let $s_1, \dotsc, s_m$ be representatives of each equivalence class in $S$.
-  On input $\pair{x}{y}$, for each $i \in \{1, \dotsc, n\}$ in parallel, determine if $x \in [r_i]_R$ and $y \in [r_i]_R$ (also in parallel).
-  If $x$ and $y$ are both in $[r_i]_R$ for some $i$, output $\pair{s_i}{s_i}$, otherwise output $\pair{s_1}{s_2}$.
+%   On the other hand, there is a many-one reduction from $R$ to $S$.
+%   First, suppose $S$ has $m$ equivalence classes and let $s_1, \dotsc, s_m$ be representatives of each equivalence class in $S$.
+%   On input $\pair{x}{y}$, for each $i \in \{1, \dotsc, n\}$ in parallel, determine if $x \in [r_i]_R$ and $y \in [r_i]_R$ (also in parallel).
+%   If $x$ and $y$ are both in $[r_i]_R$ for some $i$, output $\pair{s_i}{s_i}$, otherwise output $\pair{s_1}{s_2}$.
 
-  Since each string must be in exactly one of the equivalence classes of $R$, this function must halt when searching for the equivalence class for the strings $x$ and $y$.
-  If $\pair{x}{y} \in R$, then they are in the same equivalence class of $R$ and hence the function will output $\pair{s_i}{s_i}$, which is in $S$ by the reflexivity of $S$.
-  If $\pair{x}{y} \notin R$, then they are in different equivalence classes and hence the function will output $\pair{s_1}{s_2}$, which is not in $S$ because $[s_1]_S \neq [s_2]_S$ by hypothesis.
-  Therefore this function is a computable many-one reduction from $R$ to $S$.
-\end{proof}
+%   Since each string must be in exactly one of the equivalence classes of $R$, this function must halt when searching for the equivalence class for the strings $x$ and $y$.
+%   If $\pair{x}{y} \in R$, then they are in the same equivalence class of $R$ and hence the function will output $\pair{s_i}{s_i}$, which is in $S$ by the reflexivity of $S$.
+%   If $\pair{x}{y} \notin R$, then they are in different equivalence classes and hence the function will output $\pair{s_1}{s_2}$, which is not in $S$ because $[s_1]_S \neq [s_2]_S$ by hypothesis.
+%   Therefore this function is a computable many-one reduction from $R$ to $S$.
+% \end{proof}
 
-\begin{example}
-  Let $R = \mathbb{Z} / 3 \mathbb{Z}$ and $S = \mathbb{Z} / 2 \mathbb{Z}$.
-  Then $R \mornt S$ but $R \nkrnt S$.
-\end{example}
+% \begin{example}
+%   Let $R = \mathbb{Z} / 3 \mathbb{Z}$ and $S = \mathbb{Z} / 2 \mathbb{Z}$.
+%   Then $R \mornt S$ but $R \nkrnt S$.
+% \end{example}
 
-As seen in \autoref{prop:noreduction}, for equivalence relations $R$ and $S$ with a finite number of equivalence classes, a kernel reduction from $R$ to $S$ can only exist if the number of equivalence classes in $R$ is at most the number of equivalence classes in $S$.
-However, most ``interesting'' equivalence relations have an infinite number of equivalence classes.
-In \autocite[Section~4]{fg11}, the authors ask if there are such equivalence relations ``of the same densities [that is, density of equivalence classes] on which kernel reduction and [many-one] reduction differ''\kern-0.5em.
-\autocite[Theorem~5.1]{bcffm} (see also \autocite[Remark~5.2]{bcffm}) answers this question affirmatively, providing an infinite antichain of equivalence relations that are equivalent under polynomial-time many-one reductions but otherwise incomparable under polynomial-time ``strong isomorphism reductions'' (proven in \autocite[Section~7]{bcffm} to be equivalent to polynomial-time kernel reductions).
-We will provide a simple proof of a special case of \autocite[Theorem~5.1]{bcffm}, showing that an imbalance in the density of equivalence classes prevents a kernel reduction.
-This proof is valuable because it requires only knowledge of basic computational complexity theory and not knowledge of Boolean algebras, descriptive set theory, or other mathematical logic.
+% As seen in \autoref{prop:noreduction}, for equivalence relations $R$ and $S$ with a finite number of equivalence classes, a kernel reduction from $R$ to $S$ can only exist if the number of equivalence classes in $R$ is at most the number of equivalence classes in $S$.
+% However, most ``interesting'' equivalence relations have an infinite number of equivalence classes.
+% In \autocite[Section~4]{fg11}, the authors ask if there are such equivalence relations ``of the same densities [that is, density of equivalence classes] on which kernel reduction and [many-one] reduction differ''\kern-0.5em.
+% \autocite[Theorem~5.1]{bcffm} (see also \autocite[Remark~5.2]{bcffm}) answers this question affirmatively, providing an infinite antichain of equivalence relations that are equivalent under polynomial-time many-one reductions but otherwise incomparable under polynomial-time ``strong isomorphism reductions'' (proven in \autocite[Section~7]{bcffm} to be equivalent to polynomial-time kernel reductions).
+% We will provide a simple proof of a special case of \autocite[Theorem~5.1]{bcffm}, showing that an imbalance in the density of equivalence classes prevents a kernel reduction.
+% This proof is valuable because it requires only knowledge of basic computational complexity theory and not knowledge of Boolean algebras, descriptive set theory, or other mathematical logic.
 
-First we show that an equivalence relation dense in equivalence classes cannot be reduced to one sparse in equivalence classes.
-We emphasize that our result does not concern the sparseness of strings in a language, but the sparseness of equivalence classes in an equivalence relation.
-This complements the work on ``potential reducibility'' defined in \autocite[Section~5]{bcffm}.
+% First we show that an equivalence relation dense in equivalence classes cannot be reduced to one sparse in equivalence classes.
+% We emphasize that our result does not concern the sparseness of strings in a language, but the sparseness of equivalence classes in an equivalence relation.
+% This complements the work on ``potential reducibility'' defined in \autocite[Section~5]{bcffm}.
 
-\begin{definition}[{\autocite[Definition~7.2]{bcffm}}]
-  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
-  $R$ is \defn{potentially reducible} to $S$, denoted $R\pot S$, if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, $\#R(n)\leq \#S(p(n))$.
-\end{definition}
+% \begin{definition}[{\autocite[Definition~7.2]{bcffm}}]
+%   Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
+%   $R$ is \defn{potentially reducible} to $S$, denoted $R\pot S$, if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, $\#R(n)\leq \#S(p(n))$.
+% \end{definition}
 
-It follows from the definitions that for any equivalence relations $R$ and $S$, $R\kr S\implies R\pot S$, and hence $R\npot S \implies R\nkr S$ (this is stated and proven explicitly in \autocite[Lemma~5.5]{bcffm}).
-As an analog to traditional sparse languages, we provide a definition of ``kernel sparsity''\kern-0.5em, and show its application to determining potential reducibility and hence kernel reducibility.
+% It follows from the definitions that for any equivalence relations $R$ and $S$, $R\kr S\implies R\pot S$, and hence $R\npot S \implies R\nkr S$ (this is stated and proven explicitly in \autocite[Lemma~5.5]{bcffm}).
+% As an analog to traditional sparse languages, we provide a definition of ``kernel sparsity''\kern-0.5em, and show its application to determining potential reducibility and hence kernel reducibility.
 
-\begin{definition}
-  An equivalence relation $R$ on $\Sigma^*$ is \defn{kernel sparse} if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, $\#R(n)\leq p(n)$.
-  In other words, the number of equivalence classes in $R$ for strings of length at most $n$ is bounded above by a polynomial in $n$.
+% \begin{definition}
+%   An equivalence relation $R$ on $\Sigma^*$ is \defn{kernel sparse} if there exists a polynomial $p$ such that for all $n\in\mathbb{N}$, $\#R(n)\leq p(n)$.
+%   In other words, the number of equivalence classes in $R$ for strings of length at most $n$ is bounded above by a polynomial in $n$.
 
-  An equivalence relation is \defn{kernel dense} if it is not kernel sparse.
-  Formally, if for all polynomials $p$ there exists an $n\in\mathbb{N}$ such that $\#R(n)>p(n)$.
-  In other words, the number of equivalence classes in $R$ for strings of length at most $n$ is greater than any polynomial in $n$.
-\end{definition}
+%   An equivalence relation is \defn{kernel dense} if it is not kernel sparse.
+%   Formally, if for all polynomials $p$ there exists an $n\in\mathbb{N}$ such that $\#R(n)>p(n)$.
+%   In other words, the number of equivalence classes in $R$ for strings of length at most $n$ is greater than any polynomial in $n$.
+% \end{definition}
 
-These definitions allow us to provide the following very natural proposition.
-Intuitively, it states that an equivalence relation with many closely packed equivalence classes cannot reduce (under polynomially bounded notions of reduction) to an equivalence relation with few but widely spaced equivalence classes.
-This idea is stated without proof in \autocite[Section~4]{fg11}, so we provide it here for completeness.
-It is also essentially a special case of \autocite[Lemma~2.3]{gz14}, developed independently of that paper.
+% These definitions allow us to provide the following very natural proposition.
+% Intuitively, it states that an equivalence relation with many closely packed equivalence classes cannot reduce (under polynomially bounded notions of reduction) to an equivalence relation with few but widely spaced equivalence classes.
+% This idea is stated without proof in \autocite[Section~4]{fg11}, so we provide it here for completeness.
+% It is also essentially a special case of \autocite[Lemma~2.3]{gz14}, developed independently of that paper.
 
-\begin{theorem}\label{thm:density}
-  Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
-  If $R$ is kernel dense and $S$ is kernel sparse, then $R\nkr S$.
-\end{theorem}
-\begin{proof}
-  That $R\npot S$ implies $R\nkr S$ was already stated in the text preceding this theorem, so it suffices to show that $R\npot S$.
+% \begin{theorem}\label{thm:density}
+%   Let $R$ and $S$ be equivalence relations on $\Sigma^*$.
+%   If $R$ is kernel dense and $S$ is kernel sparse, then $R\nkr S$.
+% \end{theorem}
+% \begin{proof}
+%   That $R\npot S$ implies $R\nkr S$ was already stated in the text preceding this theorem, so it suffices to show that $R\npot S$.
 
-  Assume that $R\pot S$ with the intention of producing a contradiction.
-  Let $p$ be a polynomial such that $\#R(n) \leq \#S(p(n))$ (this is the definition of potential reducibility).
-  Let $q$ be a polynomial such that $\#S(n) < q(n)$ for each natural number $n$ (this is the definition of kernel sparse).
-  Substituting $p(n)$ for $n$ in this inequality yields the inequality $\#S(p(n)) < q(p(n))$, which is a polynomial in $n$.
-  %% (This is an overestimate, but we can be generous here and still produce a contradiction.)
-  Let $r = q \circ p$.
+%   Assume that $R\pot S$ with the intention of producing a contradiction.
+%   Let $p$ be a polynomial such that $\#R(n) \leq \#S(p(n))$ (this is the definition of potential reducibility).
+%   Let $q$ be a polynomial such that $\#S(n) < q(n)$ for each natural number $n$ (this is the definition of kernel sparse).
+%   Substituting $p(n)$ for $n$ in this inequality yields the inequality $\#S(p(n)) < q(p(n))$, which is a polynomial in $n$.
+%   %% (This is an overestimate, but we can be generous here and still produce a contradiction.)
+%   Let $r = q \circ p$.
 
-  Let $n_0$ be a natural number such that $\#R(n_0) > r(n_0)$, by the definition of kernel sparsity.
-  Since $\#S(p(n_0)) \leq r(n_0)$, we have $\#R(n_0) > \#S(p(n_0))$.
-  In other words, there are more equivalence classes in $R$ for strings up to length $n_0$ than there are in $S$ for strings up to length $p(n_0)$.
-  By the pigeonhole principle, we conclude that $R$ cannot potentially reduce to $S$, because the number of equivalence classes in $R$ for strings up to length $n_0$ is too great compared to the number of equivalence classes in $S$ for strings up to length $p(n_0)$.
-  This is a contradiction with the assumption that $R\pot S$.
-  We have shown this for arbitrary polynomials (which came from the definitions of potential reducibility and kernel sparsity), so we can conclude that the result holds for all equivalence relations $R$ and $S$ that are kernel dense and kernel sparse, respectively.
-\end{proof}
+%   Let $n_0$ be a natural number such that $\#R(n_0) > r(n_0)$, by the definition of kernel sparsity.
+%   Since $\#S(p(n_0)) \leq r(n_0)$, we have $\#R(n_0) > \#S(p(n_0))$.
+%   In other words, there are more equivalence classes in $R$ for strings up to length $n_0$ than there are in $S$ for strings up to length $p(n_0)$.
+%   By the pigeonhole principle, we conclude that $R$ cannot potentially reduce to $S$, because the number of equivalence classes in $R$ for strings up to length $n_0$ is too great compared to the number of equivalence classes in $S$ for strings up to length $p(n_0)$.
+%   This is a contradiction with the assumption that $R\pot S$.
+%   We have shown this for arbitrary polynomials (which came from the definitions of potential reducibility and kernel sparsity), so we can conclude that the result holds for all equivalence relations $R$ and $S$ that are kernel dense and kernel sparse, respectively.
+% \end{proof}
 
-\begin{example}
-  Consider the equality relation and the ``equal lengths'' relation (that is, $x$ relates to $y$ if $|x| = |y|$).
-  The equality relation is kernel dense, since there are $2^n$ equivalence classes for strings of length at most $n$ (one for each string).
-  The ``equal lengths'' relation is kernel sparse, since there are $n + 1$ equivalence classes for strings of length at most $n$ (one for each length, including length $0$).
-  Therefore there is no polynomial-time kernel reduction from the equality relation to the ``equal lengths'' relation.
-\end{example}
+% \begin{example}
+%   Consider the equality relation and the ``equal lengths'' relation (that is, $x$ relates to $y$ if $|x| = |y|$).
+%   The equality relation is kernel dense, since there are $2^n$ equivalence classes for strings of length at most $n$ (one for each string).
+%   The ``equal lengths'' relation is kernel sparse, since there are $n + 1$ equivalence classes for strings of length at most $n$ (one for each length, including length $0$).
+%   Therefore there is no polynomial-time kernel reduction from the equality relation to the ``equal lengths'' relation.
+% \end{example}
 
-This places a strong restriction on equivalence relations that are hard (or complete) under polynomial-time kernel reductions: they cannot be kernel sparse.
-This means that the equality relation, the densest possible equivalence relation with an exponential number of equivalence classes at each length, is a troublemaker in every complexity class that contains it.
+% This places a strong restriction on equivalence relations that are hard (or complete) under polynomial-time kernel reductions: they cannot be kernel sparse.
+% This means that the equality relation, the densest possible equivalence relation with an exponential number of equivalence classes at each length, is a troublemaker in every complexity class that contains it.
 
-\begin{corollary}
-  Let $\CEq$ be a complexity class of equivalence relations containing the equality relation $R_{eq}$.
-  If an equivalence relation $R$ is kernel sparse, then it is not $\CEq$-hard.
-\end{corollary}
-%% \begin{proof}
-%%   $R_{eq}$ is kernel dense since it contains $2^n$ equivalence classes at each length $n$, one for each distinct string.
-%%   Since $R$ is kernel sparse, then $R_{eq} \nkr R$ by \autoref{thm:density}.
-%%   Since $R_{eq} \in \CEq$, the equivalence relation $R$ cannot be $\CEq$-hard.
-%% \end{proof}
+% \begin{corollary}
+%   Let $\CEq$ be a complexity class of equivalence relations containing the equality relation $R_{eq}$.
+%   If an equivalence relation $R$ is kernel sparse, then it is not $\CEq$-hard.
+% \end{corollary}
+% %% \begin{proof}
+% %%   $R_{eq}$ is kernel dense since it contains $2^n$ equivalence classes at each length $n$, one for each distinct string.
+% %%   Since $R$ is kernel sparse, then $R_{eq} \nkr R$ by \autoref{thm:density}.
+% %%   Since $R_{eq} \in \CEq$, the equivalence relation $R$ cannot be $\CEq$-hard.
+% %% \end{proof}
 
 Polynomial-time many-one reductions are more powerful than polynomial-time kernel reductions because the former are not subject to restrictions on numbers of equivalence classes as in \autoref{prop:noreduction} and \autoref{thm:density}.
 The idea behind \autoref{thm:density} leads to a construction of equivalence relations $R$ and $S$ between which there is a polynomial-time many-one reduction but no polynomial-time kernel reduction.
@@ -218,13 +218,7 @@ The idea behind \autoref{thm:density} leads to a construction of equivalence rel
   Since both collections are valid partitions, the relations $R$ and $S$ are both equivalence relations.
 \end{proof}
 
-Again, this is a special case of \autocite[Theorem~5.1]{bcffm}, but has a much simpler proof and sufficiently demonstrates that polynomial-time kernel reductions and polynomial-time many-one reductions are different.
-
-\begin{theorem}\label{thm:different}
-  There are equivalence relations $R$ and $S$ such that $R \mor S$ but $R \nkr S$.
-  Furthermore, $R$ and $S$ are in $\NCOneEq$.
-\end{theorem}
-
+Again, the next theorem is a special case of \autocite[Theorem~5.1]{bcffm}, but has a much simpler proof and sufficiently demonstrates that polynomial-time kernel reductions and polynomial-time many-one reductions are different.
 The main idea behind this theorem is that no matter which polynomial-time function we consider as a possible kernel reduction, the number of equivalence classes in $R$ is greater than the number of equivalence classes in $S$, for sufficiently large strings.
 \autoref{thm:density} doesn't apply in this setting because both $R$ and $S$ are kernel sparse.
 Since we have carefully constructed these sets, $S$ is more kernel sparse than $R$.
@@ -232,7 +226,11 @@ This basic idea was presented independently in \autocite[Lemma~2.3]{gz14}.
 
 Though it is not explicitly stated here, this theorem can be generalized to kernel reductions with other (non-polynomial) time bounds in a straightforward manner.
 
-\begin{proof}[Proof of \autoref{thm:different}]
+\begin{theorem}\label{thm:different}
+  There are equivalence relations $R$ and $S$ such that $R \mor S$ but $R \nkr S$.
+  Furthermore, $R$ and $S$ are in $\NCOneEq$.
+\end{theorem}
+\begin{proof}
   Let $R$ and $S$ be the equivalence relations in \autoref{con:rands}.
   The following function is a polynomial-time many-one reduction from $R$ to $S$.
   On input $\pair{x}{y}$, if $|x| = |y|$ (or if $|x|$ and $|y|$ are both in $\{0, 1\}$), output $\pair{a}{a}$, otherwise output $\pair{a}{b}$, where $a$ is a string in $S_1$ and $b$ is a string in $S_2$.
