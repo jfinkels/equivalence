@@ -221,86 +221,54 @@ Though it is not explicitly stated here, this theorem can be generalized to kern
   Since the running time of $f_n$ is $p_n$, the length of $f_n(x)$ is at most $p_n(n + 1)$.
   Since $p_1, p_2, \dotsc$ is an increasing sequence (in the sense that $p_j(n) < p_{j + 1}(n)$ for all natural numbers $n$ and all positive integers $j$), we have $p_n(n + 1) < p_{n + 1}(n + 1) < p_{n + 1}(n + 1) + 1$.
   %% The image of any string of length $n + 1$ has length at most $p_n(n + 1)$, which is strictly less than $p_{n + 1}(n + 1) + 1$.
-  By the construction of $R$ and $S$, we have $\#R(n + 1) = n + 1$ and $\#S(p_n(n + 1)) \leq \#S(p_{n + 1}(n + 1)) = n$ (for an illustration, see \autoref{fig:sparse}).
+  % \begin{figure}
+  %   \caption{\label{fig:sparse}For a fixed kernel reduction $f_n$ running in time $p_n$, the image of a string of length $n + 1$ can only be a string of length at most $p_n(n + 1)$.
+  %     The number of equivalence classes in $R$ for strings of length $n + 1$ is greater than the number of equivalence classes in $S$ for strings of length $p_n(n + 1)$ for each polynomial $p_n$.}
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{scope}
+        %% Rectangles representing equivalence classes of R.
+        \node[anchor=east] (0, 0) {$\dotsb$};
+        \fill[color=lightgray]
+        ++(0, -0.05) rectangle ++(1, 0.1)
+        ++(0.1, -0.1) rectangle ++(1, 0.1)
+        ++(0.1, -0.1) rectangle ++(1, 0.1)
+        ++(0, -0.05) node[color=black, anchor=west] {$\dotsb$};
+
+        %% Labels for each equivalence class of R.
+        \path
+        (0.5, 0.3) node {$R_n$}
+        ++(1.1, 0) node {$R_{n + 1}$}
+        ++(1.1, 0) node {$R_{n + 2}$};
+      \end{scope}
+
+      \begin{scope}[shift={(0, -1.5)}]
+        %% Rectangles representing equivalence classes of R.
+        \node[anchor=east] (0, 0) {$\dotsb$};
+        \fill[color=lightgray]
+        ++(0, -0.05) rectangle ++(2.2, 0.1)
+        ++(0.1, -0.1) rectangle ++(2, 0.1)
+        ++(0, -0.05) node[color=black, anchor=west] {$\dotsb$};
+
+        %% Labels for each equivalence class of R.
+        \path
+        (0.5, 0.3) node {$S_n$}
+        ++(2.4, 0) node {$S_{n + 1}$};
+      \end{scope}
+
+      %% Arrow from top to bottom showing image under f_n.
+      \begin{scope}[dot/.style={circle, fill=black, inner sep=1.2pt},
+                    arrow/.style={->, >=stealth}]
+        \node[dot] (source) at (1.6, 0) {};
+        \node[dot] (target) at (2, -1.5) {};
+        \path[arrow] (source) edge node[fill=white] {$f_n$} (target);
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  By the construction of $R$ and $S$, we have $\#R(n + 1) = n + 1$ and $\#S(p_n(n + 1)) \leq \#S(p_{n + 1}(n + 1)) = n$.
   By the pigeonhole principle, there must be two strings $x$ and $y$ of length at most $n + 1$ in different equivalence classes of $R$ whose image under $f_n$ is in the same equivalence class of $S$.
   Since $\pair{x}{y} \notin R$ if and only if $\pair{f(x)}{f(y)} \notin S$, this is a contradiction.
   Therefore $R \nkr S$.
-
-  \begin{figure}
-    \caption{\label{fig:sparse}For a fixed kernel reduction $f_n$ running in time $p_n$, the image of a string of length $n + 1$ can only be a string of length at most $p_n(n + 1)$.
-      The number of equivalence classes in $R$ for strings of length $n + 1$ is greater than the number of equivalence classes in $S$ for strings of length $p_n(n + 1)$ for each polynomial $p_n$.}
-    \begin{center}
-      \begin{tikzpicture}[yscale=0.5]
-        \begin{scope}[shift={(0, 5)}]
-          \node at (0, 1) {$R$};
-
-          %% Rectangles for equivalence classes of $R$.
-          \draw (2, 0)
-          %% TODO should be a way to use [current node is local] option here...
-          ++(0, 1) node[anchor=east] {$\dotsb$} ++(0, -1)
-          rectangle ++(1, 2)
-          ++(0.2, -2)
-          rectangle ++(1, 2)
-          ++(0.2, -2)
-          rectangle ++(1, 2)
-          ++(0, -1)
-          node[anchor=west] {$\dotsb$}
-          ;
-
-          %% Labels for each equivalence class of $R$.
-          \path
-          (2.5, 1) node {$R_n$}
-          ++(1.2, 0) node {$R_{n + 1}$}
-          ++(1.2, 0) node {$R_{n + 2}$}
-          ;
-        \end{scope}
-
-        %% Arrow from top to bottom showing image under $f_n$.
-        \begin{scope}[shift={(0, 1)}]
-          \draw
-          (4.5, 1) node[shape=circle, fill=black, inner sep=1pt] (source) {}
-          ++(-0.8, 3.2) node[shape=circle, fill=black, inner sep=1pt] (target) {};
-          \path[<-, >=stealth] (source) edge node[anchor=south west] {$f_n$} (target);
-        \end{scope}
-
-        \begin{scope}[shift={(0, 1)}]
-          \node at (0, 1) {$S$};
-
-          %% Rectangles for equivalence classes of $S$.
-          \draw (2, 0)
-          %% TODO should be a way to use [current node is local] option here...
-          ++(0, 1) node[anchor=east] {$\dotsb$} ++(0, -1)
-          rectangle ++(3, 2)
-          ++(0.2, -2)
-          rectangle ++(4, 2)
-          ++(0, -1)
-          node[anchor=west] {$\dotsb$}
-          ;
-
-          %% Labels for each equivalence class of $S$.
-          \path
-          (3.5, 1) node {$S_n$}
-          ++(3.8, 0) node {$S_{n + 1}$}
-          ;
-        \end{scope}
-
-        %% Labels underneath each $S_i$ showing length bounds.
-        \begin{scope}
-          \draw[shorten >=1pt]
-          (2, 0) node[anchor=north] (pn) {$p_n(n) + 1$}
-          -- ++(0, 1);
-          \draw[thick, color=gray] (4.5, 3.5)
-          -- ++(0, -5)
-          node[anchor=north, color=black] (pnplus1) {$p_n(n + 1)$}
-          ;
-          \draw[shorten >=1pt]
-          (5.2, 0) node[anchor=north west, color=black] (pnplus1nplus1) {$p_{n + 1}(n + 1)$}
-          -- ++(-0.2, 1);
-          ;
-        \end{scope}
-      \end{tikzpicture}
-    \end{center}
-  \end{figure}
 
   Finally, we show that $R$ and $S$ are in $\NC^1$.
   Deciding whether two strings have the same length is trivial, so $R$ is certainly in $\NC^1$.
