@@ -1,4 +1,4 @@
-In the framework of computational complexity, and in an effort to define
+In the framework of computational complexity and in an effort to define
 a more natural reduction for problems of equivalence, we investigate the
 recently introduced kernel reduction, a reduction that operates on each
 element of a pair independently. This paper details the limitations and
