@@ -170,8 +170,9 @@ We adopt and extend the notation $\#R$ from \autocite{bcffm} to denote the numbe
 % %%   Since $R_{eq} \in \CEq$, the equivalence relation $R$ cannot be $\CEq$-hard.
 % %% \end{proof}
 
-Polynomial-time many-one reductions are more powerful than polynomial-time kernel reductions because the former are not subject to restrictions on numbers of equivalence classes as in \autoref{prop:noreduction} and \autoref{thm:density}.
-The idea behind \autoref{thm:density} leads to a construction of equivalence relations $R$ and $S$ between which there is a polynomial-time many-one reduction but no polynomial-time kernel reduction.
+Polynomial-time many-one reductions are more powerful than polynomial-time kernel reductions because the former are not subject to restrictions on numbers of equivalence classes. % as in \autoref{prop:noreduction} and \autoref{thm:density}.
+For example, if there is a superpolynomial number of equivalence classes in $R$ for strings up to length $n$ and a polynomial number of equivalence classes in $S$ for strings up to length $p(n)$, then no kernel reduction halting in time $p(n)$ can exist from $R$ to $S$.
+This idea leads to a construction of equivalence relations $R$ and $S$ between which there is a polynomial-time many-one reduction but no polynomial-time kernel reduction.
 
 \begin{construction}\label{con:rands}
   Let $f_1, f_2, \dotsc$ be an enumeration of all polynomial-time computable functions.
@@ -188,39 +189,15 @@ The idea behind \autoref{thm:density} leads to a construction of equivalence rel
   \end{equation*}
 \end{construction}
 
+It is straightforward to prove that $R$ and $S$ are equivalence relations so we omit the proof.
+
 \begin{lemma}
   $R$ and $S$ are equivalence relations.
 \end{lemma}
-\begin{proof}
-  $R$ and $S$ are equivalence relations if $\{R_n\}_{n \in \mathbb{Z}^+}$ and $\{S_n\}_{n \in \mathbb{Z}^+}$ are valid partitions of $\Sigma^*$, so it suffices to show that the union of each collection includes all nonempty strings in $\Sigma^*$ and that each collection is pairwise disjoint.
 
-  %% The set $R_n$ includes at least one string of length $n$, so each $R_n$ is nonempty.
-  For $\{R_n\}_n$, any string of length $n$ is in $R_n$, so $\Sigma^* \subseteq \cup_n R_n$.
-  If $m$ and $n$ are distinct positive integers, no string can have both length $m$ and length $n$, so $R_m \cap R_n = \emptyset$.
-  Hence $\{R_n\}_n$ is a valid partition.
-
-  %% We need to show $p_n(n) + 1 \leq p_{n + 1}(n + 1)$ in order to prove that there is at least one string (of length $p_n(n) + 1$, for example) in $S_n$.
-  %% \begin{align*}
-  %%   p_n(n) + 1 &= n (n^n) + 1 \\
-  %%   &\leq n (n^n) + n^n \\ %% && \text{(since } 1 \leq n^n \text{ for each } n \text{)} \\
-  %%   &= (n + 1) n^n \\
-  %%   &\leq (n + 1) (n + 1)^{n + 1} \\
-  %%   &= p_{n + 1}(n + 1).
-  %% \end{align*}
-  %% Thus there is at least one string in $S_n$.
-  For $\{S_n\}_n$, for any string $x$, there is an $n$ such that $p_n(n) + 1 \leq |x| \leq p_{n + 1}(n + 1)$, so every string in $\Sigma^*$ is in some $S_n$.
-  %% TODO I don't know how to explain this further.
-  To show pairwise disjointness, suppose $m$ and $n$ are distinct positive integers and assume without loss of generality that $m < n$, or in other words, that $m + 1 \leq n$.
-  Then $p_{m + 1}(m + 1) \leq p_n(n) < p_n(n) + 1$, so no string of length at most $p_{m + 1}(m + 1)$ can also have length at least $p_n(n) + 1$.
-  Hence, $S_m$ and $S_n$ are disjoint.
-  Thus, $\{S_n\}_n$ is a valid partition.
-
-  Since both collections are valid partitions, the relations $R$ and $S$ are both equivalence relations.
-\end{proof}
-
-Again, the next theorem is a special case of \autocite[Theorem~5.1]{bcffm}, but has a much simpler proof and sufficiently demonstrates that polynomial-time kernel reductions and polynomial-time many-one reductions are different.
+The next theorem is a special case of \autocite[Theorem~5.1]{bcffm}, but has a much simpler proof and sufficiently demonstrates that polynomial-time kernel reductions and polynomial-time many-one reductions are different.
 The main idea behind this theorem is that no matter which polynomial-time function we consider as a possible kernel reduction, the number of equivalence classes in $R$ is greater than the number of equivalence classes in $S$, for sufficiently large strings.
-\autoref{thm:density} doesn't apply in this setting because both $R$ and $S$ are kernel sparse.
+%% \autoref{thm:density} doesn't apply in this setting because both $R$ and $S$ are kernel sparse.
 Since we have carefully constructed these sets, $S$ is more kernel sparse than $R$.
 This basic idea was presented independently in \autocite[Lemma~2.3]{gz14}.
 
