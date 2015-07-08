@@ -140,11 +140,7 @@ The following three lemmas prove that this problem is of intermediate complexity
   Due to its time bound, $|f(x)| \leq |x|^j$ for any string $x$.
   By assumption, $p(|x'|) = |x'|^k$.
   By construction, $p(|x'|) = |f(x)|$
-  Combining these three relations yields the inequality
-  \begin{equation*}
-    |x'|^k = p(|x'|) = |f(x)| \leq |x|^j,
-  \end{equation*}
-  so $|x'| \leq |x|^{j / k} < |x|$, since $k > j$ and lengths must be natural numbers.
+  Combining these three relations yields the inequality $|x'|^k = p(|x'|) = |f(x)| \leq |x|^j$, so $|x'| \leq |x|^{j / k} < |x|$, since $k > j$ and lengths must be natural numbers.
 \end{proof}
 
 Combining the preceding three lemmas yields Ladner's theorem for classes of equivalence relations.
