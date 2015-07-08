@@ -54,32 +54,20 @@
 \newenvironment{sketch}{\begin{proof}[Proof sketch]}{\end{proof}}
 
 % custom shortcut commands
+%% \newcommand{\todo}[1]{\textbf{TODO #1}}
 %\newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}} % formatting emails
 \newcommand{\email}[1]{\textlangle\href{mailto:#1}{\nolinkurl{#1}}\textrangle}
-\newcommand{\plain}[1]{\text{ #1 }} % plain text inside math environments
-\newcommand{\sigmastar}{\{0, 1\}^{*}} % the set of all binary strings
-\newcommand{\kj}{\overset{ker}{\oplus}} % kernel join
 \newcommand{\nkr}{\nleq^{P}_{ker}} % kernel-reduces
 \newcommand{\kr}{\leq^{P}_{ker}} % kernel-reduces
-\newcommand{\pot}{\leq^{P}_{pot}} % potentially reduces
-\newcommand{\npot}{\nleq^{P}_{pot}} % does not potentially reduce
 \newcommand{\krnt}{\leq_{ker}} % kernel-reduces without time bound
 \newcommand{\nkrnt}{\nleq_{ker}} % does not kernel-reduce without time bound
 \newcommand{\kri}{\leq^{P}_{ker,1}} % 1-1 kernel-reduces
 \newcommand{\mor}{\leq^{P}_{m}} % many-one reduces
 \newcommand{\mornt}{\leq_m}
 \newcommand{\moe}{\equiv^{P}_{m}} % many-one equivalent
-\newcommand{\lb}{\left\{} % left curly brace for set notation
-\newcommand{\rb}{\right\}} % right curly brace for set notation
-%% \newcommand{\st}{\,\middle|\,} % ``such that'' pipe, for use in set definitions
-%% \newcommand{\symdiff}{\bigtriangleup} % set symmetric difference
 \newcommand{\defn}[1]{\emph{#1}} % emphasize words which are being defined
 \newcommand{\pair}[2]{\langle#1,#2\rangle} % pairing function
 \newcommand{\triple}[3]{\left\langle#1,#2,#3\right\rangle} % tripling function
-%% \newcommand{\Q}{\textsf{Q}} % to represent an unknown quantifier
-%% \newcommand{\QBF}{\lang{QBF}} % the language QBF
-%% \newcommand{\QBFEq}{\lang{QBFEq}} % the language of equivalent QBFs
-\newcommand{\todo}[1]{\textbf{TODO #1}}
 
 % redefine footnote so it has no reference and no number
 \long\def\symbolfootnote#1{\begingroup%
