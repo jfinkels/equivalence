@@ -44,7 +44,7 @@ First we define the equivalence relation performing the diagonalization and the 
   The equivalence relation $R$ is a padded version of $K$.
 
   Our goal is to define the function $p$ so that $R$ is not too hard and not too easy: it's output should be large enough that $R$ is not $\NPEq$-complete but not so large that $R$ is in $\P$.
-  For this we need an enumeration of each polynomially clocked Turing machine, $\{M_i\}_i$, where machine $M_i$ halts within time $i n^i$ on inputs of length $n$.
+  For this we need an enumeration of each polynomially clocked deterministic Turing machine, $\{M_i\}_i$, where machine $M_i$ halts within time $i n^i$ on inputs of length $n$.
   For any pair of strings $x$ and $y$, we say a Turing machine $M$ \emph{disagrees with $R$ on $\pair{x}{y}$} if
   \begin{itemize}
   \item $M(\pair{x}{y})$ accepts and $\pair{x}{y} \notin R$, or
@@ -62,21 +62,17 @@ First we define the equivalence relation performing the diagonalization and the 
 
 The following three lemmas prove that this problem is of intermediate complexity if $\PEq \neq \NPEq$.
 
-\begin{lemma}
+\begin{lemma}\label{lem:loglog}
   The function $p$ in \autoref{con:diag} is computable in time polynomial in $n$.
 \end{lemma}
 \begin{proof}
-  Computing $p(n)$ requires computing $p(1)$, $p(2)$, $\dotsc$, $p(n - 1)$; if each of these $n - 1$ computations takes a polynomial amount of time, the total time required to compute $f(n)$ remains polynomial in $n$, by induction.
+  Computing $p(n)$ requires computing $p(1)$, $p(2)$, $\dotsc$, $p(n - 1)$; if there is a polynomial that bounds the running time of each of these $n - 1$ computations, the total time required to compute $f(n)$ remains polynomial in $n$, by induction.
   Since the strings $x$ and $y$ are of length at most $\log \log n$, the total number of iterations required to test all pairs of strings is polynomial in $n$.
   The simulation of $M_i$ is computable in time $i (\log \log n)^i$, but $i$ is at most $\log \log n$, since $i$ can only be incremented at most $\log \log n$ times.
   Using the fact that a polynomial in $\log \log n$ is bounded above by $O(\log n)$,
-  \begin{align*}
-    i (\log \log n)^i & \leq \log \log n (\log \log n)^{\log \log n} \\
-    & = 2^{(\log \log \log n)^2 \log \log n } \\
-    & \leq 2^{(\log \log n)^2} \\
-    & = 2^{O(\log n)} \\
-    & = \poly(n),
-  \end{align*}
+  \begin{equation*}
+    i (\log \log n)^i \leq \log \log n (\log \log n)^{\log \log n} \leq 2^{(\log \log n)^2} \leq 2^{O(\log n)} = \poly(n),
+  \end{equation*}
   so the machine $M_i$ runs in time polynomial in $n$.
   The language $R$ is in $\NPEq$ because it is a padded version of the language $K$, which is in $\NPEq$.
   Since $\NP \subseteq \EXP$ and the inputs $x$ and $y$ are each of length $\log \log n$, membership in $R$ can be determined in time polynomial in $n$.
@@ -91,7 +87,7 @@ The following three lemmas prove that this problem is of intermediate complexity
 \begin{proof}
   Assume with the intention of producing a contradiction that $R \in \PEq$.
   Thus there is a natural number $i$ such that $M_i$ decides $R$.
-  For sufficiently large $n$, the machine $M_i$ never disagrees with $R$, so $p(n) = n^i$ for all sufficiently large $n$.
+  The machine $M_i$ never disagrees with $R$, so $p(n) = n^i$ for all sufficiently large $n$.
   Assuming without loss of generality that the string $x$ and $y$ are each of length $n$, this yields a polynomial-time kernel reduction from $K$ to $R$ via the function $\pair{x}{y} \mapsto \left\langle x 0 1^{p(n) - n - 1}, y 0 1^{p(n) - n - 1}\right\rangle$.
   This mapping is polynomial-time computable because $p(n) = n^i$ for all sufficiently large $n$, and $i$ does not depend on $n$.
   Since $\PEq$ is closed under polynomial-time kernel reductions, $K$ is in $\PEq$, and hence $\PEq = \NPEq$, since $K$ is $\NPEq$-complete.
@@ -131,7 +127,7 @@ The following three lemmas prove that this problem is of intermediate complexity
   \end{equation*}
   Since the length of the inputs to the algorithm decrease on each recursive invocation, there are at most $n$ recursive calls on inputs of pairs of strings of length $n$.
   Eventually the solution can be found in the hardcoded lookup table (the base case of the recursion).
-  Each recursive invocation of the algorithm other than the base case requires computing $f$ on an input of length $n$ (twice), which can be done in polynomial time.
+  Each recursive invocation of the algorithm other than the base case requires computing $f$ on an input of length $n$ (twice), which can be done in polynomial time, and deciding if the lengths of $f(x)$ and $f(y)$ are in the range of $p$ can be done in polynomial time by \autoref{lem:loglog}.
   Thus the overall time required for this algorithm is polynomial in $n$.
   This proves that $K \in \P$ and thus $\P = \NP$.
   Since $\P = \NP$ if and only if $\PEq = \NPEq$, we have a contradiction.

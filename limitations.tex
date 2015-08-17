@@ -183,10 +183,7 @@ This idea leads to a construction of equivalence relations $R$ and $S$ between w
   Define $R_n$ as the set of all strings of length $n$, except $R_1$, which also includes the string of length $0$.
   Define $S_n$ as the set of all strings $s$ satisfying the inequality $p_n(n) + 1 \leq |s| \leq p_{n + 1}(n + 1)$, except $S_1$, which includes all strings of length at most $p_2(2)$.
 
-  Define sets $R$ and $S$ as
-  \begin{equation*}
-    R = \bigcup_{n \in \mathbb{Z}^+} R_n \times R_n \text{ and } S = \bigcup_{n \in \mathbb{Z}^+} S_n \times S_n.\qedhere
-  \end{equation*}
+  Define relations $R$ and $S$ by $R = \cup_{n \in \mathbb{Z}^+} R_n \times R_n$ and $S = \cup_{n \in \mathbb{Z}^+} S_n \times S_n$.
 \end{construction}
 
 It is straightforward to prove that $R$ and $S$ are equivalence relations so we omit the proof.
@@ -273,14 +270,8 @@ Though it is not explicitly stated here, this theorem can be generalized to kern
   Finally, we show that $R$ and $S$ are in $\NC^1$.
   Deciding whether two strings have the same length is trivial, so $R$ is certainly in $\NC^1$.
   To decide $S$, we compute the index $i$ of the equivalence class $S_i$ containing the string $x$ and the index $j$ of the equivalence class $S_j$ containing the string $y$, then compare them for equality.
-  Computing the index $i$ of the equivalence class of a string $x$ of length $n$ can be performed as follows.
-  First, compute in parallel the values $p_1(1), \dotsc, p_{n + 1}(n + 1)$.
-  Since each $p_i$ is increasing, $n$ is definitely smaller than $p_{n + 1}(n + 1)$.
-  Computing the exponentiation of $O(n)$ pairs of strings of length $O(n)$ each can be performed by a $\TC^0$ circuit, and $\TC^0 \subseteq \NC^1$.
-  Next, for each $i \in \{1, \dotsc, n\}$ in parallel, decide if $p_i(i) + 1 \leq n \leq p_{i + 1}(i + 1)$, thereby determining whether the input is in $S_i$.
-  These comparisons can be performed by an $\NC^1$ circuit.
-  Finally, use $O(\log n)$ single-bit multiplexers in parallel to output the index (in binary) of the sole equivalence class $S_i$ containing $x$.
-  A single-bit multiplexer for $O(\log n)$ input bits can be implemented by a circuit of size $O(\log n)$ and depth $O(\log \log n)$ \autocite[Lemma~2.5.5]{savage98}, so this phase of the computation can be performed by an $\NC^1$ circuit.
+  Computing the index $i$ of the equivalence class of a string $x$ of length $n$ can be performed by computing $p_1(1), \dotsc, p_{n + 1}(n + 1)$ using arithmetic operations, determining the first index such that $p_i(i) + 1 \leq n \leq p_{i + 1}(i + 1)$, then outputting that index.
+  These can be done with an $\NC^1$ circuit.
   Computing the indices $i$ and $j$ for the two input strings can be performed in parallel, and the final comparison for equality of $i$ and $j$ adds only $O(\log n)$ depth to the circuit.
   Therefore $S \in \NC^1$.
 \end{proof}

@@ -6,8 +6,9 @@
 %% Commons Attribution-ShareAlike 4.0 International License,
 %% https://creativecommons.org/licenses/by-sa/4.0/.
 \section
-    [Relationship between completeness under kernel and many-one reductions]
-    {Relationship between completeness \\ under kernel and many-one reductions}
+    %[Relationship between completeness under kernel and many-one reductions]
+    %{Relationship between completeness \\ under kernel and many-one reductions}
+    {Completeness in kernel versus many-one reductions}
 \label{sec:npeqcompleteness}
 % Foreword
 %
@@ -97,17 +98,11 @@ This corollary provides a clearer proof of \autocite[Proposition~8.1]{bcffm}.
 \end{proof}
 
 \autoref{thm:npceqrel} also provides a simple method for proving the equivalence of $\P = \NP$ and $\PEq = \NPEq$.
+If $\PEq = \NPEq$, then the $\NP$-complete equivalence relation in \autoref{ex:npceqrel} is decidable in polynomial time, thus $\P = \NP$.
 
 \begin{theorem}\label{thm:pnppeqnpeq}
   $\P = \NP$ if and only if $\PEq = \NPEq$.
 \end{theorem}
-\begin{proof}
-  If $\P = \NP$, then $\PEq = \NPEq$ by their definitions.
-  Suppose now that $\PEq = \NPEq$.
-  Let $A$ denote the $\NP$-complete equivalence relation defined in \autoref{ex:npceqrel}.
-  Since $A \in \NPEq$ and $\PEq = \NPEq$ by hypothesis, $A \in \PEq$, and hence $A \in \P$.
-  Since $\P$ is closed under $\mor$ reductions, any $\NP$-complete problem in $\P$ implies $\P = \NP$.
-\end{proof}
 
 As stated in \autoref{sec:generalcompleteness}, we do not know whether an $\NPEq$-complete problem exists.
 In the following theorem we describe an equivalence relation that, if it were $\NPEq$-complete, would prove that injective kernel reductions are strictly weaker than general kernel reductions.
